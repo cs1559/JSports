@@ -1,7 +1,10 @@
 #Change Log
 
-#0.0.14
-- 
+#0.1.0
+- Removed Hello folder from templates
+- Added staff/player tranlsation on the manage rosters page.
+- changed sort order of roster model on the SITE side.
+
 
 #0.0.13
 - Added support for a cron job to schedule standings updates.

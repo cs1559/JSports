@@ -18,6 +18,7 @@ use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Services\GameService;
+use FP4P\Component\JSports\Administrator\Helpers\JSHelper;
 
 HTMLHelper::_('behavior.formvalidator');
 HTMLHelper::_('behavior.keepalive');
@@ -86,8 +87,8 @@ $document->setTitle(Text::_('COM_JSPORTS_TEAMPROFILE_PAGE_TITLE'));
             				<table class="table">
             					<thead>
             						<tr>
-            							<th scope="col">Name</th>
-            							<th scope="col">Role</th>
+            							<th scope="col"><?php Text::_('COM_JSPORTS_NAME'); ?></th>
+            							<th scope="col"><?php Text::_('COM_JSPORTS_ROLE'); ?></th>
             						</tr>
             					</thead>
             					<tbody>
@@ -154,7 +155,8 @@ $document->setTitle(Text::_('COM_JSPORTS_TEAMPROFILE_PAGE_TITLE'));
 						</div>
 			</div>  <!--  end of section  -->
 
-			<div class="teamprofile-section container">
+			<!--  SCHEDULE SECTION -->
+			<div class="teamprofile-section container">   
 				<h3>Schedule - <?php echo $this->recentprogram->name; ?></h3>
 					<hr class="hr-bar">
 						<div class="teamprofile-table-wrapper">
@@ -162,6 +164,7 @@ $document->setTitle(Text::_('COM_JSPORTS_TEAMPROFILE_PAGE_TITLE'));
 									<thead>
 										<tr>
 											<th scope="col">Date</th>
+											<th scope="col">Time</th>
 											<th scope="col">Name</th>
 											<th scope="col">W/L</th>
 											<th scope="col">AS</th>
@@ -175,6 +178,7 @@ $document->setTitle(Text::_('COM_JSPORTS_TEAMPROFILE_PAGE_TITLE'));
                                 ?>
 									<tr>
 										<td><?php echo $game->gamedate; ?></td>
+										<td><?php echo JSHelper::displayGameTime($game->gametime);?> </td>
 										<td><?php echo $game->name; ?></td>
 										<td><?php echo GameService::getWinLoss($this->data->id,$game); ?></td>
 										<td><?php echo $game->awayteamscore; ?></td>
@@ -187,6 +191,7 @@ $document->setTitle(Text::_('COM_JSPORTS_TEAMPROFILE_PAGE_TITLE'));
 						</div>
 			</div>  <!--  end of section  -->
 
+			<!-- ROSTER SECTION -->
 			<div class="teamprofile-section container">  <!--  Team Staff Data -->
 				<h3>Team Roster</h3>
 				<hr class="hr-bar">
@@ -226,8 +231,6 @@ $document->setTitle(Text::_('COM_JSPORTS_TEAMPROFILE_PAGE_TITLE'));
              	
              	?>
 			</div>   <!--  end of section -->
-
-
 
 
 			<div class="teamprofile-section">						

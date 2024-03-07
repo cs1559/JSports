@@ -9,6 +9,11 @@
  * @license     GNU/GPLv2, see http://www.gnu.org/licenses/gpl-2.0.html
  *
  */
+
+/**
+ * CHANGELOG:
+ * 2024-03-07  Changed the sort order to classificaiton desc, last name asc
+ */
 namespace FP4P\Component\JSports\Site\Model;
 
 defined('_JEXEC') or die;
@@ -198,7 +203,7 @@ class RostersModel extends ListModel
 	    
 	    $ordering = [$db->quoteName('a.lastname') . ' ' . $db->escape($orderDirn), ];
 	    	    
-	    $query->order("a.lastname asc");
+	    $query->order("a.classification desc, a.lastname asc");
 	    return $query;
 	}
 	

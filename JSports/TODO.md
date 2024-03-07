@@ -2,7 +2,7 @@
 
 1. Team Profile = The action drop-down appears on all team profiles - nee to add security check. **(DONE)** 
 2. Team Profile - Add the team status (e.g. archived, published, etc.)
-3. Add CONFIRMATION message PRIOR to deleting a ROSTER item.
+3. Add CONFIRMATION message PRIOR to deleting a ROSTER item.  **DONE**
 4. For the Teamlist Field, need to be able to set a default
 5. For TeamList field, need to support cross-divisional games (query by age group).  **DONE**s
 6. Add NEW (and EDIT) ROSTER player/staff  **DONE**
@@ -18,12 +18,12 @@
 16.  Add userid and role (Head Coach, Asst Coach, Manager, etc) to the roster item if the person is part of the staff.  **DONE**
 17.  Support field information per venue so when entering a game, they can select "Plummer Park - Field 1", "Plummer Park - Field 2", etc.
 18.  All a freeform text input field if the game is a NON-LEAGUE game.
-19.  Display ROSTERS of other teams if the coach has permission (need to define permission).
+19.  Display ROSTERS of other teams if the coach has permission (need to define permission).  **DONE**
 20.  The list of Programs on the TEAM page includes programs that are "registration" only.  those need to be filtered.  **DONE**
 21.  On the user list (shown on team profile page), add EMAIL to the text that is displayed.  **DONE**
 22.  On the user list (show on team profile page), add SORT ORDER to the list.   **DONE**
 23.  On the site TEAMS view, need to add ability to filter based on COACHs name.
-24.  Change the "Add Player" button on the Rosters view to "Add Player/Roster"
+24.  Change the "Add Player" button on the Rosters view to "Add Player/Roster"  **DONE**
 25.  Add hyperlinks to team pages on the schedules to make it easy to naviage between pages.
 26.  Ad Game time on the team profile view of the schedule.
 27.  On my team page, improve the layout for mobile devices when multiple teams exist.

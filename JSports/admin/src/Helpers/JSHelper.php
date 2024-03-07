@@ -43,6 +43,29 @@ class JSHelper
         }
         
     }
+
+    /**
+     * This function translates the roster classication into a readable value.
+     *
+     * @param string $code
+     * @return string
+     */
+    public static function translateRosterClassification($type = "")
+    {
+        
+        switch ($type) {
+            case 'S':
+                return 'Staff';
+                break;
+            case 'P':
+                return 'Player';
+                break;
+            default:
+                return '*error*';
+                break;
+        }
+        
+    }
     
     /**
      * This function is used to present the 24 hour time into the normal HH:MM PM/AM format. 

@@ -15,6 +15,7 @@
  * 
  * CHANGES:
  * 2024-02-02   Removed ID from the display list.
+ * 2024-03-07   Translated roster classification value.
  */
 
 defined('_JEXEC') or die;
@@ -24,6 +25,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Factory;
+use FP4P\Component\JSports\Administrator\Helpers\JSHelper;
 
 $clientId  = (int) $this->state->get('client_id', 0);
 $user      = Factory::getUser();
@@ -113,12 +115,8 @@ $canEdit = true;
 					?>
 					
 					</th>
-					<td class="">
-						<?php echo $item->firstname; ?>
-					</td>
-					<td class="">
-						<?php echo $item->classification; ?>
-					</td>
+					<td class=""><?php echo $item->firstname; ?></td>
+					<td><?php echo JSHelper::translateRosterClassification($item->classification);?> </td>
 					
 				<?php if ($this->canEdit) {?>	
 					<td class="">
