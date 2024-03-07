@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+
+	<fields name="filter">
+
+		<field
+			name="search"
+			type="text"
+			label="Seach Last Name"
+			description="Search Last Name"
+			hint="JSEARCH_FILTER"
+		/>
+
+		<field name="programid" type="sql" 
+			label="Program"
+			query="SELECT id, name FROM #__jsports_programs where published in (0,1) order by name desc"
+			key_field="id"
+			value_field="name" 
+			onchange="this.form.submit();"
+			header="- Select Program -"
+		/>
+
+		<field name="divisionid" type="sql" 
+			label="Team"
+		    sql_select="a.id, a.name"
+		    sql_from="#__jsports_divisions as a"
+		    sql_order="a.ordering ASC"
+			key_field="id"
+			value_field="name" 
+			sql_filter="programid"
+			onchange="this.form.submit();"
+			header="- Select Division -"
+		/>
+		
+		<field name="teamid" type="sql" 
+			label="Team"
+		    sql_select="a.id, concat(a.name, ' (', a.contactname , ')') as teamname"
+		    sql_from="#__jsports_teams as a, #__jsports_map as m"
+		    sql_where="a.id = m.teamid"
+		    sql_order="a.name ASC"
+			key_field="id"
+			value_field="teamname" 
+			onchange="this.form.submit();"
+			sql_filter="divisionid"
+			header="- Select Team -"
+		/>
+
+		
+		<field
+			name="classificatino"
+			type="list"
+			label="Age Group"
+			onchange="this.form.submit();"
+			>
+			<option selected="selected" value="">- Select Classification -</option>
+			<option value="S">Staff</option>
+			<option value="P">Player</option>
+		</field>
+		
+
+	</fields>
+
+	<fields name="list">
+
+		<field
+			name="fullordering"
+			type="list"
+			label="JGLOBAL_SORT_BY"
+			default="a.name ASC"
+			onchange="this.form.submit();"
+			>
+			<option value="">JGLOBAL_SORT_BY</option>
+			<option value="a.title ASC">JGLOBAL_TITLE_ASC</option>
+			<option value="a.title DESC">JGLOBAL_TITLE_DESC</option>
+ 			<option value="a.description ASC">COM_JSPORTS_DESCRIPTION_ASC</option>  
+	  		<option value="a.description DESC">COM_JSPORTS_DESCRIPTION_DSC</option> 
+		</field>
+
+		<field
+			name="limit"
+			type="limitbox"
+			label="JGLOBAL_LIST_LIMIT"
+			default="25"
+			onchange="this.form.submit();"
+		/>
+	</fields>
+</form>

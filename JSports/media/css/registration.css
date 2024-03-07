@@ -1,0 +1,8 @@
+@charset "ISO-8859-1";
+
+@import url("jsports.css");
+
+.agreement-container {
+	background-color:  lightgray;
+	border: solid;
+}

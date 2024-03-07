@@ -1,0 +1,69 @@
+{
+  "$schema": "https://developer.joomla.org/schemas/json-schema/web_assets.json",
+  "name": "com_jsports",
+  "version": "CVS: 1.0.0",
+  "license": "GNU General Public License version 2 or later; see LICENSE.txt",
+  "assets": [
+    {
+      "name": "com_jsports.jsports.style",
+      "type": "style",
+      "uri": "com_jsports/jsports.css"
+    },
+    {
+      "name": "com_jsports.teamprofile.style",
+      "type": "style",
+      "uri": "com_jsports/teamprofile.css"
+    },
+        {
+      "name": "com_jsports.registration.style",
+      "type": "style",
+      "uri": "com_jsports/registration.css"
+    },
+    {
+      "name": "com_jsports.standings.style",
+      "type": "style",
+      "uri": "com_jsports/standings.css"
+    },
+    {
+      "name": "com_jsports.teamlist.style",
+      "type": "style",
+      "uri": "com_jsports/teamlist.css"
+    },
+    
+	{
+      "name": "com_jsports.game.script",
+      "type": "script",
+      "uri": "com_jsports/game.js",
+      "dependencies": [
+        "jquery"
+      ],
+      "attributes": {
+        "defer": true
+      }
+    },
+	{
+      "name": "com_jsports.roster.script",
+      "type": "script",
+      "uri": "com_jsports/roster.js",
+      "dependencies": [
+        "jquery"
+      ],
+      "attributes": {
+        "defer": true
+      }
+    },
+    
+    {
+      "name": "com_jsports.jsports.script",
+      "type": "script",
+      "uri": "com_jsports/jsports.js",
+      "dependencies": [
+        "jquery"
+      ],
+      "attributes": {
+        "defer": true
+      }
+    }
+
+  ]
+}

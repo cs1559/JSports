@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+
+	<fieldset addfieldprefix="FP4P\Component\JSports\Administrator\Fields"
+			name="details" label="COM_JSPORTS_DETAILS">
+
+		<field name="id" type="hidden" label="COM_JSPORTS_GAMEID"
+			default="0" class="readonly" readonly="true" />
+
+		<field name="teamid" type="hidden" label="COM_JSPORTS_TEAMID"
+			default="0" class="readonly" readonly="true" />
+
+		<field name="programid" type="hidden" label="COM_JSPORTS_PROGRAMID"
+			default="0" class="readonly" readonly="true" />
+
+		<field name="divisionid" type="hidden" label="COM_JSPORTS_DIVISIONID"
+			default="0" class="readonly" readonly="true" />
+
+		<field name="opponentid" type="teamlist" label="COM_JSPORTS_OPPONENT" class="" teamid="teamid" programid="programid"
+				required="true"/>
+				
+		<field name="hometeamname" type="text" label="COM_JSPORTS_HOMETEAM"
+			default="0" class="readonly" readonly="true" />
+				
+		<field name="awayteamname" type="text" label="COM_JSPORTS_AWAYTEAM"
+			default="0" class="readonly" readonly="true" />
+				
+
+
+		<field name="hometeamid" type="teamlist" label="Home Team" class="" teamid="teamid" programid="programid"
+				required="false"/>
+		
+		
+		<field name="awayteamid" type="teamlist" label="Away Team" class="" teamid="teamid" programid="programid"
+				required="false"/>
+
+		<field name="gamedate" type="calendar" label="COM_JSPORTS_GAMEDATE"
+			default="0" class=""  require="true"/>
+			
+		<field name="gametime" type="time" label="COM_JSPORTS_GAMETIME"
+				min="09:00"
+				max="17:30"
+				required="true"
+			class="inputbox" />
+
+		<field name="leaguegame" type="radio" label="COM_JSPORTS_LEAGUEGAME"
+			class="btn-group btn-group-yesno" hint="Non-league games do not impact standings" default="1" validate="options">
+				<option value="1">Yes</option>
+				<option value="0">No</option>
+		</field>
+
+		<field name="homeindicator" type="radio" label="COM_JSPORTS_HOMEINDICATOR"
+			class="btn-group btn-group-yesno" hint="Are you the home team?" default="1" validate="options">
+				<option value="1">Yes</option>
+				<option value="0">No</option>
+		</field>
+
+	
+		<field name="location" type="locationlist"
+			label="COM_JSPORTS_LOCATION" size="50" required="true" hint="Type min of 2 characters to search"/>
+
+		<field name="gamestatus" type="list" label="COM_JSPORTS_STATUS"
+			class="form-select-color-state" default="S" validate="options">
+				<option value="S">Scheduled</option>
+				<option value="C">Complete</option>
+				<option value="R">Rained Out</option>
+				<option value="X">Cancelled</option>
+			</field>
+		
+		<field name="published" type="list" label="JSTATUS"
+			class="form-select-color-state" default="1" validate="options">
+			<option value="1">JPUBLISHED</option>
+			<option value="0">JUNPUBLISHED</option>
+			<option value="2">JARCHIVED</option>
+			<option value="-2">JTRASHED</option>
+		</field>
+
+		<field name="hometeamscore" type="integer" label="Home Team Score" first="0" last="30" step="1"
+ 			default="0" class="scorebox"  />
+
+		<field name="awayteamscore" type="integer" label="Away Team Score" first="0" last="30" step="1"
+			default="0" class="scorebox"  />
+		
+	</fieldset>
+
+
+</form>

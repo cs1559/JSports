@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+
+	<fields name="filter">
+
+		<field
+			name="search"
+			type="text"
+			label="Seach Program"
+			description="Search Programs"
+			hint="JSEARCH_FILTER"
+		/>
+
+		<field
+			name="published"
+			type="status"
+			label="JOPTION_SELECT_PUBLISHED"
+			onchange="this.form.submit();"
+			>
+			<option value="">- Select State -</option>
+		</field>
+
+		<field
+			name="status"
+			type="list"
+			label="Program Status"
+			onchange="this.form.submit();"
+			>
+			<option selected="selected" value="">- Select Status -</option>
+			<option value="A">Active</option>
+			<option value="P">Pending</option>
+			<option value="C">Closed</option>
+		</field>
+		
+		<field
+			name="registrationopen"
+			type="list"
+			label="Program Status"
+			onchange="this.form.submit();"
+			>
+			<option selected="selected" value="">- Select Registration Status -</option>
+			<option value="0">Close</option>
+			<option value="1">Open</option>
+		</field>
+		
+
+	</fields>
+
+	<fields name="list">
+
+		<field
+			name="fullordering"
+			type="list"
+			label="JGLOBAL_SORT_BY"
+			default="a.name ASC"
+			onchange="this.form.submit();"
+			>
+			<option value="">JGLOBAL_SORT_BY</option>
+			<option value="a.name ASC">COM_JSPORTS_NAME_ASC</option>
+			<option value="a.name DESC">COM_JSPORTS_NAME_DESC</option>
+ 			<option value="a.description ASC">COM_JSPORTS_DESCRIPTION_ASC</option>  
+	  		<option value="a.description DESC">COM_JSPORTS_DESCRIPTION_DSC</option> 
+		</field>
+
+		<field
+			name="limit"
+			type="limitbox"
+			label="JGLOBAL_LIST_LIMIT"
+			default="25"
+			onchange="this.form.submit();"
+		/>
+	</fields>
+</form>

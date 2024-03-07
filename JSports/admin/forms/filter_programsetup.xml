@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+
+	<fields name="filter">
+
+		<field
+			name="search"
+			type="text"
+			label="COM_JSPORTS_SEARCH_REGISTRATIONS"
+			description="COM_JSPORTS_SEARCH_REGISTRATIONS"
+			hint="JSEARCH_FILTER"
+		/>
+
+		<field name="programid" type="sql" 
+			label="League"
+			query="SELECT id, name FROM #__jsports_programs where published in (0,1) order by name desc"
+			key_field="id"
+			value_field="name" 
+			onchange="this.form.submit();"
+			header="- Select Program -"
+		/>
+		
+		<field
+			name="agegroup"
+			type="list"
+			label="COM_JSPORTS_AGEGROUP"
+			onchange="this.form.submit();"
+			>
+			<option selected="selected" value="">- Select Age Group -</option>
+			<option value="7">7U</option>
+			<option value="8">8U</option>
+			<option value="9">9U</option>
+			<option value="10">10U</option>
+			<option value="11">11U</option>
+			<option value="12">12U</option>
+			<option value="13">13U</option>
+			<option value="14">14U</option>
+		</field>
+
+		<field
+			name="published"
+			type="status"
+			label="JOPTION_SELECT_PUBLISHED"
+			onchange="this.form.submit();"
+			>
+			<option value="*">- Select State -</option>
+		</field>
+
+		
+	</fields>
+
+	<fields name="list">
+
+		<field
+			name="fullordering"
+			type="list"
+			label="JGLOBAL_SORT_BY"
+			default="a.name ASC"
+			onchange="this.form.submit();"
+			>
+			<option value="">JGLOBAL_SORT_BY</option>
+			<option value="a.teamname ASC">COM_JSPORTS_TEAMNAME_ASC</option>
+			<option value="a.teamname DESC">COM_JSPORTS_TEAMNAME_DESC</option>
+		</field>
+
+		<field
+			name="limit"
+			type="limitbox"
+			label="JGLOBAL_LIST_LIMIT"
+			default="25"
+			onchange="this.form.submit();"
+		/>
+	</fields>
+</form>

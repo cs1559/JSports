@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+
+	<fieldset name="details" label="COM_JSPORTS_DETAILS">
+			
+		<field name="uploadfile" type="file" label="COM_JSPORTS_FILEUPLOAD"
+			description="Choose an image from your computer with maximum 100KB" 
+			accept="image/*"
+			required="true" />
+
+	</fieldset>
+
+</form>

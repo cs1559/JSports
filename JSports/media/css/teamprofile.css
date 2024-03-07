@@ -1,0 +1,70 @@
+
+@import url("jsports.css");
+
+.teamprofile-header-container {
+	width: 100%;
+	/* text-align: center; */
+}
+
+.teamprofile-section {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+#profile-actions-menu {
+	margin-top: 15px;	
+	margin-right: 20px;
+}
+
+.teamprofile-header-name {
+	/* grid-area: name; */
+}
+
+.teamprofile-header-actions {
+	/* grid-area: actions; */
+}
+
+.teamprofile-logo {
+	height: 175px !important;
+	width: 175px !important;
+}
+
+.hr-bar {
+	height: 1px; 
+	border-top: 10px solid #192648;
+	opacity: 100% !important;
+}
+
+.teamprofile-table-wrapper {
+	overflow-x: auto;
+	width: 100%;
+	white-space: nowrap;
+	
+}
+
+@media all and (min-width:960px) and (max-width: 1024px) {
+  /* put your css styles in here */
+}
+
+@media all and (min-width:801px) and (max-width: 959px) {
+  /* put your css styles in here */
+}
+
+@media all and (min-width:769px) and (max-width: 800px) {
+  /* put your css styles in here */
+}
+
+@media all and (min-width:569px) and (max-width: 768px) {
+  /* put your css styles in here */
+}
+
+@media all and (min-width:481px) and (max-width: 568px) {
+  /* put your css styles in here */
+}
+
+@media all and (min-width:321px) and (max-width: 480px) {
+  /* put your css styles in here */
+}
+
+@media all and (min-width:0px) and (max-width: 320px) {
+  /* put your css styles in here */
+}

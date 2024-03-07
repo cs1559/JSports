@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+
+	<fieldset name="details" label="COM_JSPORTS_DETAILS">
+
+		<field name="id" type="number" label="JGLOBAL_FIELD_ID_LABEL"
+			default="0" class="readonly" readonly="true" />
+
+		<field name="name" type="text"
+			label="COM_JSPORTS_NAME" size="40" required="true" />
+
+		<field name="alias" type="text"
+			label="COM_JSPORTS_ALIAS" size="40" 
+			hint="Will be used in the URL"
+			 />
+			 
+		<field name="description" type="textarea"
+			label="COM_JSPORTS_DESCRIPTION" rows="5" cols="40" required="true" />
+
+		<field name="registrationopen" type="radio"
+			label="COM_JSPORTS_REGISTRATIONOPEN" class="btn-group btn-group-yesno" default="0"
+			validate="options">
+			<option value="1">Yes</option>
+			<option value="0">No</option>
+		</field>
+		
+		<field name="active" type="radio"
+			label="COM_JSPORTS_ACTIVE" class="btn-group btn-group-yesno" default="0"
+			validate="options">
+			<option value="1">Yes</option>
+			<option value="0">No</option>
+		</field>
+		
+		<field name="status" type="list"
+			label="COM_JSPORTS_STATUS" class="" default="P"
+			validate="options">
+			<option value="P">Pending</option>
+			<option value="A">Active</option>
+			<option value="C">Closed</option>
+		</field>
+
+		<field name="registrationtemplate" type="text"
+			label="COM_JSPORTS_REGISTRATIONTEMPLATE" />
+
+		<field name="programstart" type="calendar"
+			label="COM_JSPORTS_STARTDATE"  default="0000-00-00"/>
+
+		<field name="programend" type="calendar"
+			label="COM_JSPORTS_ENDDATE"  default="0000-00-00"/>
+
+		<field name="registrationstart" type="calendar"
+			label="COM_JSPORTS_STARTDATE"  default="0000-00-00"/>
+
+		<field name="registrationend" type="calendar"
+			label="COM_JSPORTS_ENDDATE"  default="0000-00-00"/>
+
+		<field name="published" type="list" label="JSTATUS"
+			class="form-select-color-state" default="1" validate="options">
+			<option value="1">JPUBLISHED</option>
+			<option value="0">JUNPUBLISHED</option>
+			<option value="2">JARCHIVED</option>
+			<option value="-2">JTRASHED</option>
+		</field>
+
+		<field name="leagueid" type="sql" 
+			label="League"
+			query="SELECT id, name FROM #__jsports_leagues"
+			key_field="id"
+			value_field="name" 
+		/>
+
+		<field name="publishstandings" type="radio"
+			label="COM_JSPORTS_PUBLISHSTANDINGS" class="btn-group btn-group-yesno" default="0"
+			validate="options">
+			<option value="1">Yes</option>
+			<option value="0">No</option>
+		</field>
+
+		<field name="setupfinal" type="radio"
+			label="COM_JSPORTS_SETUPFINAL" class="btn-group btn-group-yesno" default="0"
+			validate="options">
+			<option value="1">Yes</option>
+			<option value="0">No</option>
+		</field>
+		
+				<field name="rostersenabled" type="radio"
+			label="COM_JSPORTS_ROSTERSENABLED" class="btn-group btn-group-yesno" default="0"
+			validate="options">
+			<option value="1">Yes</option>
+			<option value="0">No</option>
+		</field>
+		
+		<field name="rosterslocked" type="radio"
+			label="COM_JSPORTS_ROSTERSLOCKED" class="btn-group btn-group-yesno" default="0"
+			validate="options">
+			<option value="1">Yes</option>
+			<option value="0">No</option>
+		</field>
+
+		<field name="registrationonly" type="radio"
+			label="COM_JSPORTS_REGISTRATIONONLY" class="btn-group btn-group-yesno" default="0"
+			validate="options">
+			<option value="1">Yes</option>
+			<option value="0">No</option>
+		</field>		
+	</fieldset>
+
+
+</form>

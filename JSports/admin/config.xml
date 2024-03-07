@@ -1,0 +1,121 @@
+<!-- 
+
+/**
+ * JSports Component for Joomla! 4.x
+ *
+ * @version     0.0.1
+ * @package     JSports
+ * @subpackage  Configuration
+ * @copyright   Copyright (C) 2023-2024 Chris Strieter
+ * @license     GNU/GPLv2, see http://www.gnu.org/licenses/gpl-2.0.html
+ *
+ */
+ 
+ CONFIGURATION OPTIONS
+ 1.  logodir - this is the folder where team logos are uploaded too.  JPATH_SITE is prepended to this value to define
+ 	the actual folder the file is stored in.  The format of the actual folder would be:
+ 	
+ 	Pattern:  JPATH_SITE{logodir}{logodir_prefix}-{teamid}/{logo filename}
+ 	Ex:  JPATH_SITE/media/com_jsports/images/logos/Team-232/teamlogo.png
+ 	
+ 2.  logodir_prefix - This value is prepended to the team id to create the last node of the logo path.  See above.
+ 
+ 3.  frontend_admin - The setting will enable / disable all JSPorts front-end administration - including any administrator/super users.  When
+ 	turne off, administrators can use the backend adminstration functionality to update the data. 
+ 	
+
+ 
+ 
+ -->
+<config>
+	<help key="Sports Management:_Options"/>
+	<fieldset name="component">
+	
+		<field name="logodir" type="text" default="/media/com_jsports/images/logos"
+			label="COM_JSPORTS_LOGOPATH"
+			description="COM_JSPORTS_LOGOPATH_DESC">
+		</field>
+		<field name="logodir_prefix" type="list"
+			label="COM_JSPORTS_TEAMLOGO_PREFIX" description="COM_JSPORTS_TEAMLOGO_PREFIX_DESC" default="">
+			<option value="Teamid-">Team ID</option>
+			<option value="Team-">Team</option>
+		</field>	
+		<field name="frontend_admin" type="radio" default="0"
+			label="COM_JSPORTS_FRONTEND_ADMIN_ENABLED"
+			description="COM_JSPORTS_FRONTEND_ADMIN_ENABLED_DESC"
+			layout="joomla.form.field.radio.switcher">
+			<option value="0">No</option>
+			<option value="1">Yes</option>
+		</field><field name="sef_ids" type="radio" layout="joomla.form.field.radio.switcher" default="0" label="JGLOBAL_SEF_NOIDS_LABEL" description="JGLOBAL_SEF_NOIDS_DESC" filter="integer">
+			<option value="0">JNO</option>
+			<option value="1">JYES</option>
+		</field>
+		
+		<field name="showposition" type="radio" default="0"
+			label="COM_JSPORTS_SHOWPOSITION_ENABLED"
+			description="COM_JSPORTS_SHOWPOSITION_ENABLED_DESC"
+			layout="joomla.form.field.radio.switcher">
+			<option value="0">No</option>
+			<option value="1">Yes</option>
+		</field>
+		
+		<field name="itemid" type="text" default=""
+			label="COM_JSPORTS_SPORTS_ID"
+			description="COM_JSPORTS_SPORTS_ID">
+		</field>
+
+		<field name="cronkey" type="text" default=""
+			label="COM_JSPORTS_CRONKEY"
+			description="COM_JSPORTS_CRONKEY">
+		</field>
+						
+	</fieldset>
+	<fieldset name="permissions" description="JCONFIG_PERMISSIONS_DESC" label="JCONFIG_PERMISSIONS_LABEL">
+			<field name="rules" type="rules" component="com_jsports" class="inputbox" filter="rules" validate="rules" label="JCONFIG_PERMISSIONS_LABEL" section="component"/>
+	</fieldset>
+</config>
+
+
+<!-- ######################################################################################## 
+	The following are a list of all the different types of fields you can add 
+	to this file They are here for copy pasting - neat eh? ######################################################################################## 
+	https://docs.joomla.org/Standard_form_field_types <field name="mycalendar" 
+	type="calendar" default="5-10-2008" label="Select a date" description="" 
+	format="%d-%m-%Y" /> https://docs.joomla.org/Standard_form_field_types <field 
+	name="mycategory" type="category" label="Select a category" description="" 
+	section="3" /> https://docs.joomla.org/Standard_form_field_types <field name="myeditor" 
+	type="editors" default="none" label="Select an editor" /> https://docs.joomla.org/Standard_form_field_types 
+	<field name="myfile" type="filelist" default="" label="Select a file" description="" 
+	directory="administrator" filter="" exclude="" stripext="" /> https://docs.joomla.org/Standard_form_field_types 
+	<field name="myfolder" type="folderlist" default="" label="Select a folder" 
+	directory="administrator" filter="" exclude="" stripext="" /> https://docs.joomla.org/Standard_form_field_types 
+	<field name="myhelpsite" type="helpsites" default="" label="Select a help 
+	site" description="" /> https://docs.joomla.org/Standard_form_field_types 
+	<field name="mysecretvariable" type="hidden" default="" /> https://docs.joomla.org/Standard_form_field_types 
+	<field name="myimage" type="imagelist" default="" label="Select an image" 
+	description="" directory="" exclude="" stripext="" /> https://docs.joomla.org/Standard_form_field_types 
+	<field name="mylanguage" type="languages" client="site" default="en-GB" label="Select 
+	a language" description="" /> https://docs.joomla.org/Standard_form_field_types 
+	<field name="mylistvalue" type="list" default="" label="Select an option" 
+	description=""> <option value="0">Option 1</option> <option value="1">Option 
+	2</option> </field> https://docs.joomla.org/Standard_form_field_types <field 
+	name="mymenu" type="menu" default="mainmenu" label="Select a menu" description="Select 
+	a menu" /> https://docs.joomla.org/Standard_form_field_types <field name="mymenuitem" 
+	type="menuitem" default="45" label="Select a menu item" description="Select 
+	a menu item" /> https://docs.joomla.org/Standard_form_field_types <field 
+	name="mypassword" type="password" default="secret" label="Enter a password" 
+	description="" size="5" /> https://docs.joomla.org/Standard_form_field_types 
+	<field name="myradiovalue" type="radio" default="0" label="Select an option" 
+	description=""> <option value="0">1</option> <option value="1">2</option> 
+	</field> https://docs.joomla.org/Standard_form_field_types <field type="spacer" 
+	default="&lt;b&gt;Advanced parameters&lt;/b&gt;" /> https://docs.joomla.org/Standard_form_field_types 
+	<field name="myfield" type="sql" default="10" label="Select an article" query="SELECT 
+	id, title FROM #__content" key_field=”id” value_field=”title” /> https://docs.joomla.org/Standard_form_field_types 
+	<field name="mytextvalue" type="text" default="Some text" label="Enter some 
+	text" description="" size="10" /> https://docs.joomla.org/Standard_form_field_types 
+	<field name="mytextarea" type="textarea" default="default" label="Enter some 
+	text" description="" rows="10" cols="5" /> https://docs.joomla.org/Standard_form_field_types 
+	<field name="mytimezone" type="timezones" default="-10" label="Select a timezone" 
+	description="" /> https://docs.joomla.org/Standard_form_field_types <field 
+	name="myusergroups" type="usergroup" default="" label="Select a user group" 
+	description="" /> -->

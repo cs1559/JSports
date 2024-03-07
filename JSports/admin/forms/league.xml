@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+
+	<fieldset name="details" label="COM_JSPORTS_DETAILS">
+
+		<field name="id" type="number" label="JGLOBAL_FIELD_ID_LABEL"
+			default="0" class="readonly" readonly="true" />
+
+		<field name="name" type="text"
+			label="COM_JSPORTS_PROGRAM_TITLE" size="40" required="true" />
+
+		<field name="description" type="textarea"
+			label="COM_JSPORTS_DESCRIPTION" rows="5" cols="40" required="true" />
+
+
+		<field name="published" type="list" label="JSTATUS"
+			class="form-select-color-state" default="1" validate="options">
+			<option value="1">JPUBLISHED</option>
+			<option value="0">JUNPUBLISHED</option>
+			<option value="2">JARCHIVED</option>
+			<option value="-2">JTRASHED</option>
+		</field>
+
+	</fieldset>
+
+	<fieldset name="options" label="COM_JSPORTS_OPTIONS">
+
+		<field name="registrationenabled" type="radio"
+			label="COM_JSPORTS_REGISTRATIONOPEN" class="btn-group btn-group-yesno" default="0"
+			validate="options">
+			<option value="1">Yes</option>
+			<option value="0">No</option>
+		</field>
+			
+		<field name="rostersenabled" type="radio"
+			label="COM_JSPORTS_ROSTERSENABLED" class="btn-group btn-group-yesno" default="0"
+			validate="options">
+			<option value="1">Yes</option>
+			<option value="0">No</option>
+		</field>
+		
+		<field name="rosterslocked" type="radio"
+			label="COM_JSPORTS_ROSTERSLOCKED" class="btn-group btn-group-yesno" default="0"
+			validate="options">
+			<option value="1">Yes</option>
+			<option value="0">No</option>
+		</field>
+		
+		
+	</fieldset>
+
+</form>

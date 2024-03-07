@@ -1,0 +1,34 @@
+
+@import url("jsports.css");
+
+.teamprofile-header-container {
+	width: 100%;
+	display: grid;
+	grid-template-columns: 75% 25%; 
+	grid-gap: 20px;
+	grid-template-areas: "name actions";
+}
+
+#profile-actions-menu {
+	margin-top: 15px;	
+	margin-right: 20px;
+}
+
+.teamprofile-header-name {
+	grid-area: name;
+}
+
+.teamprofile-header-actions {
+	grid-area: actions;
+}
+
+.teamprofile-logo {
+	height: 175px !important;
+	width: 175px !important;
+}
+
+.hr-bar {
+	height: 1px; 
+	border-top: 10px solid #192648;
+	opacity: 100% !important;
+}

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+
+	<fieldset name="details" label="COM_JSPORTS_DETAILS">
+			
+		<field name="programid" type="sql" 
+			label="COM_JSPORTS_PROGRAMS"
+			query="SELECT id, name FROM #__jsports_programs where registrationopen = 1"
+			key_field="id"
+			value_field="name" 
+			required="true"
+			header="-Select Program-"
+		/>
+		
+
+	</fieldset>
+
+
+</form>

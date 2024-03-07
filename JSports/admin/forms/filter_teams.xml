@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+
+	<fields name="filter">
+
+		<field
+			name="search"
+			type="text"
+			label="Seach Program"
+			description="Search Programs"
+			hint="JSEARCH_FILTER"
+		/>
+
+		<field name="lastplayed" type="sql" 
+			label="COM_JSPORTS_LASTPLAYED"
+			query="select lastplayed from #__jsports_view_lastplayed group by lastplayed order by lastplayed desc"
+			key_field="lastplayed"
+			value_field="lastplayed" 
+			onchange="this.form.submit();"
+			header="- Select Last Played Year -"
+		/>
+
+		<field
+			name="published"
+			type="status"
+			label="JOPTION_SELECT_PUBLISHED"
+			onchange="this.form.submit();"
+			>
+			<option value="">- Select State -</option>
+		</field>
+		
+	</fields>
+
+	<fields name="list">
+
+		<field
+			name="fullordering"
+			type="list"
+			label="JGLOBAL_SORT_BY"
+			default="a.name ASC"
+			onchange="this.form.submit();"
+			>
+			<option value="">JGLOBAL_SORT_BY</option>
+ 			<option value="a.name ASC">COM_JSPORTS_NAME_ASC</option>  
+	  		<option value="a.name DESC">COM_JSPORTS_NAME_DESC</option> 
+		</field>
+
+		<field
+			name="limit"
+			type="limitbox"
+			label="JGLOBAL_LIST_LIMIT"
+			default="25"
+			onchange="this.form.submit();"
+		/>
+	</fields>
+</form>

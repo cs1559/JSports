@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+
+	<fieldset addfieldprefix="FP4P\Component\JSports\Administrator\Fields"
+			name="details" label="COM_JSPORTS_DETAILS">
+
+		<field name="id" type="number" label="JGLOBAL_FIELD_ID_LABEL"
+			default="0" class="readonly" readonly="true" />
+
+		<field name="redirectteamid" type="hidden" label="COM_JSPORTS_TEAMID"
+			default="0" class="readonly" readonly="true" />
+			
+		<field name="teamid" type="hidden" label="COM_JSPORTS_TEAMID"
+			default="0" class="readonly" readonly="true" />
+
+		<field name="programid" type="hidden" label="COM_JSPORTS_PROGRAMID"
+			default="0" class="readonly" readonly="true" />
+
+		<field name="divisionid" type="hidden" label="COM_JSPORTS_DIVISIONID"
+			default="0" class="readonly" readonly="true" />
+
+		<field name="hometeamname" type="text" label="COM_JSPORTS_HOMETEAM"
+			default="0" class="readonly" readonly="true" />
+				
+		<field name="awayteamname" type="text" label="COM_JSPORTS_AWAYTEAM"
+			default="0" class="readonly" readonly="true" />
+				
+		<field name="hometeamscore" type="integer" label="Home Team Score" first="0" last="30" step="1"
+ 			default="0" class="scorebox"  />
+
+		<field name="awayteamscore" type="integer" label="Away Team Score" first="0" last="30" step="1"
+			default="0" class="scorebox"  />
+		
+	</fieldset>
+
+
+</form>

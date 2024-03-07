@@ -1,0 +1,12 @@
+@import url("jsports.css");
+
+.teamlist-divisionname {
+	font-size: 1vw;
+	font-style: italic;
+}
+.teamlist-table-wrapper {
+	overflow-x: auto;
+	width: 100%;
+	white-space: nowrap;
+	
+}

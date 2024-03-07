@@ -1,0 +1,8 @@
+{
+	"name" : "com_jsports/com_jsports",
+	"autoload" : {
+		"psr-4" : {
+			"jsports\\common\\" : "common"
+		}
+	}
+}
