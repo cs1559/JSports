@@ -66,7 +66,6 @@ class GameService
         
         $rc = $table->delete();
         
-        
         $app->triggerEvent('onAfterGameDelete', ['data' => $table, 'returnCode'=> $rc]);
         
         return $rc;
@@ -92,6 +91,7 @@ class GameService
                
         $datetime = date_create()->format('Y-m-d H:i:s');
 
+        // Change the status of the game and identify who actually posted the score.
     	$data = array(
     		'hometeamscore' => $hometeamscore,
     		'awayteamscore' => $awayteamscore,
@@ -153,7 +153,13 @@ class GameService
         return $result;        
     }
     
-    
+    /**
+     * This function will retrieve a list of upcoming games that are still "scheduled";
+     * 
+     * @param unknown $programid
+     * @param number $limit
+     * @return unknown
+     */
     public static function getUpcomingGames($programid = null, $limit = 25) {
         $db = Factory::getDbo();
         $query = $db->getQuery(true);
@@ -180,7 +186,7 @@ class GameService
     /**
      * This function will return a list of most recent games.
      * @param unknown $programid
-     * @return unknown
+     * @return array Objects
      */
     public static function getRecentGames($programid = null, $limit = 15) {
                 
@@ -205,7 +211,13 @@ class GameService
         return $obj;
     }
     
-    
+    /**
+     * This function will retrieve a team's games for a given program.
+     * 
+     * @param unknown $teamid
+     * @param unknown $programid
+     * @return unknown
+     */
     public static function getTeamSchedule($teamid, $programid) {
         // Create a new query object.
         $db = Factory::getDbo();

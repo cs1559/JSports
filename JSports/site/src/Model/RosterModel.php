@@ -2,7 +2,7 @@
 /**
  * JSports - Joomla Sports Management Component
  *
- * @version     0.0.1
+ * @version     1.0.0
  * @package     JSports.Site
  * @subpackage  com_jsports
  * @copyright   Copyright (C) 2023-2024 Chris Strieter
@@ -37,21 +37,7 @@ class RosterModel extends FormModel
     protected $recordhistory;
     
     protected $form = 'roster';
-    
-    
-    public function getData(){
-        
-//         $input = Factory::getApplication()->input;
-//         $id     = $input->getInt("id");
-        
-//         $svc = new rosterservice();
-//         $item = $svc->getItem($id);
-        
-//         $this->recordhistory  = $this->getrosterstatsByProgram($id);
-        
-//         return $item;
-    }
-    
+       
     
     public function getItem(){
 
@@ -128,13 +114,6 @@ class RosterModel extends FormModel
 	$roster->bind($data);
 	$roster->check();
 
-// 	echo "RosterModel::save()";
-// 	exit;
-	
-// 	// Block of code to prevent an "incorrect integer value" own the ownerid field.
-// 	if (strlen($data["ownerid"]) < 1) {	
-// 		$data["ownerid"] = 0;
-// 	}
         
         //@TODO Need to add code to catch any error that may exist.
 	if ($roster->save($data)) {

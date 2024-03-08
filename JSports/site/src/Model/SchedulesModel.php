@@ -2,7 +2,7 @@
 /**
  * JSports - Joomla Sports Management Component
  *
- * @version     0.0.1
+ * @version     1.0.0
  * @package     JSports.Site
  * @subpackage  com_jsports
  * @copyright   Copyright (C) 2023-2024 Chris Strieter
@@ -119,13 +119,7 @@ class SchedulesModel extends ListModel
            ->where(" (" . $db->quoteName('a.teamid') . ' = ' . $db->quote($teamid)
                 . " or " . $db->quoteName('a.opponentid') . ' = ' . $db->quote($teamid) . ")")
            ->order("gamedate asc");
-	    
-//            $query->select("a.*, concat(a.awayteamname,\" @ \",a.hometeamname) as name");
-//            $query->from($db->quoteName('#__jsports_games') . ' AS a')
-//            ->where($db->quoteName('a.programid') . ' = ' . $db->quote($this->programid))
-//            ->where($db->quoteName('a.awayteamid') . ' = ' . $db->quote($teamid))
-//            ->orWhere($db->quoteName('a.hometeamid') . ' = ' . $db->quote($teamid))
-//            ->order("gamedate asc");
+
            
 	    return $query;
 	}
@@ -145,7 +139,5 @@ class SchedulesModel extends ListModel
 
 		return $items;
 	}
-	
-	
-	
+		
 }

@@ -2,7 +2,7 @@
 /**
  * JSports - Joomla Sports Management Component
  *
- * @version     0.0.1
+ * @version     1.0.0
  * @package     JSports.Site
  * @subpackage  com_jsports
  * @copyright   Copyright (C) 2023-2024 Chris Strieter
@@ -23,7 +23,7 @@ class DivisionService
      * This function will return an individual row based on the PROGRAM ID.
      * 
      * @param number $id
-     * @return \FP4P\Component\JSports\Administrator\Table\ProgramsTable|NULL
+     * @return \FP4P\Component\JSports\Administrator\Table\DivisionsTable|NULL
      */
     public static function getItem($id = 0) {
         
@@ -39,6 +39,12 @@ class DivisionService
         return null;
     }
         
+    /**
+     * This function will return a list of 'published' divisions within a specific program.
+     * 
+     * @param unknown $programid
+     * @return array
+     */
     public static function getDivisionList($programid) {
         
         $db = Factory::getDbo();
@@ -57,10 +63,6 @@ class DivisionService
         return $rows;
         
     }
-    
-    
-    
-    
     
 }
 

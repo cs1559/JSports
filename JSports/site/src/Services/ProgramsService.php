@@ -2,7 +2,7 @@
 /**
  * JSports - Joomla Sports Management Component
  *
- * @version     0.0.1
+ * @version     1.0.0
  * @package     JSports.Site
  * @subpackage  com_jsports
  * @copyright   Copyright (C) 2023-2024 Chris Strieter
@@ -39,6 +39,12 @@ class ProgramsService
         return null;
     }
     
+    /**
+     * This function will return an array of objects that represent a list of programs that have not 
+     * been completed.
+     * 
+     * @return unknown
+     */
     public static function getNonCompletedPrograms() {
         $db = Factory::getDbo();
         $query = $db->getQuery(true);
@@ -56,6 +62,12 @@ class ProgramsService
         return $obj;
     }
     
+    /**
+     * This function will return a default program.  The default program will be the most recent
+     * non-completed program.
+     * 
+     * @return unknown
+     */
     public static function getDefaultProgram() {
         
         $programs = ProgramsService::getNonCompletedPrograms();

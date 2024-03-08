@@ -2,7 +2,7 @@
 /**
  * JSports - Joomla Sports Management Component
  *
- * @version     0.0.1
+ * @version     1.0.0
  * @package     JSports.Site
  * @subpackage  com_jsports
  * @copyright   Copyright (C) 2023-2024 Chris Strieter
@@ -141,25 +141,7 @@ class Router extends RouterView
         
         return $query;
     }
-    
-//     public function build(&$query)
-//     {
-// //         $segments = ['view'=>'team','id' => '1011'];
         
-        
-//         // Process the parsed variables based on custom defined rules
-//         foreach ($this->rules as $rule) {
-//             $rule->build($query, $segments);
-//         }
-     
-//         print_r($segments);
-//         exit;
-//         return $segments;
-//     }
-    
-    
-    
-    
     /*   
      * 
      * 

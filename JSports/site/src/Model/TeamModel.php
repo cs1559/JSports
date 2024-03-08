@@ -2,7 +2,7 @@
 /**
  * JSports - Joomla Sports Management Component
  *
- * @version     0.0.1
+ * @version     1.0.0
  * @package     JSports.Site
  * @subpackage  com_jsports
  * @copyright   Copyright (C) 2023-2024 Chris Strieter
@@ -136,7 +136,6 @@ class TeamModel extends FormModel
         // Check the session for previously entered form data.
         $data = Factory::getApplication()->getUserState(
             'com_jsports_form.team.data',	// a unique name to identify the data in the session
-//             array("name" => "Coach Name")
                 array($this->data)	// prefill data if no data found in session
             );
         
@@ -186,8 +185,7 @@ class TeamModel extends FormModel
     
     
     public function getTeamPrograms($teamid) {
-        
-        
+                
         $db    = $this->getDatabase();
         $query = $db->getQuery(true);
         

@@ -2,7 +2,7 @@
 /**
  * JSports - Joomla Sports Management Component
  *
- * @version     0.0.1
+ * @version     1.0.0
  * @package     JSports.Site
  * @subpackage  com_jsports
  * @copyright   Copyright (C) 2023-2024 Chris Strieter
@@ -141,23 +141,6 @@ class RostersModel extends ListModel
 	    );	    
 	    $query->where($conditions);
 	    
-
-	      // $db->quoteName('#__jsports_teams') . ' AS ,b ');
-
-	        
-// 	    // Filter by published state
-// 	    $published = (string) $this->getState('filter.published');
-	    
-// 	    if (is_numeric($published))
-// 	    {
-// 	        $query->where($db->quoteName('a.published') . ' = :published');
-// 	        $query->bind(':published', $published, ParameterType::INTEGER);
-// 	    }
-// 	    elseif ($published === '')
-// 	    {
-// 	        $query->whereIn($db->quoteName('a.published'), array(0, 1));
-// 	    }
-	     
 
         // Filter by PROGRAMID
         $programid = (string) $this->getState('filter.programid');
