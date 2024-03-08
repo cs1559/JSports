@@ -2,7 +2,7 @@
 /**
  * JSports - Joomla Sports Management Component
  *
- * @version     0.0.1
+ * @version     1.0.0
  * @package     JSports.Site
  * @subpackage  com_jsports
  * @copyright   Copyright (C) 2023-2024 Chris Strieter
@@ -157,73 +157,27 @@ class PostscoreModel extends FormModel
         GameService::postScore($id, $hscore, $ascore);
          
         return true;         
-
-//         $table = GameService::getGamesTable();
-//     	$table->bind($data);
-    
-//     	// Set default values if its a new record.
-//     	if ($data['id'] == 0) {
-//             $table->enteredby = $user->username;	    
-//     	}
-//     	$table->updatedby = $user->username;   
-//     	$datetime = date_create()->format('Y-m-d H:i:s');
-//     	$table->dateupdated = $datetime;
-    	
-//     	// Get Team Names
-    	
-//     	if ($data['homeindicator']) {
-//     	    $hometeam = TeamService::getItem($data['teamid']);
-//     	    $awayteam = TeamService::getItem($data['opponentid']);
-//     	    $table->hometeamid = $data['teamid'];
-//     	    $table->hometeamname = $hometeam->name;
-//     	    $table->awayteamid = $data['opponentid'];
-//     	    $table->awayteamname = $awayteam->name;
-//     	} else {
-//     	    $hometeam = TeamService::getItem($data['opponentid']);
-//     	    $awayteam = TeamService::getItem($data['teamid']);
-//     	    $table->hometeamid = $hometeam->id;
-//     	    $table->hometeamname = $hometeam->name;
-//     	    $table->awayteamid = $awayteam->id;
-//     	    $table->awayteamname = $awayteam->name;
-//     	}
-    	
-    	    	
-//     	$table->name = $awayteam->name . " @ " . $hometeam->name;
-    	
-//     	$table->check();
-	          
-//         //@TODO Need to add code to catch any error that may exist.
-//     	if ($table->save($data)) {
-//     		return true;
-//     	} else {
-//     	    $errors = $table->getErrors();
-//     	    $this->setError($errors[0]);
-//     		$app = Factory::getApplication();
-//     		$app->enqueueMessage($errors[0],'error');
-//     		return false;
-//     	}
-
-     	return true;        
+        
     }
    
     
-    /**
-     * Returns a reference to the a Table object, always creating it.
-     *
-     * @param   string  $type    The table type to instantiate
-     * @param   string  $prefix  A prefix for the table class name. Optional.
-     * @param   array   $config  Configuration array for model. Optional.
-     *
-     * @return  Table    A database object
-     *
-     * @since   1.0.0
-     */
-    public function getTable($type = 'Games', $prefix = 'Administrator', $config = array())
-    {
-        $type = 'Games';
-        exit;
-        return parent::getTable($type, $prefix, $config);
-    }
+//     /**
+//      * Returns a reference to the a Table object, always creating it.
+//      *
+//      * @param   string  $type    The table type to instantiate
+//      * @param   string  $prefix  A prefix for the table class name. Optional.
+//      * @param   array   $config  Configuration array for model. Optional.
+//      *
+//      * @return  Table    A database object
+//      *
+//      * @since   1.0.0
+//      */
+//     public function getTable($type = 'Games', $prefix = 'Administrator', $config = array())
+//     {
+//         $type = 'Games';
+//         exit;
+//         return parent::getTable($type, $prefix, $config);
+//     }
     
     
     

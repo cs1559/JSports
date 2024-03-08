@@ -3,7 +3,7 @@
 
 	<fieldset name="details" label="COM_JSPORTS_DETAILS">
 
-		<field name="id" type="number" label="JGLOBAL_FIELD_ID_LABEL"
+		<field name="id" type="number" label="COM_JSPORTS_TEAMID"
 			default="0" class="readonly" readonly="true" />
 
 		<field name="name" type="text"
