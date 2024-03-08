@@ -2,7 +2,7 @@
 /**
  * JSports - Joomla Sports Management Component 
  *
- * @version     0.0.1
+ * @version     1.0.0
  * @package     JSports.Administrator
  * @subpackage  com_jsports
  * @copyright   Copyright (C) 2023-2024 Chris Strieter
@@ -28,6 +28,10 @@ use FP4P\Component\JSports\Site\Services\TeamService;
 class AjaxController extends BaseController
 {
             
+    /**
+     * This function is called by jQuery ajax calls to populate the options for a division
+     * drop down list based on a selected Program id.
+     */
     public function buildDivisionList() {
         
         $input = Factory::getApplication()->input;
@@ -43,7 +47,10 @@ class AjaxController extends BaseController
     }
     
     
-    
+    /**
+     * This function is called by jQuery ajax calls to populate the options for a team
+     * drop down list based on a selected Program id and division id.
+     */
     public function buildTeamList() {
         
         $input = Factory::getApplication()->input;

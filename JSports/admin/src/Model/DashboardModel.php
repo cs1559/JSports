@@ -2,7 +2,7 @@
 /**
  * JSports - Joomla Sports Management Component 
  *
- * @version     0.0.1
+ * @version     1.0.0
  * @package     JSports.Administrator
  * @subpackage  com_jsports
  * @copyright   Copyright (C) 2023-2024 Chris Strieter
@@ -19,22 +19,23 @@ use Joomla\CMS\MVC\Model\BaseModel;
 use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Administrator\Table\LeaguesTable;
 
-
 class DashboardModel extends BaseModel
 {
     
     public $title;
     public $version;
+        
     
-    
+    /**
+     * @todo  This constructor needs to be redon.  The concept of LEAGUE is still under review.  Many of these options
+     *          should be component level settings.
+     */
     function __construct() {
         parent::__construct();
         
         $league = new LeaguesModel();
         $league->id = 1;
-        $league->name = "SWIBL2-League";
-        //        print_r($league);
-        
+    
         $array = (array) $league;
         
         $db = Factory::getDbo();
@@ -43,9 +44,6 @@ class DashboardModel extends BaseModel
         $l = $leagues->load(1);
         
         $leagues->bind($array);
-        
-//        $leagues->save();
-        
         
         $this->title  = "Sports Managment Component";
         $this->version = "1.0";
@@ -59,10 +57,5 @@ class DashboardModel extends BaseModel
     public function getVersion() {
         return $this->version;
     }
-    
-    //     public function getForm($data = array(), $loadData = true)
-    //     {
-    //         return false;
-    //     }
-    
+        
 }

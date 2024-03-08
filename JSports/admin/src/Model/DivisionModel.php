@@ -2,7 +2,7 @@
 /**
  * JSports - Joomla Sports Management Component 
  *
- * @version     0.0.1
+ * @version     1.0.0
  * @package     JSports.Administrator
  * @subpackage  com_jsports
  * @copyright   Copyright (C) 2023-2024 Chris Strieter
@@ -30,7 +30,6 @@ class DivisionModel extends AdminModel
      *
      * @return  boolean  True if allowed to delete the record. Defaults to the permission set in the component.
      *
-     * @since   1.6
      */
     protected function canDelete($record)
     {
@@ -55,7 +54,6 @@ class DivisionModel extends AdminModel
      *
      * @return  boolean  True if allowed to change the state of the record. Defaults to the permission set in the component.
      *
-     * @since   1.6
      */
     protected function canEditState($record)
     {
@@ -78,7 +76,6 @@ class DivisionModel extends AdminModel
      *
      * @return  Table  A Table object
      *
-     * @since   3.0
      * @throws  \Exception
      */
     public function getTable($name = '', $prefix = '', $options = array())
@@ -103,7 +100,6 @@ class DivisionModel extends AdminModel
      *
      * @return  Form|boolean  A Form object on success, false on failure
      *
-     * @since   1.6
      */
     public function getForm($data = array(), $loadData = true)
     {
@@ -123,7 +119,6 @@ class DivisionModel extends AdminModel
      *
      * @return  mixed  The data for the form.
      *
-     * @since   1.6
      */
     protected function loadFormData()
     {
@@ -142,7 +137,5 @@ class DivisionModel extends AdminModel
         
         return $data;
     }  
-
-
 }
 

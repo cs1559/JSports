@@ -2,7 +2,7 @@
 /**
  * JSports - Joomla Sports Management Component
  *
- * @version     0.0.1
+ * @version     1.0.0
  * @package     JSports.Site
  * @subpackage  com_jsports
  * @copyright   Copyright (C) 2023-2024 Chris Strieter
@@ -59,7 +59,7 @@ class PostscoreController extends FormController
     
     public function save2($key = null, $urlVar = null)
     {
-    
+        $japp = Application::getInstance();
                    
         // Check for request forgeries.
         $this->checkToken();
@@ -112,7 +112,7 @@ class PostscoreController extends FormController
         // Attempt to save the data.
         $return = $model->save($data);
        
-        echo "PostscoreController::save -  after save";
+        //echo "PostscoreController::save -  after save";
         // Check for errors.
         if ($return === false) {
             // Save the data in the session.
@@ -124,37 +124,10 @@ class PostscoreController extends FormController
             
             return false;
         }
-        echo "PostscoreController::save -  befre switch-task";
+        $japp->triggerEvent('onAfterPostScore', ['data' => $data]);
         
         
         
-        // Redirect the user and adjust session state based on the chosen task.
-//         switch ($this->getTask()) {
-                
-//             default:
-                
-
-//                 // Clear the game data from the session.
-//                 $app->setUserState('com_jsports.edit.postscore.data', null);
-                
-//                 $redirect = $app->getUserState('com_jsports.edit.postscore.redirect', '');
-//                 echo "PostscoreController::save -  inside switch-defaukt";
-//                 exit;
-//                 // Don't redirect to an external URL.
-//                 if (!Uri::isInternal($redirect)) {
-//                     $redirect = null;
-//                 }
-                
-//                 if (!$redirect) {
-//                     $this->setRedirect(Route::_('index.php?option=com_jsports&view=postscores&teamid=' . $redirectteamid, false));
-//                 }
-                
-
-//                 // Redirect to the Team Profile screen.
-//                 $this->setMessage(Text::_('COM_JSPORTS_GAME_SAVE_SUCCESS'));
-//                 $this->setRedirect(Route::_($redirect, false));
-//                 break;
-//         }
         
 //         // Flush the data from the session.
 //         $app->setUserState('com_jsports.edit.postscore.data', null);

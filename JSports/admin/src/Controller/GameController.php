@@ -2,7 +2,7 @@
 /**
  * JSports - Joomla Sports Management Component 
  *
- * @version     0.0.1
+ * @version     1.0.0
  * @package     JSports.Administrator
  * @subpackage  com_jsports
  * @copyright   Copyright (C) 2023-2024 Chris Strieter
@@ -17,7 +17,7 @@ defined('_JEXEC') or die;
 use Joomla\CMS\MVC\Controller\FormController;
 
 /**
- * Controller for a single Team
+ * Controller for a single Game
  *
  */
 class GameController extends FormController
@@ -25,14 +25,7 @@ class GameController extends FormController
     
     public function savenew($key = null, $urlVar = null) {
         
-        //         $data = $this->input->post->get('jform', array(), 'array');
-        
-        //         $data['name'] = $data['name'];
-        
-        
         parent::save($key, $urlVar);
-        
-        //http://localhost:8081/administrator/index.php?option=com_jsports&view=game&layout=edit
         
         $this->redirect('index.php?option=com_jsports&view=game&layout=edit');
     }

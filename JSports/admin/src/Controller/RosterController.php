@@ -2,7 +2,7 @@
 /**
  * JSports - Joomla Sports Management Component 
  *
- * @version     0.0.1
+ * @version     1.0.0
  * @package     JSports.Administrator
  * @subpackage  com_jsports
  * @copyright   Copyright (C) 2023-2024 Chris Strieter
@@ -19,11 +19,8 @@ use Joomla\CMS\MVC\Controller\FormController;
 /**
  * Controller for a single ROSTER ITEM
  *
- * @since  1.6
  */
 class RosterController extends FormController
 {
-    
-    
     
 }

@@ -88,8 +88,7 @@ class HtmlView extends BaseHtmlView
         $this->teamlastyearplayed = $mod->teamlastyearplayed;
         $this->program = $mod->program;
         
-        $this->canEdit = SecurityService::canEditTeamRoster($this->team->id,
-                $this->program->id, $this->team->ownerid);
+        $this->canEdit = SecurityService::canEditTeamRoster($this->team->id,$this->program->id);
         
         // Check for errors.
         if (count($errors = $this->get('Errors')))

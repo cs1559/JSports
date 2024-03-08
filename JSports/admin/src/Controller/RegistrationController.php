@@ -2,7 +2,7 @@
 /**
  * JSports - Joomla Sports Management Component 
  *
- * @version     0.0.1
+ * @version     1.0.0
  * @package     JSports.Administrator
  * @subpackage  com_jsports
  * @copyright   Copyright (C) 2023-2024 Chris Strieter
@@ -24,16 +24,10 @@ use Joomla\CMS\MVC\Controller\FormController;
 class RegistrationController extends FormController
 {
     
-    public function save($key = null, $urlVar = null) {
-        
-//         $data = $this->input->post->get('jform', array(), 'array');
-        
-//         $data['name'] = $data['name'];
-        
+    public function save($key = null, $urlVar = null) {       
         
         parent::save($key, $urlVar);
         
     }
-    
-    
+
 }

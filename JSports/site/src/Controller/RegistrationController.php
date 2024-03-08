@@ -96,7 +96,7 @@ class RegistrationController extends BaseController
     public function save()
     {
                 
-        $app = Application::getInstance();
+        $japp = Application::getInstance();
         
         // Check for request forgeries.
 //         $this->checkToken();
@@ -160,7 +160,7 @@ class RegistrationController extends BaseController
             return false;
         }
 
-        $app->triggerEvent('onAfterRegistration', ['data' => $data]);
+        $japp->triggerEvent('onAfterRegistration', ['data' => $data]);
         
         // Redirect the user and adjust session state based on the chosen task.
         switch ($this->getTask()) {

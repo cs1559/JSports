@@ -2,7 +2,7 @@
 /**
  * JSports - Joomla Sports Management Component 
  *
- * @version     0.0.1
+ * @version     1.0.0
  * @package     JSports.Administrator
  * @subpackage  com_jsports
  * @copyright   Copyright (C) 2023-2024 Chris Strieter
@@ -23,6 +23,12 @@ use Joomla\CMS\MVC\Controller\FormController;
 class DivisionController extends FormController
 {
     
+    /**
+     * This function saves a division.  NOT SURE THIS FUNCTION IS TRULY NEEDED.
+     * 
+     * @param unknown $key
+     * @param unknown $urlVar
+     */
     public function save($key = null, $urlVar = null) {
         
         parent::save($key, $urlVar);

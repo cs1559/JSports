@@ -2,7 +2,7 @@
 /**
  * JSports - Joomla Sports Management Component
  *
- * @version     0.0.1
+ * @version     1.0.0
  * @package     JSports.Administrator
  * @subpackage  com_jsports
  * @copyright   Copyright (C) 2023-2024 Chris Strieter
@@ -21,7 +21,6 @@ use Joomla\CMS\Form\Field\ListField;
 use Joomla\CMS\HTML\HTMLHelper;
 use FP4P\Component\JSports\Administrator\Helpers\Html;
 use FP4P\Component\JSports\Site\Services\ProgramsService;
-
 
 class ProgramslistField extends ListField
 {
@@ -63,11 +62,9 @@ class ProgramslistField extends ListField
         }
            
         $options = array_merge(parent::getOptions(), $options);
-        
-        
+                
         return $options;
         
     }
         
-
 }

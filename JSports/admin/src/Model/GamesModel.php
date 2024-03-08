@@ -2,14 +2,13 @@
 /**
  * JSports - Joomla Sports Management Component 
  *
- * @version     0.0.1
+ * @version     1.0.0
  * @package     JSports.Administrator
  * @subpackage  com_jsports
  * @copyright   Copyright (C) 2023-2024 Chris Strieter
  * @license     GNU/GPLv2, see http://www.gnu.org/licenses/gpl-2.0.html
  *
  */
-
 
 namespace FP4P\Component\JSports\Administrator\Model;
 
@@ -120,7 +119,7 @@ class GamesModel extends ListModel
 	{
 		// Compile the store id.
 		$id .= ':' . $this->getState('filter.search');
-		$id .= ':' . $this->getState('filter.published');
+//		$id .= ':' . $this->getState('filter.published');
 		$id .= ':' . $this->getState('filter.programid');
 		$id .= ':' . $this->getState('filter.divisionid');
 		$id .= ':' . $this->getState('filter.teamid');
@@ -172,30 +171,7 @@ class GamesModel extends ListModel
 	            'a.*'
 	            )
 	        );
-	    $query->from($db->quoteName('#__jsports_games') . ' AS a');
-
-	    /*
-	    // Filter by published state
-	    $published = (string) $this->getState('filter.published');
-	    
-	    if (is_numeric($published))
-	    {
-	        $query->where($db->quoteName('a.published') . ' = :published');
-	        $query->bind(':published', $published, ParameterType::INTEGER);
-	    }
-	    elseif ($published === '')
-	    {
-	        $query->whereIn($db->quoteName('a.published'), array(0, 1));
-	    }
-	    
-	    // Filter by search in date.
-	    $status = $this->getState('filter.status');
-	    if (!empty($status)) {	        
-	        $query->where($db->quoteName('a.status') . ' = :status');
-	        $query->bind(':status', $status, ParameterType::STRING);
-	    }
-	    */
-	    
+	    $query->from($db->quoteName('#__jsports_games') . ' AS a');   
     
 	    // Filter by DIVISION ID
 	    $divisionid = $_divisionid;
@@ -243,8 +219,7 @@ class GamesModel extends ListModel
 
 		return $items;
 	}
-	
-	
+
 
 	    /**
 	     * Method to change the published state of one or more records.
@@ -271,30 +246,6 @@ class GamesModel extends ListModel
 	        $db->setQuery($query);
 	        $db->execute();
 	    }
-	
-	    
-	    /**
-	     * Method to DELETE one or more records from the database
-	     *
-	     * @param   array    &$pks   A list of the primary keys to change.
-	     * @param   integer  $value  The value of the published state.
-	     *
-	     * @return  boolean  True on success.
-	     *
-	     * @since   4.0.0
-	     */
-// 	    public function delete(&$pks, $value = 1) {
-	        
-// 	        /* this is a very simple method to change the state of each item selected */
-// 	        $db = $this->getDatabase();
-	        
-// 	        $query = $db->getQuery(true);
-	        
-// 	        $query->delete($db->quoteName('#__jsports_divisions'))
-// 	        ->whereIn($db->quoteName('id'), $pks);
-// 	        $db->setQuery($query);
-// 	        $db->execute();
-// 	    }
 	    
 	
 }

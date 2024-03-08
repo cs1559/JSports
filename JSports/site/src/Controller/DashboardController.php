@@ -2,7 +2,7 @@
 /**
  * JSports - Joomla Sports Management Component
  *
- * @version     0.0.1
+ * @version     1.0.0
  * @package     JSports.Site
  * @subpackage  com_jsports
  * @copyright   Copyright (C) 2023-2024 Chris Strieter
@@ -27,9 +27,7 @@ class DisplayController extends BaseController
 {
     
     protected $default_view = 'dashboard';
-    
-    
-   
+  
 	/**
 	 * Method to display a view.
 	 *
@@ -46,8 +44,6 @@ class DisplayController extends BaseController
 	    $params = ComponentHelper::getParams('com_jsports');
 	    $itemid = $params->get('itemid');
 	    $uri->setVar('Itemid', $itemid);
-	    
-	    die ('dashboard controller');
 	    
 		return parent::display();
 	}

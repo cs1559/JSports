@@ -2,7 +2,7 @@
 /**
  * JSports - Joomla Sports Management Component 
  *
- * @version     0.0.1
+ * @version     1.0.0
  * @package     JSports.Administrator
  * @subpackage  com_jsports
  * @copyright   Copyright (C) 2023-2024 Chris Strieter
@@ -10,13 +10,11 @@
  *
  */
 
-
 namespace FP4P\Component\JSports\Administrator\Controller;
 
 defined('_JEXEC') or die;
 
 use Joomla\CMS\MVC\Controller\AdminController;
-
 
 class VenuesController extends AdminController
 {
@@ -39,6 +37,4 @@ class VenuesController extends AdminController
         return parent::getModel($name, $prefix, $config);
     }
     
-
-
 }

@@ -2,7 +2,7 @@
 /**
  * JSports - Joomla Sports Management Component
  *
- * @version     0.0.1
+ * @version     1.0.0
  * @package     JSports.Administrator
  * @subpackage  com_jsports
  * @copyright   Copyright (C) 2023-2024 Chris Strieter
@@ -44,7 +44,6 @@ class DivisionslistField extends ListField
         $options = array();
         
         if ($this->programid == 0) {
-//             $options[] = HtmlHelper::_('select.option','','MISSING PROGRAMID PARAMETER');
             $options[] = HtmlHelper::_('select.option',"","-- Select Division --");
             return $options;
         }

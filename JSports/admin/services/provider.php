@@ -32,21 +32,16 @@ return new class implements ServiceProviderInterface
         $container->registerServiceProvider(new CategoryFactory('\\FP4P\\Component\\JSports'));
         $container->registerServiceProvider(new MVCFactory('\\FP4P\\Component\\JSports'));
         $container->registerServiceProvider(new ComponentDispatcherFactory('\\FP4P\\Component\\JSports'));
-        /* COMMENTD OUT ROUTER CODE*/
-         $container->registerServiceProvider(new RouterFactory('\\FP4P\\Component\\JSports'));
+        $container->registerServiceProvider(new RouterFactory('\\FP4P\\Component\\JSports'));
         $container->set(
             ComponentInterface::class,
             function (Container $container)
             {
             
-//                 $component = new MywalksComponent($container->get(ComponentDispatcherFactoryInterface::class));
-                
                 $component = new JSportsComponent($container->get(ComponentDispatcherFactoryInterface::class));
                 
 //                 $component = new MVCComponent($container->get(ComponentDispatcherFactoryInterface::class));
                 $component->setMVCFactory($container->get(MVCFactoryInterface::class));
-                
-                
                 $component->setRegistry($container->get(Registry::class));
                 $component->setMVCFactory($container->get(MVCFactoryInterface::class));
                 $component->setRouterFactory($container->get(RouterFactoryInterface::class));

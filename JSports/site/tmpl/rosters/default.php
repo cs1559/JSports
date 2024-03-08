@@ -41,7 +41,7 @@ $wa->useStyle('com_jsports.jsports.style');
 $wa->useStyle('com_jsports.teamprofile.style');
 
 $document->setTitle(Text::_('COM_JSPORTS_TEAMROSTER_PAGE_TITLE'));
-$canEdit = true;
+
 
 ?>
 <form action="<?php echo Route::_('index.php?option=com_jsports&view=rosters'); ?>" method="post" name="adminForm" id="adminForm">

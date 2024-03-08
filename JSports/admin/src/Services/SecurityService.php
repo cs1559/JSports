@@ -2,7 +2,7 @@
 /**
  * JSports - Joomla Sports Management Component
  *
- * @version     0.0.1
+ * @version     1.0.0
  * @package     JSports.Administrator
  * @subpackage  com_jsports
  * @copyright   Copyright (C) 2023-2024 Chris Strieter
@@ -13,6 +13,8 @@
 /**
  * CHANGE HISTORY:
  * - Fixed isAdmin function.  There was logic to check if a person was assigned to a team and that wasn't the intention of that function.
+ * 2024-03-07 - Added logic to set the ownerid parameter to user-> on canEditTeamRoster and canEditTeamSchedule
+ * 
  */
 namespace FP4P\Component\JSports\Administrator\Services;
 
@@ -40,7 +42,8 @@ class SecurityService
         // League Administrators can still log into the backend and make necessary changes.
         $params = ComponentHelper::getParams('com_jsports');
         $frontendenabled = $params->get('frontend_admin');
-        
+   
+        // If front-end adminstration is turned off, return FASLE;
         if (!$frontendenabled) {
             return false;    
         }
@@ -57,9 +60,6 @@ class SecurityService
         if (SecurityService::isAdmin()) {
             return true;
         }
-//         if ($user->authorise('core.jsports.admin','com_jsports')) {
-//             return true;
-//         }
             
         if (is_null($ownerid)) {
             $svc = new TeamService();
@@ -101,6 +101,12 @@ class SecurityService
      */
     public static function canEditTeamRoster($teamid, $programid, $ownerid = null) {
 
+        if (is_null($ownerid)) {
+            $user = Factory::getUser();
+            $ownerid = $user->id;
+        }
+        
+        
         $canEdit = SecurityService::canEditTeam($teamid, $ownerid);
 
         $pgm = ProgramsService::getItem($programid);
@@ -127,15 +133,19 @@ class SecurityService
      * @return boolean|unknown
      */
     public static function canEditTeamSchedule($teamid, $programid, $ownerid = null) {
-        
-        $canEdit = SecurityService::canEditTeam($teamid, $ownerid);
+
+        if (is_null($ownerid)) {
+            $user = Factory::getUser();
+            $ownerid = $user->id;
+        }
         
         $pgm = ProgramsService::getItem($programid);
-        
         if ($pgm->status == "C") {
             return false;
         }
-                
+        
+        $canEdit = SecurityService::canEditTeam($teamid, $ownerid);
+        
         return $canEdit;
     }
     

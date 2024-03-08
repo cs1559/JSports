@@ -2,7 +2,7 @@
 /**
  * JSports - Joomla Sports Management Component 
  *
- * @version     0.0.1
+ * @version     1.0.0
  * @package     JSports.Administrator
  * @subpackage  com_jsports
  * @copyright   Copyright (C) 2023-2024 Chris Strieter
@@ -29,7 +29,6 @@ class DivisionsModel extends ListModel
 	 *
 	 * @param   array  $config  An optional associative array of configuration settings.
 	 *
-	 * @since   1.6
 	 * @see     \Joomla\CMS\MVC\Controller\BaseController
 	 */
 	public function __construct($config = array())
@@ -57,7 +56,6 @@ class DivisionsModel extends ListModel
 	 *
 	 * @return  void
 	 *
-	 * @since   1.6
 	 */
 	protected function populateState($ordering = 'a.name', $direction = 'asc')
 	{
@@ -69,7 +67,6 @@ class DivisionsModel extends ListModel
 	       $programid = $app->getUserState('com_jsports.programid');
 	    }
 	    $this->setState('programid', $programid);
-	    // keep the walk_id for adding new visits
 	    $app->setUserState('com_jsports.programid', $programid);
 	    
 		$search = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
@@ -78,9 +75,6 @@ class DivisionsModel extends ListModel
 		$published = $this->getUserStateFromRequest($this->context . '.filter.published', 'filter_published', '');
 		$this->setState('filter.published', $published);
 
-// 		$status = $this->getUserStateFromRequest($this->context . '.filter.status', 'filter_status', '');
-// 		$this->setState('filter.status', $status);
-		
 		// List state information.
 		parent::populateState($ordering, $direction);
 	}
@@ -113,9 +107,7 @@ class DivisionsModel extends ListModel
 	 *
 	 * @return  \Joomla\Database\DatabaseQuery
 	 *
-	 * @since   1.6
-	 */
-	
+	 */	
 	protected function getListQuery()
 	{
 	    // Create a new query object.
@@ -182,13 +174,6 @@ class DivisionsModel extends ListModel
 	    $orderCol  = $this->state->get('list.ordering', 'a.id');
 	    $orderDirn = $this->state->get('list.direction', 'ASC');
 	    
-// 	    $ordering = [$db->quoteName('a.name') . ' ' . $db->escape($orderDirn), ];
-	    
-	    
-	//    if ($orderCol == 'a.ordering') {
-	  //      $orderCol = $db->quoteName('a.ordering');
-	    //}
-
         $query->order($db->escape($orderCol . ' ' . $orderDirn));
 	    return $query;
 	}
@@ -200,7 +185,6 @@ class DivisionsModel extends ListModel
 	 *
 	 * @return  mixed  An array of data items on success, false on failure.
 	 *
-	 * @since   4.0.0
 	 */
 	public function getItems()
 	{
@@ -260,6 +244,5 @@ class DivisionsModel extends ListModel
 	        $db->setQuery($query);
 	        $db->execute();
 	    }
-	    
-	
+	    	
 }

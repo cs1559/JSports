@@ -2,7 +2,7 @@
 /**
  * JSports - Joomla Sports Management Component
  *
- * @version     0.0.1
+ * @version     1.0.0
  * @package     JSports.Site
  * @subpackage  com_jsports
  * @copyright   Copyright (C) 2023-2024 Chris Strieter
@@ -66,17 +66,6 @@ class GameService
         
         $rc = $table->delete();
         
-//         $query = $db->getQuery(true);
-        
-//         $conditions = array(
-//             $db->quoteName('id') . '=' .$db->quote($id));
-        
-//         $query->delete($db->quoteName('#__jsports_games'));
-//         $query->where($conditions);
-        
-//         $db->setQuery($query);
-        
-//         $rc = $db->execute();
         
         $app->triggerEvent('onAfterGameDelete', ['data' => $table, 'returnCode'=> $rc]);
         

@@ -2,12 +2,12 @@
 /**
  * JSports - Joomla Sports Management Component 
  *
- * @version     0.0.1
+ * @version     1.0.0
  * @package     JSports.Administrator
  * @subpackage  com_jsports
  * @copyright   Copyright (C) 2023-2024 Chris Strieter
  * @license     GNU/GPLv2, see http://www.gnu.org/licenses/gpl-2.0.html
- *
+ * @deprecated
  */
 
 namespace FP4P\Component\JSports\Administrator\Helpers;
@@ -18,6 +18,7 @@ use Joomla\CMS\Factory;
 
 /**
  * The Html class is a helper class that returns various HTML elements. 
+ * @deprecated
  *
  */
 class Html

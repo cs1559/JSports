@@ -2,7 +2,7 @@
 /**
  * JSports - Joomla Sports Management Component 
  *
- * @version     0.0.1
+ * @version     1.0.0
  * @package     JSports.Administrator
  * @subpackage  com_jsports
  * @copyright   Copyright (C) 2023-2024 Chris Strieter
@@ -41,15 +41,10 @@ class DivisionsController extends AdminController
      * @param   array   $config  The array of possible config values. Optional.
      *
      * @return  \Joomla\CMS\MVC\Model\BaseDatabaseModel
-     *
-     * @since   1.6
      */
     public function getModel($name = 'Division', $prefix = 'Administrator', $config = ['ignore_request' => true])
     {
         return parent::getModel($name, $prefix, $config);
     }
-    
-
-
 
 }

@@ -2,7 +2,7 @@
 /**
  * JSports - Joomla Sports Management Component
  *
- * @version     0.0.1
+ * @version     1.0.0
  * @package     JSports.Site
  * @subpackage  com_jsports
  * @copyright   Copyright (C) 2023-2024 Chris Strieter
@@ -77,15 +77,7 @@ class TeamController extends BaseController
         if (!$form) {
             throw new \Exception($model->getError(), 500);
         }
-        
-        // Send an object which can be modified through the plugin event
-//         $objData = (object) $requestData;
-//         $app->triggerEvent(
-//             'onContentNormaliseRequestData',
-//             ['com_users.user', $objData, $form]
-//             );
-//         $requestData = (array) $objData;
-        
+               
         // Validate the posted data.
         $data = $model->validate($form, $requestData);
         

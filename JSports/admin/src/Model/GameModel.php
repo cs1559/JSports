@@ -2,7 +2,7 @@
 /**
  * JSports - Joomla Sports Management Component 
  *
- * @version     0.0.1
+ * @version     1.0.0
  * @package     JSports.Administrator
  * @subpackage  com_jsports
  * @copyright   Copyright (C) 2023-2024 Chris Strieter
@@ -41,7 +41,6 @@ class GameModel extends AdminModel
         if (empty($record->id) || $record->published != -2) {
             return false;
         }
-        
         
         if (!empty($record->id)) {
             return $this->getCurrentUser()->authorise('core.delete', 'com_jsports.game.' . (int) $record->id);
@@ -161,7 +160,13 @@ class GameModel extends AdminModel
         $this->set('divisionid', $data['divisionid']);
         $this->set('teamid' ,$data['teamid']);
         
-        
+        /*
+         * =================================================
+         *  THIS NEEDS TO POSSIBLY BE REFACTORED.
+         * =================================================
+         *  The Team ID represents the team who entered the game.  The home/away information is based on the home game indicator; howevrer,
+         *  in the Admin module, the teamid is always the HOME TEAM.
+         */
         $hometeam = TeamService::getItem($data['teamid']);
         $awayteam = TeamService::getItem($data['opponentid']);
         $data['hometeamid'] = $hometeam->id;
@@ -173,43 +178,7 @@ class GameModel extends AdminModel
         $data['name'] = $awayteam->name . " @ " . $hometeam->name;
         
         return parent::save($data);
-        
-//         $table = GameService::getGamesTable();
-//         $table->bind($data);
-        
-//         // Set default values if its a new record.
-//         if ($data['id'] == 0) {
-//             $table->enteredby = $user->username;
-//         }
-//         $table->updatedby = $user->username;
-//         $datetime = date_create()->format('Y-m-d H:i:s');
-//         $table->dateupdated = $datetime;
-        
-//         // Get Team Names
-//         $hometeam = TeamService::getItem($data['teamid']);
-//         $awayteam = TeamService::getItem($data['opponentid']);
-//         $table->hometeamid = $hometeam->id;
-//         $table->hometeamname = $hometeam->name;
-//         $table->awayteamid = $awayteam->id;
-//         $table->awayteamname = $awayteam->name;
-               
-//         $table->name = $awayteam->name . " @ " . $hometeam->name;
-        
-//         $table->check();
-        
-//         //@TODO Need to add code to catch any error that may exist.
-//         if ($table->save($data)) {
-//             return true;
-//         } else {
-//             $errors = $table->getErrors();
-//             $this->setError($errors[0]);
-//             $app = Factory::getApplication();
-//             $app->enqueueMessage($errors[0],'error');
-//             return false;
-//         }
-        
-//         return true;
-        
+                
     }
 
 

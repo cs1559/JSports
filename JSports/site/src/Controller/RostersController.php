@@ -33,17 +33,6 @@ use Joomla\CMS\Component\ComponentHelper;
 class RosterController extends BaseController
 {
     
-//     public function display($cachable = false, $urlparams = [])
-//     {
-        
-//         $app            = $this->app;
-//         $user           = $this->app->getIdentity();
-        
-//         $params = ComponentHelper::getParams('com_jsports');
-//         $itemid = $params->get('itemid');
-
-//         parent::display($cachable = false, $urlparams = []);
-//     }
     
     /**
      * Method to save a ROSTER record.

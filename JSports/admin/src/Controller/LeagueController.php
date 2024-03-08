@@ -2,7 +2,7 @@
 /**
  * JSports - Joomla Sports Management Component 
  *
- * @version     0.0.1
+ * @version     1.0.0
  * @package     JSports.Administrator
  * @subpackage  com_jsports
  * @copyright   Copyright (C) 2023-2024 Chris Strieter
@@ -10,6 +10,13 @@
  *
  */
 
+/**
+ * ================================================================================
+ * LEAGUES MAY NOT BE REQUIRED AND MAYBE REMOVED IN A LATER RELASE.  MANY OF THE
+ * OPTIONS ASSOCIATED WITH A LEAGUE ARE SUPPORTED AT THE PROGRAM LEVEL OR AT THE
+ * COMPONENT LEVEL.
+ * ================================================================================
+ */
 
 namespace FP4P\Component\JSports\Administrator\Controller;
 
