@@ -81,13 +81,11 @@ class HtmlView extends BaseHtmlView
         $this->activeFilters = $this->get('ActiveFilters');
         
         // NOTE:  Need to research to see if there is a better way of getting the model data into the template
-        $mod = $this->getModel();       
+        $mod = $this->getModel();
         $this->team = $mod->team;
         $this->teamlastyearplayed = $mod->teamlastyearplayed;
         $this->program = $mod->program;
-        
-        $error = $mod->getError();
-                
+                       
         $this->canEdit = SecurityService::canEditTeamSchedule($this->team->id,$this->program->id);
         
         // Check for errors.
@@ -101,3 +99,4 @@ class HtmlView extends BaseHtmlView
     }
        
 }
+

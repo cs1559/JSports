@@ -27,7 +27,6 @@ class EventDispatcher extends Observable
             $instance = new EventDispatcher();
             $obs = new GameObserver();
             $instance->attach($obs);
-           // $instance->attach(new TeamObserver());
         }
         return $instance;
     }

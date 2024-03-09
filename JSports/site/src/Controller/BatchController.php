@@ -43,11 +43,8 @@ class BatchController extends BaseController
         $site = 'https://swibl.org';
         $content = '';
         
-        $cron_key = md5('JSports Key For: ' . $site . $salt);       
-        
-        //echo $input->get('validationid', '', 'string') . "<br/>";
-        //echo $cron_key . "<br/>";
-        
+        $cron_key = md5('JSports Key For: ' . $site . $salt);
+                
         if (($input->exists('validationid')) && ($input->get('validationid', '', 'string') == $cron_key)) {
             
             ob_start();

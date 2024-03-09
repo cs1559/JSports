@@ -19,7 +19,7 @@ class Application
     private static $instance = null;
     
     private function __construct() {
-        
+        // nothing extra to do.
     }
     
     public static function getInstance()

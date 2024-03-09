@@ -20,21 +20,21 @@ class UserService
 {
     /**
      * This is a helper function that returns the current user object from Joomla.
-     * 
+     *
      * @return unknown
-     */   
+     */
     public static function getUser() {
-        $user = Factory::getUser();
-        return $user;
+        return Factory::getUser();
+        
     }
 
     /**
      * This function will return a list of teams a user is associated with - either as the owner or as a staff
      * roster entry where their user id was set.
-     * 
+     *
      * NOTE:  THERE IS A POTENTIAL ISSUE WHEN A TEAM PLAYS MULTIPLE YEARS AND A STAFF MEMBER WAS GIVEN PERMISSION BUT THEY WERE NO LONGER
      * WITH THE TEAM IN THEIR FINAL SEASON.  THAT USER MAY HAVE ACCESS TO EDIT THE TEAM INFORMATION.
-     * 
+     *
      * @param unknown $uid
      * @return array|unknown
      */
@@ -42,12 +42,12 @@ class UserService
         
         if (is_null($uid)) {
             $user = Factory::getUser();
-            $uid = $user->id;            
+            $uid = $user->id;
             if ($user->guest) {
-                $obj = array();
-                return $obj;
+                return array();
+                
             }
-        }	
+        }
         $db = Factory::getDbo();
         $query = $db->getQuery(true);
 
@@ -60,25 +60,25 @@ class UserService
                 and m.programid = maxp.xid
                 and t.ownerid = " . $db->quote($uid) . "
             UNION
-            select distinct t.*, p.name as lastprogramname 
-            from #__jsports_teams t, #__jsports_map m, #__jsports_programs p, 
+            select distinct t.*, p.name as lastprogramname
+            from #__jsports_teams t, #__jsports_map m, #__jsports_programs p,
             	(select max(programid) xid from #__jsports_map group by teamid) as maxp,
                 #__jsports_rosters r
-            where t.id = m.teamid and m.programid = p.id and m.programid = maxp.xid 
+            where t.id = m.teamid and m.programid = p.id and m.programid = maxp.xid
             	and r.programid = m.programid
                 and r.teamid = m.teamid
             	and r.userid = " . $db->quote($uid);
                     
             
         $db->setQuery($sql);
-        $obj = $db->loadObjectList();
-        return $obj;
+        return $db->loadObjectList();
+        
     
     }
     
     /**
      * This function will return a list of TEAM ID's they are associated with.
-     * 
+     *
      * @param unknown $uid
      * @return array|NULL[]
      */
@@ -88,8 +88,8 @@ class UserService
             $user = Factory::getUser();
             $uid = $user->id;
             if ($user->guest) {
-                $obj = array();
-                return $obj;
+                return array();
+                
             }
         }
         $retArray = array();
@@ -104,7 +104,7 @@ class UserService
     
     /**
      * This function will determine if a user is an "admin" for a team during a given program.
-     * 
+     *
      * @param unknown $teamid
      * @param unknown $programid
      * @param unknown $uid
@@ -145,7 +145,7 @@ class UserService
     /**
      * this function just indicates if the user is a guest or not.  the intention was to abstract this joomla specific logic to
      * the core code.
-     * 
+     *
      * @return unknown
      */
     public static function isGuest() {
@@ -154,14 +154,14 @@ class UserService
     }
     
     /**
-     * 
-     * SELECT d.agegroup 
+     *
+     * SELECT d.agegroup
 FROM xkrji_jsports_teams t, xkrji_jsports_map m, xkrji_jsports_divisions d
 where t.id = m.teamid
 and m.divisionid = d.id
 and t.ownerid = 640
 UNION
-SELECT d.agegroup 
+SELECT d.agegroup
 FROM xkrji_jsports_rosters r, xkrji_jsports_map m, xkrji_jsports_divisions d
 where r.teamid = m.teamid
 and m.divisionid = d.id
@@ -172,9 +172,9 @@ and r.userid = 640;
     /**
      * the getAssignedAgeGroups will return an array of age groups a given user has been assigned too either based
      * on the owner id of the team or as a result of a user id being assigned at the ROSTER level.
-     * 
+     *
      * @param unknown $uid
-     * @return array 
+     * @return array
      */
     public static function getAssignedAgeGroups($uid = null) {
         
@@ -182,8 +182,8 @@ and r.userid = 640;
             $user = Factory::getUser();
             $uid = $user->id;
             if ($user->guest) {
-                $obj = array();
-                return $obj;
+                return array();
+              
             }
         }
         
@@ -214,14 +214,14 @@ and r.userid = 640;
             $db->quoteName('m.divisionid') . ' = ' . $db->quoteName('d.id'),
             $db->quoteName('r.userid') . ' = ' . $db->quote($uid),
         );
-        $query2->where($conditions2);        
+        $query2->where($conditions2);
         $query->union($query2);
         
         
         $db->setQuery($query);
         
-        $rows = $db->loadObjectList();
-        return $rows;
+        return $db->loadObjectList();
+        
     }
 }
 

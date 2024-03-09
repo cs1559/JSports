@@ -1,6 +1,6 @@
 <?php
 /**
- * JSports - Joomla Sports Management Component 
+ * JSports - Joomla Sports Management Component
  *
  * @version     1.0.0
  * @package     JSports.Administrator
@@ -136,6 +136,6 @@ class DivisionModel extends AdminModel
         $this->preprocessData('com_jsports.program', $data);
         
         return $data;
-    }  
+    }
 }
 

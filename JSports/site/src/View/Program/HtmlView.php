@@ -55,7 +55,7 @@ class HtmlView extends BaseHtmlView
         
         $this->data       = $this->get('Data');
         $this->state      = $this->get('State');
-        $this->item       = $this->get('Item');        
+        $this->item       = $this->get('Item');
         
         $this->form               = $this->getModel()->getForm($this->data,true);
         
@@ -80,3 +80,4 @@ class HtmlView extends BaseHtmlView
         return parent::display($tpl);
     }
 }
+

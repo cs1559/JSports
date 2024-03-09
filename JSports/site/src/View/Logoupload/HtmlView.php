@@ -55,19 +55,13 @@ class HtmlView extends BaseHtmlView
         $this->state      = $this->get('State');
         $this->item       = $this->get('Item');
         
-        $this->form               = $this->getModel()->getForm($this->item,true);
-        
-        $mod = $this->getModel();
+        $this->form       = $this->getModel()->getForm($this->item,true);
+       
         $this->teamlogo = "/media/com_jsports/images/swibl-large.png";
         
         $this->teamname = $this->item->name;
         
-         $this->form->bind($this->item);
-         
-//          $app    = $this->app;
-//          // Get the user data.
-//          $requestData = $app->getInput()->post->get('jform', [], 'array');
-         
+         $this->form->bind($this->item);        
         
          // Check for errors.
         if (count($errors = $this->get('Errors')))
@@ -78,3 +72,4 @@ class HtmlView extends BaseHtmlView
         return parent::display($tpl);
     }
 }
+

@@ -69,12 +69,12 @@ class RegisterModel extends FormModel
     {
         
         // Check the session for previously entered form data.
-        $data = Factory::getApplication()->getUserState(
+        return Factory::getApplication()->getUserState(
             'com_jsports_form.register',	// a unique name to identify the data in the session
             array($this->data)	// prefill data if no data found in session
             );
         
-        return $data;
+//         return $data;
     }
     
 }

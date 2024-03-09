@@ -52,11 +52,11 @@ class PostscoreModel extends FormModel
     }
     
     /**
-     * This function is an override function of the FormModel validate function.  This is a 
-     * server side validation that adds a check to see if the teamid is equal to the opponent ID. 
+     * This function is an override function of the FormModel validate function.  This is a
+     * server side validation that adds a check to see if the teamid is equal to the opponent ID.
      * If that passes validation, then the parent validate function is called.  Otherwise, a false boolean
      * is returned.
-     * 
+     *
      * @param unknown $form
      * @param unknown $data
      * @param unknown $group
@@ -64,10 +64,6 @@ class PostscoreModel extends FormModel
      */
     public function validate($form, $data, $group = null) {
         
-//         if ($data['teamid'] == $data['opponentid']) {
-//             $this->setError(Text::_('COM_JSPORTS_ERR_OPPONENT_SAME'));
-//             return false;
-//         }
         return parent::validate($form, $data, $group = null);
     }
     
@@ -88,11 +84,11 @@ class PostscoreModel extends FormModel
             $this->divisionid = TeamService::getTeamDivisionId($this->teamid, $this->programid);
             echo "PostScoreModel::getItem - TeamID=" . $this->teami;
             exit;
-        } 
+        }
         
         // Get a Team record and place within our model
         $this->team = TeamService::getItem($item->teamid);
-        //$this->team = TeamService::getItem(9999999);
+        
         
         if (is_null($this->team)) {
             $this->setError(Text::_('COM_JSPORTS_ERR_MISSING_TEAM'));
@@ -130,7 +126,7 @@ class PostscoreModel extends FormModel
             echo "PostScoreModel::loadFormData";
             var_dump($data);
             exit;
-        }        
+        }
 
         $this->preprocessData('com_jsports.postscore', $data);
         
@@ -156,29 +152,10 @@ class PostscoreModel extends FormModel
          
         GameService::postScore($id, $hscore, $ascore);
          
-        return true;         
+        return true;
         
     }
    
-    
-//     /**
-//      * Returns a reference to the a Table object, always creating it.
-//      *
-//      * @param   string  $type    The table type to instantiate
-//      * @param   string  $prefix  A prefix for the table class name. Optional.
-//      * @param   array   $config  Configuration array for model. Optional.
-//      *
-//      * @return  Table    A database object
-//      *
-//      * @since   1.0.0
-//      */
-//     public function getTable($type = 'Games', $prefix = 'Administrator', $config = array())
-//     {
-//         $type = 'Games';
-//         exit;
-//         return parent::getTable($type, $prefix, $config);
-//     }
-    
     
     
 }

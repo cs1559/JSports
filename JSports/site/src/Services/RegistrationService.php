@@ -12,7 +12,6 @@
 
 namespace FP4P\Component\JSports\Site\Services;
 
-//use FP4P\Component\JSports\Site\Services\Registration;
 use FP4P\Component\JSports\Administrator\Table\RegistrationsTable;
 use Joomla\Database\ParameterType;
 use Joomla\CMS\Factory;
@@ -22,13 +21,13 @@ class RegistrationService
    
     public static function getRegistrationTable() {
         $db = Factory::getDbo();
-        $registrations = new RegistrationsTable($db);
-        return $registrations;
+        return new RegistrationsTable($db);
+      
     }
     
     /**
      * This function will return an individual row based on the Registration ID.
-     * 
+     *
      * @param number $id
      * @return \FP4P\Component\JSports\Site\Services\Registration\RegistrationsTable|NULL
      */
@@ -36,9 +35,6 @@ class RegistrationService
         
         $db = Factory::getDbo();
         $registrations = new RegistrationsTable($db);
-        
-        $item = null;
-        
         $row = $registrations->load($id);
         
         if ($row) {
@@ -52,10 +48,10 @@ class RegistrationService
     /**
      * This function returns a boolean whether or not anyone can register on the platform.  there
      * are two (2) primary tests to determine if registration is avaiable:
-     * 
+     *
      * 1.  Registration is completely turned off at the league/organization level.
      * 2.  Checks to see if there are ANY programs currently accepting registration(s).
-     * 
+     *
      * @return boolean
      */
     public function isRegistrationAvailable() {
@@ -68,7 +64,7 @@ class RegistrationService
         
         // Select the required fields from the table.
         $query->select($db->quoteName('registrationenabled'));
-        $query->from($db->quoteName('#__jsports_leagues'));   
+        $query->from($db->quoteName('#__jsports_leagues'));
         $query->where($db->quoteName('id') . ' = :id' );
         $query->bind(':id', $id, ParameterType::INTEGER);
         
@@ -86,7 +82,7 @@ class RegistrationService
         // Query Programs table to see if there are any programs current open for registration
         $query->select($db->quoteName(array('name','registrationopen')));
         $query->from($db->quoteName('#__jsports_programs') . ' AS a');
-        $query->where($db->quoteName('registrationopen') . ' = 1' );        
+        $query->where($db->quoteName('registrationopen') . ' = 1' );
         $db->setQuery($query);
         
         

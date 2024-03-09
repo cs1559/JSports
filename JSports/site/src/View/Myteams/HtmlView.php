@@ -47,10 +47,11 @@ class HtmlView extends BaseHtmlView
      */
     public function display($tpl = null)
     {
-        $user       = $this->getCurrentUser();
-        
+       
         $this->teams = $this->get('Teams');
                        
         return parent::display($tpl);
     }
 }
+
+

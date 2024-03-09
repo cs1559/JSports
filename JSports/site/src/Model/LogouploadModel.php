@@ -42,16 +42,6 @@ class LogouploadModel extends FormModel
     protected $form = 'team';
     
     
-//     public function getData(){
-//         $input = Factory::getApplication()->input;
-//         $id     = $input->getInt("id");
-        
-//         $svc = new TeamService();
-//         $item = $svc->getItem($id);
-        
-//         return $item;
-//     }
-    
     
     public function getItem(){
         
@@ -59,12 +49,9 @@ class LogouploadModel extends FormModel
         $id     = $input->getInt("id");
         
         $svc = new TeamService();
-        $item = $svc->getItem($id);
+        return $svc->getItem($id);
 
-//         $this->programs = $this->getTeamPrograms($item->id);
-//         $this->recordhistory = $this->getTeamStatsByProgram($item->id); 
-        
-        return $item;
+
     }
     
     
@@ -72,7 +59,7 @@ class LogouploadModel extends FormModel
     public function getForm($data = array(), $loadData = true)
     {
         
-        $form = $this->loadForm('com_jsports.logoupload', 'logoupload', ['control' => 'jform', 'load_data' => true]);
+//         $form = $this->loadForm('com_jsports.logoupload', 'logoupload', ['control' => 'jform', 'load_data' => true]);
         
         $form = $this->loadForm(
             'com_jsports_form.logoupload.data', // just a unique name to identify the form
@@ -114,3 +101,4 @@ class LogouploadModel extends FormModel
     }
     
 }
+

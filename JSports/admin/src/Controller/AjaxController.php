@@ -61,7 +61,8 @@ class AjaxController extends BaseController
         
         $options  = "<option value=''>-- Select Team -- </option>";
         foreach ($teams as $team) {
-            $options = $options . "<option value='" . $team['teamid'] . "'>" . $team['teamname'].' (' .$team['contactname'].')' . "</option>";
+            $options = $options . "<option value='" . $team['teamid'] . "'>" . 
+                $team['teamname'].' (' .$team['contactname'].')' . "</option>";
         }
         echo $options;
     }

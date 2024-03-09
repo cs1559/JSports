@@ -40,7 +40,7 @@ class RegistrationModel extends FormModel
     
     /**
      * This function will retrieve a registration record from the database.
-     * 
+     *
      * @return RegistrationTable
      */
     public function getData(){
@@ -67,15 +67,14 @@ class RegistrationModel extends FormModel
         $id     = $input->getInt("id");
         
         $svc = new RegistrationService();
-        $item = $svc->getItem($id);
-
-        return $item;
+        return $svc->getItem($id);
+        
     }
     
     
     /**
-     * This function will return an instance of the form associated with the Registration Model.  
-     * 
+     * This function will return an instance of the form associated with the Registration Model.
+     *
      * @param array $data
      * @param boolean $loadData
      * @throws Exception
@@ -84,7 +83,7 @@ class RegistrationModel extends FormModel
     public function getForm($data = array(), $loadData = true)
     {
         
-        $form = $this->loadForm('com_jsports.registration', 'registration', ['control' => 'jform', 'load_data' => true]);
+//         $form = $this->loadForm('com_jsports.registration', 'registration', ['control' => 'jform', 'load_data' => true]);
         
         $form = $this->loadForm(
             'com_jsports_form.registration.data',   // just a unique name to identify the form
@@ -131,7 +130,7 @@ class RegistrationModel extends FormModel
     
     /**
      * This function will save/store the data captured on the Registration EDIT form and save it to the database.
-     * 
+     *
      * @param unknown $data
      * @return unknown
      */
@@ -140,7 +139,7 @@ class RegistrationModel extends FormModel
         $reg = RegistrationService::getRegistrationTable();
         
         // Set default values for certain fields
-        $reg->ipaddr = $_SERVER['REMOTE_ADDR']; 
+        $reg->ipaddr = $_SERVER['REMOTE_ADDR'];
         $reg->regdate = date("Y-m-d H:i:s");
 
         //@TODO Need to add code to catch any error that may exist.

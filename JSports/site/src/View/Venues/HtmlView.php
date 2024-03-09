@@ -2,7 +2,7 @@
 /**
  * JSports - Joomla Sports Management Component
  *
- * @version     0.0.1
+ * @version     1.0.0
  * @package     JSports.Site
  * @subpackage  com_jsports
  * @copyright   Copyright (C) 2023-2024 Chris Strieter
@@ -93,7 +93,7 @@ class HtmlView extends BaseHtmlView
 
         ToolbarHelper::title(Text::_('Sports Managment - Venues'));
                
-        $canDo = ContentHelper::getActions('com_jsports');       
+        $canDo = ContentHelper::getActions('com_jsports');
         
         if ($canDo->get('core.create'))
         {
@@ -145,3 +145,4 @@ class HtmlView extends BaseHtmlView
     }
    
 }
+

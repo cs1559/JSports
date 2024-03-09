@@ -21,7 +21,7 @@ use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Services\UserService;
 
 /**
- * 
+ *
  *
  * @since  1.6
  */
@@ -33,7 +33,7 @@ class MyteamsModel extends BaseModel
     
     /**
      * This function will retrieve a list of teams assocaited with the user.
-     * 
+     *
      * @return unknown
      */
     public function getTeams(){

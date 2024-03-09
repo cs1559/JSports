@@ -15,7 +15,6 @@ namespace FP4P\Component\JSports\Site\View\Registration;
 
 defined('_JEXEC') or die;
 
-// use FP4P\Component\JSports\Site\Services\Registration;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Factory;
@@ -82,7 +81,7 @@ class HtmlView extends BaseHtmlView
         $app->setUserState('com_jsports.edit.registration.agreementurl','');
         
         
-        $this->form->bind($this->item);      
+        $this->form->bind($this->item);
         
          // Check for errors.
         if (count($errors = $this->get('Errors')))
@@ -93,3 +92,4 @@ class HtmlView extends BaseHtmlView
         return parent::display($tpl);
     }
 }
+

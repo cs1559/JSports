@@ -21,7 +21,7 @@ class DivisionService
     
     /**
      * This function will return an individual row based on the PROGRAM ID.
-     * 
+     *
      * @param number $id
      * @return \FP4P\Component\JSports\Administrator\Table\DivisionsTable|NULL
      */
@@ -41,7 +41,7 @@ class DivisionService
         
     /**
      * This function will return a list of 'published' divisions within a specific program.
-     * 
+     *
      * @param unknown $programid
      * @return array
      */
@@ -59,8 +59,8 @@ class DivisionService
         $query->where($conditions);
         $query->order("ordering asc");
         $db->setQuery($query);
-        $rows = $db->loadAssocList();
-        return $rows;
+        return $db->loadAssocList();
+
         
     }
     

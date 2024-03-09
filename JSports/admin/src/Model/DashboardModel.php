@@ -30,7 +30,7 @@ class DashboardModel extends BaseModel
      * @todo  This constructor needs to be redon.  The concept of LEAGUE is still under review.  Many of these options
      *          should be component level settings.
      */
-    function __construct() {
+    public function __construct() {
         parent::__construct();
         
         $league = new LeaguesModel();

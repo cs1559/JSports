@@ -21,7 +21,7 @@ class ProgramsService
     
     /**
      * This function will return an individual row based on the PROGRAM ID.
-     * 
+     *
      * @param number $id
      * @return \FP4P\Component\JSports\Administrator\Table\ProgramsTable|NULL
      */
@@ -40,9 +40,9 @@ class ProgramsService
     }
     
     /**
-     * This function will return an array of objects that represent a list of programs that have not 
+     * This function will return an array of objects that represent a list of programs that have not
      * been completed.
-     * 
+     *
      * @return unknown
      */
     public static function getNonCompletedPrograms() {
@@ -58,14 +58,14 @@ class ProgramsService
         $query->where($conditions);
         $query->order('id asc');
         $db->setQuery($query);
-        $obj = $db->loadObjectList();
-        return $obj;
+        return $db->loadObjectList();
+        
     }
     
     /**
      * This function will return a default program.  The default program will be the most recent
      * non-completed program.
-     * 
+     *
      * @return unknown
      */
     public static function getDefaultProgram() {
@@ -89,8 +89,8 @@ class ProgramsService
         $query->where($conditions);
         $query->order("name desc");
         $db->setQuery($query);
-        $rows = $db->loadAssocList();
-        return $rows;
+        return $db->loadAssocList();
+        
         
     }
     

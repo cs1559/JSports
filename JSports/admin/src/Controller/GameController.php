@@ -1,6 +1,6 @@
 <?php
 /**
- * JSports - Joomla Sports Management Component 
+ * JSports - Joomla Sports Management Component
  *
  * @version     1.0.0
  * @package     JSports.Administrator
@@ -31,3 +31,4 @@ class GameController extends FormController
     }
     
 }
+

@@ -42,9 +42,9 @@ class StandingsEngine
         $db    = Factory::getDbo();
         $query = $db->getQuery(true);
          
-        $sql = " 
+        $sql = "
          select tempa.programid, tempa.divisionid, tempa.divname, tempa.teamid, tempa.teamname, tempa.headcoach, wins, losses, ties, (wins+losses+ties) gamesplayed, points, runsallowed, runsscored,
-                (wins / (wins+ties+losses)) as winpct 
+                (wins / (wins+ties+losses)) as winpct
         from (
 select m.programid, m.divisionid, d.name as divname, teamid , t.name as teamname, t.contactname as headcoach, regid 
 from #__jsports_map m, #__jsports_divisions d, #__jsports_teams t
@@ -90,9 +90,9 @@ on tempa.teamid = tempb.teamid and tempa.programid = tempb.programid
         
         
         // Load the results as a list of stdClass objects (see later for more options on retrieving data).
-        $result = $db->loadAssocList();
+        return $db->loadAssocList();
         
-        return $result;        
+               
     }
     
     private function loadRecord($item) {

@@ -114,11 +114,11 @@ class PostscoresModel extends ListModel
 	    $db    = $this->getDatabase();
 	    $query = $db->getQuery(true);
 	    
-        $query->select("a.*");  
+        $query->select("a.*");
 	    $query->from($db->quoteName('#__jsports_games') . ' AS a')
  	       ->where($db->quoteName('a.programid') . ' = ' . $db->quote($this->programid))
  	       ->where($db->quoteName('a.gamestatus') . ' = ' . $db->quote('S'))
-           	->where("(" . $db->quoteName('a.opponentid') . ' = ' . $db->quote($teamid) . ' or ' 
+           	->where("(" . $db->quoteName('a.opponentid') . ' = ' . $db->quote($teamid) . ' or '
                 . $db->quoteName('a.teamid') . ' = ' . $db->quote($teamid) .")")
            ->order("gamedate asc");
 	    
@@ -143,9 +143,9 @@ class PostscoresModel extends ListModel
 	 */
 	public function getItems()
 	{
-		$items = parent::getItems();
+		return parent::getItems();
 
-		return $items;
+	
 	}
 	
 	
@@ -153,7 +153,7 @@ class PostscoresModel extends ListModel
 	
 	
 	/**
-	 * This function is an override function of the FormModel validate function.  
+	 * This function is an override function of the FormModel validate function.
 	 *
 	 * @param unknown $form
 	 * @param unknown $data

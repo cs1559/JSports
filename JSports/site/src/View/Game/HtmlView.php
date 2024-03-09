@@ -26,8 +26,6 @@ use Joomla\CMS\MVC\View\GenericDataException;
 
 use Joomla\CMS\Form\Formhelper;
 
-//FormHelper::loadFieldClass('list');
-
 class HtmlView extends BaseHtmlView
 {
     public $form;
@@ -42,14 +40,7 @@ class HtmlView extends BaseHtmlView
     protected $team;
     protected $canEdit = false;
     
-    
-//     /**
-//      * The pagination object
-//      *
-//      * @var  \JPagination
-//      */
-//     protected $pagination;
-    
+      
     /**
      * The model state
      *
@@ -58,7 +49,7 @@ class HtmlView extends BaseHtmlView
     protected $state;
     
     public function display($tpl = null)
-    {        
+    {
         $input = Factory::getApplication()->input;
         $itemid = $input->get('id',0);
         
@@ -91,5 +82,7 @@ class HtmlView extends BaseHtmlView
         return parent::display($tpl);
         
     }
+    
        
 }
+

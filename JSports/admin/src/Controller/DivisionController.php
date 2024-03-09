@@ -1,6 +1,6 @@
 <?php
 /**
- * JSports - Joomla Sports Management Component 
+ * JSports - Joomla Sports Management Component
  *
  * @version     1.0.0
  * @package     JSports.Administrator
@@ -25,7 +25,7 @@ class DivisionController extends FormController
     
     /**
      * This function saves a division.  NOT SURE THIS FUNCTION IS TRULY NEEDED.
-     * 
+     *
      * @param unknown $key
      * @param unknown $urlVar
      */

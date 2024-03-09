@@ -40,14 +40,7 @@ class HtmlView extends BaseHtmlView
     protected $teamlastyearplayed;
     protected $program;
     protected $canEdit = false;
-    
-//     /**
-//      * The pagination object
-//      *
-//      * @var  \JPagination
-//      */
-//     protected $pagination;
-    
+        
     /**
      * The model state
      *
@@ -56,21 +49,16 @@ class HtmlView extends BaseHtmlView
     protected $state;
     
     public function display($tpl = null)
-    {        
+    {
         $input = Factory::getApplication()->input;
-        $itemid = $input->get('id',0);
         
         $this->item         = $this->get('Item');
         $this->state         = $this->get('State');
         
         $this->form = $this->getModel()->getForm($this->item,true);
-        $this->form->bind($this->item);
-        
-        // NOTE:  Need to research to see if there is a better way of getting the model data into the template
-        $mod = $this->getModel();
-        
+        $this->form->bind($this->item);       
 
-        $this->team = TeamService::getItem($this->item->teamid); 
+        $this->team = TeamService::getItem($this->item->teamid);
         
         // Check for errors.
         if (count($errors = $this->get('Errors')))
@@ -83,3 +71,4 @@ class HtmlView extends BaseHtmlView
     }
        
 }
+

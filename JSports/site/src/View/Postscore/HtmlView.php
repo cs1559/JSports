@@ -50,14 +50,12 @@ class HtmlView extends BaseHtmlView
     protected $state;
     
     public function display($tpl = null)
-    {        
+    {
         $input = Factory::getApplication()->input;
         $itemid = $input->get('id',0);
         
         $this->item         = $this->get('Item');
         $this->state         = $this->get('State');
-        
-        $model = $this->getModel();
         
         $redirectteam = $input->get('teamid');
         
@@ -92,3 +90,4 @@ class HtmlView extends BaseHtmlView
     }
        
 }
+

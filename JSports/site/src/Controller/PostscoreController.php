@@ -38,11 +38,8 @@ class PostscoreController extends FormController
     {
         
         $app            = $this->app;
-        $user           = $this->app->getIdentity();
+//         $user           = $this->app->getIdentity();
         
-        $params = ComponentHelper::getParams('com_jsports');
-        $itemid = $params->get('itemid');
-
         parent::display($cachable = false, $urlparams = []);
     }
     
@@ -66,12 +63,11 @@ class PostscoreController extends FormController
 
         $app    = $this->app;
         $model  = $this->getModel('Postscore', 'Site');
-        $user   = $this->app->getIdentity();
         
         // Get the user data.
         $requestData = $app->getInput()->post->get('jform', [], 'array');
 
-        $gameid = $requestData['id'];
+        //$gameid = $requestData['id'];
         $teamid = $requestData['teamid'];
         $redirectteamid = $requestData['redirectteamid'];
         
@@ -82,10 +78,10 @@ class PostscoreController extends FormController
             throw new \Exception($model->getError(), 500);
         }
         
-        
         // Validate the posted data.
         $data = $model->validate($form, $requestData);
-       
+        $redirectUrl = 'index.php?option=com_jsports&view=postscores&teamid=' . $redirectteamid;
+        
         // Check for errors.
         if ($data === false) {
             // Get the validation messages.
@@ -104,7 +100,7 @@ class PostscoreController extends FormController
             $app->setUserState('com_jsports.edit.postscore.data', $requestData);
 
             // Redirect back to list of game scores to post.
-            $this->setRedirect(Route::_('index.php?option=com_jsports&view=postscores&teamid=' .$redirectteamid, false));
+            $this->setRedirect(Route::_($redirectUrl, false));
            
             return false;
         }
@@ -120,7 +116,7 @@ class PostscoreController extends FormController
             
             // Redirect back to the edit screen.
             $this->setMessage(Text::sprintf('COM_JSPORTS_GAME_SAVE_FAILED', $model->getError()), 'warning');
-            $this->setRedirect(Route::_('index.php?option=com_jsports&view=postscores&teamid=' . $redirectteamid, false));
+            $this->setRedirect(Route::_($redirectUrl, false));
             
             return false;
         }
@@ -132,7 +128,7 @@ class PostscoreController extends FormController
 //         // Flush the data from the session.
 //         $app->setUserState('com_jsports.edit.postscore.data', null);
         $this->setMessage(Text::_('COM_JSPORTS_SCOREPOSTED_SUCCESS'));
-        $this->setRedirect(Route::_('index.php?option=com_jsports&view=postscores&teamid=' . $redirectteamid, false));
+        $this->setRedirect(Route::_($redirectUrl, false));
 
     }
       
@@ -152,13 +148,12 @@ class PostscoreController extends FormController
         $app    = $this->app;
         // Get the team id.
         $requestData = $app->getInput()->post->get('jform', [], 'array'); 
-        $teamid = $requestData['teamid'];
+        //$teamid = $requestData['teamid'];
         $redirectteamid = $requestData['redirectteamid'];
         
         // Flush the data from the session.
         $this->app->setUserState('com_jsports.edit.postscore.data', null);
-        
-        
+                
         // Redirect to team schedule.
         $this->setRedirect(Route::_('index.php?option=com_jsports&view=postscores&teamid=' . $redirectteamid, false));
     }

@@ -61,7 +61,7 @@ class RosterModel extends FormModel
     public function getForm($data = array(), $loadData = true)
     {
         
-        $form = $this->loadForm('com_jsports.roster', 'roster', ['control' => 'jform', 'load_data' => true]);
+//         $form = $this->loadForm('com_jsports.roster', 'roster', ['control' => 'jform', 'load_data' => true]);
         
         $form = $this->loadForm(
             'com_jsports_form.roster.data', // just a unique name to identify the form
@@ -92,7 +92,7 @@ class RosterModel extends FormModel
         
         if (empty($data)) {
             $data = $this->getItem();
-        }        
+        }
         
         $this->preprocessData('jsports.roster', $data);
         
@@ -126,7 +126,7 @@ class RosterModel extends FormModel
 		return false;
 	}
 
-    	return true;        
+    	return true;
     }
     
     

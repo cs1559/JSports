@@ -48,7 +48,6 @@ class HtmlView extends BaseHtmlView
      */
     public function display($tpl = null)
     {
-        $user       = $this->getCurrentUser();
         $input = Factory::getApplication()->input;
         $programid = (int) $input->get('programid');
         

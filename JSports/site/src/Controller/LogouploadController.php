@@ -53,9 +53,8 @@ class LogouploadController extends BaseController
         
     	if (strlen($prefix) < 1) {
     		$prefix = "Teamid-";
-    	} 
+    	}
         
-        $resize = true;
         $rheight = 175;
         $rwidth = 175;
         
@@ -63,24 +62,27 @@ class LogouploadController extends BaseController
         $this->checkToken();
         
         $app    = $this->app;
+        
         // Get the uploaded file information.
-        $input    = Factory::getApplication()->getInput();
+        //$input    = Factory::getApplication()->getInput();
 
         $requestData = $app->getInput()->post->get('jform', [], 'array');
     	$file = $app->getInput()->files->get('jform', null, 'raw');
         
     	$logofile = $file['uploadfile'];
     
-        // Do not change the filter type 'raw'. We need this to let files containing PHP code to upload. See \JInputFiles::get.
-    	//$logofile = $input->files->get('jform[uploadfile]', null, 'raw');
+        // Do not change the filter type 'raw'. We need this to let files containing PHP code 
+        // to upload. See \JInputFiles::get.
+        //$logofile = $input->files->get('jform[uploadfile]', null, 'raw');
 	
     	$teamid = $requestData['id'];
                
         // Actual name of the file being uploaded.
         $filename = File::makeSafe($logofile['name']);
                        
-        // Calculate the path to the teams logo.  
-        // @TODO Revisit this.  May want to have the folder naming convention (along with folder) configurable at the component level
+        // Calculate the path to the teams logo.
+        // @TODO Revisit this.  May want to have the folder naming convention (along with f
+        // older) configurable at the component level
         //$filepath = Folder::makeSafe( '\\media\\com_jsports\\images\\logos\\' . $prefix . $teamid .'');
         $filepath = Folder::makeSafe( '/media/com_jsports/images/logos/' . $prefix . $teamid .'');
 
@@ -90,7 +92,7 @@ class LogouploadController extends BaseController
             Folder::create($filepath);
         }
 
-        // 02-26-2024 - changed filename delimeter 
+        // 02-26-2024 - changed filename delimeter
         //$filename = $filepath . "\\" . $filename;
         $filename = $filepath . "/" . $filename;
         
@@ -123,6 +125,8 @@ class LogouploadController extends BaseController
                 case 'gif':
                     $src = ImageCreateFromGif($logofile['tmp_name']);
                     break;
+                default:
+                    break;
                     
             }
             
@@ -150,6 +154,8 @@ class LogouploadController extends BaseController
                 case 'gif':
                     $statusupload = imagegif($tmp,$filepath,100);//upload the image
                     break;
+                default:
+                    break;
                     
             }
             
@@ -166,7 +172,7 @@ class LogouploadController extends BaseController
                 $this->setMessage(Text::_('COM_JSPORTS_TEAMLOGO_SAVE_SUCCESS'));
             } else {
                 $this->setMessage(Text::_('COM_JSPORTS_TEAMLOGO_SAVE_FAIL'));
-            }          
+            }
             
             // Redirect to the edit screen.
             $this->setRedirect(Route::_('index.php?option=com_jsports&view=team&id=' . $teamid, false));

@@ -46,10 +46,7 @@
 //             $query->where($conditions);
             $db->setQuery($query);
             
-            $results = $db->loadAssocList();
-       
-            
-            return $results;            
+            return $db->loadAssocList();
         }
         
         
@@ -79,9 +76,8 @@
             $db->setQuery($query);
             
             // Load the results as a list of stdClass objects (see later for more options on retrieving data).
-            $rows = $db->loadAssocList();
+            return $db->loadAssocList();
             
-            return $rows;
         }
         
         

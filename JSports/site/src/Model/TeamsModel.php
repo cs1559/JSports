@@ -63,7 +63,7 @@ class TeamsModel extends ListModel
 	protected function populateState($ordering = 'a.name', $direction = 'asc')
 	{
 	    
-	    $app = Factory::getApplication();
+// 	    $app = Factory::getApplication();
 	    
 		$search = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
 		$this->setState('filter.search', $search);
@@ -129,7 +129,7 @@ class TeamsModel extends ListModel
 	    $programid = (string) $this->getState('filter.programid');
 	    $divisionid = (string) $this->getState('filter.divisionid');
 	    
-   if (strlen($programid) < 1) {
+        if (strlen($programid) < 1) {
  	        $programid = 0;
  	        $divisionid = 0;
 	    }
@@ -139,7 +139,7 @@ class TeamsModel extends ListModel
 	            $db->quoteName('#__jsports_map') . ' AS b,  '  .
 	            $db->quoteName('#__jsports_divisions') . ' AS c ' );
 	        $query->where($db->quoteName('a.id') . ' = ' . $db->quoteName('b.teamid'));
-	        $query->where($db->quoteName('b.divisionid') . ' = ' . $db->quoteName('c.id'));   
+	        $query->where($db->quoteName('b.divisionid') . ' = ' . $db->quoteName('c.id'));
 	        
 	    } else {
 	        $query->from($db->quoteName('#__jsports_teams') . ' AS a, ' .
@@ -209,9 +209,9 @@ class TeamsModel extends ListModel
 	 */
 	public function getItems()
 	{
-		$items = parent::getItems();
+		return parent::getItems();
 
-		return $items;
+		
 	}
 	
 	

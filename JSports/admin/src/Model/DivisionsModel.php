@@ -1,6 +1,6 @@
 <?php
 /**
- * JSports - Joomla Sports Management Component 
+ * JSports - Joomla Sports Management Component
  *
  * @version     1.0.0
  * @package     JSports.Administrator
@@ -62,10 +62,11 @@ class DivisionsModel extends ListModel
 	    
 	    $app = Factory::getApplication();
 	    
-	    $programid = $app->input->get('programid', 0, 'int');
+	    $id = $app->input->get('id', 0, 'int');
 	    if (empty($id)) {
-	       $programid = $app->getUserState('com_jsports.programid');
+	       $programid = $app->getUserState('com_jsports.divisionid');
 	    }
+	    $programid = $app->input->get('programid', 0, 'int');
 	    $this->setState('programid', $programid);
 	    $app->setUserState('com_jsports.programid', $programid);
 	    
@@ -107,7 +108,7 @@ class DivisionsModel extends ListModel
 	 *
 	 * @return  \Joomla\Database\DatabaseQuery
 	 *
-	 */	
+	 */
 	protected function getListQuery()
 	{
 	    // Create a new query object.
@@ -140,7 +141,7 @@ class DivisionsModel extends ListModel
 	    
 	    // Filter by search in date.
 	    $status = $this->getState('filter.status');
-	    if (!empty($status)) {	        
+	    if (!empty($status)) {
 	        $query->where($db->quoteName('a.status') . ' = :status');
 	        $query->bind(':status', $status, ParameterType::STRING);
 	    }

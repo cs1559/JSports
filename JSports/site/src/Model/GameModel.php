@@ -53,11 +53,11 @@ class GameModel extends FormModel
     }
     
     /**
-     * This function is an override function of the FormModel validate function.  This is a 
-     * server side validation that adds a check to see if the teamid is equal to the opponent ID. 
+     * This function is an override function of the FormModel validate function.  This is a
+     * server side validation that adds a check to see if the teamid is equal to the opponent ID.
      * If that passes validation, then the parent validate function is called.  Otherwise, a false boolean
      * is returned.
-     * 
+     *
      * @param unknown $form
      * @param unknown $data
      * @param unknown $group
@@ -87,7 +87,7 @@ class GameModel extends FormModel
             $this->teamid = $input->getInt('teamid');
             $this->programid = $input->getInt('programid');
             $this->divisionid = TeamService::getTeamDivisionId($this->teamid, $this->programid);
-        } 
+        }
         
         // Get a Team record and place within our model
         $this->team = TeamService::getItem($item->teamid);
@@ -128,7 +128,7 @@ class GameModel extends FormModel
             echo "GameModel::loadFormData";
             var_dump($data);
             exit;
-        }        
+        }
 
         $this->preprocessData('com_jsports.game', $data);
         
@@ -151,9 +151,9 @@ class GameModel extends FormModel
     
     	// Set default values if its a new record.
     	if ($data['id'] == 0) {
-            $table->enteredby = $user->username;	    
+            $table->enteredby = $user->username;
     	}
-    	$table->updatedby = $user->username;   
+    	$table->updatedby = $user->username;
     	$datetime = date_create()->format('Y-m-d H:i:s');
     	$table->dateupdated = $datetime;
     	   	
@@ -189,7 +189,7 @@ class GameModel extends FormModel
     		return false;
     	}
 
-    	return true;        
+    	return true;
     }
     
     

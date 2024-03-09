@@ -56,8 +56,6 @@ class HtmlView extends BaseHtmlView
      */
     public function display($tpl = null)
     {
-        $user       = $this->getCurrentUser();
-
         $mod = $this->getModel();
 
         $this->program = ProgramsService::getDefaultProgram();
@@ -75,3 +73,5 @@ class HtmlView extends BaseHtmlView
         return parent::display($tpl);
     }
 }
+
+

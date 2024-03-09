@@ -22,14 +22,13 @@ class GameService
     
     public static function getGamesTable() {
         $db = Factory::getDbo();
-        $table = new GamesTable($db);
-        return $table;
+        return new GamesTable($db);
     }
     
     
     /**
      * This function will return an individual row based on the GAME ITEM ID
-     * 
+     *
      * @param number $id
      * @return \FP4P\Component\JSports\Administrator\Table\GamesTable
      */
@@ -52,7 +51,7 @@ class GameService
     
     /**
      * This function will DELETE a specific row within the ROSTERS table.
-     * 
+     *
      * @param number $id  Item ID
      */
     public static function delete($id = 0) {
@@ -73,8 +72,8 @@ class GameService
        
     
     /**
-     * The postScore function will update the necessary fields required when a score is posted.   
-     * 
+     * The postScore function will update the necessary fields required when a score is posted.
+     *
      * @param int $id                   // Game ID
      * @param int $hometeamscore        // Home Team Score
      * @param int $awayteamscore        // Away Team Score
@@ -120,7 +119,7 @@ class GameService
     
     /**
      * This function simply returns a "W" or "L" or "T" for a team based on their context (home/away).
-     * 
+     *
      * @param unknown $teamid
      * @param unknown $item
      * @return string
@@ -128,8 +127,7 @@ class GameService
     public static function getWinLoss($teamid, $item) {
         $result = "-";
         $_teamid = $teamid;
-        //extract($item); 
-        
+                
         if ($item->gamestatus == 'C') {
             if ($teamid == $item->hometeamid) {
                 if ($item->hometeamscore > $item->awayteamscore) {
@@ -139,7 +137,7 @@ class GameService
                 } else {
                     $result = "T";
                 }
-            } 
+            }
             if ($teamid == $item->awayteamid) {
                 if ($item->hometeamscore < $item->awayteamscore) {
                     $result = "W";
@@ -148,14 +146,14 @@ class GameService
                 } else {
                     $result = "T";
                 }
-            } 
+            }
         }
-        return $result;        
+        return $result;
     }
     
     /**
      * This function will retrieve a list of upcoming games that are still "scheduled";
-     * 
+     *
      * @param unknown $programid
      * @param number $limit
      * @return unknown
@@ -177,8 +175,8 @@ class GameService
         $query->setLimit($limit);
         $query->order('g.gamedate asc');
         $db->setQuery($query);
-        $obj = $db->loadObjectList();
-        return $obj;
+        return $db->loadObjectList();
+       
         
     }
     
@@ -207,13 +205,13 @@ class GameService
         $query->setLimit($limit);
         $query->order('g.gamedate desc');
         $db->setQuery($query);
-        $obj = $db->loadObjectList();
-        return $obj;
+        return $db->loadObjectList();
+       
     }
     
     /**
      * This function will retrieve a team's games for a given program.
-     * 
+     *
      * @param unknown $teamid
      * @param unknown $programid
      * @return unknown
@@ -223,9 +221,6 @@ class GameService
         $db = Factory::getDbo();
         $query = $db->getQuery(true);
         
-        
-        $query = $db->getQuery(true);
-        
         $query->select("a.*");
         $query->from($db->quoteName('#__jsports_games') . ' AS a')
         ->where($db->quoteName('a.programid') . ' = ' . $db->quote($programid))
@@ -233,8 +228,7 @@ class GameService
             . " or " . $db->quoteName('a.opponentid') . ' = ' . $db->quote($teamid) . ")")
         ->order("gamedate asc");
         $db->setQuery($query);
-        $obj = $db->loadObjectList();
-        return $obj;
+        return $db->loadObjectList();
             
     }
 }

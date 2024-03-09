@@ -21,7 +21,7 @@ use FP4P\Component\JSports\Site\Services\StandingsService;
 use FP4P\Component\JSports\Site\Services\ProgramsService;
 
 /**
- * 
+ *
  *
  * @since  1.6
  */
@@ -33,7 +33,7 @@ class StandingsModel extends BaseModel
     
     /**
      * This function will retrieve a list of teams assocaited with the user.
-     * 
+     *
      * @return unknown
      */
     public function getProgramStandings(){

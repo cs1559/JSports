@@ -77,10 +77,10 @@ class HtmlView extends BaseHtmlView
         $this->state         = $this->get('State');
         $this->filterForm    = $this->get('FilterForm');
         $this->activeFilters = $this->get('ActiveFilters');
-        $this->team = $this->get('team') ;   
+        $this->team = $this->get('team') ;
         
         // NOTE:  Need to research to see if there is a better way of getting the model data into the template
-        $mod = $this->getModel();       
+        $mod = $this->getModel();
         $this->team = $mod->team;
         $this->teamlastyearplayed = $mod->teamlastyearplayed;
         $this->program = $mod->program;
@@ -98,3 +98,4 @@ class HtmlView extends BaseHtmlView
     }
        
 }
+

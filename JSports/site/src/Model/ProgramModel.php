@@ -43,9 +43,8 @@ class ProgramModel extends FormModel
         $id     = $input->getInt("id");
         
         $svc = new RegistrationService();
-        $item = $svc->getItem($id);
+        return $svc->getItem($id);
         
-        return $item;
     }
     
     
@@ -55,16 +54,16 @@ class ProgramModel extends FormModel
         $id     = $input->getInt("id");
         
         $svc = new RegistrationService();
-        $item = $svc->getItem($id);
+        return $svc->getItem($id);
 
-        return $item;
+       
     }
     
     
     public function getForm($data = array(), $loadData = true)
     {
         
-        $form = $this->loadForm('com_jsports.registration', 'registration', ['control' => 'jform', 'load_data' => true]);
+//         $form = $this->loadForm('com_jsports.registration', 'registration', ['control' => 'jform', 'load_data' => true]);
         
         $form = $this->loadForm(
             'com_jsports_form.registration.data', // just a unique name to identify the form
@@ -97,7 +96,7 @@ class ProgramModel extends FormModel
         
         if (empty($data)) {
             $data = $this->getItem();
-        }        
+        }
         
         $this->preprocessData('jsports.registration', $data);
         

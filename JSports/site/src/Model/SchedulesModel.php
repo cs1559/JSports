@@ -113,7 +113,7 @@ class SchedulesModel extends ListModel
 	    $db    = $this->getDatabase();
 	    $query = $db->getQuery(true);
 	    
-        $query->select("a.*");  
+        $query->select("a.*");
 	    $query->from($db->quoteName('#__jsports_games') . ' AS a')
  	       ->where($db->quoteName('a.programid') . ' = ' . $db->quote($this->programid))
            ->where(" (" . $db->quoteName('a.teamid') . ' = ' . $db->quote($teamid)
@@ -135,9 +135,8 @@ class SchedulesModel extends ListModel
 	 */
 	public function getItems()
 	{
-		$items = parent::getItems();
+		return parent::getItems();
 
-		return $items;
 	}
 		
 }

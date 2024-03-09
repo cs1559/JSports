@@ -21,14 +21,14 @@ class RosterService
     
     public static function getRostersTable() {
         $db = Factory::getDbo();
-        $rosters = new RostersTable($db);
-        return $rosters;
+        return new RostersTable($db);
+       
     }
     
     
     /**
      * This function will return an individual row based on the ROSTER ITEM ID
-     * 
+     *
      * @param number $id
      * @return \FP4P\Component\JSports\Administrator\Table\RostersTable
      */
@@ -37,10 +37,7 @@ class RosterService
         $db = Factory::getDbo();
         $table = new RostersTable($db);
         
-        $item = null;
-        
         $row = $table->load($id);
-        
         
         if ($row) {
             return $table;
@@ -51,7 +48,7 @@ class RosterService
     
     /**
      * This function will DELETE a specific row within the ROSTERS table.
-     * 
+     *
      * @param number $id  Item ID
      */
     public static function delete($id = 0) {
@@ -94,8 +91,8 @@ class RosterService
         );
         $query->where($conditions);
         $db->setQuery($query);
-        $obj = $db->loadObjectList();
-        return $obj;
+        return $db->loadObjectList();
+        
     }
     
     

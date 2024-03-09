@@ -76,7 +76,7 @@ class HtmlView extends BaseHtmlView
         
         // Check for errors.
         
-        $this->pagination->limit - 30;
+        $this->pagination->limit = 30;
         
         if (count($errors = $this->get('Errors')))
         {
@@ -89,3 +89,4 @@ class HtmlView extends BaseHtmlView
     
    
 }
+

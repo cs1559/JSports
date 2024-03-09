@@ -12,7 +12,8 @@
 
 /**
  * CHANGE LOG:
- * 02/13/2024 - Added CONTACT NAME to the option value in the select element.  Also added OPTION GROUPS for cross-divisional play.
+ * 02/13/2024 - Added CONTACT NAME to the option value in the select element.  
+ *              Also added OPTION GROUPS for cross-divisional play.
  */
     namespace FP4P\Component\JSports\Site\Services;
     
@@ -27,14 +28,14 @@
         
         public static function getTeamsTable() {
             $db = Factory::getDbo();
-            $teams = new TeamsTable($db);
-            return $teams;
+            return new TeamsTable($db);
+           
         }
         
         
         /**
          * This function will return an individual row based on the Team ID.
-         * 
+         *
          * @param number $id
          * @return FP4P\Component\JSports\Administrator\Table\TeamsTable|NULL
          */
@@ -43,11 +44,8 @@
             $db = Factory::getDbo();
             $team = new TeamsTable($db);
             
-            $item = null;
-            
             $row = $team->load($id);
-            
-            
+         
             if ($row) {
                 return $team;
             }
@@ -76,9 +74,7 @@
             
             $db->setQuery($query);
                 
-            $result = $db->execute();
-            
-            return $result;
+            return $db->execute();
             
         }
         
@@ -105,9 +101,9 @@
             $db->setQuery($query);
             
             // Load the results as a list of stdClass objects (see later for more options on retrieving data).
-            $row = $db->loadAssoc();
+            return $db->loadAssoc();
     
-            return $row;        
+
         }
         
         
@@ -130,7 +126,7 @@
             $row = $db->loadAssoc();
        
             
-            return $row['divisionid'];            
+            return $row['divisionid'];
         }
         
         
@@ -141,14 +137,16 @@
             $query = $db->getQuery(true);
             
             if (is_null($divisionid)) {
-                $sql = "SELECT a.id as teamid, a.name as teamname, m.divisionid, d.name as divisionname, d.agegroup, a.contactname FROM " .
+                $sql = "SELECT a.id as teamid, a.name as teamname, m.divisionid, d.name as divisionname, 
+                            d.agegroup, a.contactname FROM " .
                     $db->quoteName('#__jsports_teams') . " as a, " .
                     $db->quoteName('#__jsports_map') . " as m, " .
                     $db->quoteName('#__jsports_divisions') . " as d
                 where m.teamid = a.id
                 and m.divisionid = d.id
                 and m.divisionid in (
-                    select divisionid from " . $db->quoteName('#__jsports_map') . " as m, " . $db->quoteName('#__jsports_divisions') . " as d
+                    select divisionid from " . $db->quoteName('#__jsports_map') . " as m, " . 
+                            $db->quoteName('#__jsports_divisions') . " as d
                     where m.divisionid = d.id
                     and m.teamid = " . $db->quote($teamid) . " and m.programid = " . $db->quote($programid) . "
                     )
@@ -159,9 +157,9 @@
             $db->setQuery($query);
             
             // Load the results as a list of stdClass objects (see later for more options on retrieving data).
-            $rows = $db->loadAssocList();
+            return $db->loadAssocList();
             
-            return $rows;
+          
         }
         
 
@@ -169,7 +167,8 @@
             $db    = Factory::getDbo();
             $query = $db->getQuery(true);
             
-           $sql = "SELECT a.id as teamid, a.name as teamname, m.divisionid, d.name as divisionname, d.agegroup, a.contactname FROM " .
+           $sql = "SELECT a.id as teamid, a.name as teamname, m.divisionid, d.name as divisionname, 
+                        d.agegroup, a.contactname FROM " .
                     $db->quoteName('#__jsports_teams') . " as a, " .
                     $db->quoteName('#__jsports_map') . " as m, " .
                     $db->quoteName('#__jsports_divisions') . " as d
@@ -185,16 +184,17 @@
             $db->setQuery($query);
             
             // Load the results as a list of stdClass objects (see later for more options on retrieving data).
-            $rows = $db->loadAssocList();
+            return $db->loadAssocList();
             
-            return $rows;
+           
         }
 
         public static function getTeamsByAgeGroup($programid, $agegroup, $divisionid) {
             $db    = Factory::getDbo();
             $query = $db->getQuery(true);
             
-            $sql = "SELECT a.id as teamid, a.name as teamname, m.divisionid, d.name as divisionname, d.agegroup, a.contactname FROM " .
+            $sql = "SELECT a.id as teamid, a.name as teamname, m.divisionid, 
+                    d.name as divisionname, d.agegroup, a.contactname FROM " .
                 $db->quoteName('#__jsports_teams') . " as a, " .
                 $db->quoteName('#__jsports_map') . " as m, " .
                 $db->quoteName('#__jsports_divisions') . " as d
@@ -203,18 +203,18 @@
                 and m.divisionid in (
                     select divisionid from #__jsports_map as m, #__jsports_divisions as d
                     where m.divisionid = d.id
-                    and d.agegroup = " . $agegroup . " and d.id <> " . $divisionid . " and m.programid = " . $programid . "
+                    and d.agegroup = " . $agegroup . " and d.id <> " . $divisionid . 
+                        " and m.programid = " . $programid . "
                     )
 	 	order by teamname
-		";     
+		";
                 
                 $query->setQuery($sql);
                 $db->setQuery($query);
                 
                 // Load the results as a list of stdClass objects (see later for more options on retrieving data).
-                $rows = $db->loadAssocList();
-                
-                return $rows;
+                return $db->loadAssocList();
+        
         }
     }
     

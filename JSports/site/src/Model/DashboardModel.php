@@ -26,7 +26,7 @@ use FP4P\Component\JSports\Site\Objects\stats\GameStatistics;
 
 
 /**
- * 
+ *
  *
  */
 class DashboardModel extends BaseModel
@@ -62,7 +62,7 @@ class DashboardModel extends BaseModel
     
         $context = $this->getContext();
         $programs = ProgramsService::getNonCompletedPrograms();
-        $games = GameService::getRecentGames($context['programid'],10);
+        //$games = GameService::getRecentGames($context['programid'],10);
         $this->programs = $programs;
     }
     
@@ -97,15 +97,14 @@ class DashboardModel extends BaseModel
     public function getTotalTeams($context) {
         
         $obj = new TotalTeams($context);
-        $total = $obj->getData();
-        return $total;
+        return $obj->getData();
+    
     }
     
     public function getGameStatistics($context)
     {
         $obj = new GameStatistics($context);
-        $result = $obj->getData();
-        return $result;
+        return $obj->getData();
         
     }
     
@@ -120,8 +119,8 @@ class DashboardModel extends BaseModel
         if (array_key_exists('limit', $context)) {
             $limit = $context['limit'];
         }
-        $games = GameService::getUpcomingGames($programid, $limit);
-        return $games;    
+        return GameService::getUpcomingGames($programid, $limit);
+    
         
                
     }

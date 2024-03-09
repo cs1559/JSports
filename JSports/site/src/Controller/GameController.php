@@ -37,11 +37,8 @@ class GameController extends FormController
     public function display($cachable = false, $urlparams = [])
     {
         
-        $app            = $this->app;
-        $user           = $this->app->getIdentity();
-        
-        $params = ComponentHelper::getParams('com_jsports');
-        $itemid = $params->get('itemid');
+//        $params = ComponentHelper::getParams('com_jsports');
+//        $itemid = $params->get('itemid');
 
         parent::display($cachable = false, $urlparams = []);
     }
@@ -54,7 +51,6 @@ class GameController extends FormController
         
         $app = Factory::getApplication();
         
-        $redirecturl = "";
         $input = Factory::getApplication()->input;
         $id     = $input->getInt("id");
         
@@ -69,10 +65,10 @@ class GameController extends FormController
         $item = $svc->getItem($id);
         
         $redirectURL = 'index.php?option=com_jsports&view=dashboard';
-        
-        if ($item->gamestatus === 'C') {
+        $rUrl = 'index.php?option=com_jsports&view=schedules&teamid=' . $item->teamid . '&programid=' . $item->programid;
+        if ($item->gamestatus === 'C') {            
             $this->setMessage("Completed Game CANNOT be deleted",'info');
-            $redirectURL = 'index.php?option=com_jsports&view=schedules&teamid=' . $item->teamid . '&programid=' . $item->programid;
+            $redirectURL = $rUrl;
         } else {
             
             try {
@@ -82,13 +78,13 @@ class GameController extends FormController
                 } else {
                     $this->setMessage("Game was NOT deleted",'info');
                 }
-                $redirectURL = 'index.php?option=com_jsports&view=schedules&teamid=' . $item->teamid . '&programid=' . $item->programid;
+                $redirectURL = $rUrl;
                 
             } catch (Exception $e) {
-                $errors = $team->getErrors();
+                $errors = $item->getErrors();
                 $this->setError($errors[0]);
                 $app->enqueueMessage($errors[0],'error');
-                $redirectURL = 'index.php?option=com_jsports&view=schedules&teamid=' . $item->teamid . '&programid=' . $item->programid;
+                $redirectURL = 'index.php?option=com_jsports&view=schedules&teamid=' . $item->teamid    '&programid=' . $item->programid;
             }
         }
         
@@ -112,7 +108,7 @@ class GameController extends FormController
 
         $app    = $this->app;
         $model  = $this->getModel('Game', 'Site');
-        $user   = $this->app->getIdentity();
+//        $user   = $this->app->getIdentity();
         
         // Get the user data.
         $requestData = $app->getInput()->post->get('jform', [], 'array');
@@ -162,7 +158,9 @@ class GameController extends FormController
             
             // Redirect back to the edit screen.
             $this->setMessage(Text::sprintf('COM_JSPORTS_GAME_SAVE_FAILED', $model->getError()), 'warning');
-            $this->setRedirect(Route::_('index.php?option=com_jsports&view=game&layout=edit&id=' . $data['teamid'], false));
+            $this->setRedirect(
+                Route::_('index.php?option=com_jsports&view=game&layout=edit&id=' . $data['teamid']
+                    , false));
             
             return false;
         }
@@ -182,7 +180,8 @@ class GameController extends FormController
                 }
                 
                 if (!$redirect) {
-                    $redirect = 'index.php?option=com_jsports&view=schedules&teamid=' .  $data['teamid'] . '&programid='  . $data['programid'];
+                    $redirect = 'index.php?option=com_jsports&view=schedules&teamid=' .  $data['teamid'] .
+                        '&programid='  . $data['programid'];
                 }
                 
 
@@ -198,7 +197,8 @@ class GameController extends FormController
         
     
     /**
-     * Function to support a CANCEL operation from the Game data entry screen.  The redirect goes back to the team schedules page.
+     * Function to support a CANCEL operation from the Game data entry screen.  The redirect
+     * goes back to the team schedules page.
      *
      * @return  void
      *
@@ -211,7 +211,7 @@ class GameController extends FormController
 
         $app    = $this->app;
         // Get the team id.
-        $requestData = $app->getInput()->post->get('jform', [], 'array'); 
+        $requestData = $app->getInput()->post->get('jform', [], 'array');
         $teamid = $requestData['teamid'];
         
         // Flush the data from the session.

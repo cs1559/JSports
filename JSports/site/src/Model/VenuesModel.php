@@ -178,9 +178,9 @@ class VenuesModel extends ListModel
 	 */
 	public function getItems()
 	{
-		$items = parent::getItems();
+		return parent::getItems();
 
-		return $items;
+		
 	}
 	
 	

@@ -101,16 +101,16 @@ class TeamModel extends FormModel
         $id     = $input->getInt("id");
         
         $svc = new TeamService();
-        $item = $svc->getItem($id);
+        return $svc->getItem($id);
 
-        return $item;
+        
     }
         
     
     public function getForm($data = array(), $loadData = true)
     {
         
-        $form = $this->loadForm('com_jsports.team', 'team', ['control' => 'jform', 'load_data' => true]);
+//         $form = $this->loadForm('com_jsports.team', 'team', ['control' => 'jform', 'load_data' => true]);
         
         $form = $this->loadForm(
             'com_jsports_form.team.data', // just a unique name to identify the form
@@ -141,7 +141,7 @@ class TeamModel extends FormModel
         
         if (empty($data)) {
             $data = $this->getItem();
-        }        
+        }
         
         $this->preprocessData('jsports.team', $data);
         
@@ -164,7 +164,7 @@ class TeamModel extends FormModel
 	$team->check();
 
 	// Block of code to prevent an "incorrect integer value" own the ownerid field.
-	if (strlen($data["ownerid"]) < 1) {	
+	if (strlen($data["ownerid"]) < 1) {
 		$data["ownerid"] = 0;
 	}
         
@@ -179,7 +179,7 @@ class TeamModel extends FormModel
 		return false;
 	}
 
-    	return true;        
+    	return true;
     }
     
     
@@ -205,10 +205,9 @@ class TeamModel extends FormModel
         $db->setQuery($query);
         
         // Load the results as a list of stdClass objects (see later for more options on retrieving data).
-        $results = $db->loadObjectList();
+        return $db->loadObjectList();
         
         
-        return $results;
     }
     
     public function getTeamStatsByProgram($teamid) {
@@ -246,9 +245,9 @@ class TeamModel extends FormModel
         
         
         // Load the results as a list of stdClass objects (see later for more options on retrieving data).
-        $results = $db->loadObjectList();
+        return $db->loadObjectList();
         
-        return $results;
+        
     }
 
     
