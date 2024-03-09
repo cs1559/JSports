@@ -2,7 +2,7 @@
 /**
  * JSports - Joomla Sports Management Component
  *
- * @version     0.0.1
+ * @version     1.0.0
  * @package     JSports.Site
  * @subpackage  com_jsports
  * @copyright   Copyright (C) 2023-2024 Chris Strieter
@@ -51,11 +51,9 @@ class RegistrationController extends BaseController
         $user           = $this->app->getIdentity();
         $registrationId = (int) $this->input->get('id');
         
-        
         $params = ComponentHelper::getParams('com_jsports');
         $itemid = $params->get('itemid');
               
-        
         $formdata = new Input($this->input->get('jform','','array'));
         
         // Locate the program ID from the form from the calling page.
@@ -86,7 +84,7 @@ class RegistrationController extends BaseController
     }
     
     /**
-     * Method to save a user's profile data.
+     * Method to save a registration data.
      *
      * @return  void|boolean
      *

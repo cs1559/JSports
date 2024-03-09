@@ -2,7 +2,7 @@
 /**
  * JSports - Joomla Sports Management Component
  *
- * @version     0.0.1
+ * @version     1.0.0
  * @package     JSports.Site
  * @subpackage  com_jsports
  * @copyright   Copyright (C) 2023-2024 Chris Strieter
@@ -78,9 +78,6 @@ class HtmlView extends BaseHtmlView
         $this->filterForm    = $this->get('FilterForm');
         $this->activeFilters = $this->get('ActiveFilters');
         $this->team = $this->get('team') ;   
-        
-//         $this->form = $this->getModel()->getForm($this->item,true);
-//         $this->form->bind($this->item);
         
         // NOTE:  Need to research to see if there is a better way of getting the model data into the template
         $mod = $this->getModel();       

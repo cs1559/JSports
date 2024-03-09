@@ -21,7 +21,6 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
-use FP4P\Component\JSports\Site\Objects\RouteHelper;
 
 // Load Web Asset Manager
 $wa = $this->document->getWebAssetManager();

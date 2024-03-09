@@ -156,9 +156,7 @@ class GameModel extends FormModel
     	$table->updatedby = $user->username;   
     	$datetime = date_create()->format('Y-m-d H:i:s');
     	$table->dateupdated = $datetime;
-    	
-    	// Get Team Names
-    	
+    	   	
     	if ($data['homeindicator']) {
     	    $hometeam = TeamService::getItem($data['teamid']);
     	    $awayteam = TeamService::getItem($data['opponentid']);

@@ -2,7 +2,7 @@
 /**
  * JSports - Joomla Sports Management Component
  *
- * @version     0.0.1
+ * @version     1.0.0
  * @package     JSports.Administrator
  * @subpackage  com_jsports
  * @copyright   Copyright (C) 2023-2024 Chris Strieter
@@ -36,5 +36,5 @@ class HtmlView extends BaseHtmlView
         ToolbarHelper::title(Text::_('JSports'));
         ToolbarHelper::title(Text::_('Add'));
         
-        ToolbarHelper::apply('planet.apply');}
+//        ToolbarHelper::apply('planet.apply');}
 }

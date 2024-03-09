@@ -2,7 +2,7 @@
 /**
  * JSports - Joomla Sports Management Component
  *
- * @version     0.0.1
+ * @version     1.0.0
  * @package     JSports.Site
  * @subpackage  com_jsports
  * @copyright   Copyright (C) 2023-2024 Chris Strieter
@@ -82,8 +82,6 @@ class HtmlView extends BaseHtmlView
         {
             throw new GenericDataException(implode("\n", $errors), 500);
         }
-        
-//         $this->addToolbar();
         
         return parent::display($tpl);
         

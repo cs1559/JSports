@@ -2,7 +2,7 @@
 /**
  * JSports - Joomla Sports Management Component
  *
- * @version     0.0.1
+ * @version     1.0.0
  * @package     JSports.Site
  * @subpackage  com_jsports
  * @copyright   Copyright (C) 2023-2024 Chris Strieter
@@ -71,8 +71,6 @@ class HtmlView extends BaseHtmlView
         
 
         $this->team = TeamService::getItem($this->item->teamid); 
-//         $this->teamlastyearplayed = $mod->teamlastyearplayed;
-//         $this->program = $mod->program;
         
         // Check for errors.
         if (count($errors = $this->get('Errors')))

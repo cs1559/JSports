@@ -21,18 +21,6 @@ class Application
     private function __construct() {
         
     }
-    /**
-     * This function will return the Event Dispatcher.
-     * 
-     * @return unknown
-     */
-//     public static function getDispatcher() {
-        
-//         $dispatcher = EventDispatcher::getInstance();
-            
-//         return $dispatcher;
-        
-//     }
     
     public static function getInstance()
     {

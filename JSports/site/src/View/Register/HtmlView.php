@@ -2,7 +2,7 @@
 /**
  * JSports - Joomla Sports Management Component
  *
- * @version     0.0.1
+ * @version     1.0.0
  * @package     JSports.Site
  * @subpackage  com_jsports
  * @copyright   Copyright (C) 2023-2024 Chris Strieter
@@ -72,8 +72,6 @@ class HtmlView extends BaseHtmlView
         // Check authorizations
         //        $this->canDo = ContentHelper::getActions('com_content', 'article', $this->item->id);
         $this->canDo = ContentHelper::getActions('com_jsports','core.register');
-        
-        //         print_r($this->canDo);
         
         if (!$user->authorise('core.register', 'com_jsports')) {
             Factory::getApplication()->enqueueMessage("You must be logged in to register", 'error');

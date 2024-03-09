@@ -28,7 +28,6 @@ use FP4P\Component\JSports\Site\Objects\stats\GameStatistics;
 /**
  * 
  *
- * @since  1.6
  */
 class DashboardModel extends BaseModel
 {
@@ -51,8 +50,7 @@ class DashboardModel extends BaseModel
     }
     
     private function getContext() {
-        
-        
+               
         return $this->context;
     }
     
@@ -68,6 +66,11 @@ class DashboardModel extends BaseModel
         $this->programs = $programs;
     }
     
+    
+    /**
+     * This function retrieves various statistics for a program.
+     * @return \FP4P\Component\JSports\Site\Model\DashboardModel
+     */
     public function getStatistics() {
 
 	   $context = $this->getContext();

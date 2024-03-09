@@ -2,7 +2,7 @@
 /**
  * JSports - Joomla Sports Management Component
  *
- * @version     0.0.1
+ * @version     1.0.0
  * @package     JSports.Site
  * @subpackage  com_jsports
  * @copyright   Copyright (C) 2023-2024 Chris Strieter
@@ -12,8 +12,6 @@
 
 namespace FP4P\Component\JSports\Site\View\Logoupload;
 
-
-
 defined('_JEXEC') or die;
 
 use Joomla\CMS\MVC\View\GenericDataException;
@@ -22,7 +20,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\CMSObject;
 
 /**
- * HTML Team View
+ * HTML Logo Upload View
  *
  * @since  1.5
  */
@@ -41,9 +39,6 @@ class HtmlView extends BaseHtmlView
      */
     protected $item;
       
-    protected $programs;
-    protected $programstats;
-    protected $profilemenu;
     protected $teamlogo;
     protected $teamname;
     

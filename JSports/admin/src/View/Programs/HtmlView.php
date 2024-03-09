@@ -2,7 +2,7 @@
 /**
  * JSports - Joomla Sports Management Component
  *
- * @version     0.0.1
+ * @version     1.0.0
  * @package     JSports.Administrator
  * @subpackage  com_jsports
  * @copyright   Copyright (C) 2023-2024 Chris Strieter
@@ -83,23 +83,6 @@ class HtmlView extends BaseHtmlView
         
         return parent::display($tpl);
         
-        
-//         $db = Factory::getDbo();
-//         $leagues = new ProgramsTable($db);
-        
-//         $leagues->load(1);
-        
-//         $fields = array();
-//         $fields['name'] = 'SWIBL2';
-        
-//         $leagues->save($fields);
-        
-//         print_r($leagues->configuration);
-//         echo "*** done ***";
-//         exit;
-//                 $this->addToolBar();
-        
-//         parent::display($tpl);
     }
     
     protected function addToolBar()

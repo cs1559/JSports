@@ -2,7 +2,7 @@
 /**
  * JSports - Joomla Sports Management Component
  *
- * @version     0.0.1
+ * @version     1.0.0
  * @package     JSports.Site
  * @subpackage  com_jsports
  * @copyright   Copyright (C) 2023-2024 Chris Strieter
@@ -61,12 +61,10 @@ class HtmlView extends BaseHtmlView
 
         $this->canEdit = SecurityService::canEditTeam($this->data->id,$this->data->ownerid);
         
-        
         $this->form = $this->getModel()->getForm($this->item,true);
         $this->form->bind($this->item);
 
         $mod = $this->getModel();
-        
         
         // Retrieve the directory for this teams logo
         $params = ComponentHelper::getParams('com_jsports');
@@ -94,7 +92,7 @@ class HtmlView extends BaseHtmlView
         } else {
             $this->teamlogo = $defaultlogo;
         }
-  //      $this->form->bind($this->item);
+
         if (!SecurityService::isCoach()) {
             $this->data->contactphone = 'Unavailable';
             $this->data->contactemail = 'Unavailable';
