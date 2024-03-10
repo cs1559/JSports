@@ -4,7 +4,7 @@
 	<fieldset addfieldprefix="FP4P\Component\JSports\Administrator\Fields"
 			name="details" label="COM_JSPORTS_DETAILS">
 
-		<field name="id" type="hidden" label="JGLOBAL_FIELD_ID_LABEL"
+		<field name="id" type="hidden" label="COM_JSPORTS_GAMEID"
 			default="0" class="readonly" readonly="true" />
 
 		<field name="redirectteamid" type="hidden" label="COM_JSPORTS_TEAMID"
