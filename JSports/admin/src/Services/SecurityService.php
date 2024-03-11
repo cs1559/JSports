@@ -14,6 +14,7 @@
  * CHANGE HISTORY:
  * - Fixed isAdmin function.  There was logic to check if a person was assigned to a team and that wasn't the intention of that function.
  * 2024-03-07 - Added logic to set the ownerid parameter to user-> on canEditTeamRoster and canEditTeamSchedule
+ * 2024-03-11 - Changed code to check isAdmin when the viewTeamRoster function is called.
  * 
  */
 namespace FP4P\Component\JSports\Administrator\Services;
@@ -235,6 +236,12 @@ class SecurityService
     public static function canViewTeamRoster($teamid, $divisionid = 0) {
         
         $retval= false;
+        
+        // 2024-03-11 - added to allow all league admins to view roster.
+        if (SecurityService::isAdmin()) {
+            return true;
+        }
+        
         $division = DivisionService::getItem($divisionid);
         
         $allowed_agegroups = UserService::getAssignedAgeGroups();
