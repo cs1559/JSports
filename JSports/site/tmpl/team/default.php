@@ -1,8 +1,8 @@
 <?php
 /**
- * JSports Component for Joomla! 4.x
+ * JSports - Joomla Sports Management Component
  *
- * @version     0.0.1
+ * @version     1.0.0
  * @package     JSports
  * @subpackage  Site.Templates
  * @category    Teams
@@ -72,7 +72,14 @@ $document->setTitle(Text::_('COM_JSPORTS_TEAMPROFILE_PAGE_TITLE'));
 						</strong><?php echo $this->data->city . ", " . $this->data->state; ?><br />
 						<strong>Contact Phone:</strong><?php echo $this->data->contactphone; ?><br />
 						<strong>Contact Email: </strong><?php echo $this->data->contactemail; ?><br />
-						<strong>Website: </strong><?php echo $this->data->websiteurl; ?><br />
+						<strong>Website: </strong><?php
+						if (strlen($this->data->websiteurl) > 5) {
+						      echo $this->data->websiteurl; 
+						} else {
+						    echo 'N/A';
+						}
+					   ?><br />
+						      
 						<strong>Most Recent Program: </strong><?php echo $this->recentprogram->name; ?><br />
 					</div>
 				</div>
