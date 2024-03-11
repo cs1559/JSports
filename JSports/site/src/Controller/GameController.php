@@ -84,7 +84,8 @@ class GameController extends FormController
                 $errors = $item->getErrors();
                 $this->setError($errors[0]);
                 $app->enqueueMessage($errors[0],'error');
-                $redirectURL = 'index.php?option=com_jsports&view=schedules&teamid=' . $item->teamid    '&programid=' . $item->programid;
+                $redirectURL = 'index.php?option=com_jsports&view=schedules&teamid=' . 
+                    $item->teamid   . '&programid=' . $item->programid;
             }
         }
         
