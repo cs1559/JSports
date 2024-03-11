@@ -1,10 +1,16 @@
 #Change Log
 
+#0.1.2
+- Made change to allow admins to see any roster.
+- Fixed display of website url on team profile.
+
+#0.1.1 
+- Cleaned up code using SonarLint
+
 #0.1.0
 - Removed Hello folder from templates
 - Added staff/player tranlsation on the manage rosters page.
 - changed sort order of roster model on the SITE side.
-
 
 #0.0.13
 - Added support for a cron job to schedule standings updates.
