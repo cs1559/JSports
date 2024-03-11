@@ -45,7 +45,7 @@ class ProgramsService
      *
      * @return unknown
      */
-    public static function getNonCompletedPrograms() {
+    public static function getNonCompletedPrograms($activeonly = false) {
         $db = Factory::getDbo();
         $query = $db->getQuery(true);
         
@@ -55,6 +55,9 @@ class ProgramsService
             $db->quoteName('p.status') . ' <> "C"',
             $db->quoteName('p.published') . ' in (1) '
         );
+        if ($activeonly) {
+            $conditions[] = $db->quoteName('p.status') . ' = "A"';
+        }
         $query->where($conditions);
         $query->order('id asc');
         $db->setQuery($query);
