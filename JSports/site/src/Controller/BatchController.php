@@ -19,6 +19,8 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Objects\Standings\StandingsEngine;
+use FP4P\Component\JSports\Site\Services\ProgramsService;
+
 
 /**
  * JSports Batch Controller - provides the component with batch capabilities that can be execute via CRON.
@@ -50,8 +52,16 @@ class BatchController extends BaseController
             ob_start();
             echo $output->datetime . "\n";
             print "Update Standings:  START \n";
+            
             $engine = new StandingsEngine();
-            $engine->generateStandings(33);
+            
+            // 2024-03-11 Made changes to support issue#8 - remove hardcoded value.
+            // Retrieve the non completed programs.  'true' will filter only ACTIVE programs.
+            $programs = ProgramsService::getNonCompletedPrograms(true);
+            foreach ($programs as $program) {
+                print "- Processing Program " . $program->id . "\n";
+                $engine->generateStandings($program->id);
+            }
             print "Update Standings:  END \n";
             $msize = ob_get_length();
             header("Content-Length: $msize");
