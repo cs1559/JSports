@@ -31,7 +31,7 @@
 
 		<field name="programid" type="sql" 
 			label="COM_JSPORTS_PROGRAM"
-			query="SELECT id, name FROM #__jsports_programs"
+			query="SELECT id, name FROM #__jsports_programs where status &lt;&gt; 'C' order by id desc"
 			key_field="id"
 			value_field="name" 
 			header="-Select Program-"
