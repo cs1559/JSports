@@ -12,10 +12,13 @@
 
 /**
  * CHANGE HISTORY:
- * - Fixed isAdmin function.  There was logic to check if a person was assigned to a team and that wasn't the intention of that function.
- * 2024-03-07 - Added logic to set the ownerid parameter to user-> on canEditTeamRoster and canEditTeamSchedule
- * 2024-03-11 - Changed code to check isAdmin when the viewTeamRoster function is called.
- * 
+ * - Fixed isAdmin function.  There was logic to check if a person was
+ *    assigned to a team and that wasn't the intention of that function.
+ * 2024-03-07 - Added logic to set the ownerid parameter to user-> on
+ *              canEditTeamRoster and canEditTeamSchedule
+ * 2024-03-11 - Changed code to check isAdmin when the viewTeamRoster
+ *              function is called.
+ *
  */
 namespace FP4P\Component\JSports\Administrator\Services;
 
@@ -32,21 +35,22 @@ class SecurityService
     
     /**
      * Function that determines if a sepcific user can EDIT a team.
-     * 
+     *
      * @param unknown $teamid
      * @param unknown $ownerid
      * @return boolean
      */
     public static function canEditTeam($teamid, $ownerid = null) {
         
-        // Check to see if FRONT END ADMINISTRATIN is enabled.  Prevent all users from editing items on the front end if disabled.
-        // League Administrators can still log into the backend and make necessary changes.
+        // Check to see if FRONT END ADMINISTRATIN is enabled.  Prevent all
+        // users from editing items on the front end if disabled. League
+        // Administrators can still log into the backend and make necessary changes.
         $params = ComponentHelper::getParams('com_jsports');
         $frontendenabled = $params->get('frontend_admin');
    
         // If front-end adminstration is turned off, return FASLE;
         if (!$frontendenabled) {
-            return false;    
+            return false;
         }
         
         // Get current user
@@ -91,10 +95,11 @@ class SecurityService
     }
     
     /**
-     * This function verifies that a specific user can EDIT a team's roster.  Additional business rules can be added here.
-     * Current business rules prohibit a team roster from being edited if the rosters are "locked" (set at the program level) and
+     * This function verifies that a specific user can EDIT a team's roster.  Additional
+     * business rules can be added here. Current business rules prohibit a team roster
+     * from being edited if the rosters are "locked" (set at the program level) and
      * if the program/season is currently CLOSED.
-     *   
+     *
      * @param int $teamid
      * @param int $programid
      * @param int $ownerid
@@ -122,11 +127,12 @@ class SecurityService
             return false;
         }
         
-        return $canEdit;    
+        return $canEdit;
     }
     
     /**
-     * This function verifies that a specific user can EDIT a team's schedule.  Additional business rules can be added here.
+     * This function verifies that a specific user can EDIT a team's schedule.
+     * Additional business rules can be added here.
      *
      * @param int $teamid
      * @param int $programid
@@ -145,13 +151,12 @@ class SecurityService
             return false;
         }
         
-        $canEdit = SecurityService::canEditTeam($teamid, $ownerid);
+        return SecurityService::canEditTeam($teamid, $ownerid);
         
-        return $canEdit;
     }
     
     /**
-     * 
+     *
      * @param unknown $teamid
      * @param unknown $item         // Item from the SchedulesModel.
      */
@@ -170,23 +175,24 @@ class SecurityService
     
     
     /**
-     * This function will return a boolean if the frontend administration is Enabled or Disable.  If disabled, an authorized user
-     * will not be presented a menu of functions for managing a team profile.
-     * 
+     * This function will return a boolean if the frontend administration is
+     * Enabled or Disable.  If disabled, an authorized user will not be
+     * presented a menu of functions for managing a team profile.
+     *
      * @return boolean
      */
     public static function frontEndAdminEnabled() {
         $params = ComponentHelper::getParams('com_jsports');
-        $frontendenabled = $params->get('frontend_admin');
+        return $params->get('frontend_admin');
         
-        return $frontendenabled;
     }
 
     
     /**
-     * This function returns a boolean if the user has been granted ADMIN permissions within the component.  This is beyond
-     * any type of admin role that was granted to an individual via the Team Profile owner id attribute or via the staff roster.
-     * 
+     * This function returns a boolean if the user has been granted ADMIN permissions
+     * within the component.  This is beyond any type of admin role that was granted
+     * to an individual via the Team Profile owner id attribute or via the staff roster.
+     *
      * @return boolean
      */
     public static function isAdmin(){
@@ -217,7 +223,7 @@ class SecurityService
             return false;
         }
         
-        // If the user is assigned with ADMINISTRATOR permissions, then yes. 
+        // If the user is assigned with ADMINISTRATOR permissions, then yes.
         if (SecurityService::isAdmin()) {
             return true;
         }
@@ -247,7 +253,6 @@ class SecurityService
         $allowed_agegroups = UserService::getAssignedAgeGroups();
         
         foreach ($allowed_agegroups as $item) {
-        //echo "DIVISION AGE GROUP: " . $division->agegroup;
             if ($item->agegroup == $division->agegroup) {
                 $retval = true;
             }
@@ -258,4 +263,3 @@ class SecurityService
 }
 
 
- 
