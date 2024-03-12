@@ -1,4 +1,8 @@
 #Change Log
+#0.1.3
+- Fixes to resolve posting score issues.
+- Added new MailService in preparation for sending email notifications when game scores are
+posted.
 
 #0.1.2
 - Made change to allow admins to see any roster.
