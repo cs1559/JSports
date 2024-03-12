@@ -20,6 +20,7 @@ use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Objects\Standings\StandingsEngine;
 use FP4P\Component\JSports\Site\Services\ProgramsService;
+use FP4P\Component\JSports\Site\Services\MailService;
 
 
 /**
@@ -78,5 +79,24 @@ class BatchController extends BaseController
         
         print $content;
         $app->close();
+    }
+    
+    
+    public function testEmail(){
+        $recipients = array();
+        $recipients[]='cs1559@sbcglobal.net';
+        $recipients[]='cjstrieter@gmail.com';
+        $subject = 'This is a test';
+        $body = '<strong>Hello World</strong><br/>This is a test email to multiple recipients';
+        $svc = new MailService();
+        $rc = $svc->sendMail($recipients, $subject, $body);
+        if ($rc) {
+            echo "email sent";
+        } else {
+            echo "email failed";
+        }
+        
+        
+        
     }
 }
