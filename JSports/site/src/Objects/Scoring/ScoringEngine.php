@@ -35,7 +35,7 @@ class ScoringEngine
             $game->awayteampoints = 2;
             $game->hometeampoints = 0;
         } else {
-            $game->awayteampoonts = 1;
+            $game->awayteampoints = 1;
             $game->hometeampoints = 1;
         }
         
