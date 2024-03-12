@@ -23,9 +23,9 @@ use FP4P\Component\JSports\Administrator\Helpers\Html;
 use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\MVC\View\GenericDataException;
 
-use Joomla\CMS\Form\Formhelper;
+// use Joomla\CMS\Form\Formhelper;
 
-FormHelper::loadFieldClass('list');
+// FormHelper::loadFieldClass('list');
 
 class HtmlView extends BaseHtmlView
 {
