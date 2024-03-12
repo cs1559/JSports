@@ -1,4 +1,5 @@
 #Change Log
+
 #0.1.3
 - Fixes to resolve posting score issues.
 - Added new MailService in preparation for sending email notifications when game scores are
