@@ -120,6 +120,7 @@ class UserService
         $query->from($db->quoteName('#__jsports_teams'));
         $conditions = array(
             $db->quoteName('ownerid') . ' = ' . $db->quote($uid),
+            $db->quoteName('id') . ' = ' . $db->quote($teamid),
         );
         $query->where($conditions);
         
