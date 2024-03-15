@@ -216,11 +216,11 @@ $document->setTitle(Text::_('COM_JSPORTS_TEAMPROFILE_PAGE_TITLE'));
             					<tbody>
             	
             				<?php 
-                        	foreach ($this->rosterstaff as $staffitem) {
+                        	foreach ($this->rosterplayers as $rosteritem) {
                             ?>
                             	<tr>
-                            		<td><?php echo $staffitem->firstname . " " . $staffitem->lastname; ?> </td>
-                            		<td><?php echo $staffitem->role; ?>
+                            		<td><?php echo $rosteritem->firstname . " " . $rosteritem->lastname; ?> </td>
+                            		
                             	</tr>
                             <?php } ?>
                             
