@@ -37,7 +37,7 @@ $wa->useStyle('com_jsports.jsports.style');
 <br/><br/>
 
 <div class="jsports-table-wrapper">
-<div tabindex="0" id="standings-container">
+<div id="standings-container">
 
 </div>
 </div>
