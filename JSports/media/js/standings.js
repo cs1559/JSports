@@ -1,16 +1,10 @@
-/*
-	This selector enables a redirect from the team profile based on their menu
-	selection.
-*/
-jQuery("#profile-actions").change(function(){
- 	window.location = jQuery(this).val();
-});
 
-jQuery("#program-list").change(function(){
+
+jQuery( document ).ready(function() {
 
 		jQuery.ajax({
 			    url: 'index.php?option=com_jsports&view=standings&layout=show&tmpl=component',
-			    data: '&programid=' + jQuery("#program-list option:selected").val(),
+			    data: '&programid=' + jQuery("#program-list").first().val(),
 			    type: 'POST',
 				dataType: 'html',
 				beforeSend: function() {
@@ -25,6 +19,9 @@ jQuery("#program-list").change(function(){
 	  				spinner.setAttribute('hidden','');
 	    		}	    		
 			});		
-	
+
 });
 
+
+
+	

@@ -9,7 +9,7 @@
 7. Add logic to post scores functionality that will only allow a score to be posted on or after the actual game date.
 8. Remove ID on the Manage schedule  page **DONE**
 9. Remove ID on the Manage players page. **DONE**
-10.  Translate the classification of P and S to Player and Staff.
+10.  Translate the classification of P and S to Player and Staff.  **DONE**
 11.  Set the page title for manage schedule - JSPORTS_TEAMSCHEDULE_PAGE_TITLE  it does not get translated.  **DONE**
 12.  Make Team Profile web responsive.
 13.  Add Date Updated and Updated by to Team EDIT page in the admin section.
@@ -24,8 +24,8 @@
 22.  On the user list (show on team profile page), add SORT ORDER to the list.   **DONE**
 23.  On the site TEAMS view, need to add ability to filter based on COACHs name.
 24.  Change the "Add Player" button on the Rosters view to "Add Player/Roster"  **DONE**
-25.  Add hyperlinks to team pages on the schedules to make it easy to naviage between pages.
-26.  Ad Game time on the team profile view of the schedule.
+25.  Add hyperlinks to team pages on the schedules to make it easy to naviage between pages/teams.
+26.  Ad Game time on the team profile view of the schedule. **DONE**
 27.  On my team page, improve the layout for mobile devices when multiple teams exist.
-28.  On team page, get rid of the '0' when there is no website url.
+28.  On team page, get rid of the '0' when there is no website url.  **DONE**
 29.  Add a check on the admin side that would prohibit divisions from being reassigned once games have been completed within a program.

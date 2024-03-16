@@ -52,6 +52,17 @@
         "defer": true
       }
     },
+	{
+      "name": "com_jsports.standings.script",
+      "type": "script",
+      "uri": "com_jsports/standings.js",
+      "dependencies": [
+        "jquery"
+      ],
+      "attributes": {
+        "defer": true
+      }
+    },
     
     {
       "name": "com_jsports.jsports.script",

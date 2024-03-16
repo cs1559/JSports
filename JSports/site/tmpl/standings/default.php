@@ -17,6 +17,7 @@ use FP4P\Component\JSports\Administrator\Helpers\Html;
 $wa = $this->document->getWebAssetManager();
 $wa->getRegistry()->addExtensionRegistryFile('com_jsports');
 $wa->useScript('com_jsports.jsports.script');
+$wa->useScript('com_jsports.standings.script');
 $wa->useStyle('com_jsports.jsports.style');
 
 ?>
@@ -27,7 +28,7 @@ $wa->useStyle('com_jsports.jsports.style');
 </div>
 <div hidden id="spinner"></div>
 <form action="<?php echo Route::_('index.php?option=com_jsports&view=Dashboard'); ?>"
-	method="post" name="profileform" id="profile-form" class="form-validate">
+	method="post" name="standingsform" id="standings-form" class="form-validate">
 	
 <?php echo Html::getProgramsList(); ?>
 
