@@ -51,11 +51,11 @@ class HtmlView extends BaseHtmlView
         $input = Factory::getApplication()->input;
         $programid = (int) $input->get('programid');
         
-        if ($programid > 0) {
+//         if ($programid > 0) {
             $this->standings = $this->get('ProgramStandings');
             $this->program = $this->get('Program');
             $layout = "show";
-        }
+//         }
         
         return parent::display($tpl);
     }
