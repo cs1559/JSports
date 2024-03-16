@@ -41,6 +41,10 @@ class StandingsModel extends BaseModel
         $input = Factory::getApplication()->input;
         $programid = (int) $input->get('programid');
         
+        if ($programid < 1) {
+            $program = ProgramsService::getDefaultProgram();
+            $programid = $program->id;
+        }
         $this->program = ProgramsService::getItem($programid);
         
         if ($this->program->status == 'C') {
