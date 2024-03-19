@@ -21,8 +21,14 @@
 
 		<field name="hometeamname" type="text" label="COM_JSPORTS_HOMETEAM"
 			default="0" class="readonly" readonly="true" />
+
+		<field name="hometeamid" type="hidden" label="COM_JSPORTS_HOMETEAMID"
+			default="0" class="readonly" readonly="true" />
 				
 		<field name="awayteamname" type="text" label="COM_JSPORTS_AWAYTEAM"
+			default="0" class="readonly" readonly="true" />
+
+		<field name="awayteamid" type="hidden" label="COM_JSPORTS_AWAYTEAMID"
 			default="0" class="readonly" readonly="true" />
 				
 		<field name="hometeamscore" type="integer" label="Home Team Score" first="0" last="30" step="1"
