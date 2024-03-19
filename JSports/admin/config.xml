@@ -71,9 +71,9 @@
 						
 	</fieldset>
 	<fieldset name="email" description="COM_JSPORTS_EMAIL_DESC" label="COM_JSPORTS_EMAIL_LABEL">
-		<field name="emailenabled" type="radio" default="0"
-			label="COM_JSPORTS_EMAIL_ENABLED"
-			description="COM_JSPORTS_EMAIL_ENABLED_DESC"
+		<field name="eventemails" type="radio" default="0"
+			label="COM_JSPORTS_EVENTEMAILS_ENABLED"
+			description="COM_JSPORTS_EVENTEMAILS_ENABLED_DESC"
 			layout="joomla.form.field.radio.switcher">
 			<option value="0">No</option>
 			<option value="1">Yes</option>
@@ -85,6 +85,17 @@
 		<field name="fromname" type="text" default=""
 			label="COM_JSPORTS_FROMEMAIL_NAME"
 			description="COM_JSPORTS_FROMEMAIL_NAME_DESC">
+		</field>
+		<field name="ccadmin" type="radio" default="0"
+			label="COM_JSPORTS_CCADMIN_ENABLED"
+			description="COM_JSPORTS_CCADMIN_DESC"
+			layout="joomla.form.field.radio.switcher">
+			<option value="0">No</option>
+			<option value="1">Yes</option>
+		</field>
+		<field name="adminemail" type="email" default=""
+			label="COM_JSPORTS_ADMINEMAIL"
+			description="COM_JSPORTS_ADMINEMAIL_DESC">
 		</field>
 			
 	</fieldset>
