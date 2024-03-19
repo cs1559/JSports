@@ -11,15 +11,19 @@
  */
 namespace FP4P\Component\JSports\Site\Objects;
 
-use FP4P\Component\JSports\Site\Objects\EventDispatcher;
+use FP4P\Component\JSports\Site\Objects\Events\EventDispatcher;
+use FP4P\Component\JSports\Site\Services\MailService;
 
 class Application
 {
     
     private static $instance = null;
+    private $dispatcher;
     
     private function __construct() {
         // nothing extra to do.
+        
+        $this->dispatcher = EventDispatcher::getInstance();
     }
     
     public static function getInstance()
@@ -33,6 +37,13 @@ class Application
     }
     
     
+    /**
+     * Ths function will use the dispatcher to trigger the event notifications.
+     * 
+     * @param string $eventName
+     * @param array $args
+     * @return boolean
+     */
     public function triggerEvent($eventName,$args = [] ) {
         /*
          * onAfterPostScore
@@ -40,10 +51,15 @@ class Application
          * onAfterOwnerUpdate
          * onAfterGameDelete
          * 
+         * onAfterPostScore
          */
+
+        $this->dispatcher->trigger($eventName,$args);
+        
         
         return true;
     }
+    
     
 }
 
