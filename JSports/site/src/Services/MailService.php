@@ -54,12 +54,11 @@ class MailService
      {
         
             $params = ComponentHelper::getParams( 'com_jsports' );
-            $emailenabled = $params->get('emailenabled');
             $fromemail = $params->get('fromemail');
             $fromname = $params->get('fromname');
             
-            $fromemail = 'info@swibl.org';
-            $fromname = 'SWIBL';
+//             $fromemail = 'info@swibl.org';
+//             $fromname = 'SWIBL';
             if (strlen($fromemail) <= 1) {
                 return false;
             }
@@ -74,11 +73,11 @@ class MailService
             $mailer->addRecipient($recipient);
                        
             $mailer->setSubject($subject);
-            
+                
             $mailer->isHtml(true);
             $mailer->Encoding = 'base64';
             $mailer->setBody($body);
-    
+            $mailer->addCC($cc);
             $send = $mailer->Send();
             if ( $send !== true ) {
                 return false;
