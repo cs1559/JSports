@@ -34,9 +34,11 @@ $document->setTitle(Text::_('COM_JSPORTS_POSTSCORE_PAGE_TITLE'));
 	<?php // echo "Away: " . Html::getAwatTeamlist($this->teamid, $this->programid); ?>
 	
 	<?php echo $this->form->renderField('name'); ?>
+	<?php echo $this->form->renderField('hometeamid'); ?>
 	<?php echo $this->form->renderField('hometeamname'); ?>
 	<?php echo $this->form->renderField('hometeamscore'); ?>	
 	<?php echo $this->form->renderField('awayteamname'); ?>
+	<?php echo $this->form->renderField('awayteamid'); ?>	
 	<?php echo $this->form->renderField('awayteamscore'); ?>
 	<?php echo $this->form->renderField('teamid');?>
 	<?php echo $this->form->renderField('programid');?>
