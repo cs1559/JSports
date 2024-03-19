@@ -121,7 +121,7 @@ class PostscoreController extends FormController
             
             return false;
         }
-        $japp->triggerEvent('onAfterPostScore', ['data' => $data]);
+        //$japp->triggerEvent('onAfterPostScore', ['data' => $data]);
         
         
         
