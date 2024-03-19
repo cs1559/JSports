@@ -1,4 +1,9 @@
 #Change Log
+#0.1.6
+- Added team ids on the post score screen (hidden)
+- Adding Post Score notification functionality.
+- Added CC League Admin configuraiton options to cc league emails on event notifications
+- Added new component level configurations
 
 #0.1.3
 - Fixes to resolve posting score issues.
