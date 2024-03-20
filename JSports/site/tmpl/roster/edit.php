@@ -42,12 +42,14 @@ if ($this->item->classification == "S") {
 	
 		<?php echo $this->form->renderField('id'); ?>
 		<?php echo $this->form->renderField('teamid'); ?>
-		<?php echo $this->form->renderField('programid'); ?>				
+		<?php echo $this->form->renderField('programid'); ?>
+		<?php echo $this->form->renderField('classification'); ?>				
 		<?php echo $this->form->renderField('firstname'); ?>
 		<?php echo $this->form->renderField('lastname'); ?>
-		<?php echo $this->form->renderField('classification'); ?>
+		<?php echo $this->form->renderField('playernumber'); ?>
 		<?php echo $this->form->renderField('role'); ?>
 		<?php echo $this->form->renderField('userid'); ?>
+		<?php echo $this->form->renderField('staffadmin'); ?>
 		<?php echo $this->form->renderField('email'); ?>
 
 	<input type="hidden" name="task" value="">
