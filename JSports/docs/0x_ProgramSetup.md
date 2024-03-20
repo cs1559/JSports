@@ -2,6 +2,6 @@
 
 
 
-<img src="SetupWorkflow.png" width="800" height="450">
+<img src="images/SetupWorkflow.png" width="800" height="450">
 
 
