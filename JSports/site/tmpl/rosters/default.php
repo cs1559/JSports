@@ -42,8 +42,18 @@ $wa->useStyle('com_jsports.teamprofile.style');
 
 $document->setTitle(Text::_('COM_JSPORTS_TEAMROSTER_PAGE_TITLE'));
 
+if ($this->program->rosterslocked) {
+    
+    ?>
+    <div class="alert alert-warning"><strong>** ROSTERS LOCKED **</strong></div>		
+    <?php 
+}
 
 ?>
+
+
+
+
 <form action="<?php echo Route::_('index.php?option=com_jsports&view=rosters'); ?>" method="post" name="adminForm" id="adminForm">
 	
 	<div class="teamprofile-header-container" >
