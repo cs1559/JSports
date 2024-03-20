@@ -36,6 +36,10 @@ function showStaffElements() {
 			jQuery("#jform_userid-lbl").show();
 			jQuery("#jform_email").show();
 			jQuery("#jform_email-lbl").show();
+			jQuery("#jform_staffadmin").show();
+			jQuery("#jform_staffadmin-lbl").show();
+			jQuery("#jform_playernumber").hide();
+			jQuery("#jform_playernumber-lbl").hide();			
 }
 
 function hideStaffElements() {
@@ -44,6 +48,10 @@ function hideStaffElements() {
 			jQuery("#jform_userid").hide();
 			jQuery("#jform_userid-lbl").hide();
 			jQuery("#jform_email").hide();
-			jQuery("#jform_email-lbl").hide();	
+			jQuery("#jform_email-lbl").hide();
+			jQuery("#jform_staffadmin").hide();
+			jQuery("#jform_staffadmin-lbl").hide();
+			jQuery("#jform_playernumber").show();
+			jQuery("#jform_playernumber-lbl").show();				
 }
 
