@@ -50,7 +50,7 @@ class GameObserver extends BaseObserver
 <br/>Please notify the league if there are any discrepancies with the score that has been posted.<br/>
 <p>
 SWIBL<br/>
-Email: info@swibl-baseball.org<br/>
+Email: info@swibl.org<br/>
 </p> ";
         
         $subject = "SWIBL - Game Score Posted";
