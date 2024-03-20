@@ -112,7 +112,7 @@
 
 		</field>		
 
-		<field name="standingspolicy" type="list" label="JSTATUS"
+		<field name="standingspolicy" type="list" label="COM_JSPORTS_STANDINGSPOLICY"
 			class="form-select-color-state" default="POINTS" validate="options">
 			<option value="POINTS">Points (Points, RA, RS)</option>
 			<option value="WINPCT">Winning Percentage</option>
