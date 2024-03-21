@@ -40,7 +40,24 @@ class SecurityService
      * @param unknown $ownerid
      * @return boolean
      */
-    public static function canEditTeam($teamid, $ownerid = null) {
+    public static function canEditTeam(array $context) {
+        
+        if (isset($context['teamid'])) {
+            $teamid = $context['teamid'];
+        } else {
+            return false;
+        }
+        
+        if (isset($context['ownerid'])) {
+            $ownerid = $context['ownerid'];
+        } else {
+            $ownerid = null;
+        }
+        if (isset($context['programid'])) {
+            $programid = $context['programid'];
+        } else {
+            $programid = TeamService::getMostRecentProgram($teamid);
+        }
         
         // Check to see if FRONT END ADMINISTRATIN is enabled.  Prevent all
         // users from editing items on the front end if disabled. League
@@ -86,8 +103,8 @@ class SecurityService
         
         // Check to see if user is listed on the Staff Rosters of a team.
 
-        $pgm = ProgramsService::getMostRecentProgram();
-        if (UserService::isTeamAdmin($teamid, $pgm['id'], $user->id)){
+        //$pgm = ProgramsService::getMostRecentProgram();
+        if (UserService::isTeamAdmin($teamid, $programid, $user->id)){
             return true;
         }
         return false;
