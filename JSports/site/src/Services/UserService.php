@@ -130,6 +130,7 @@ class UserService
             $db->quoteName('userid') . ' = ' . $db->quote($uid),
             $db->quoteName('teamid') . ' = ' . $db->quote($teamid),
             $db->quoteName('programid') . ' = ' . $db->quote($programid),
+            $db->quoteName('staffadmin') . ' = ' . $db->quote('1'),         
         );
         $query2->where($conditions2);
         
