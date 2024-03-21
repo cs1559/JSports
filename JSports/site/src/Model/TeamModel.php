@@ -85,7 +85,7 @@ class TeamModel extends FormModel
         }
 
         $this->standings = StandingsService::getProgramStandings(
-        $this->recentprogram->id, false, $divisionid);
+            $this->recentprogram->id, false, $divisionid);
         
         $gsvc = new GameService();
         $this->games = $gsvc->getTeamSchedule($id, $recentprogramid);
