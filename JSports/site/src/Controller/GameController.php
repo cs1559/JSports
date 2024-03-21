@@ -92,6 +92,54 @@ class GameController extends FormController
         $this->setRedirect(Route::_($redirectURL));
         
     }
+
+    
+    /**
+     * Function to support the RESET of a game from the team schedule.  This function resets the status to 'S'
+     * @return boolean
+     */
+    public function reset() {
+        
+        $app = Factory::getApplication();
+        
+        $input = Factory::getApplication()->input;
+        $id     = $input->getInt("id");
+        
+        if ($id == 0) {
+            $this->setMessage("Invalid ID value provied - Game RESET failed",'error');
+            $this->setRedirect(Route::_('index.php?option=com_jsports&view=dashboard', false));
+            return false;
+        }
+        
+        // Get the record to be deleted so you know the team ID and the program ID.
+        $svc = new GameService();
+        $item = $svc->getItem($id);
+        
+        $redirectURL = 'index.php?option=com_jsports&view=dashboard';
+        $rUrl = 'index.php?option=com_jsports&view=schedules&teamid=' . $item->teamid . '&programid=' . $item->programid;
+            try {
+                $result = GameService::reset($id);
+                if ($result) {
+                    $this->setMessage("Game status was successfully reset",'info');
+                } else {
+                    $this->setMessage("Game status was NOT reset",'info');
+                }
+                $redirectURL = $rUrl;
+                
+            } catch (Exception $e) {
+                $errors = $item->getErrors();
+                $this->setError($errors[0]);
+                $app->enqueueMessage($errors[0],'error');
+                $redirectURL = 'index.php?option=com_jsports&view=schedules&teamid=' .
+                    $item->teamid   . '&programid=' . $item->programid;
+            }
+        
+        $this->setRedirect(Route::_($redirectURL));
+        
+    }
+    
+    
+    
     
     /**
      * This function will SAVE the game item.
