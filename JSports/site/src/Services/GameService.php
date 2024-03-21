@@ -50,7 +50,7 @@ class GameService
     }
     
     /**
-     * This function will DELETE a specific row within the ROSTERS table.
+     * This function will DELETE a specific row within the GAMES table.
      *
      * @param number $id  Item ID
      */
@@ -69,7 +69,39 @@ class GameService
         
         return $rc;
     }
-       
+
+    
+    /**
+     * This function will RESET the game status
+     *
+     * @param number $id  Item ID
+     */
+    public static function reset($id = 0) {
+        
+        $user = Factory::getUser();
+        $app = Application::getInstance();
+        
+        $db = Factory::getDbo();
+        $table = new GamesTable($db);
+        $row = $table->load($id);
+        
+        $status = 'S';
+        
+        // Change the status of the game and identify who actually posted the score.
+        $data = array(
+            'gamestatus' => 'S',
+//             'updatedby' => $user->username,
+//             'dateupdated' => $datetime,
+        );
+        
+        $table->bind($data);
+        
+        $table->store();
+        
+        return true;
+    }
+    
+    
     
     /**
      * The postScore function will update the necessary fields required when a score is posted.
