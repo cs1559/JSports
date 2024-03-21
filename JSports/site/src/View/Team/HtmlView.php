@@ -58,13 +58,17 @@ class HtmlView extends BaseHtmlView
         $this->data       = $this->get('Data');
         $this->state      = $this->get('State');
         $this->item       = $this->get('Item');
-
-        $this->canEdit = SecurityService::canEditTeam($this->data->id,$this->data->ownerid);
-        
+       
         $this->form = $this->getModel()->getForm($this->item,true);
         $this->form->bind($this->item);
 
         $mod = $this->getModel();
+
+        $context = array('teamid' => $this->data->id,
+            'ownerid' => $this->data->ownerid,
+            'programid' => $mod->recentprogram->id
+        );
+        $this->canEdit = SecurityService::canEditTeam($context);
         
         // Retrieve the directory for this teams logo
         $params = ComponentHelper::getParams('com_jsports');
@@ -77,6 +81,7 @@ class HtmlView extends BaseHtmlView
         $this->rosterplayers = $mod->rosterplayers;
         $this->canSeeRoster = $mod->canSeeRoster;
         $this->games = $mod->games;
+        
         
         
         if ($this->canEdit) {
