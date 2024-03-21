@@ -139,7 +139,13 @@ $document->setTitle(Text::_('COM_JSPORTS_TEAMSCHEDULE_PAGE_TITLE'));
 							<a class="btn btn-primary btn-sm" href="<?php echo Route::_('index.php?option=com_jsports&view=game&layout=edit&id=' . $item->id); ?>">Edit</a>
 							<a class="btn btn-danger btn-sm" onClick="return confirm('Are you sure?');" href="<?php echo Route::_('index.php?option=com_jsports&task=game.delete&id=' . $item->id); ?>">Delete</a>
 						  <?php 
-						}
+					    } else {
+					        if (SecurityService::isAdmin()) {
+					            ?>
+					            <a class="btn btn-secondary btn-sm" onClick="return confirm('Are you sure?');" href="<?php echo Route::_('index.php?option=com_jsports&task=game.reset&id=' . $item->id); ?>">Reset Status</a>
+					            <?php 
+					        }
+					    }
 						?>
 					</td>				
 				<?php } ?>						
