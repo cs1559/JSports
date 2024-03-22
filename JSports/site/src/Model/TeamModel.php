@@ -225,6 +225,9 @@ class TeamModel extends FormModel
 //         $query->where($db->quoteName('a.teamid') . ' = ' . $db->quote($teamid));
 //         $query->order('a.programname DESC');
 
+        
+        //@TODO   This may potentially may show duplicate records after the current season closes.  re-evaluate this.
+        
         $query = " select * from (
             select s.programid, p.name as programname, d.name as divisionname , teamid, teamname, wins, losses, ties, points, runsscored, runsallowed
             from #__jsports_standings s, #__jsports_programs p, #__jsports_divisions d
