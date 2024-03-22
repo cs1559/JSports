@@ -130,6 +130,12 @@ class HtmlView extends BaseHtmlView
             ->message('JGLOBAL_CONFIRM_DELETE')
             ->listCheck(true);
         }
+
+        $toolbar->standardButton('Close')
+        ->icon('fa fa-home')
+        ->text('Close')
+        ->task('programs.close')
+        ->listCheck(true);
         
         $toolbar->standardButton('dashboard')
         ->icon('fa fa-home')
