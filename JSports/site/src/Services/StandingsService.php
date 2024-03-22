@@ -14,7 +14,7 @@ namespace FP4P\Component\JSports\Site\Services;
 use FP4P\Component\JSports\Administrator\Table\TeamsTable;
 use Joomla\Database\ParameterType;
 use Joomla\CMS\Factory;
-use FP4P\Component\JSports\Site\ProgramsService;
+use FP4P\Component\JSports\Site\Services\ProgramsService;
 
 class StandingsService
 {
