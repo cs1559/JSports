@@ -39,7 +39,8 @@
 		/>
 
 		<field name="websiteurl" type="URL" label="COM_JSPORTS_WEBSITEURL"
-			default="0" class="readonly" readonly="true" />
+			hint="Enter your team/orgs website URL"
+			default="" />
 	
 
 	
