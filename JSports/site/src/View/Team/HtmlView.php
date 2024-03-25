@@ -45,6 +45,7 @@ class HtmlView extends BaseHtmlView
     protected $canEdit = false;
     protected $standings;
     protected $canSeeRoster;
+    protected $divisionname;
     
     /**
      * Execute and display a template script.
@@ -70,6 +71,8 @@ class HtmlView extends BaseHtmlView
         );
         $this->canEdit = SecurityService::canEditTeam($context);
         
+        $this->standings = $mod->standings;
+        
         // Retrieve the directory for this teams logo
         $params = ComponentHelper::getParams('com_jsports');
         $logodir = $params->get('logodir');
@@ -81,6 +84,7 @@ class HtmlView extends BaseHtmlView
         $this->rosterplayers = $mod->rosterplayers;
         $this->canSeeRoster = $mod->canSeeRoster;
         $this->games = $mod->games;
+        $this->divisionname = $this->standings[0]['divisionname'];
         
         
         
