@@ -76,7 +76,7 @@ class TeamService
         return $db->execute();
     }
 
-    public function getMostRecentProgram($teamid)
+    public static function getMostRecentProgram($teamid)
     {
         $db = Factory::getDbo();
         $query = $db->getQuery(true);

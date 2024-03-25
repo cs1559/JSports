@@ -88,7 +88,12 @@ class HtmlView extends BaseHtmlView
         
         $error = $mod->getError();
                 
-        $this->canEdit = SecurityService::canEditTeamSchedule($this->team->id,$this->program->id);
+        $context = array(
+            'teamid' => $this->team->id,
+            'programid' => $this->program->id
+        );
+        //$this->canEdit = SecurityService::canEditTeamSchedule($this->team->id,$this->program->id);
+        $this->canEdit = SecurityService::canEditTeamSchedule($context);
         
         // Check for errors.
         if (count($errors = $this->get('Errors')))

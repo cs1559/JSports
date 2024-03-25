@@ -129,8 +129,11 @@ class SecurityService
             $ownerid = $user->id;
         }
         
-        
-        $canEdit = SecurityService::canEditTeam($teamid, $ownerid);
+        $context = array(
+            'teamid' => $teamid,
+            'ownerid' => $ownerid
+        );
+        $canEdit = SecurityService::canEditTeam($context);
 
         $pgm = ProgramsService::getItem($programid);
         
@@ -167,8 +170,15 @@ class SecurityService
         if ($pgm->status == "C") {
             return false;
         }
+        $context = array(
+            'teamid' => $teamid,
+            'ownerid' => $ownerid
+        );
+        return SecurityService::canEditTeam($context);
         
-        return SecurityService::canEditTeam($teamid, $ownerid);
+//        return SecurityService::canEditTeam(array('teamid' => $teamid, 'ownerid' => $ownerid));
+        
+        //return SecurityService::canEditTeam($teamid, $ownerid);
         
     }
     

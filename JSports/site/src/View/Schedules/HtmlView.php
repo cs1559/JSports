@@ -88,6 +88,7 @@ class HtmlView extends BaseHtmlView
                        
         $this->canEdit = SecurityService::canEditTeamSchedule($this->team->id,$this->program->id);
         
+        
         // Check for errors.
         if (count($errors = $this->get('Errors')))
         {
