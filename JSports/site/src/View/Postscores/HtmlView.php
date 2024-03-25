@@ -92,8 +92,8 @@ class HtmlView extends BaseHtmlView
             'teamid' => $this->team->id,
             'programid' => $this->program->id
         );
-        //$this->canEdit = SecurityService::canEditTeamSchedule($this->team->id,$this->program->id);
-        $this->canEdit = SecurityService::canEditTeamSchedule($context);
+        $this->canEdit = SecurityService::canEditTeamSchedule($this->team->id,$this->program->id);
+        //$this->canEdit = SecurityService::canEditTeamSchedule($context);
         
         // Check for errors.
         if (count($errors = $this->get('Errors')))
