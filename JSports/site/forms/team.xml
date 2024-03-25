@@ -39,7 +39,7 @@
 		/>
 
 		<field name="websiteurl" type="URL" label="COM_JSPORTS_WEBSITEURL"
-			hint="Enter your team/orgs website URL"
+			hint="Enter your team or organizations website URL"
 			default="" />
 	
 
