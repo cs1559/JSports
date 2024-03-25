@@ -19,6 +19,7 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Services\GameService;
 use FP4P\Component\JSports\Administrator\Helpers\JSHelper;
+use Joomla\CMS\Component\ComponentHelper;
 
 HTMLHelper::_('behavior.formvalidator');
 HTMLHelper::_('behavior.keepalive');
@@ -31,6 +32,10 @@ $wa = $this->document->getWebAssetManager();
 $wa->getRegistry()->addExtensionRegistryFile('com_jsports');
 $wa->useScript('com_jsports.jsports.script');
 $wa->useStyle('com_jsports.teamprofile.style');
+
+$params = ComponentHelper::getParams('com_jsports');
+$showlinks = $params->get('showpagelinks');
+$showstandings = $params->get('showstandings');
 
 $document->setTitle(Text::_('COM_JSPORTS_TEAMPROFILE_PAGE_TITLE'));
 ?>
@@ -57,6 +62,8 @@ $document->setTitle(Text::_('COM_JSPORTS_TEAMPROFILE_PAGE_TITLE'));
                     ?>
     			</div> <!--  END OF ACTIONS -->
     		</div> <!--  END OF ROW -->
+    		
+
 		</div> <!--  end of section -->
 
 		<hr class="hr-bar">
@@ -85,8 +92,18 @@ $document->setTitle(Text::_('COM_JSPORTS_TEAMPROFILE_PAGE_TITLE'));
 				</div>
 			</div>   <!--  end of section -->
 
+<?php if ($showlinks) { ?>
+    		<div id="bookmarks">Page Links:
+    			<a href="#teamstaff">Team Staff</a> |
+    			<a href="#divisionstandings">Division Standings</a> |
+    			<a href="#teamstats">Team Stats</a> |
+    			<a href="#schedule">Schedule</a> |
+    			<a href="#roster">Roster</a>
+    		</div>
+<?php } ?>
+    		
 			<div class="teamprofile-section container">  <!--  Team Staff Data -->
-				<h3>Team Staff</h3>
+				<h3 id="teamstaff">Team Staff</h3>
 				<hr class="hr-bar">
 				
 				<?php if (count($this->rosterstaff) > 0) { ?>
@@ -117,9 +134,57 @@ $document->setTitle(Text::_('COM_JSPORTS_TEAMPROFILE_PAGE_TITLE'));
              	<?php }?>
 			</div>   <!--  end of section -->
 
+<?php if ($showstandings) { ?>
 
+			<div class="teamprofile-section container">  <!--  Divisional Standings -->
+				<h3 id="divisionstandings">Division Standings (<?php echo $this->divisionname; ?>)</h3>
+				<hr class="hr-bar">
+				
+				<?php if (count($this->standings) > 0) { ?>
+						<div class="teamprofile-table-wrapper">
+            				<table class="table">
+            					<thead>
+            						<tr>
+            							<th scope="col"><?php echo Text::_('COM_JSPORTS_TEAMNAME'); ?></th>
+										<th scope="col">W</th>
+										<th scope="col">L</th>
+										<th scope="col">T</th>
+										<th scope="col">RA</th>
+										<th scope="col">RS</th>
+										<th scope="col">Pts</th>
+            						</tr>
+            					</thead>
+            					<tbody>
+            	
+            				<?php 
+                        	foreach ($this->standings as $standingsitem) {
+                            ?>
+                            	<tr>
+                            		<td>
+                            			<a href="<?php echo Route::_('index.php?option=com_jsports&view=team&id=' . $standingsitem['teamid']); ?>">
+                            			<?php echo $standingsitem['teamname']; ?>
+                            			</a> 
+                        			</td>
+                            		<td><?php echo $standingsitem['wins']; ?>
+                            		<td><?php echo $standingsitem['losses']; ?>
+                            		<td><?php echo $standingsitem['ties']; ?>
+                            		<td><?php echo $standingsitem['runsallowed']; ?>
+                            		<td><?php echo $standingsitem['runsscored']; ?>
+                        			<td><?php echo $standingsitem['points']; ?>
+                            	</tr>
+                            <?php } ?>
+                            
+                            </tbody>
+                            </table>
+                        </div>
+             	<?php } else {    ?>
+             				* See Contact Information above *
+             	<?php }?>
+			</div>   <!--  end of section -->
+
+<?php } ?>
 			<div class="teamprofile-section container">
-					<h3>Team Statistics</h3>
+					<h3 id="teamstats">Team Statistics</h3>
 					<hr class="hr-bar">
 						<div class="teamprofile-table-wrapper">
 								<table class="table">
@@ -164,7 +229,7 @@ $document->setTitle(Text::_('COM_JSPORTS_TEAMPROFILE_PAGE_TITLE'));
 
 			<!--  SCHEDULE SECTION -->
 			<div class="teamprofile-section container">   
-				<h3>Schedule - <?php echo $this->recentprogram->name; ?></h3>
+				<h3 id="schedule">Schedule - <?php echo $this->recentprogram->name; ?></h3>
 					<hr class="hr-bar">
 						<div class="teamprofile-table-wrapper">
 								<table class="table">
@@ -200,7 +265,7 @@ $document->setTitle(Text::_('COM_JSPORTS_TEAMPROFILE_PAGE_TITLE'));
 
 			<!-- ROSTER SECTION -->
 			<div class="teamprofile-section container">  <!--  Team Staff Data -->
-				<h3>Team Roster</h3>
+				<h3 id="roster">Team Roster</h3>
 				<hr class="hr-bar">
 				
 				<?php 
@@ -211,6 +276,7 @@ $document->setTitle(Text::_('COM_JSPORTS_TEAMPROFILE_PAGE_TITLE'));
             					<thead>
             						<tr>
             							<th scope="col">Name</th>
+        								<th scope="col">No.</th>
             						</tr>
             					</thead>
             					<tbody>
@@ -220,7 +286,7 @@ $document->setTitle(Text::_('COM_JSPORTS_TEAMPROFILE_PAGE_TITLE'));
                             ?>
                             	<tr>
                             		<td><?php echo $rosteritem->firstname . " " . $rosteritem->lastname; ?> </td>
-                            		
+                            		<td><?php echo $rosteritem->playernumber; ?>
                             	</tr>
                             <?php } ?>
                             
