@@ -123,6 +123,11 @@ class SecurityService
      * @return boolean|unknown
      */
     public static function canEditTeamRoster($teamid, $programid, $ownerid = null) {
+        
+        // If the user is a "super user" or "administrator" immediately grant them access
+        if (SecurityService::isAdmin()) {
+            return true;
+        }
 
         if (is_null($ownerid)) {
             $user = Factory::getUser();
@@ -161,6 +166,11 @@ class SecurityService
      */
     public static function canEditTeamSchedule($teamid, $programid, $ownerid = null) {
 
+        // If the user is a "super user" or "administrator" immediately grant them access
+        if (SecurityService::isAdmin()) {
+            return true;
+        }
+        
         if (is_null($ownerid)) {
             $user = Factory::getUser();
             $ownerid = $user->id;
