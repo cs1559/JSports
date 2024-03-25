@@ -9,8 +9,10 @@ jQuery( document ).ready(function() {
 	}
 	
 	type = jQuery('#jform_classification').val();
-	if (type == 'P') {
+	if (type == "P") {
 		hideStaffElements();
+	} else {
+		showStaffElements();
 	}
 });
 
