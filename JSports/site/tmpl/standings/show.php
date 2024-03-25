@@ -20,7 +20,6 @@ $wa->getRegistry()->addExtensionRegistryFile('com_jsports');
 $wa->useScript('com_jsports.jsports.script');
 $wa->useStyle('com_jsports.standings.style');
 
-// Retrieve the directory for this teams logo
 $params = ComponentHelper::getParams('com_jsports');
 $showposition = $params->get('showposition');
 
