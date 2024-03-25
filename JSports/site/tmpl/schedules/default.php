@@ -130,26 +130,25 @@ $document->setTitle(Text::_('COM_JSPORTS_TEAMSCHEDULE_PAGE_TITLE'));
 					</td>
 					<td class="">
 							<?php // echo $item->id; ?>
-					<?php 
-					//if ($this->canEdit && (SecurityService::canEditGame($this->team->id, $item))) {  	
-					if ($this->canEdit) {
-					    // Remove all buttons if the game has been completed.
-					    if ($item->gamestatus != 'C') {
-					    ?>
-							<a class="btn btn-primary btn-sm" href="<?php echo Route::_('index.php?option=com_jsports&view=game&layout=edit&id=' . $item->id); ?>">Edit</a>
-							<a class="btn btn-danger btn-sm" onClick="return confirm('Are you sure?');" href="<?php echo Route::_('index.php?option=com_jsports&task=game.delete&id=' . $item->id); ?>">Delete</a>
-						  <?php 
-					    } else {
-					        if (SecurityService::isAdmin()) {
-					            ?>
-					            <a class="btn btn-secondary btn-sm" onClick="return confirm('Are you sure?');" href="<?php echo Route::_('index.php?option=com_jsports&task=game.reset&id=' . $item->id); ?>">Reset Status</a>
-					            <?php 
-					        }
-					    }
-						?>
-					</td>				
-				<?php } ?>						
+    					<?php 
+    					//     canEditGame(team id of schedule being viewed, game object)
+    					if ($this->canEdit && (SecurityService::canEditGame($this->team->id, $item))) {
+    					//if ($this->canEdit) {
+    					    // Remove all buttons if the game has been completed.
+        					    if ($item->gamestatus != 'C') {
+        					    ?>
+        							<a class="btn btn-primary btn-sm" href="<?php echo Route::_('index.php?option=com_jsports&view=game&layout=edit&id=' . $item->id); ?>">Edit</a>
+        							<a class="btn btn-danger btn-sm" onClick="return confirm('Are you sure?');" href="<?php echo Route::_('index.php?option=com_jsports&task=game.delete&id=' . $item->id); ?>">Delete</a>
+        						  <?php 
+        					    }
+    					 } 
 
+    			         if (SecurityService::isAdmin()) {
+    				          ?>
+    				        <a class="btn btn-secondary btn-sm" onClick="return confirm('Are you sure?');" href="<?php echo Route::_('index.php?option=com_jsports&task=game.reset&id=' . $item->id); ?>">Reset Status</a>
+    				          <?php
+    				     }
+    						?>
 					</td>
 				</tr>
 		<?php endforeach; ?>
