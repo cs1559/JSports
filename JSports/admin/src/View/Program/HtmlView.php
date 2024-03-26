@@ -116,7 +116,7 @@ class HtmlView extends BaseHtmlView
             $toolbar->cancel('program.cancel', 'JTOOLBAR_CLOSE');
         }
         
-        ToolbarHelper::custom('program.setup', 'process.png', 'process_f2.png', 'Program Setup', false);
+//        ToolbarHelper::custom('program.setup', 'process.png', 'process_f2.png', 'Program Setup', false);
 //         if ($canDo->get('core.delete'))
 //         {
 //             $toolbar->delete('program.delete')
