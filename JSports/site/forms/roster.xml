@@ -38,7 +38,7 @@
 		</field>
 
 		<field name="role" type="list" 	label="COM_JSPORTS_ROLE" 
-			class="form-select-color-state" default="" validate="options">
+			class="form-select-color-state" default="Asst Coach" validate="options">
 			<option value="Head Coach">COM_JSPORTS_HEADCOACH</option>
 			<option value="Asst Coach">COM_JSPORTS_ASSTCOACH</option>
 			<option value="Team Manager">COM_JSPORTS_TEAM_MANAGER</option>
