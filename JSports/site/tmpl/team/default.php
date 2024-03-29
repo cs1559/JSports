@@ -239,8 +239,8 @@ $document->setTitle(Text::_('COM_JSPORTS_TEAMPROFILE_PAGE_TITLE'));
 											<th scope="col">Time</th>
 											<th scope="col">Name</th>
 											<th scope="col">W/L</th>
-											<th scope="col">RA</th>
-											<th scope="col">RS</th>
+											<th scope="col">Away</th>
+											<th scope="col">Home</th>
 											<th scope="col">Status</th>
 										</tr>
 									</thead>
