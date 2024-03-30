@@ -34,9 +34,15 @@ class Html
         
         // Select all records from the user profile table where key begins with "custom.".
         // Order it by the ordering field.
+        
+        $conditions = array(
+            $db->quoteName('programid') . ' = ' . $db->quote($programid),
+            $db->quoteName('published') . ' = 1 ',
+        );
+        
         $query->select($db->quoteName(array('id', 'name', 'agegroup')));
         $query->from($db->quoteName('#__jsports_divisions'));
-        $query->where($db->quoteName('programid') . ' = ' . $db->quote($programid));
+        $query->where($conditions);
         $query->order('name ASC');
         
         // Reset the query using our newly populated query object.
