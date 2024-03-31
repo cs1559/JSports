@@ -85,4 +85,31 @@ class ProgramsController extends AdminController
         }
         
     }
+    
+    
+    /**
+     * Logic when the user selects 'SETUP' from the programs list.  
+     */
+    public function setup() {
+        $app = Factory::getApplication();
+        
+        $ids = $this->input->post->get('cid', array(), 'array');
+        if (count($ids) > 1) {
+            Factory::getApplication()->enqueueMessage("You can only SETUP one program at a time", 'warning');
+            $this->setRedirect('index.php?option=com_jsports&view=programs');
+            return;
+        } 
+
+        $program = ProgramsService::getItem($ids[0]);
+        
+        if ($program->registrationonly) {
+            Factory::getApplication()->enqueueMessage("Setup does not apply to REGISTRATION ONLY programs", 'warning');
+            $this->setRedirect('index.php?option=com_jsports&view=programs');
+            return;
+        }
+        
+        $this->setRedirect('index.php?option=com_jsports&view=programsetup&programid=' . $ids[0]);
+    }
+    
+    
 }
