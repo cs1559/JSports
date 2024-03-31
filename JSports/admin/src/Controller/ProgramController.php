@@ -15,6 +15,7 @@ namespace FP4P\Component\JSports\Administrator\Controller;
 defined('_JEXEC') or die;
 
 use Joomla\CMS\MVC\Controller\FormController;
+use Joomla\CMS\Factory;
 
 /**
  * Controller for a single Program
@@ -30,6 +31,14 @@ class ProgramController extends FormController
         
         parent::save($key, $urlVar);
         
+    }
+    
+    public function setup() {
+        $app = Factory::getApplication();
+        
+        $programid = $app->input->get('id', 0, 'int');
+        
+        $this->setRedirect('index.php?option=com_jsports&view=programsetup&programid=' . $programid);
     }
     
 }
