@@ -29,12 +29,17 @@ class HtmlView extends BaseHtmlView
         $this->title = $this->get('Title');
         $this->version = $this->get('Version');
         
-//         $this->addToolBar();
+         $this->addToolBar();
         
         parent::display($tpl);
     }
     
-    protected function addToolBar()
-    {
+    protected function addToolBar() {
+        
+    
+        $toolbar = Toolbar::getInstance();
+        $toolbar->preferences('com_jsports');
+        
+        ToolbarHelper::help('help.html', true);
     }
 }
