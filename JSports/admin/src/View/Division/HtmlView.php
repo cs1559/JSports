@@ -116,6 +116,6 @@ class HtmlView extends BaseHtmlView
             $toolbar->cancel('division.cancel', 'JTOOLBAR_CLOSE');
         }
         
-        
+        ToolbarHelper::help('help.html', true);
     }
 }

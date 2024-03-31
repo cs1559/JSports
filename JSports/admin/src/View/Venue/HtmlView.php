@@ -117,6 +117,6 @@ class HtmlView extends BaseHtmlView
             $toolbar->cancel('venue.cancel', 'JTOOLBAR_CLOSE');
         }
         
-        
+        ToolbarHelper::help('help.html', true);
     }
 }

@@ -116,12 +116,12 @@ class HtmlView extends BaseHtmlView
             $toolbar->cancel('program.cancel', 'JTOOLBAR_CLOSE');
         }
         
-//        ToolbarHelper::custom('program.setup', 'process.png', 'process_f2.png', 'Program Setup', false);
-//         if ($canDo->get('core.delete'))
-//         {
-//             $toolbar->delete('program.delete')
-//                 ->message('JGLOBAL_CONFIRM_DELETE');
-//         }
+        $toolbar->standardButton('Setup')
+        ->icon('fa fa-home')
+        ->text('Setup Program')
+        ->task('program.setup')
+        ->listCheck(false);
         
+        ToolbarHelper::help('help.html', true);
     }
 }

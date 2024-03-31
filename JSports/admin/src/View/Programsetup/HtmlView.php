@@ -70,8 +70,18 @@ class HtmlView extends BaseHtmlView
         $this->items         = $this->get('Items');
         $this->pagination    = $this->get('Pagination');
         $this->state         = $this->get('State');
-        $this->filterForm    = $this->get('FilterForm');
+        //$this->filterForm    = $this->get('FilterForm');
+        $this->form    = $this->get('Form');
         $this->activeFilters = $this->get('ActiveFilters');
+        
+        $input = Factory::getApplication()->input;
+        $programid = $input->get('programid');
+
+        $defaults = array(
+              'programid' => $programid,
+        );
+        $this->form->bind($defaults);
+        
         
         // Check for errors.
         if (count($errors = $this->get('Errors')))
@@ -119,6 +129,9 @@ class HtmlView extends BaseHtmlView
         }
         
         ToolbarHelper::custom('programsetup.assigndivisions', 'save', 'save', 'Save Division Assignments', false, 'adminForm');
+
+        ToolbarHelper::custom('programsetup.programsList', 'list', 'list', 'Program List', false, 'adminForm');
+        
         
         if ($this->state->get('filter.published') == -2 && $canDo->get('core.delete'))
         {
@@ -128,17 +141,19 @@ class HtmlView extends BaseHtmlView
             ->listCheck(true);
         }
         
+        /*
         $toolbar->standardButton('dashboard')
         ->icon('fa fa-home')
         ->text('Dashboard')
         ->task('display.dashboard')
         ->listCheck(false);
-        
+        */
         if ($canDo->get('core.create'))
         {
             $toolbar->preferences('com_jsports');
         }
         
+        ToolbarHelper::help('help.html', true);
     }
    
 }

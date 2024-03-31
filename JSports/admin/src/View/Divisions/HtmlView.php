@@ -121,6 +121,8 @@ class HtmlView extends BaseHtmlView
             {
                 $childBar->trash('divisions.trash')->listCheck(true);
             }
+            
+
         }
         
         if ($this->state->get('filter.published') == -2 && $canDo->get('core.delete'))
@@ -143,8 +145,9 @@ class HtmlView extends BaseHtmlView
             $toolbar->preferences('com_jsports');
         }
         
+        $toolbar->preferences('com_jsports');
         
-        
+        ToolbarHelper::help('help.html', true);
     }
    
 }

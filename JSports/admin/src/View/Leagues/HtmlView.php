@@ -144,6 +144,8 @@ class HtmlView extends BaseHtmlView
             $toolbar->preferences('com_jsports');
         }
         
+        ToolbarHelper::help('help.html', true);
+        
     }
    
 }

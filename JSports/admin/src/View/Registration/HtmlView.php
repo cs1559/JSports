@@ -1,4 +1,5 @@
-<?php/**
+<?php
+/**
 * JSports - Joomla Sports Management Component
 *
 * @version     1.0.0
@@ -10,6 +11,7 @@
 */
 
 namespace FP4P\Component\JSports\Administrator\View\Registration;
+
 
 defined('_JEXEC') or die;
 
@@ -116,6 +118,7 @@ class HtmlView extends BaseHtmlView
             $toolbar->cancel('registration.cancel', 'JTOOLBAR_CLOSE');
         }
         
+        ToolbarHelper::help('help.html', true);
         
     }
 }

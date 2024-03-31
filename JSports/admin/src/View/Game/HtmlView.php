@@ -121,6 +121,6 @@ class HtmlView extends BaseHtmlView
             $toolbar->cancel('game.cancel', 'JTOOLBAR_CLOSE');
         }
         
-        
+        ToolbarHelper::help('help.html', true);
     }
 }

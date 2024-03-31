@@ -131,9 +131,23 @@ class HtmlView extends BaseHtmlView
             ->listCheck(true);
         }
 
+        $toolbar->standardButton('setup')
+        ->icon('icon-cog')
+        ->text('COM_JSPORTS_SETUP')
+        ->task('programs.setup')
+        ->listCheck(true);
+        
+        
+        
+        $toolbar->standardButton('Refresh Standings')
+        ->icon('icon-refresh')
+        ->text('COM_JSPORTS_REFRESH_STANDINGS')
+        ->task('programs.refreshstandings')
+        ->listCheck(true);
+        
         $toolbar->standardButton('Close')
-        ->icon('fa fa-home')
-        ->text('Close')
+        ->icon('fa fa-lock')
+        ->text('COM_JSPORTS_CLOSE_PROGRAM')
         ->task('programs.close')
         ->listCheck(true);
         
@@ -148,6 +162,7 @@ class HtmlView extends BaseHtmlView
             $toolbar->preferences('com_jsports');
         }
         
+        ToolbarHelper::help('help.html', true);
     }
    
 }

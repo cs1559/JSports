@@ -98,7 +98,7 @@ class HtmlView extends BaseHtmlView
         $toolbar = Toolbar::getInstance();
         
         ToolbarHelper::title(
-            Text::_('COM_JSPORTS_PROGRAM_PAGE_TITLE_' . ($isNew ? 'ADD' : 'EDIT'))
+            Text::_('COM_JSPORTS_LEAGUE_PAGE_TITLE_' . ($isNew ? 'ADD' : 'EDIT'))
             );
         
         $canDo = ContentHelper::getActions('com_jsports');
@@ -116,6 +116,6 @@ class HtmlView extends BaseHtmlView
             $toolbar->cancel('league.cancel', 'JTOOLBAR_CLOSE');
         }
         
-        
+        ToolbarHelper::help('help.html', true);
     }
 }

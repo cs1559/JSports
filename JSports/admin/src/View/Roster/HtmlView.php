@@ -116,6 +116,7 @@ class HtmlView extends BaseHtmlView
         {
             $toolbar->cancel('roster.cancel', 'JTOOLBAR_CLOSE');
         }
-                
+              
+        ToolbarHelper::help('help.html', true);
     }
 }
