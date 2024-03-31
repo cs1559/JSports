@@ -17,6 +17,9 @@ defined('_JEXEC') or die;
 use Joomla\CMS\MVC\Controller\BaseController;
 use FP4P\Component\JSports\Site\Objects\Standings\StandingsEngine;
    
+use Joomla\CMS\Factory;
+
+
 class DisplayController extends BaseController
 {
             
@@ -24,6 +27,22 @@ class DisplayController extends BaseController
            
     public function display($cachable = false, $urlparams = array())
     {
+        
+        
+        $input = Factory::getApplication()->input;
+        
+        if (strtolower($input->get('view'))== "programsetup"){
+            $programid = $input->get('programid');
+            
+            if (!$programid) {
+                $app = Factory::getApplication();
+                $app->enqueueMessage("A Program must be selected", 'message');
+                $this->setRedirect('index.php?option=com_jsports&view=programs');
+                return;
+            }
+        }
+        
+        
         
         return parent::display($cachable, $urlparams);
     }
