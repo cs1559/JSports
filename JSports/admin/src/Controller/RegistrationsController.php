@@ -25,11 +25,11 @@ class RegistrationsController extends AdminController
         return parent::display($cachable, $urlparams);
     }
 
-    public function publish() {
-        $model = $this->getModel('Registration');
+//     public function publish() {
+//         $model = $this->getModel('Registration');
         
-        parent::publish();
-    }
+//         parent::publish();
+//     }
     
     public function getModel($name = 'Registration', $prefix = 'Administrator', $config = ['ignore_request' => true])
     {
