@@ -29,6 +29,7 @@ class ProgramsetupController extends AdminController
     
     public function display($cachable = false, $urlparams = array())
     {
+        
         return parent::display($cachable, $urlparams);
     }
 
@@ -40,6 +41,9 @@ class ProgramsetupController extends AdminController
      */
     public function assignDivisions() {
         
+        $input = Factory::getApplication()->input;
+        $requestData = $input->post->get('jform', [], 'array');
+        
         $assignments = $_REQUEST["div-assignment"];
         
         foreach ($assignments as $key => $value) {
@@ -48,10 +52,15 @@ class ProgramsetupController extends AdminController
         
         Factory::getApplication()->enqueueMessage("Division assignments ahve been saved", 'message');
         
-        $this->setRedirect('index.php?option=com_jsports&view=programsetup');
+        $this->setRedirect('index.php?option=com_jsports&view=programsetup&programid=' . $requestData['programid']);
         
     }
     
+    protected function programsList(){
+        
+        $this->setRedirect('index.php?option=com_jsports&view=programs');
+        
+    }
 
     /**
      * This function updates the internal map that associates a team to a given division wihtin a given program.  This map table
