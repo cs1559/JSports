@@ -120,7 +120,8 @@ class HtmlView extends BaseHtmlView
 //         {
 //             $toolbar->cancel('game.cancel', 'JTOOLBAR_CLOSE');
 //         }
-        
+
+       $toolbar->preferences('com_jsports');
         
     }
 }
