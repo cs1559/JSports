@@ -34,6 +34,8 @@ HTMLHelper::_('behavior.keepalive');
 					<div class="col-md-8">
 						<?php echo $this->form->renderField('leagueid'); ?>
 						<?php echo $this->form->renderField('description'); ?>
+						<?php echo $this->form->renderField('sportcode'); ?>
+						<?php echo $this->form->renderField('groupingscode'); ?>
 						<?php echo $this->form->renderField('programstart'); ?>
 						<?php echo $this->form->renderField('programend'); ?>						
 						<?php echo $this->form->renderField('id'); ?>
