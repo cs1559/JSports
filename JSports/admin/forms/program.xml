@@ -39,6 +39,22 @@
 			<option value="C">Closed</option>
 		</field>
 
+		<field name="sportcode" type="list"
+			label="COM_JSPORTS_SPORT" class="" default="B"
+			validate="options">
+			<option value="B">Baseball</option>
+			<option value="G">Golf</option>
+		</field>
+
+
+		<field name="groupingscode" type="sql" 
+			label="COM_JSPORTS_GROUPINGSCODE"
+			query="SELECT code, name FROM #__jsports_groups where published = 1 order by name"
+			key_field="code"
+			value_field="name" 
+			header="-Select Groups -"
+		/>
+
 		<field name="registrationtemplate" type="text"
 			label="COM_JSPORTS_REGISTRATIONTEMPLATE" />
 
