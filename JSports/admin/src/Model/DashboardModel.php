@@ -18,6 +18,7 @@ use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\MVC\Model\BaseModel;
 use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Administrator\Table\LeaguesTable;
+use FP4P\Component\JSports\Administrator\Helpers\JSHelper;
 
 class DashboardModel extends BaseModel
 {
@@ -32,21 +33,9 @@ class DashboardModel extends BaseModel
      */
     public function __construct() {
         parent::__construct();
-        
-        $league = new LeaguesModel();
-        $league->id = 1;
-    
-        $array = (array) $league;
-        
-        $db = Factory::getDbo();
-        $leagues = new LeaguesTable($db);
-        
-        $l = $leagues->load(1);
-        
-        $leagues->bind($array);
-        
+                
         $this->title  = "Sports Managment Component";
-        $this->version = "1.0";
+        $this->version = JSHelper::getVersion();
     }
     
     public function getTitle()
