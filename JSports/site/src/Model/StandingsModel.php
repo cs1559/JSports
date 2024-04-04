@@ -19,6 +19,7 @@ use Joomla\Database\ParameterType;
 use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Services\StandingsService;
 use FP4P\Component\JSports\Site\Services\ProgramsService;
+use FP4P\Component\JSports\Site\Services\DivisionService;
 
 /**
  *
@@ -30,6 +31,7 @@ class StandingsModel extends BaseModel
     
     protected $standings;
     protected $program;
+    protected $divisions;
     
     /**
      * This function will retrieve a list of teams assocaited with the user.
@@ -46,6 +48,7 @@ class StandingsModel extends BaseModel
             $programid = $program->id;
         }
         $this->program = ProgramsService::getItem($programid);
+        $this->divisions = DivisionService::getDivisionList($programid);
         
         if ($this->program->status == 'C') {
             $this->standings = StandingsService::getProgramStandings($programid,true);
@@ -60,6 +63,9 @@ class StandingsModel extends BaseModel
         return $this->program;
     }
     
+    public function getDivisions() {
+        return $this->divisions;
+    }
     
     
 }
