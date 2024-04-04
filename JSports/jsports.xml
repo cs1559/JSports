@@ -3,14 +3,14 @@
 
 	<name>JSports</name>
 	<!-- The following elements are optional and free of formatting constraints -->
-	<creationDate>2024-03-25</creationDate>
+	<creationDate>2024-04-04</creationDate>
 	<author>Chris Strieter</author>
 	<authorEmail>chris@swibl.org</authorEmail>
 	<authorUrl>http://www.swibl.org</authorUrl>
 	<copyright>Copyright (c) 2006-2024. Chris Strieter. All rights reserved.</copyright>
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
 	<!--  The version string is recorded in the components table -->
-	<version>0.1.8</version>
+	<version>0.1.9</version>
 	<!-- The description is optional and defaults to the name -->
 	<description>JSports is a sports management tool for sports league.  It was designed and built to meet the needs of a youth 
 	select sports league.   Currently functionality includes building of programs (e.g. seasons), division management, rostering, registration
@@ -42,7 +42,18 @@
 
 
 	<administration>
-	 	<menu link="index.php?option=com_jsports">Sports Management</menu>
+	 	<menu link="index.php?option=com_jsports">JSports</menu>
+		<submenu>
+			<menu link="option=com_jsports&amp;view=dashboard">Dashboard</menu>
+			<menu link="option=com_jsports&amp;view=leagues">Leagues</menu>
+			<menu link="option=com_jsports&amp;view=programs">Programs</menu>
+			<menu link="option=com_jsports&amp;view=divisions">Divisions</menu>
+			<menu link="option=com_jsports&amp;view=teams">Teams</menu>
+			<menu link="option=com_jsports&amp;view=venues">Venues</menu>
+			<menu link="option=com_jsports&amp;view=registrations">Registrations</menu>
+			<menu link="option=com_jsports&amp;view=games">Games</menu>
+			<menu link="option=com_jsports&amp;view=rosters">Rosters</menu>
+		</submenu>
 
 		<files folder="admin">
 			<!-- Admin Main File Copy Section -->
@@ -50,6 +61,7 @@
 			<filename>jsports.php</filename>
 			<filename>access.xml</filename>
 			<filename>config.xml</filename>
+			<folder>help</folder>
 			<folder>src</folder>
 			<folder>forms</folder>
 			<folder>services</folder>
