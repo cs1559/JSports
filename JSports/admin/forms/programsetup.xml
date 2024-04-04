@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+
+	<fieldset addfieldprefix="FP4P\Component\JSports\Administrator\Fields"
+			name="details" label="COM_JSPORTS_DETAILS">
+
+		<field name="programid" type="hidden" label="COM_JSPORTS_PROGRAMID"
+			default="0" class="readonly" readonly="true" />
+			
+		<field
+			name="agegroup"
+			type="list"
+			onchange="this.form.submit();"
+			>
+			<option selected="selected" value="">- Select Age Group -</option>
+			<option value="7">7U</option>
+			<option value="8">8U</option>
+			<option value="9">9U</option>
+			<option value="10">10U</option>
+			<option value="11">11U</option>
+			<option value="12">12U</option>
+			<option value="13">13U</option>
+			<option value="14">14U</option>
+		</field>
+
+		<field
+			name="published"
+			type="status"
+			label="JOPTION_SELECT_PUBLISHED"
+			onchange="this.form.submit();"
+			>
+			<option value="*">- Select State -</option>
+		</field>
+
+	</fieldset>
+
+</form>
