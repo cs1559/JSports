@@ -143,7 +143,7 @@ $document->setTitle(Text::_('COM_JSPORTS_TEAMSCHEDULE_PAGE_TITLE'));
         					    }
     					 } 
 
-    			         if (SecurityService::isAdmin()) {
+    			         if (SecurityService::isAdmin() && $item->gamestatus == "C") {
     				          ?>
     				        <a class="btn btn-secondary btn-sm" onClick="return confirm('Are you sure?');" href="<?php echo Route::_('index.php?option=com_jsports&task=game.reset&id=' . $item->id); ?>">Reset Status</a>
     				          <?php
