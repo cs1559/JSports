@@ -29,26 +29,18 @@ HTMLHelper::_('behavior.keepalive');
 	method="post" name="registerform" id="register-form" class="form-validate">
 	
 <div class="row">
-<?php echo $this->form->renderField('id');?>
-<?php echo $this->form->renderField('programid');?>
-<?php echo $this->form->renderField('teamname');?>
-<?php echo $this->form->renderField('name');?>
-<?php echo $this->form->renderField('email');?>
-<?php echo $this->form->renderField('phone');?>
-<?php echo $this->form->renderField('address');?>
-<?php echo $this->form->renderField('city');?>
-<?php echo $this->form->renderField('state');?>
-<?php echo $this->form->renderField('grouping');?>
-<?php echo $this->form->renderField('skilllevel');?>
-<div class="row agreement-container">
-<h3>COACHES AGREEMENT</h3>
-All coaches are required to review the Coaches Agreement/Code of Conduct before submitting their registration.  
-Please <a href="<?php echo $this->agreementurl;?>" target="_blank">CLICK HERE TO DOWNLOAD AGREEMENT</a> and review the document before continuing.   
-<?php echo $this->form->renderField('tosack');?>
-</div>
-<?php echo $this->form->renderField('registeredby');?>
-<?php echo $this->form->renderField('captcha');?>
-
+    <?php echo $this->form->renderField('id');?>
+    <?php echo $this->form->renderField('programid');?>	
+    <?php echo $this->form->renderField('teamname');?>
+    <?php echo $this->form->renderField('name');?>
+    <?php echo $this->form->renderField('email');?>
+    <?php echo $this->form->renderField('phone');?>
+    <?php echo $this->form->renderField('address');?>
+    <?php echo $this->form->renderField('city');?>
+    <?php echo $this->form->renderField('state');?>
+    <?php echo $this->form->renderField('grouping');?>
+    <?php echo $this->form->renderField('registeredby');?>
+    <?php echo $this->form->renderField('captcha');?>
 </div>
 
 

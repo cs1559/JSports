@@ -38,7 +38,7 @@ HTMLHelper::_('behavior.keepalive');
 <?php echo $this->form->renderField('address');?>
 <?php echo $this->form->renderField('city');?>
 <?php echo $this->form->renderField('state');?>
-<?php echo $this->form->renderField('agegroup');?>
+<?php echo $this->form->renderField('grouping');?>
 <?php echo $this->form->renderField('skilllevel');?>
 <?php echo $this->form->renderField('playoffs');?>
 <div class="row agreement-container">
