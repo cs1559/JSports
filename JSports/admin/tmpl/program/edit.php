@@ -74,10 +74,10 @@ HTMLHelper::_('behavior.keepalive');
 
 		<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'registration', Text::_('COM_JSPORTS_REGISTRATION')); ?>
 		<div class="row">
-			<div class="col-md-9">
+			<div class="col-md-6">
 				<div class="row">
-					<div class="col-md-8">
-						<?php echo $this->form->renderField('agreementurl'); ?>
+					<div class="col-md-6">
+						<?php echo $this->form->renderField('registrationonly'); ?>
 						<?php echo $this->form->renderField('registrationopen'); ?>
 						<?php echo $this->form->renderField('registrationtemplate'); ?>
 						<?php echo $this->form->renderField('registrationstart'); ?>
@@ -86,11 +86,11 @@ HTMLHelper::_('behavior.keepalive');
 					</div>
 				</div>
 			</div>
-			<div class="col-md-3">
-				<div class="card card-light">
-					<div class="card-body">
-						<?php // echo LayoutHelper::render('joomla.edit.global', $this); ?>
-					</div>
+			<div class="col-md-6">
+				<div class="row">
+					<div class="col-md-6">
+				<?php echo $this->form->renderField('registrationoptions'); ?>
+				</div>
 				</div>
 			</div>
 		</div>
