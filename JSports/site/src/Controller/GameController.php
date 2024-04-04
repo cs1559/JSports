@@ -21,6 +21,7 @@ use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Services\ProgramsService;
 use FP4P\Component\JSports\Site\Services\GameService;
 use Joomla\CMS\Component\ComponentHelper;
+use FP4P\Component\JSports\Site\Objects\Application as Myapp;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
@@ -49,6 +50,8 @@ class GameController extends FormController
      */
     public function delete() {
         
+        $logger = Myapp::getLogger();
+        
         $app = Factory::getApplication();
         
         $input = Factory::getApplication()->input;
@@ -65,8 +68,9 @@ class GameController extends FormController
         $item = $svc->getItem($id);
         
         $redirectURL = 'index.php?option=com_jsports&view=dashboard';
-        $rUrl = 'index.php?option=com_jsports&view=schedules&teamid=' . $item->teamid . '&programid=' . $item->programid;
-        if ($item->gamestatus === 'C') {            
+        $rUrl = 'index.php?option=com_jsports&view=schedules&teamid=' . 
+                $item->teamid . '&programid=' . $item->programid;
+        if ($item->gamestatus === 'C') {
             $this->setMessage("Completed Game CANNOT be deleted",'info');
             $redirectURL = $rUrl;
         } else {
@@ -74,8 +78,10 @@ class GameController extends FormController
             try {
                 $result = GameService::delete($id);
                 if ($result) {
+                    $logger->info('Game ID: ' . $id. ' has been DELETED');
                     $this->setMessage("Game ITEM was successfully deleted",'info');
                 } else {
+                    $logger->error('Game ID: ' . $id. ' has NOT been deleted');
                     $this->setMessage("Game was NOT deleted",'info');
                 }
                 $redirectURL = $rUrl;
@@ -100,6 +106,7 @@ class GameController extends FormController
      */
     public function reset() {
         
+        $logger = Myapp::getLogger();
         $app = Factory::getApplication();
         
         $input = Factory::getApplication()->input;
@@ -120,6 +127,7 @@ class GameController extends FormController
             try {
                 $result = GameService::reset($id);
                 if ($result) {
+                    $logger->info('Game ID: ' . $id . ' status has been reset');
                     $this->setMessage("Game status was successfully reset",'info');
                 } else {
                     $this->setMessage("Game status was NOT reset",'info');
