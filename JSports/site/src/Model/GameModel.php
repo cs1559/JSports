@@ -21,6 +21,7 @@ use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Services\GameService;
 use FP4P\Component\JSports\Site\Services\TeamService;
 use Joomla\CMS\Application\SiteApplication;
+use FP4P\Component\JSports\Site\Objects\Application as Myapp;
 
 /**
  * GameModel - Methods/functions to manage games within the component.
@@ -144,6 +145,9 @@ class GameModel extends FormModel
      */
     public function save($data) {
         
+        $logger = Myapp::getLogger();
+        $isNew = false;
+        
         $user = Factory::getUser();
             
         $table = GameService::getGamesTable();
@@ -152,6 +156,7 @@ class GameModel extends FormModel
     	// Set default values if its a new record.
     	if ($data['id'] == 0) {
             $table->enteredby = $user->username;
+            $isNew = true;
     	}
     	$table->updatedby = $user->username;
     	$datetime = date_create()->format('Y-m-d H:i:s');
@@ -180,6 +185,11 @@ class GameModel extends FormModel
 	          
         //@TODO Need to add code to catch any error that may exist.
     	if ($table->save($data)) {
+    	    if ($isNew) {
+    	        $logger->info('Game id: ' . $data['id'] . ' has been inserted');
+    	    } else {
+    	       $logger->info('Game id: ' . $data['id'] . ' has been updated');
+    	    }
     		return true;
     	} else {
     	    $errors = $table->getErrors();
