@@ -102,7 +102,15 @@
 			validate="options">
 			<option value="1">Yes</option>
 			<option value="0">No</option>
-		</field>		
+		</field>
+		
+		<field name="includegroups" type="radio"
+			label="COM_JSPORTS_INCLUDEGROUPS" class="btn-group btn-group-yesno" default="0"
+			validate="options">
+			<option value="1">Yes</option>
+			<option value="0">No</option>
+		</field>
+	
 	</fieldset>
 
 

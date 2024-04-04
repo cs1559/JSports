@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
 
-	<fieldset name="details" label="COM_JSPORTS_DETAILS">
+	<fieldset addfieldprefix="FP4P\Component\JSports\Administrator\Fields" 
+			name="details" label="COM_JSPORTS_DETAILS">
 
 		<field name="id" type="hidden" label="JGLOBAL_FIELD_ID_LABEL"
 			default="0" class="readonly" readonly="true" />
@@ -43,6 +44,11 @@
 		<field name="teamname" type="text"
 			label="COM_JSPORTS_TEAMNAME" size="40" required="true" />
 			
+
+		<field name="grouping" type="programgroupslist"
+			label="COM_JSPORTS_AGEGROUP"  required="true" />
+			
+
 		<field
 			name="agegroup"
 			type="list"
