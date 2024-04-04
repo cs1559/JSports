@@ -15,6 +15,7 @@ namespace FP4P\Component\JSports\Site\Services;
 use FP4P\Component\JSports\Administrator\Table\RegistrationsTable;
 use Joomla\Database\ParameterType;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Component\ComponentHelper;
 
 class RegistrationService
 {
@@ -56,10 +57,21 @@ class RegistrationService
      */
     public function isRegistrationAvailable() {
     
+        $params = ComponentHelper::getParams('com_jsports');
+        $regenabled = $params->get('registrationenabled');
+
+        // See if Registration is enabled at the component level.
+        if (!$regenabled) {
+            Factory::getApplication()->enqueueMessage("Platform does not have registration enabled", 'error');
+            return false;
+        }
+        
         // Create a new query object.
+        
         $db    = Factory::getDbo();
         $query = $db->getQuery(true);
         
+        /*
         $id = 1;
         
         // Select the required fields from the table.
@@ -72,12 +84,14 @@ class RegistrationService
         
         // Load the results as a list of stdClass objects (see later for more options on retrieving data).
         $row = $db->loadAssoc();
+
         
         if (!$row['registrationenabled']) {
             Factory::getApplication()->enqueueMessage("Platform does not have registration enabled", 'error');
             return false;
         }
-
+        */
+        
         $query = $db->getQuery(true);
         // Query Programs table to see if there are any programs current open for registration
         $query->select($db->quoteName(array('name','registrationopen')));
