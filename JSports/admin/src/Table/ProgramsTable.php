@@ -31,6 +31,8 @@ class ProgramsTable extends Table
             $this->alias = OutputFilter::stringURLUnicodeSlug($this->name);
         }
         
+        $this->registrationoptions = json_encode($this->registrationoptions);
+        
         return parent::check();
     }
 }
