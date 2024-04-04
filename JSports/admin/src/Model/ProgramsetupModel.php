@@ -27,6 +27,7 @@ class ProgramsetupModel extends ListModel
 {
     
     protected $programid = 0;
+    protected $programname = '';
     
 	/**
 	 * Constructor.
@@ -71,28 +72,43 @@ class ProgramsetupModel extends ListModel
 	    
 	    $app = Factory::getApplication();
 	    
-	    $programid = $app->input->get('programid', 0, 'int');
-	    if (empty($programid)) {
-	       $programid = $app->getUserState('com_jsports.programid');
-	    }
+// 	    $programid = $app->input->get('programid', 0, 'int');
+// 	    if (empty($programid)) {
+// 	       $programid = $app->getUserState('com_jsports.programid');
+// 	    }
 
-	    $this->setState('filter.programid', $programid);
-	    // keep the walk_id for adding new visits
-	    $app->setUserState('com_jsports.programid', $programid);
+// 	    $this->setState('filter.programid', $programid);
+// 	    // keep the walk_id for adding new visits
+// 	    $app->setUserState('com_jsports.programid', $programid);
 	    
-		$search = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
-		$this->setState('filter.search', $search);
+// 		$search = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
+// 		$this->setState('filter.search', $search);
 
 		$published = $this->getUserStateFromRequest($this->context . '.filter.published', 'filter_published', '');
 		$this->setState('filter.published', $published);
 
-		$agegroup = $this->getUserStateFromRequest($this->context . '.filter.agegroup', 'filter_agegroup', '');
-		$this->setState('filter.agegroup', $agegroup);
+// 		$agegroup = $this->getUserStateFromRequest($this->context . '.filter.agegroup', 'filter_agegroup', '');
+// 		$this->setState('filter.agegroup', $agegroup);
 		
 		// List state information.
 		parent::populateState($ordering, $direction);
 	}
 
+	
+	public function getForm($data = array(), $loadData = true)
+	{
+	    // Get the form.
+	    $form = $this->loadForm('com_jsports.programsetup', 'programsetup', array('control' => 'jform', 'load_data' => $loadData));
+	    
+	    if (empty($form))
+	    {
+	        return false;
+	    }
+	    
+	    return $form;
+	}
+	
+	
 	/**
 	 * Method to get a store id based on model configuration state.
 	 *
@@ -127,7 +143,10 @@ class ProgramsetupModel extends ListModel
 	
 	protected function getListQuery()
 	{
-	    $programid = $this->getState('filter.programid');
+// 	    $programid = $this->getState('filter.programid');
+	    
+	    $app = Factory::getApplication();
+	    $programid = $app->input->get('programid', 0, 'int');
 	    
 	    // Create a new query object.
 	    $db    = $this->getDatabase();
@@ -168,7 +187,7 @@ class ProgramsetupModel extends ListModel
 	    }
 	    
 	    // Filter by PROGRAM.
-	    $programid = $this->getState('filter.programid');
+// 	    $programid = $this->getState('filter.programid');
 	    if (!empty($this->programid)) {	        
 	        $query->where($db->quoteName('a.programid') . ' = :programid');
 	        $query->bind(':programid', $programid, ParameterType::INTEGER);
@@ -194,10 +213,10 @@ class ProgramsetupModel extends ListModel
 	    
 	    	    
 	    // Add the list ordering clause.
-	    $orderCol  = $this->state->get('list.ordering', 'a.id');
+	    $orderCol  = $this->state->get('list.ordering', 'a.agegroup');
 	    $orderDirn = $this->state->get('list.direction', 'ASC');
 	    
-	    $ordering = [$db->quoteName('c.name') . ' ' . $db->escape($orderDirn), ];
+	    $ordering = [$db->quoteName('r.agegroup') . ' ' . $db->escape($orderDirn), ];
 	    	    
 	    $query->order($ordering);
 	    

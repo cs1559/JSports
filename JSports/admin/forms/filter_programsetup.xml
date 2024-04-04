@@ -2,7 +2,7 @@
 <form>
 
 	<fields name="filter">
-
+	
 		<field
 			name="search"
 			type="text"
@@ -23,7 +23,6 @@
 		<field
 			name="agegroup"
 			type="list"
-			label="COM_JSPORTS_AGEGROUP"
 			onchange="this.form.submit();"
 			>
 			<option selected="selected" value="">- Select Age Group -</option>

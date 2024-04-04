@@ -20,24 +20,27 @@ use FP4P\Component\JSports\Administrator\Helpers\Html;
 
 $listOrder = $this->escape($this->state->get('list.ordering'));
 $listDirn  = $this->escape($this->state->get('list.direction'));
-$states = array (
-		'0' => Text::_('JUNPUBLISHED'),
-		'1' => Text::_('JPUBLISHED'),
-		'2' => Text::_('JARCHIVED'),
-		'-2' => Text::_('JTRASHED')
-);
+
 $editIcon = '<span class="fa fa-pen-square me-2" aria-hidden="true"></span>';
 
 $clientId  = (int) $this->state->get('client_id', 0);
 $user      = Factory::getUser();
-// $canCheckin = $user->authorise('core.manage', 'com_checkin') || $item->checked_out == $user->get('id') || is_null($item->checked_out);
-//$canChange  = $user->authorise('core.edit.state', 'com_modules.module.' . $item->id) && $canCheckin;
-
-
 
 ?>
 <form action="<?php echo Route::_('index.php?option=com_jsports&view=programsetup'); ?>" method="post" name="adminForm" id="adminForm">
-	<?php echo LayoutHelper::render('joomla.searchtools.default', array('view' => $this)); ?>
+	
+		<div class="selection-criteria row" style="display: flex; flex-direction: row; ">
+    	
+    		<?php echo $this->form->renderField('programid'); ?>
+    			
+    		<div class="w-25">
+       			<?php echo $this->form->renderField('agegroup'); ?>	
+    		</div>
+    		
+		</div>
+	
+	<?php // echo LayoutHelper::render('joomla.searchtools.default', array('view' => $this)); ?>
+	
 	<?php if (empty($this->items)) : 
 	       ?>
 		
@@ -47,7 +50,7 @@ $user      = Factory::getUser();
 		</div>
 		
 	<?php else : ?>
-		<table class="table" id="registrationsList">
+		<table class="table" id="programList">
 			<thead>
 				<tr>
 					<td class="w-5 text-center">
@@ -89,22 +92,18 @@ $user      = Factory::getUser();
 					</td>
 
 <?php 
-//     $canChange  = $user->authorise('core.edit.state', 'com_modules.module.' . $item->id) && $canCheckin; 
+
     $canChange  = $user->authorise('core.edit.state', 'com_jsports.programsetup.' . $item->id);
 
 ?>
                  <td class="text-center">   
-                        <?php //echo HTMLHelper::_('jgrid.published', $item->published, $i, 'modules.', $canChange, 'cb', $item->publish_up, $item->publish_down); ?>
                         <?php echo HTMLHelper::_('jgrid.published', $item->published, $i,'programsetup.', $canChange);  ?>
-                 
                 </td>
 
 
-					<th scope="row" class="has-context">
-						<a class="hasTooltip" href="<?php //echo Route::_('index.php?option=com_jsports&task=programsetup.edit&id=' . $item->id); ?>">
-							<?php echo $editIcon; ?><?php echo $this->escape($item->teamname); ?>
-						</a>
-					</th>
+					<td scope="row" class="has-context">
+						<?php echo $this->escape($item->teamname); ?>
+					</td>
 					<td class="">
 						<?php echo $item->agegroup; ?>
 					</td>
