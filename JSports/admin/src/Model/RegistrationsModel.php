@@ -228,127 +228,127 @@ class RegistrationsModel extends ListModel
 //      }
 	        
 	    
-	    /**
-	     * This function performs the business logic to process/publish a given registration.  This process will do the following:
-	     * 
-	     * 1.  Create a new team record if appropriate
-	     * 2.  Add the record to the Team/Program/Division mapping file.
-	     * 3.  Publish the registration record.  Once its published, it cannot be published again.
-	     * 
-	     * @param unknown $regid
-	     * @return boolean
-	     */
-	    protected function processRegistration($regid) {
+// 	    /**
+// 	     * This function performs the business logic to process/publish a given registration.  This process will do the following:
+// 	     * 
+// 	     * 1.  Create a new team record if appropriate
+// 	     * 2.  Add the record to the Team/Program/Division mapping file.
+// 	     * 3.  Publish the registration record.  Once its published, it cannot be published again.
+// 	     * 
+// 	     * @param unknown $regid
+// 	     * @return boolean
+// 	     */
+// 	    protected function processRegistration($regid) {
 
-	        $db = $this->getDatabase();
+// 	        $db = $this->getDatabase();
 	        
-	        $rsvc = new RegistrationService();
-	        $item = $rsvc->getItem($regid);
+// 	        $rsvc = new RegistrationService();
+// 	        $item = $rsvc->getItem($regid);
 
-	        if ($item->published) {
-	            Factory::getApplication()->enqueueMessage("State of a published registration cannot be changed", 'error');
-	            return false;
-	        }
-	        try {
+// 	        if ($item->published) {
+// 	            Factory::getApplication()->enqueueMessage("State of a published registration cannot be changed", 'error');
+// 	            return false;
+// 	        }
+// 	        try {
             
 
-                // begin transactio
-                $db->transactionStart();
+//                 // begin transactio
+//                 $db->transactionStart();
     
-                // =========================================================================================
-                // Create Team record
-                // =========================================================================================
-                $query = $db->getQuery(true);
-                $columns = array(
-                    'id',
-                    'name',
-                    'alias',
-                    'city',
-                    'state',
-                    'contactname',
-                    'contactemail',
-                    'contactphone',
-                    'published'
-                );
-                $teamname = OutputFilter::stringURLUnicodeSlug($item->teamname);
+//                 // =========================================================================================
+//                 // Create Team record
+//                 // =========================================================================================
+//                 $query = $db->getQuery(true);
+//                 $columns = array(
+//                     'id',
+//                     'name',
+//                     'alias',
+//                     'city',
+//                     'state',
+//                     'contactname',
+//                     'contactemail',
+//                     'contactphone',
+//                     'published'
+//                 );
+//                 $teamname = OutputFilter::stringURLUnicodeSlug($item->teamname);
     
-                $values = array(
-                    0,
-                    $db->quote($item->teamname), // teamname
-                    $db->quote($teamname), // alias
-                    $db->quote($item->city), // city
-                    $db->quote($item->state), // state
-                    $db->quote($item->name), // contact name
-                    $db->quote($item->email), // contact email
-                    $db->quote($item->phone), // contact phone
-                    1 // published
-                );
+//                 $values = array(
+//                     0,
+//                     $db->quote($item->teamname), // teamname
+//                     $db->quote($teamname), // alias
+//                     $db->quote($item->city), // city
+//                     $db->quote($item->state), // state
+//                     $db->quote($item->name), // contact name
+//                     $db->quote($item->email), // contact email
+//                     $db->quote($item->phone), // contact phone
+//                     1 // published
+//                 );
     
-                $query->insert($db->quoteName('#__jsports_teams'))
-                    ->columns($db->quoteName($columns))
-                    ->values(implode(',', $values));
+//                 $query->insert($db->quoteName('#__jsports_teams'))
+//                     ->columns($db->quoteName($columns))
+//                     ->values(implode(',', $values));
     
-                $db->setQuery($query);
-                $db->execute();
+//                 $db->setQuery($query);
+//                 $db->execute();
     	           
-    	           // Get the row that was just inserted
-    	        $new_row_id = $db->insertid();
+//     	           // Get the row that was just inserted
+//     	        $new_row_id = $db->insertid();
     	        
     	        
-    	        $query = $db->getQuery(true);
-                // =========================================================================================
-    	        // Create Mapping Record - need newly created teamdid, programid, regid (set divid to 0)
-    	        // =========================================================================================
-    	        $columns = array(
-    	            'id',
-    	            'programid',
-    	            'teamid',
-    	            'divisionid',
-    	            'regid',
-    	            'published'
-    	        );
-    	        $values = array(
-    	            0,
-    	            $db->quote($item->programid), // programid (from registration record)
-    	            $db->quote($new_row_id), // team id - determined by previous insert into team table
-    	            $db->quote(0), // divisionid - set to zero (0) as divisional assignment has not been made yet
-    	            $db->quote($item->id), // Registration ID
-    	            0 // published - SET TO ZERO (0)
-    	        );
+//     	        $query = $db->getQuery(true);
+//                 // =========================================================================================
+//     	        // Create Mapping Record - need newly created teamdid, programid, regid (set divid to 0)
+//     	        // =========================================================================================
+//     	        $columns = array(
+//     	            'id',
+//     	            'programid',
+//     	            'teamid',
+//     	            'divisionid',
+//     	            'regid',
+//     	            'published'
+//     	        );
+//     	        $values = array(
+//     	            0,
+//     	            $db->quote($item->programid), // programid (from registration record)
+//     	            $db->quote($new_row_id), // team id - determined by previous insert into team table
+//     	            $db->quote(0), // divisionid - set to zero (0) as divisional assignment has not been made yet
+//     	            $db->quote($item->id), // Registration ID
+//     	            0 // published - SET TO ZERO (0)
+//     	        );
     	        
-    	        $query->insert($db->quoteName('#__jsports_map'))
-    	        ->columns($db->quoteName($columns))
-    	        ->values(implode(',', $values));
-    	        $db->setQuery($query);
-    	        $db->execute();
+//     	        $query->insert($db->quoteName('#__jsports_map'))
+//     	        ->columns($db->quoteName($columns))
+//     	        ->values(implode(',', $values));
+//     	        $db->setQuery($query);
+//     	        $db->execute();
     	        
 	        
-    	        // =========================================================================================
-    	        //  Set registration record to published.
-    	        // =========================================================================================
-    	        $query = $db->getQuery(true);
-    	        $fields = array($db->quoteName('published') . ' = 1');
-    	        $conditions = array($db->quoteName('id') . ' = ' .$item->id);
+//     	        // =========================================================================================
+//     	        //  Set registration record to published.
+//     	        // =========================================================================================
+//     	        $query = $db->getQuery(true);
+//     	        $fields = array($db->quoteName('published') . ' = 1');
+//     	        $conditions = array($db->quoteName('id') . ' = ' .$item->id);
     	        
-    	        $query->update($db->quoteName('#__jsports_registrations'))
-    	        ->set($fields)
-    	        ->where($conditions);
-    	        $db->setQuery($query);
-    	        $db->execute();
+//     	        $query->update($db->quoteName('#__jsports_registrations'))
+//     	        ->set($fields)
+//     	        ->where($conditions);
+//     	        $db->setQuery($query);
+//     	        $db->execute();
     	        
-    	        // commit transaction
-    	        $db->transactionCommit();
+//     	        // commit transaction
+//     	        $db->transactionCommit();
 	        
 	        
-	        } catch (Exception $e) {
-	            // // catch any database errors.
-	            $db->transactionRollback();
-	            Factory::getApplication()->enqueueMessage("REgistration publish failed for one or more registration records", 'error');
-	            return false;
+// 	        } catch (Exception $e) {
+// 	            // // catch any database errors.
+// 	            $db->transactionRollback();
+// 	            Factory::getApplication()->enqueueMessage("REgistration publish failed for one or more registration records", 'error');
+// 	            return false;
 	            
-	        }
-	        return true;
-	    }
+// 	        }
+// 	        return true;
+// 	    }
 
 	    
 	    /**
