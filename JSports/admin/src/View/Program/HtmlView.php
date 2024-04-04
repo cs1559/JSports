@@ -117,7 +117,7 @@ class HtmlView extends BaseHtmlView
         }
         
         $toolbar->standardButton('Setup')
-        ->icon('fa fa-home')
+        ->icon('icon-cog')
         ->text('Setup Program')
         ->task('program.setup')
         ->listCheck(false);
