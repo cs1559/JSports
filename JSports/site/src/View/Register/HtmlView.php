@@ -42,13 +42,6 @@ class HtmlView extends BaseHtmlView
      */
     protected $item;
     
-    /**
-     * The list of visit reports/visit dates for this walk
-     *
-     * @var    \JObject
-     * @since  1.6
-     */
-    protected $reports;
     
     /**
      * Execute and display a template script.
@@ -78,12 +71,11 @@ class HtmlView extends BaseHtmlView
             return false;
         }
                
-        // Check to if the user can even register.
+        // Check to see if the user can even register.
         $svc = new RegistrationService();
         $bool = $svc->isRegistrationAvailable();
         
         if (!$bool){
-          
             return false;
         }
         
