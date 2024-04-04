@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+		
+		<field name="registrationtemplate" type="text"
+			label="COM_JSPORTS_REGISTRATIONTEMPLATE" />
+
+		<field name="agreementurl" type="URL"
+			size="100"
+			label="COM_JSPORTS_AGREEMENTURL" class="" default=""
+			hint="URL of agreement registrant must acknowledge">
+
+		</field>		
+
+		<field name="includegroups" type="radio"
+			label="COM_JSPORTS_INCLUDEGROUPS" class="btn-group btn-group-yesno" default="0"
+			validate="options">
+			<option value="1">Yes</option>
+			<option value="0">No</option>
+		</field>
+
+		<field name="includeskills" type="radio"
+			label="COM_JSPORTS_INCLUDESKILLS" class="btn-group btn-group-yesno" default="0"
+			validate="options">
+			<option value="1">Yes</option>
+			<option value="0">No</option>
+		</field>
+
+		<field name="includeplayoffs" type="radio"
+			label="COM_JSPORTS_INCLUDEPLAYOFFS" class="btn-group btn-group-yesno" default="0"
+			validate="options">
+			<option value="1">Yes</option>
+			<option value="0">No</option>
+		</field>
+
+		<field name="includeagreement" type="radio"
+			label="COM_JSPORTS_INCLUDEAGREEMENT" class="btn-group btn-group-yesno" default="0"
+			validate="options">
+			<option value="1">Yes</option>
+			<option value="0">No</option>
+		</field>
+
+		<field name="includeregisteredby" type="radio"
+			label="COM_JSPORTS_INCLUDEREGISTEREDBY" class="btn-group btn-group-yesno" default="0"
+			validate="options">
+			<option value="1">Yes</option>
+			<option value="0">No</option>
+		</field>
+
+		
+</form>
+
+

@@ -64,12 +64,6 @@
 		<field name="programend" type="calendar"
 			label="COM_JSPORTS_ENDDATE"  default="0000-00-00"/>
 
-		<field name="registrationstart" type="calendar"
-			label="COM_JSPORTS_STARTDATE"  default="0000-00-00"/>
-
-		<field name="registrationend" type="calendar"
-			label="COM_JSPORTS_ENDDATE"  default="0000-00-00"/>
-
 		<field name="published" type="list" label="JSTATUS"
 			class="form-select-color-state" default="1" validate="options">
 			<option value="1">JPUBLISHED</option>
@@ -119,20 +113,23 @@
 			<option value="1">Yes</option>
 			<option value="0">No</option>
 		</field>
-		
-		
-		<field name="agreementurl" type="URL"
-			size="100"
-			label="COM_JSPORTS_AGREEMENTURL" class="" default=""
-			hint="URL of agreement registrant must acknowledge">
-
-		</field>		
+				
 
 		<field name="standingspolicy" type="list" label="COM_JSPORTS_STANDINGSPOLICY"
 			class="form-select-color-state" default="POINTS" validate="options">
 			<option value="POINTS">Points (Points, RA, RS)</option>
 			<option value="WINPCT">Winning Percentage</option>
 		</field>
+
+		<field name="registrationstart" type="calendar"
+			label="COM_JSPORTS_STARTDATE"  default="0000-00-00"/>
+
+		<field name="registrationend" type="calendar"
+			label="COM_JSPORTS_ENDDATE"  default="0000-00-00"/>
+
+		<field name="registrationoptions" type="subform"
+		    formsource="/administrator/components/com_jsports/forms/registrationoptions.xml"
+		    label="COM_JSPORTS_REGISTRATIONOPTIONS" description="Subform Field Description" />
 
 				
 	</fieldset>
