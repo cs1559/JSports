@@ -13,6 +13,7 @@ namespace FP4P\Component\JSports\Site\Objects;
 
 use FP4P\Component\JSports\Site\Objects\Events\EventDispatcher;
 use FP4P\Component\JSports\Site\Services\MailService;
+use FP4P\Component\JSports\Site\Objects\Logger\DatabaseLogger;
 
 class Application
 {
@@ -24,6 +25,10 @@ class Application
         // nothing extra to do.
         
         $this->dispatcher = EventDispatcher::getInstance();
+    }
+    
+    public static function getLogger(){
+        return DatabaseLogger::getInstance();
     }
     
     public static function getInstance()
