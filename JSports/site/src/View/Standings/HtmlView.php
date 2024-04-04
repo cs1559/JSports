@@ -37,10 +37,11 @@ class HtmlView extends BaseHtmlView
      */
     protected $standings;
     protected $program;
+    protected $divisions;
 
     
     /**
-     * Execute and display a template script.
+     * Execute and display a template script.   This will check the the program settings to see what template to use.
      *
      * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
      *
@@ -51,11 +52,12 @@ class HtmlView extends BaseHtmlView
         $input = Factory::getApplication()->input;
         $programid = (int) $input->get('programid');
         
-//         if ($programid > 0) {
-            $this->standings = $this->get('ProgramStandings');
-            $this->program = $this->get('Program');
-            $layout = "show";
-//         }
+        $this->standings = $this->get('ProgramStandings');
+        $this->program = $this->get('Program');
+        $this->divisions = $this->get('Divisions');
+        if (!$this->program->publishstandings) {
+             $this->setLayout("nonpublished");
+        }
         
         return parent::display($tpl);
     }
