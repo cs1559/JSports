@@ -30,7 +30,17 @@ $showposition = $params->get('showposition');
 		<h1><span id="standings-league-description">League Standings - <?php echo $this->program->name; ?></span></h1>
 		<br/>
 		<span class="system_message"><?php // echo $season_note; ?></span>
-
+		<div>
+			<?php 
+			foreach ($this->divisions as $div) {
+			    ?>
+			    <a href="#div<?php echo $div['id']?>"><?php echo $div['name'];?></a> |
+			    
+			<?php 
+			}
+			
+			?>
+		</div>
 		<?php
 			$x = 0;
 			$prevdiv = 0;
@@ -47,10 +57,14 @@ $showposition = $params->get('showposition');
 				    
 					if ($first) {
 						
-					}  else {
-						echo "</table>";
+					}  else { ?>
+					    </table>
+					    </div>
+					    <a class="btn btn-primary btn-sm" href="#top">Back to Top</a>
+					    <?php 
 					}	 			
                     ?>
+                    <div id="div<?php echo $item['divisionid']; ?>" class="jsports-table-wrapper">
 					<h3 class="standings-division-title"><?php echo $item['divisionname'] ?></h3>
 									
 						<table class="table table-striped standings-table">
@@ -139,7 +153,7 @@ $showposition = $params->get('showposition');
 				$first = false;
 
  			} 
-			echo "</table>";
+			echo "</table></div>";
 	?>
 
 </div>

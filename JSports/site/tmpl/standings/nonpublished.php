@@ -12,33 +12,23 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use FP4P\Component\JSports\Administrator\Helpers\Html;
+use Joomla\CMS\Component\ComponentHelper;
 
 // Load Web Asset Manager
 $wa = $this->document->getWebAssetManager();
 $wa->getRegistry()->addExtensionRegistryFile('com_jsports');
 $wa->useScript('com_jsports.jsports.script');
-$wa->useScript('com_jsports.standings.script');
-$wa->useStyle('com_jsports.jsports.style');
+$wa->useStyle('com_jsports.standings.style');
 
 ?>
 
-    
-<div id="top" class="page-header">
-	<h1><?php echo "Standings"; ?></h1>
-</div>
-<div hidden id="spinner"></div>
-<form action="<?php echo Route::_('index.php?option=com_jsports&view=Dashboard'); ?>"
-	method="post" name="standingsform" id="standings-form" class="form-validate">
-	
-<?php echo Html::getProgramsList(); ?>
-
-</form>
-
-<br/><br/>
-
-<!--  <div class="jsports-table-wrapper">   -->
 <div id="standings-container">
 
+		<h1><span id="standings-league-description">League Standings - <?php echo $this->program->name; ?></span></h1>
+		<br/>
+		<span class="system_message"><?php // echo $season_note; ?></span>
+
+		<strong>Standings for this program are unavailable.  Please try again later.</strong>
+		
 </div>
-<!--  </div> -->
 
