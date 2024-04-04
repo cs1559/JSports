@@ -20,6 +20,7 @@ use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Services\GameService;
 use FP4P\Component\JSports\Site\Services\TeamService;
 use Joomla\CMS\Application\SiteApplication;
+use FP4P\Component\JSports\Site\Objects\Application as Myapp;
 
 /**
  * GameModel - Methods/functions to manage games within the component.
@@ -144,6 +145,8 @@ class PostscoreModel extends FormModel
 
     public function save($data) {
         
+        $logger = Myapp::getLogger();
+        
         $user = Factory::getUser();
 
         $id = $data['id'];
@@ -151,7 +154,8 @@ class PostscoreModel extends FormModel
         $ascore = $data['awayteamscore'];
          
         GameService::postScore($id, $hscore, $ascore);
-         
+        $logger->info('Game ID: ' . $id. ' Score Posted - Home = ' . $hscore . ' Away = ' . $ascore);
+        
         return true;
         
     }
