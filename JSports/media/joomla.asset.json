@@ -29,7 +29,11 @@
       "type": "style",
       "uri": "com_jsports/teamlist.css"
     },
-    
+    {
+      "name": "com_jsports.admin.style",
+      "type": "style",
+      "uri": "com_jsports/jsports-admin.css"
+    },
 	{
       "name": "com_jsports.game.script",
       "type": "script",

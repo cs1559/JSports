@@ -35,3 +35,8 @@
 #standings-container {
 	padding-bottom: 100px;
 }
+
+.btn-sm, .btn-group-sm > .btn {
+  padding: .15rem !important;
+  font-size: .75rem !important;
+}
