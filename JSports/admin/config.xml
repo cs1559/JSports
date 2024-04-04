@@ -30,6 +30,23 @@
 <config>
 	<help key="Sports Management:_Options"/>
 	<fieldset name="component">
+
+		<field name="frontend_admin" type="radio" default="0"
+			label="COM_JSPORTS_FRONTEND_ADMIN_ENABLED"
+			description="COM_JSPORTS_FRONTEND_ADMIN_ENABLED_DESC"
+			layout="joomla.form.field.radio.switcher">
+			<option value="0">No</option>
+			<option value="1">Yes</option>
+		</field>
+
+		<field name="registrationenabled" type="radio" default="0"
+			label="COM_JSPORTS_REGISTRATIONENABLED"
+			description="COM_JSPORTS_REGISTRATIONENABLED_DESC"
+			layout="joomla.form.field.radio.switcher">
+			<option value="0">No</option>
+			<option value="1">Yes</option>
+		</field>
+
 	
 		<field name="logodir" type="text" default="/media/com_jsports/images/logos"
 			label="COM_JSPORTS_LOGOPATH"
@@ -40,15 +57,10 @@
 			<option value="Teamid-">Team ID</option>
 			<option value="Team-">Team</option>
 		</field>	
-		<field name="frontend_admin" type="radio" default="0"
-			label="COM_JSPORTS_FRONTEND_ADMIN_ENABLED"
-			description="COM_JSPORTS_FRONTEND_ADMIN_ENABLED_DESC"
-			layout="joomla.form.field.radio.switcher">
-			<option value="0">No</option>
-			<option value="1">Yes</option>
-		</field>
 		
-		<field name="sef_ids" type="radio" layout="joomla.form.field.radio.switcher" default="0" label="JGLOBAL_SEF_NOIDS_LABEL" description="JGLOBAL_SEF_NOIDS_DESC" filter="integer">
+		<field name="sef_ids" type="radio" layout="joomla.form.field.radio.switcher" 
+			default="0" label="JGLOBAL_SEF_NOIDS_LABEL" 
+			description="JGLOBAL_SEF_NOIDS_DESC" filter="integer">
 			<option value="0">JNO</option>
 			<option value="1">JYES</option>
 		</field>
