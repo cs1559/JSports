@@ -117,6 +117,27 @@ class ProgramsService
     }
     
     
+    public static function getProgramGroups($programid) {
+        
+        $pgm = ProgramsService::getItem($programid);
+        
+        $db = Factory::getDbo();
+        $query = $db->getQuery(true);
+        
+        $query->select('p.*');
+        $query->from($db->quoteName('#__jsports_groups_items') . ' AS p ');
+        $conditions = array(
+            $db->quoteName('p.code') . ' = ' . $db->quote($pgm->groupingscode),
+        );
+        $query->where($conditions);
+        $query->order('id asc');
+        $db->setQuery($query);
+        return $db->loadAssocList();
+//        return $db->loadObjectList();
+    }
+    
+    
+    
     public static function closeProgram($programid) {
 
         $db = Factory::getDbo();
