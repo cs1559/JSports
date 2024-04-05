@@ -154,7 +154,8 @@ $showposition = $params->get('showposition');
 
  			} 
 			echo "</table></div>";
+			
 	?>
-
+			<a class="btn btn-primary btn-sm" href="#top">Back to Top</a>
 </div>
 
