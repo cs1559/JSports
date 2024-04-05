@@ -73,10 +73,10 @@ class JSHelper
      */
     public static function displayGameTime($value) {
 
-    	if (str_contains($value,'PM')) {
+    	if (str_contains(strtoupper($value),'PM')) {
     		return $value;
     	}
-    	if (str_contains($value,'AM')) {
+    	if (str_contains(strtoupper($value),'AM')) {
     		return $value;
     	}
     
