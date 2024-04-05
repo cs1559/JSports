@@ -72,8 +72,7 @@ class TeamModel extends FormModel
         
         $psvc = new ProgramsService();
         $this->recentprogram = $psvc->getItem($recentprogramid);
-        
-        
+               
         $rsvc = new RosterService();
         $this->rosterstaff = $rsvc->getRosterStaff($id, $recentprogramid);
         
@@ -84,8 +83,14 @@ class TeamModel extends FormModel
             $this->rosterplayers = null;
         }
 
+	if ($this->recentprogram->status == "C"){
+		$flag = true;
+	} else  {
+		$flag = false;
+	}
+
         $this->standings = StandingsService::getProgramStandings(
-            $this->recentprogram->id, false, $divisionid);
+            $this->recentprogram->id, $flag, $divisionid);
         
         $gsvc = new GameService();
         $this->games = $gsvc->getTeamSchedule($id, $recentprogramid);
