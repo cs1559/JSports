@@ -202,6 +202,7 @@ class GameService
             $db->quoteName('g.divisionid') . ' = ' . $db->quoteName('d.id'),
             $db->quoteName('g.gamestatus') . ' = "S"',
             $db->quoteName('g.programid') . ' = ' . $db->quote($programid),
+            $db->quoteName('g.gamedate') . ' >= CURRENT_DATE',
         );
         $query->where($conditions);
         $query->setLimit($limit);
