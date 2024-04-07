@@ -90,8 +90,8 @@ class GameService
         // Change the status of the game and identify who actually posted the score.
         $data = array(
             'gamestatus' => 'S',
-//             'updatedby' => $user->username,
-//             'dateupdated' => $datetime,
+            'hometeamscore' => 0,
+            'awayteamscore' => 0,
         );
         
         $table->bind($data);
