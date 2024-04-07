@@ -186,7 +186,7 @@ class GameModel extends FormModel
         //@TODO Need to add code to catch any error that may exist.
     	if ($table->save($data)) {
     	    if ($isNew) {
-    	        $logger->info('Game id: ' . $data['id'] . ' has been inserted');
+    	        $logger->info('Game id: ' . $table->name . ' has been inserted');
     	    } else {
     	       $logger->info('Game id: ' . $data['id'] . ' has been updated');
     	    }
