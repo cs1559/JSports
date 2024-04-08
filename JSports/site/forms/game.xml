@@ -62,7 +62,6 @@
 		<field name="gamestatus" type="list" label="COM_JSPORTS_STATUS"
 			class="form-select-color-state" default="S" validate="options">
 				<option value="S">Scheduled</option>
-				<option value="C">Complete</option>
 				<option value="R">Rained Out</option>
 				<option value="X">Cancelled</option>
 			</field>
