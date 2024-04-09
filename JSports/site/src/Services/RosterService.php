@@ -15,6 +15,7 @@ namespace FP4P\Component\JSports\Site\Services;
 use FP4P\Component\JSports\Administrator\Table\RostersTable;
 use Joomla\Database\ParameterType;
 use Joomla\CMS\Factory;
+use FP4P\Component\JSports\Site\Objects\Application as Myapp;
 
 class RosterService
 {
@@ -53,6 +54,11 @@ class RosterService
      */
     public static function delete($id = 0) {
         
+        $logger = Myapp::getLogger();
+        
+        $svc = new RosterService();
+        $item = $svc->getItem($id);
+        
         $db = Factory::getDbo();
         
         $query = $db->getQuery(true);
@@ -65,7 +71,11 @@ class RosterService
         
         $db->setQuery($query);
         
-        return $db->execute();
+        $rc = $db->execute();
+        $logger->info('Deleting roster item - ' . $item->firstname . ' ' . $item->lastname);
+        
+        return $rc;
+        
     }
       
     

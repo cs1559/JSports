@@ -18,6 +18,7 @@ use Joomla\CMS\MVC\Model\FormModel;
 use Joomla\Database\ParameterType;
 use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Services\RosterService;
+use FP4P\Component\JSports\Site\Objects\Application as Myapp;
 
 /**
  * Methods supporting a list of mywalks records.
@@ -109,24 +110,31 @@ class RosterModel extends FormModel
      */
     public function save($data) {
         
-    $roster = RosterService::getRostersTable();
-
-	$roster->bind($data);
-	$roster->check();
-
-        
-        //@TODO Need to add code to catch any error that may exist.
-	if ($roster->save($data)) {
-		return true;
-	} else {
-	    $errors = $roster->getErrors();
-	    $this->setError($errors[0]);
-		$app = Factory::getApplication();
-		$app->enqueueMessage($errors[0],'error');
-		return false;
-	}
-
-    	return true;
+        $logger = Myapp::getLogger();
+        $roster = RosterService::getRostersTable();
+    
+    	$roster->bind($data);
+    	$roster->check();
+    
+            
+            //@TODO Need to add code to catch any error that may exist.
+    	if ($roster->save($data)) {
+    	    if ($roster->staffadmin) {
+    	        $adminFlag = 'Yes';
+    	    } else {
+    	        $adminFlag = 'No';
+    	    }
+    	    $logger->info('Saving roster item id - ' . $roster->id . ' Name: '. $roster->firstname . ' ' . $roster->lastname . ' ADMIN='. $adminFlag);
+    		return true;
+    	} else {
+    	    $errors = $roster->getErrors();
+    	    $this->setError($errors[0]);
+    		$app = Factory::getApplication();
+    		$app->enqueueMessage($errors[0],'error');
+    		return false;
+    	}
+    
+        	return true;
     }
     
     

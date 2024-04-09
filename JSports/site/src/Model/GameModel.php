@@ -178,7 +178,7 @@ class GameModel extends FormModel
     	    $table->awayteamname = $awayteam->name;
     	}
     	
-    	    	
+    	  	
     	$table->name = $awayteam->name . " @ " . $hometeam->name;
     	
     	$table->check();
@@ -186,9 +186,9 @@ class GameModel extends FormModel
         //@TODO Need to add code to catch any error that may exist.
     	if ($table->save($data)) {
     	    if ($isNew) {
-    	        $logger->info('Game id: ' . $table->name . ' has been inserted');
+    	        $logger->info('Game id: ' . $table->id . " - " .  $table->name . ' has been inserted');
     	    } else {
-    	       $logger->info('Game id: ' . $data['id'] . ' has been updated');
+    	        $logger->info('Game id: ' . $table->id . ' has been updated - STATUS = ' . $data['gamestatus']);
     	    }
     		return true;
     	} else {
@@ -201,9 +201,6 @@ class GameModel extends FormModel
 
     	return true;
     }
-    
-    
-
     
     
 }
