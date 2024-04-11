@@ -31,7 +31,7 @@
 			value_field="name" 
 			onchange="this.form.submit();"
 			sql_filter="programid"
-			sql_default_programid="30"
+			sql_default_programid="9999999999"
 			header="- Select Division -"
 		/>
 		
