@@ -78,7 +78,7 @@ class GameController extends FormController
             try {
                 $result = GameService::delete($id);
                 if ($result) {
-                    $logger->info('Game ID: ' . $id. ' has been DELETED');
+                    $logger->info('Game ID: ' . $id. ' has been DELETED  ' . $item->gamedate . ' ' . $item->name . ' STATUS=' . $item->gamestatus);
                     $this->setMessage("Game ITEM was successfully deleted",'info');
                 } else {
                     $logger->error('Game ID: ' . $id. ' has NOT been deleted');
