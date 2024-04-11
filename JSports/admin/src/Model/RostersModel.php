@@ -60,30 +60,29 @@ class RostersModel extends ListModel
 	 *
 	 * @since   1.0.0
 	 */
-	protected function populateState($ordering = 'a.id', $direction = 'asc')
+	protected function populateState($ordering = 'a.name', $direction = 'asc')
 	{
 	    
 	    $app = Factory::getApplication();
 	    
-	    $programid = $app->input->get('programid', 0, 'int');
-	    if (empty($id)) {
-	       $programid = $app->getUserState('com_jsports.programid');
-	    }
-	    $this->setState('programid', $programid);
+	    $input = Factory::getApplication()->input;
+	    $input = $input->post->get('jform', array(), 'array');
 	    
-	    // keep the walk_id for adding new visits
-	    $app->setUserState('com_jsports.programid', $programid);
-
-		$search = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
-		$this->setState('filter.search', $search);
-
-		$published = $this->getUserStateFromRequest($this->context . '.filter.published', 'filter_published', '');
-		$this->setState('filter.published', $published);
-		
-		// List state information.
-		parent::populateState($ordering, $direction);
+	    $programid = $this->getUserStateFromRequest($this->context . '.filter.programid', 'filter_programid', '');
+	    $this->setState('filter.programid', $programid);
+	    
+	    $divisionid = $this->getUserStateFromRequest($this->context . '.filter.divisionid', 'filter_divisionid', '');
+	    $this->setState('filter.divisionid', $divisionid);
+	    
+	    $teamid = $this->getUserStateFromRequest($this->context . '.filter.teamid', 'filter_teamid', '');
+	    $this->setState('filter.teamid', $teamid);
+	    
+	    
+	    
+	    // List state information.
+	    parent::populateState($ordering, $direction);
 	}
-
+	
 	/**
 	 * Method to get a store id based on model configuration state.
 	 *
@@ -99,15 +98,13 @@ class RostersModel extends ListModel
 	 */
 	protected function getStoreId($id = '')
 	{
-		// Compile the store id.
-		$id .= ':' . $this->getState('filter.search');
-		$id .= ':' . $this->getState('filter.programid');
-		$id .= ':' . $this->getState('filter.divisionid');
-		$id .= ':' . $this->getState('filter.teamid');
-		$id .= ':' . $this->getState('filter.classification');
-		$id .= ':' . $this->getState('filter.lastname');
-
-		return parent::getStoreId($id);
+	    // Compile the store id.
+	    $id .= ':' . $this->getState('filter.search');
+	    $id .= ':' . $this->getState('filter.programid');
+	    $id .= ':' . $this->getState('filter.divisionid');
+	    $id .= ':' . $this->getState('filter.teamid');
+	    
+	    return parent::getStoreId($id);
 	}
 
 	/**
@@ -120,6 +117,31 @@ class RostersModel extends ListModel
 	
 	protected function getListQuery()
 	{
+	    $input = Factory::getApplication()->input;
+	    $input = $input->post->get('jform', array(), 'array');
+	    
+// 	    if (array_key_exists('programid', $input)) {
+// 	        $_programid = $input['programid'];
+// 	    } else {
+// 	        $_programid = 0;
+// 	    }
+	    
+// 	    if (array_key_exists('divisionid', $input)) {
+// 	        $_divisionid = $input['divisionid'];
+// 	    } else {
+// 	        $_divisionid = null;
+// 	    }
+	    
+// 	    if (array_key_exists('teamid', $input)) {
+// 	        $_teamid = $input['teamid'];
+// 	    } else {
+// 	        $_teamid = null;
+// 	    }
+	
+	    $_programid = (string) $this->getState('filter.programid');
+	    $_divisionid = (string) $this->getState('filter.divisionid');
+	    $_teamid = (string) $this->getState('filter.teamid');
+	    
 	    // Create a new query object.
 	    $db    = $this->getDatabase();
 	    $query = $db->getQuery(true);
@@ -140,52 +162,40 @@ class RostersModel extends ListModel
 	        $db->quoteName('a.teamid') . ' = ' . $db->quoteName('b.id'),   // Join to the TEAMS table
 	        $db->quoteName('a.programid') . ' = ' . $db->quoteName('c.programid'),   
 	        $db->quoteName('a.teamid') . ' = ' . $db->quoteName('c.teamid'),   
-	    );	    
+	    );
 	    $query->where($conditions);
 
-        // Filter by PROGRAMID
-        $programid = (string) $this->getState('filter.programid');
-        if (is_numeric($programid))
-        {
-            $query->where($db->quoteName('a.programid') . ' = :programid');
-            $query->bind(':programid', $programid, ParameterType::INTEGER);
-        }
-
-        // Filter by DIVISION ID
-        $divisionid = (string) $this->getState('filter.divisionid');
-        if (is_numeric($divisionid))
-        {
-            $query->where($db->quoteName('c.divisionid') . ' = :divisionid');
-            $query->bind(':divisionid', $divisionid, ParameterType::INTEGER);
-        }
-        
-        // Filter by TEAMID
-        $teamid = (string) $this->getState('filter.teamid');
-        if (is_numeric($teamid))
-        {
-            $query->where($db->quoteName('a.teamid') . ' = :teamid');
-            $query->bind(':teamid', $teamid, ParameterType::INTEGER);
-        }
-        
-        // Filter by CLASSIFICATION
-        $classification = (string) $this->getState('filter.classification');
-        if (is_numeric($classification))
-        {
-            $query->where($db->quoteName('a.classification') . ' = :classification');
-            $query->bind(':classification', $classification, ParameterType::STRING);
-        }
-        
-        
-	    // Filter by search in name
-	    $search = $this->getState('filter.search');
-	    
-	    if (!empty($search))
+	    // Filter by DIVISION ID
+	    $divisionid = $_divisionid;
+	    if (is_numeric($divisionid))
 	    {
-	        $search = '%' . trim($search) . '%';
-	        $query->where($db->quoteName('a.lastname') . ' LIKE :search')
-	        ->bind(':search', $search, ParameterType::STRING);
+	        $query->where($db->quoteName('c.divisionid') . ' = :divisionid');
+	        $query->bind(':divisionid', $divisionid, ParameterType::INTEGER);
 	    }
 	    
+	    $programid = $_programid;
+// 	    if (is_numeric($programid))
+// 	    {
+	        $query->where($db->quoteName('a.programid') . ' = :programid');
+	        $query->bind(':programid', $programid, ParameterType::INTEGER);
+// 	    }
+	    
+	    $teamid = $_teamid;
+	    if (is_numeric($teamid))
+	    {
+	        $query->where($db->quoteName('a.teamid') . ' = :teamid');
+	        $query->bind(':teamid', $teamid, ParameterType::INTEGER);
+	    }
+	    
+	    
+//         // Filter by CLASSIFICATION
+//         $classification = (string) $this->getState('filter.classification');
+//         if (is_numeric($classification))
+//         {
+//             $query->where($db->quoteName('a.classification') . ' = :classification');
+//             $query->bind(':classification', $classification, ParameterType::STRING);
+//         }
+            
 	    
 	    // Add the list ordering clause.
 	    $orderCol  = $this->state->get('list.ordering', 'a.id');
@@ -194,6 +204,9 @@ class RostersModel extends ListModel
 	    $ordering = [$db->quoteName('a.lastname') . ' ' . $db->escape($orderDirn), ];
 	    	    
 	    $query->order($ordering);
+	    
+// 	    echo $query->__toString();
+// 	    exit;
 	    
 	    return $query;
 	}
@@ -216,30 +229,17 @@ class RostersModel extends ListModel
 	
 	
 
-// 	    /**
-// 	     * Method to change the published state of one or more records.
-// 	     *
-// 	     * @param   array    &$pks   A list of the primary keys to change.
-// 	     * @param   integer  $value  The value of the published state.
-// 	     *
-// 	     * @return  boolean  True on success.
-// 	     *
-// 	     * @since   4.0.0
-// 	     */
-// 	    public function publish(&$pks, $value = 1) {
-	        
-// 	        /* this is a very simple method to change the state of each item selected */
-// 	        $db = $this->getDatabase();
-	        
-// 	        $query = $db->getQuery(true);
-	        
-// 	        $query->update($db->quoteName('#__jsports_programs'))
-// 	        ->set($db->quoteName('published') . ' = :value')
-// 	        ->bind(':value', $value , ParameterType::INTEGER)
-// 	        ->whereIn($db->quoteName('id'), $pks);
-// 	        $db->setQuery($query);
-// 	        $db->execute();
-// 	    }
-	
+	public function getForm($data = array(), $loadData = true)
+	{
+	    // Get the form.
+	    $form = $this->loadForm('com_jsports.rosters', 'rosters', array('control' => 'jform', 'load_data' => $loadData));
+	    
+	    if (empty($form))
+	    {
+	        return false;
+	    }
+	    
+	    return $form;
+	}
 	
 }

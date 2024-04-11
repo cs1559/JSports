@@ -46,9 +46,30 @@
       }
     },
 	{
+      "name": "com_jsports.common.script",
+      "type": "script",
+      "uri": "com_jsports/common.js",
+      "dependencies": [
+        "jquery"
+      ],
+      "attributes": {
+        "defer": true
+      }
+    },
+	{
       "name": "com_jsports.roster.script",
       "type": "script",
       "uri": "com_jsports/roster.js",
+      "dependencies": [
+        "jquery"
+      ],
+      "attributes": {
+        "defer": true
+      }
+    },	{
+      "name": "com_jsports.rosters.script",
+      "type": "script",
+      "uri": "com_jsports/rosters.js",
       "dependencies": [
         "jquery"
       ],

@@ -71,7 +71,18 @@ class HtmlView extends BaseHtmlView
         $this->pagination    = $this->get('Pagination');
         $this->state         = $this->get('State');
         $this->filterForm    = $this->get('FilterForm');
+        $this->form          = $this->get('Form');
         $this->activeFilters = $this->get('ActiveFilters');
+        
+        // Obtain the state variables and bind them to the search form
+        $_programid = $this->state->get('admin.rosters.programid');
+        $_divisionid = $this->state->get('admin.rosters.divisionid');
+        $_teamid = $this->state->get('admin.rosters.teamid');
+        $defaults = array('programid' => $_programid,
+            'divisionid' => $_divisionid,
+            'teamid' => $_teamid,
+        );
+        $this->form->bind($defaults);
         
         // Check for errors.
         if (count($errors = $this->get('Errors')))

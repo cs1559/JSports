@@ -19,12 +19,6 @@ use Joomla\CMS\Factory;
 
 $listOrder = $this->escape($this->state->get('list.ordering'));
 $listDirn  = $this->escape($this->state->get('list.direction'));
-$states = array (
-		'0' => Text::_('JUNPUBLISHED'),
-		'1' => Text::_('JPUBLISHED'),
-		'2' => Text::_('JARCHIVED'),
-		'-2' => Text::_('JTRASHED')
-);
 $editIcon = '<span class="fa fa-pen-square me-2" aria-hidden="true"></span>';
 
 $clientId  = (int) $this->state->get('client_id', 0);
@@ -33,11 +27,38 @@ $user      = Factory::getUser();
 // $canCheckin = $user->authorise('core.manage', 'com_checkin') || $item->checked_out == $user->get('id') || is_null($item->checked_out);
 //$canChange  = $user->authorise('core.edit.state', 'com_modules.module.' . $item->id) && $canCheckin;
 
-
+$wa = $this->document->getWebAssetManager();
+$wa->getRegistry()->addExtensionRegistryFile('com_jsports');
+$wa->useScript('com_jsports.rosters.script');
+$wa->useStyle('com_jsports.jsports.style')
 
 ?>
+
 <form action="<?php echo Route::_('index.php?option=com_jsports&view=rosters'); ?>" method="post" name="adminForm" id="adminForm">
-	<?php echo LayoutHelper::render('joomla.searchtools.default', array('view' => $this)); ?>
+		<div hidden id="spinner"></div>
+	<div class="selection-criteria row" style="display: flex; flex-direction: row; ">
+		<div class="w-25">
+   		<?php echo $this->filterForm->renderField('programid', 'filter'); ?>	
+		</div>
+	
+		<div class="w-25">
+			<?php echo $this->filterForm->renderField('divisionid', 'filter'); ?>	
+		</div>	
+		
+		<div class="w-25">
+			<?php echo $this->filterForm->renderField('teamid', 'filter'); ?> 		
+		</div>	
+		
+		<div class="w-25">
+			<button style="margin-top: 30px;" type="submit" class="btn btn-primary validate" >
+            <span class="icon-check" aria-hidden="true"></span>
+            <?php echo Text::_('COM_JSPORTS_SEARCH'); ?>
+    	    </button>
+		</div>
+		
+		
+	</div>
+
 	<?php if (empty($this->items)) : 
 	       ?>
 		

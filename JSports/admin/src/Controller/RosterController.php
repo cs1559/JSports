@@ -1,6 +1,6 @@
 <?php
 /**
- * JSports - Joomla Sports Management Component 
+ * JSports - Joomla Sports Management Component
  *
  * @version     1.0.0
  * @package     JSports.Administrator
@@ -15,6 +15,7 @@ namespace FP4P\Component\JSports\Administrator\Controller;
 defined('_JEXEC') or die;
 
 use Joomla\CMS\MVC\Controller\FormController;
+use Joomla\CMS\Factory;
 
 /**
  * Controller for a single ROSTER ITEM
@@ -22,5 +23,14 @@ use Joomla\CMS\MVC\Controller\FormController;
  */
 class RosterController extends FormController
 {
+    
+//     public function add() {
+        
+//         $data = $this->input->post->get('jform', array(), 'array');
+//         $programid = (int) $data['programid'];
+//         echo "here I am - " . $programid;
+//         exit;
+        
+//     }
     
 }
