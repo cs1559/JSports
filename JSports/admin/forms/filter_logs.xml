@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+
+	<fields name="filter">
+
+		<field
+			name="search"
+			type="text"
+			label="Seach Venues"
+			description="Search Logs"
+			hint="JSEARCH_FILTER"
+		/>
+
+		<field name="username" type="sql" 
+			label="User Name"
+			query="select distinct username from #__jsports_action_logs group by username"
+			key_field="username"
+			value_field="username" 
+			onchange="this.form.submit();"
+			header="- Select User -"
+		/>
+	
+	</fields>
+
+	<fields name="list">
+
+		<field
+			name="fullordering"
+			type="list"
+			label="JGLOBAL_SORT_BY"
+			default="a.name ASC"
+			onchange="this.form.submit();"
+			>
+			<option value="">JGLOBAL_SORT_BY</option>
+ 			<option value="a.username ASC">COM_JSPORTS_NAME_ASC</option>  
+	  		<option value="a.username DESC">COM_JSPORTS_NAME_DESC</option>
+ 			<option value="a.logdate ASC">COM_JSPORTS_NAME_ASC</option>  
+	  		<option value="a.logdate DESC">COM_JSPORTS_NAME_DESC</option> 
+	  		 
+		</field>
+
+		<field
+			name="limit"
+			type="limitbox"
+			label="JGLOBAL_LIST_LIMIT"
+			default="25"
+			onchange="this.form.submit();"
+		/>
+	</fields>
+</form>
