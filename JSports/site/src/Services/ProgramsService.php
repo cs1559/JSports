@@ -117,6 +117,13 @@ class ProgramsService
     }
     
     
+    /**
+     * This function will return a list of groups for a given program.  this is based on the groupings code
+     * set at the Program level.
+     * 
+     * @param unknown $programid
+     * @return unknown
+     */
     public static function getProgramGroups($programid) {
         
         $pgm = ProgramsService::getItem($programid);
@@ -127,10 +134,10 @@ class ProgramsService
         $query->select('p.*');
         $query->from($db->quoteName('#__jsports_groups_items') . ' AS p ');
         $conditions = array(
-            $db->quoteName('p.code') . ' = ' . $db->quote($pgm->groupingscode),
+            $db->quoteName('p.groupcode') . ' = ' . $db->quote($pgm->groupingscode),
         );
         $query->where($conditions);
-        $query->order('id asc');
+        //$query->order('id asc');
         $db->setQuery($query);
         return $db->loadAssocList();
 //        return $db->loadObjectList();
