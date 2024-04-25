@@ -23,6 +23,10 @@ use Joomla\CMS\Table\Table;
 
 class RosterModel extends AdminModel
 {
+    
+    public $programid;
+    public $teamid;
+    
     /**
      * Method to test whether a record can be deleted.
      *
