@@ -200,7 +200,8 @@ class SecurityService
     public static function canEditGame($teamid, Object $item ){
         $canEdit = true;
         
-        if ($teamid != $item->teamid) {
+        //if ($teamid != $item->teamid) {
+        if ($teamid != $item->hometeamid) {
             return false;
         }
         if ($item->gamestatus === 'C') {
