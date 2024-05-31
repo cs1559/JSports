@@ -200,6 +200,11 @@ class SecurityService
     public static function canEditGame($teamid, Object $item ){
         $canEdit = true;
         
+        // If the user is a "super user" or "administrator" immediately grant them access
+        if (SecurityService::isAdmin()) {
+            return true;
+        }
+        
         //if ($teamid != $item->teamid) {
         if ($teamid != $item->hometeamid) {
             return false;
