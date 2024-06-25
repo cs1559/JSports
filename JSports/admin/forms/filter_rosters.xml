@@ -29,13 +29,14 @@
 
 		<field name="teamid" type="sql" 
 			label="Team"
+			default="0"
 		    sql_select="a.*"
 		    sql_from="#__jsports_teams as a, #__jsports_map as m"
 		    sql_where="a.id = m.teamid"
 		    sql_order="a.name ASC"
 			key_field="id"
 			value_field="name" 
-			onchange="jQuery('.button-new').prop('disabled',false); this.form.submit();"
+			onchange="this.form.submit();"
 			sql_filter="divisionid"
 			header="- Select Team -"
 		/>
