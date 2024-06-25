@@ -34,7 +34,7 @@ class DashboardModel extends BaseModel
     public function __construct() {
         parent::__construct();
                 
-        $this->title  = "Sports Managment Component";
+        $this->title  = "JSports - Sports Managment Component";
         $this->version = JSHelper::getVersion();
     }
     
