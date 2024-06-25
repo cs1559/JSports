@@ -91,7 +91,7 @@ class HtmlView extends BaseHtmlView
         // Get the toolbar object instance
         $toolbar = Toolbar::getInstance('toolbar');
 
-        ToolbarHelper::title(Text::_('Sports Managment - Venues'));
+        ToolbarHelper::title(Text::_('Sports Managment - View System/User Logs'));
                
         $canDo = ContentHelper::getActions('com_jsports');
         
