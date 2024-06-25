@@ -5,3 +5,8 @@
 	flex-wrap: wrap;
 }
 
+.dashboard-heading {
+	background-color:	cornflowerblue;
+	text-align: center;
+}
+
