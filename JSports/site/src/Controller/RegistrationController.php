@@ -162,6 +162,8 @@ class RegistrationController extends BaseController
         }
 
         $japp->triggerEvent('onAfterRegistration', ['data' => $data]);
+
+        die('onAfterRegistration');
         
         // Redirect the user and adjust session state based on the chosen task.
         switch ($this->getTask()) {
