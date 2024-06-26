@@ -14,6 +14,7 @@ namespace FP4P\Component\JSports\Site\Objects\Events;
 
 use FP4P\Component\JSports\Site\Objects\Observable;
 use FP4P\Component\JSports\Site\Objects\Events\GameObserver;
+use FP4P\Component\JSports\Site\Objects\Events\RegistrationObserver;
 
 class EventDispatcher extends Observable
 {
@@ -27,6 +28,9 @@ class EventDispatcher extends Observable
             $instance = new EventDispatcher();
             $obs = new GameObserver();
             $instance->attach($obs);
+            
+            $obs1 = new RegistrationObserver();
+            $instance->attach($obs1);
         }
         return $instance;
     }
