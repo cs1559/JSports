@@ -149,7 +149,7 @@ class RegistrationModel extends FormModel
         //@TODO Need to add code to catch any error that may exist.
         if ($table->save($data)) {
             
-            $app->triggerEvent('onAfterRegistration', ['data' => $table]);
+//             $app->triggerEvent('onAfterRegistration', ['data' => $table]);
             
             return true;
         } else {
