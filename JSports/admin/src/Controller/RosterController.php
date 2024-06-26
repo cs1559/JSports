@@ -24,13 +24,18 @@ use Joomla\CMS\Factory;
 class RosterController extends FormController
 {
     
-//     public function add() {
+    public function add() {
         
-//         $data = $this->input->post->get('jform', array(), 'array');
-//         $programid = (int) $data['programid'];
-//         echo "here I am - " . $programid;
-//         exit;
         
-//     }
+        $model = $this->getModel('Roster','Administrator');
+        
+        $data = $this->input->post->get('filter', array(), 'array');
+        
+        $model->programid = $data['programid'];
+        $model->teamid = $data['teamid'];
+                
+        parent::add();
+        
+    }
     
 }
