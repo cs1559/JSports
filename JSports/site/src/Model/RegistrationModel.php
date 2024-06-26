@@ -16,7 +16,7 @@ namespace FP4P\Component\JSports\Site\Model;
 defined('_JEXEC') or die;
 
 use Joomla\CMS\MVC\Model\FormModel;
-
+use FP4P\Component\JSports\Site\Objects\Application;
 use Joomla\Database\ParameterType;
 use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Services\RegistrationService;
@@ -136,14 +136,29 @@ class RegistrationModel extends FormModel
      */
     public function save($data) {
         
-        $reg = RegistrationService::getRegistrationTable();
+        $user = Factory::getUser();
+        $app = Application::getInstance();
+        
+        
+        $table = RegistrationService::getRegistrationTable();
         
         // Set default values for certain fields
-        $reg->ipaddr = $_SERVER['REMOTE_ADDR'];
-        $reg->regdate = date("Y-m-d H:i:s");
+        $table->ipaddr = $_SERVER['REMOTE_ADDR'];
+        $table->regdate = date("Y-m-d H:i:s");
 
         //@TODO Need to add code to catch any error that may exist.
-        return $reg->save($data);
+        if ($table->save($data)) {
+            
+            $app->triggerEvent('onAfterRegistration', ['data' => $table]);
+            
+            return true;
+        } else {
+            $errors = $table->getErrors();
+            $this->setError($errors[0]);
+            $app = Factory::getApplication();
+            $app->enqueueMessage($errors[0],'error');
+            return false;
+        }
         
     }
 }
