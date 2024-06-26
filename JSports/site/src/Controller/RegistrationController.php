@@ -60,8 +60,10 @@ class RegistrationController extends BaseController
         $programid = $formdata->get('programid');
         $svc = new ProgramsService();
         $program = $svc->getItem($programid);
+        $options = json_decode($program->registrationoptions);
         
-        $layout = $program->registrationtemplate;
+       // $layout = $program->registrationtemplate;
+        $layout = $options->registrationtemplate;
         
         if (strlen($layout) < 1) {
             $layout = 'edit';
@@ -75,7 +77,8 @@ class RegistrationController extends BaseController
         // Set the registration id to edit in the session.
         $app->setUserState('com_jsports.edit.registration.id', $registrationId);
         $app->setUserState('com_jsports.edit.registration.programid', $programid);
-        $app->setUserState('com_jsports.edit.registration.agreementurl', $program->agreementurl);
+        //$app->setUserState('com_jsports.edit.registration.agreementurl', $program->agreementurl);
+        $app->setUserState('com_jsports.edit.registration.agreementurl', $options->agreementurl);
         
         // Redirect to the edit screen.
         $this->setRedirect(Route::_('index.php?option=com_jsports&view=registration&layout=' . $layout . '&Itemid=' . $itemid, false));
