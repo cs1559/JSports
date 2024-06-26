@@ -53,7 +53,7 @@
 			name="agegroup"
 			type="list"
 			label="COM_JSPORTS_AGEGROUP"
-			required="true" 
+			required="false" 
 			>
 			<option selected="selected" value="">- Select Age Group -</option>
 			<option value="7">7U</option>
@@ -70,7 +70,7 @@
 			name="skilllevel"
 			type="list"
 			label="COM_JSPORTS_SKILLLEVEL"
-			required="true" 
+			required="false" 
 			>
 			<option selected="selected" value="">- Select Skill Level -</option>
 			<option value="R">Red</option>
