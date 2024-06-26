@@ -19,6 +19,7 @@ use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Factory;
 use Joomla\CMS\CMSObject;
+use FP4P\Component\JSports\Site\Services\ProgramsService;
 
 /**
  * HTML Registration View
@@ -27,11 +28,8 @@ use Joomla\CMS\CMSObject;
  */
 class HtmlView extends BaseHtmlView
 {
-    /**
-     * The item model state
-     *
-     * @var    \Joomla\Registry\Registry
-     * @since  1.6xxx
+    protected $program;
+    
     /**
      * The item object details
      *
@@ -47,6 +45,8 @@ class HtmlView extends BaseHtmlView
      * @since  1.6
      */
     protected $agreementurl = "";
+   
+    protected $options = "";
     
     /**
      * Execute and display a template script.
@@ -74,6 +74,8 @@ class HtmlView extends BaseHtmlView
             $this->item->programid = $programid;
         }
         
+        $this->program = ProgramsService::getItem($programid);
+        $this->options = json_decode($this->program->registrationoptions);
         
         $this->agreementurl = $app->getUserState('com_jsports.edit.registration.agreementurl', '');
      
