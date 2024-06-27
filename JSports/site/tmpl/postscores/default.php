@@ -48,6 +48,14 @@ $document->setTitle(Text::_('COM_JSPORTS_POSTSCORES_PAGE_TITLE'));
 <?php echo $this->program->name . " (" . $this->program->status . ")"; ?>
 <hr class="hr-bar">
 	
+	<?php if ($this->program->status == 'C') { ?>
+		<div class="alert alert-info">
+			<span class="fa fa-info-circle" aria-hidden="true"></span><span class="sr-only"><?php echo Text::_('INFO'); ?></span>
+			<?php echo Text::_('Scores can no longer be posted - Program is closed'); ?>
+		</div>
+
+	<?php } ?>
+	
 	<?php if (empty($this->items)) : 
 	       ?>
 		
@@ -77,7 +85,7 @@ $document->setTitle(Text::_('COM_JSPORTS_POSTSCORES_PAGE_TITLE'));
 					<?php 
 				//if ($this->canEdit && (SecurityService::canEditGame($this->team->id, $item))) {
 
-				if ($this->canEdit) {
+				if ($this->canEdit && $this->program->status == 'A') {
 ?>	
 						<a class="btn btn-primary btn-sm" href="<?php echo Route::_('index.php?option=com_jsports&view=postscore&id=' . $item->id . '&teamid=' . $this->team->id); ?>">Post Score</a>
 
