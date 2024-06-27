@@ -13,6 +13,7 @@ namespace FP4P\Component\JSports\Site\Objects\Events;
 
 use FP4P\Component\JSports\Site\Objects\BaseObserver;
 use FP4P\Component\JSports\Site\Services\TeamService;
+use FP4P\Component\JSports\Site\Services\ProgramsService;
 use FP4P\Component\JSports\Site\Services\MailService;
 use Joomla\CMS\Component\ComponentHelper;
 
@@ -33,21 +34,37 @@ class RegistrationObserver extends BaseObserver
         
         $data = (object) $args['data'];
         
+        $program = ProgramsService::getItem($data->programid);
+        
+        
         // @TODO - This needs to be refactored where the email content is abstracted from this class into more of a
         //      template solutions.
         $body = "
-<p>THANK YOU for registering for </p>
+<p>Your registration has been received for" . $program->name . "</p>
+<h2>REGISTRATION DETAILS</h2>
 <p>
+Team Name:  " . $data->teamname ."</br>
+Coach Name: " . $data->name . "</br>
+Email:  " . $data->email . "</br>
+Phone: " . $data->phone . "</br>
+Address: " . $data->address . "<br/>
+City: " . $data->city . "<br/>
+State: " . $data->state . "<br/>
+</br>
+Registration Group: " . $data->grouping . "<br/>
+</br>
+Registered By: " . $data->registeredby . "<br/>
+
+
+</p>
 <p>
 SWIBL<br/>
 Email: info@swibl.org<br/>
 </p> ";
         
-        $subject = "SWIBL - New Registration";
+        $subject = "SWIBL - New " . $program->name . " Registration";
         
-        $mainemails = "cs1559@localhost";
-        $swiblemails = "chris@swibl.org";
-        $recipients = array_merge($homeemails, $awayemails);
+        $recipients = [$data->email];
         
         $adminrecipients = array();
         if ($ccadmin) {
