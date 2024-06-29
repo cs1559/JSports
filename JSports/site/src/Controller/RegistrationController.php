@@ -148,6 +148,7 @@ class RegistrationController extends BaseController
         
         // Attempt to save the data.
         $return = $model->save($data);
+        $lastid = $return;
         
         // Check for errors.
         if ($return === false) {
@@ -161,7 +162,7 @@ class RegistrationController extends BaseController
             return false;
         }
 
-        $japp->triggerEvent('onAfterRegistration', ['data' => $data]);
+        $japp->triggerEvent('onAfterRegistration', ['data' => $data, 'regid' => $lastid]);
        
         // Redirect the user and adjust session state based on the chosen task.
         switch ($this->getTask()) {
@@ -177,7 +178,8 @@ class RegistrationController extends BaseController
                 }
                 
                 if (!$redirect) {
-                    $redirect = 'index.php?option=com_jsports&view=dashboard';
+                    //$redirect = 'index.php?option=com_jsports&view=dashboard';
+                    $redirect = 'index.php?option=com_jsports&view=registration&layout=complete' . '&id=' . $lastid;
                 }
                 
                 // Redirect to the list screen.
@@ -208,4 +210,12 @@ class RegistrationController extends BaseController
         // Redirect to user profile.
         $this->setRedirect(Route::_('index.php?option=com_users&view=profile', false));
     }
+    
+    public function complete() {
+        echo "Registration complete";
+        exit;
+    }
+    
+    
+    
 }
