@@ -254,7 +254,12 @@ $document->setTitle(Text::_('COM_JSPORTS_TEAMPROFILE_PAGE_TITLE'));
 									<tr>
 										<td><?php echo $game->gamedate; ?></td>
 										<td><?php echo JSHelper::displayGameTime($game->gametime);?> </td>
-										<td><?php echo $game->name; ?></td>
+										<td><?php echo $game->name; 
+										// Display indicator for NON-LEAGUE GAME
+										if (!$game->leaguegame) {
+										    echo '**';
+										}
+										?></td>
 										<td><?php echo GameService::getWinLoss($this->data->id,$game); ?></td>
 										<td><?php echo $game->awayteamscore; ?></td>
 										<td><?php echo $game->hometeamscore; ?></td>
