@@ -93,11 +93,14 @@ class HtmlView extends BaseHtmlView
         }
         
         $defaultlogo = '/media/com_jsports/images/swibl-square-logo.png';
-        if (strlen($this->data->logo) > 0) {
-            $this->teamlogo = $logodir . "/Teamid-" . $this->data->id . "/" . $this->data->logo;
-            if (!file_exists(JPATH_SITE . $this->teamlogo)) {
-                $this->teamlogo = $defaultlogo;
-            }
+        // Test for NULL to avoid deprecated error with strlen
+        if (!is_null($this->data->logo)) {
+            if (strlen($this->data->logo) > 0) {
+                $this->teamlogo = $logodir . "/Teamid-" . $this->data->id . "/" . $this->data->logo;
+                if (!file_exists(JPATH_SITE . $this->teamlogo)) {
+                    $this->teamlogo = $defaultlogo;
+                }
+            } 
         } else {
             $this->teamlogo = $defaultlogo;
         }

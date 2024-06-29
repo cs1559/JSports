@@ -79,9 +79,12 @@ $document->setTitle(Text::_('COM_JSPORTS_TEAMPROFILE_PAGE_TITLE'));
 						</strong><?php echo $this->data->city . ", " . $this->data->state; ?><br />
 						<strong>Contact Phone:</strong><?php echo $this->data->contactphone; ?><br />
 						<strong>Contact Email: </strong><?php echo $this->data->contactemail; ?><br />
-						<strong>Website: </strong><?php
-						if (strlen($this->data->websiteurl) > 5) {
-						      echo $this->data->websiteurl; 
+						<strong>Website: </strong>
+						<?php
+						if (!is_null($this->data->websiteurl))) {
+    						if (strlen($this->data->websiteurl) > 5) {
+    						      echo $this->data->websiteurl; 
+    						}
 						} else {
 						    echo 'N/A';
 						}
