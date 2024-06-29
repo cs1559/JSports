@@ -81,7 +81,7 @@ $document->setTitle(Text::_('COM_JSPORTS_TEAMPROFILE_PAGE_TITLE'));
 						<strong>Contact Email: </strong><?php echo $this->data->contactemail; ?><br />
 						<strong>Website: </strong>
 						<?php
-						if (!is_null($this->data->websiteurl))) {
+						if (!is_null($this->data->websiteurl)) {
     						if (strlen($this->data->websiteurl) > 5) {
     						      echo $this->data->websiteurl; 
     						}
