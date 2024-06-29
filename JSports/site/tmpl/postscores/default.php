@@ -71,8 +71,8 @@ $document->setTitle(Text::_('COM_JSPORTS_POSTSCORES_PAGE_TITLE'));
 			foreach ($this->items as $i => $item) :
 			?>		
            		 <div class="row" style="border-style: solid; margin-bottom: 15px; padding-top: 10px; padding-bottom: 10px;">
-                    <div class="col-sm-2">
-                      <strong><?php echo Text::_('COM_JSPORTS_GAMEDATE') . ":</strong> " . $item->gamedate;?>
+                    <div class="col-sm-3">
+                      <strong><?php echo Text::_('COM_JSPORTS_GAMEDATE') . ":</strong> " . $item->gamedate . " (" . JSHelper::displayGameTime($item->gametime) . ")"?>
                     </div>
                     <div class="col-sm-5">
                       <?php echo $item->name;?>
