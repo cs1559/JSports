@@ -22,6 +22,7 @@ use FP4P\Component\JSports\Site\Services\GameService;
 use FP4P\Component\JSports\Site\Services\TeamService;
 use Joomla\CMS\Application\SiteApplication;
 use FP4P\Component\JSports\Site\Objects\Application as Myapp;
+use FP4P\Component\JSports\Administrator\Helpers\JSHelper;
 
 /**
  * GameModel - Methods/functions to manage games within the component.
@@ -186,9 +187,11 @@ class GameModel extends FormModel
         //@TODO Need to add code to catch any error that may exist.
     	if ($table->save($data)) {
     	    if ($isNew) {
-    	        $logger->info('Game id: ' . $table->id . " - " .  $table->name . ' has been inserted');
+    	        $logger->info('Game id: ' . $table->id . " - " .  
+    	            $table->name . " has been inserted - Date: " . $table->gamedate . " Time: " . JSHelper::displayGameTime($table->gametime));
     	    } else {
-    	        $logger->info('Game id: ' . $table->id . ' has been updated - STATUS = ' . $data['gamestatus']);
+    	        $logger->info('Game id: ' . $table->id . ' has been updated - Date: ' . 
+    	            $table->gamedate . ' Time: ' . JSHelper::displayGameTime($table->gametime) . ' STATUS = ' . $data['gamestatus']);
     	    }
     		return true;
     	} else {
