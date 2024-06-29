@@ -151,7 +151,9 @@ class RegistrationModel extends FormModel
             
 //             $app->triggerEvent('onAfterRegistration', ['data' => $table]);
             
-            return true;
+            //return true;
+            return $table->id;
+            
         } else {
             $errors = $table->getErrors();
             $this->setError($errors[0]);
