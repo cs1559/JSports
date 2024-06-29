@@ -33,6 +33,7 @@ class RegistrationObserver extends BaseObserver
         $multiadmins = strpos(',', $adminemails);
         
         $data = (object) $args['data'];
+        $regid = $args['regid'];
         
         $program = ProgramsService::getItem($data->programid);
         
@@ -43,6 +44,7 @@ class RegistrationObserver extends BaseObserver
 <p>Your registration has been received for" . $program->name . "</p>
 <h2>REGISTRATION DETAILS</h2>
 <p>
+Registration ID: " . $regid . "</br>
 Team Name:  " . $data->teamname ."</br>
 Coach Name: " . $data->name . "</br>
 Email:  " . $data->email . "</br>
