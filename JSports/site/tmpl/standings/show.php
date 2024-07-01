@@ -27,6 +27,8 @@ $showposition = $params->get('showposition');
 
 <div id="standings-container">
 
+<?php if (!$this->program->registrationonly) { ?>
+
 		<h1><span id="standings-league-description">League Standings - <?php echo $this->program->name; ?></span></h1>
 		<br/>
 		<span class="system_message"><?php // echo $season_note; ?></span>
@@ -157,5 +159,7 @@ $showposition = $params->get('showposition');
 			
 	?>
 			<a class="btn btn-primary btn-sm" href="#top">Back to Top</a>
+			
+	<?php } ?>
 </div>
 
