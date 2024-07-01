@@ -44,11 +44,11 @@ class RegistrationObserver extends BaseObserver
 <p>Your registration has been received for" . $program->name . "</p>
 <h2>REGISTRATION DETAILS</h2>
 <p>
-Registration ID: " . $regid . "</br>
-Team Name:  " . $data->teamname ."</br>
-Coach Name: " . $data->name . "</br>
-Email:  " . $data->email . "</br>
-Phone: " . $data->phone . "</br>
+Registration ID: " . $regid . "<br/>
+Team Name:  " . $data->teamname ."<br/>
+Coach Name: " . $data->name . "<br/>
+Email:  " . $data->email . "<br/>
+Phone: " . $data->phone . "<br/>
 Address: " . $data->address . "<br/>
 City: " . $data->city . "<br/>
 State: " . $data->state . "<br/>
