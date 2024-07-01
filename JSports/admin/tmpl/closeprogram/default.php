@@ -27,7 +27,7 @@ HTMLHelper::_('behavior.keepalive');
 	to the historical standings table, creating a new team record history entry and more.
 	</p>
 	
-	<a class="btn btn-primary" href="<?php echo Route::_('index.php?option=com_jsports&task=closeprogram.process&id=' . (int) $this->item->id); ?>">CLICK HERE TO CLOSE PROGRAM</a>
+	<a class="btn btn-primary" href="<?php echo Route::_('index.php?option=com_jsports&task=closeprogram.process&programid=' . (int) $this->item->id); ?>">CLICK HERE TO CLOSE PROGRAM</a>
 	<input type="hidden" name="task" value="">
 	<?php echo HTMLHelper::_('form.token'); ?>
 </form>

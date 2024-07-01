@@ -169,7 +169,7 @@ class ProgramsService
         
 //         // INSERT CURRENT STANDINGS INTO PAST STANDINGS (MIGRATE)
         $query = $db->getQuery(true);
-        $sql = "delete from #__jsports_test_standings
+        $sql = "delete from #__jsports_past_standings
                     where programid = " . $db->quote($programid);
         
         $query->setQuery($sql);
@@ -177,7 +177,7 @@ class ProgramsService
         $result = $db->execute();
         
         $query = $db->getQuery(true);
-        $sql = "insert into " . $db->quoteName("#__jsports_test_standings")
+        $sql = "insert into " . $db->quoteName("#__jsports_past_standings")
                 . " select * from " . $db->quoteName("#__jsports_standings")  
                 . " where programid = " . $db->quote($programid);
 
@@ -235,17 +235,16 @@ class ProgramsService
         $table->store();
 
         
-        echo "DELETING CURRENT STANDINGS <br/>";
+        //echo "DELETING CURRENT STANDINGS <br/>";
         //         // DELETE CURRENT STANDINGS
-        //         $query = $db->getQuery(true);
-        //         $conditions = array(
-        //             $db->quoteName('programid') . ' = ' . $db->quoteName($programid),
-        //             $db->quoteName('1'),
-        //         );
-        //         $query->delete($db->quoteName('#__jsports_standings'));
-        //         $query->where($conditions);
-        //         $db->setQuery($query);
-        //         $result = $db->execute();
+        //         // INSERT CURRENT STANDINGS INTO PAST STANDINGS (MIGRATE)
+        $query = $db->getQuery(true);
+        $sql = "delete from #__jsports_standings
+                    where programid = " . $db->quote($programid);
+        
+        $query->setQuery($sql);
+        $db->setQuery($query);
+        $result = $db->execute();
         
 
         return true;
@@ -271,7 +270,7 @@ class ProgramsService
         
         
         //         // INSERT CURRENT STANDINGS INTO PAST STANDINGS (MIGRATE)
-        $sql = "delete from " . $db->quoteName("#__jsports_test_standings")
+        $sql = "delete from " . $db->quoteName("#__jsports_past_standings")
         . " where programid = " . $db->quote($programid);
         
         $query->setQuery($sql);
