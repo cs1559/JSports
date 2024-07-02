@@ -41,7 +41,7 @@ class RegistrationObserver extends BaseObserver
         // @TODO - This needs to be refactored where the email content is abstracted from this class into more of a
         //      template solutions.
         $body = "
-<p>Your registration has been received for" . $program->name . "</p>
+<p>Your registration has been received for " . $program->name . "</p>
 <h2>REGISTRATION DETAILS</h2>
 <p>
 Registration ID: " . $regid . "<br/>
