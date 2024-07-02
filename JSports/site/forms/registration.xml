@@ -100,7 +100,7 @@
 			label="COM_JSPORTS_TOS" size="40" require="true"/>
 
 		
-		<field name="captcha" type="captcha" label="COM_CONTACT_CAPTCHA_LABEL" validate="captcha" namespace="contact"/>
+		<field name="captcha" type="captcha" label="COM_JSPORTS_CAPTCHA_LABEL" validate="captcha" namespace="contact"/>
 
 		
 	</fieldset>
