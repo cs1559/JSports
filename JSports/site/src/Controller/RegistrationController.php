@@ -66,7 +66,7 @@ class RegistrationController extends BaseController
         $layout = $options->registrationtemplate;
         
         if (strlen($layout) < 1) {
-            $layout = 'edit';
+            $layout = 'default';
         }
         
         //@TODO  Need to add check for the existence of the file.
@@ -80,7 +80,7 @@ class RegistrationController extends BaseController
         //$app->setUserState('com_jsports.edit.registration.agreementurl', $program->agreementurl);
         $app->setUserState('com_jsports.edit.registration.agreementurl', $options->agreementurl);
         
-        // Redirect to the edit screen.
+        // Redirect to the default screen.
         $this->setRedirect(Route::_('index.php?option=com_jsports&view=registration&layout=' . $layout . '&Itemid=' . $itemid, false));
         
         return true;
