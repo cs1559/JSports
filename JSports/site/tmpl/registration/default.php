@@ -23,14 +23,22 @@ HTMLHelper::_('behavior.keepalive');
 
 ?>
 
-<h1>Registration Edit</h1>
+<h1>Registration </h1>
 
 <form action="<?php echo Route::_('index.php?option=com_jsports&view=registrations&layout=edit'); ?>"
 	method="post" name="registerform" id="register-form" class="form-validate">
 	
+<?php if (!is_null($this->program->registrationnotes)) {?>	
+<div>
+	<p>
+		<?php echo $this->program->registrationnotes; ?>	
+	</p>
+</div>	
+<?php } ?>
+
 <div class="row">
 
-<?php echo $this->program->name; ?>
+<?php //echo $this->program->name; ?>
 <?php echo $this->form->renderField('id');?>
 <?php echo $this->form->renderField('programid');?>
 <?php echo $this->form->renderField('teamname');?>
@@ -41,18 +49,21 @@ HTMLHelper::_('behavior.keepalive');
 <?php echo $this->form->renderField('city');?>
 <?php echo $this->form->renderField('state');?>
 <?php 
-
+if (!is_null($this->options)) {
 if ($this->options->includegroups) {
     echo $this->form->renderField('grouping');
 }
-    
+}
 ?>
-<?php 
+<?php
+if (!is_null($this->options)) {
 if ($this->options->includeskills) {
     echo $this->form->renderField('skilllevel');
 }
+}
 ?>
 <?php 
+if (!is_null($this->options)) {
 if ($this->options->includeagreement) {
 ?>
 <div class="row agreement-container">
@@ -64,10 +75,13 @@ Please <a href="<?php echo $this->agreementurl;?>" target="_blank">CLICK HERE TO
 
 <?php 
 }
+}
 ?>
 <?php 
-if ($this->options->includeregisteredby) {
-    echo $this->form->renderField('registeredby');
+if (!is_null($this->options)) {
+    if ($this->options->includeregisteredby) {
+        echo $this->form->renderField('registeredby');
+    }
 }
 ?>
 <?php echo $this->form->renderField('captcha');?>
