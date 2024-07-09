@@ -46,7 +46,7 @@ class HtmlView extends BaseHtmlView
      */
     protected $agreementurl = "";
    
-    protected $options = "";
+    protected $options = null;
     
     /**
      * Execute and display a template script.
@@ -75,7 +75,9 @@ class HtmlView extends BaseHtmlView
         }
         
         $this->program = ProgramsService::getItem($programid);
-        $this->options = json_decode($this->program->registrationoptions);
+        if (!is_null($this->program->registrationoptions)) {
+            $this->options = json_decode($this->program->registrationoptions);
+        } 
         
         $this->agreementurl = $app->getUserState('com_jsports.edit.registration.agreementurl', '');
      
