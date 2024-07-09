@@ -76,10 +76,10 @@ HTMLHelper::_('behavior.keepalive');
 		<div class="row">
 			<div class="col-md-6">
 				<div class="row">
-					<div class="col-md-6">
-						<?php echo $this->form->renderField('registrationonly'); ?>
+					<div>
 						<?php echo $this->form->renderField('registrationopen'); ?>
-						<?php echo $this->form->renderField('registrationtemplate'); ?>
+						<?php echo $this->form->renderField('cost'); ?>
+						<?php echo $this->form->renderField('registrationnotes'); ?>
 						<?php echo $this->form->renderField('registrationstart'); ?>
 						<?php echo $this->form->renderField('registrationend'); ?>
 
@@ -88,9 +88,9 @@ HTMLHelper::_('behavior.keepalive');
 			</div>
 			<div class="col-md-6">
 				<div class="row">
-					<div class="col-md-6">
-				<?php echo $this->form->renderField('registrationoptions'); ?>
-				</div>
+					<div>
+						<?php echo $this->form->renderField('registrationoptions'); ?>
+					</div>
 				</div>
 			</div>
 		</div>
