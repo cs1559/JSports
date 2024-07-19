@@ -29,6 +29,48 @@
  -->
 <config>
 	<help key="Sports Management:_Options"/>
+	
+	<fieldset name="organization" description="COM_JSPORTS_ORG_DESC" label="COM_JSPORTS_ORG_LABEL">
+		<field name="orgname" type="text" default=""
+			label="COM_JSPORTS_ORGNAME"
+			description="COM_JSPORTS_ORGNAME_DESC">
+		</field>
+		<field name="orgaddr1" type="text" default=""
+			label="COM_JSPORTS_ORGADDR1"
+			description="COM_JSPORTS_ORGADDR1_DESC">
+		</field>
+		<field name="orgaddr2" type="text" default=""
+			label="COM_JSPORTS_ORGADDR2"
+			description="COM_JSPORTS_ORGADDR2_DESC">
+		</field>
+		<field name="orgcity" type="text" default=""
+			label="COM_JSPORTS_ORGCITY"
+			description="COM_JSPORTS_ORGCITY_DESC">
+		</field>
+		<field name="orgstate" type="text" default=""
+			label="COM_JSPORTS_ORGSTATE"
+			description="COM_JSPORTS_ORGSTATE_DESC">
+		</field>
+		<field name="orgzipcode" type="text" default=""
+			label="COM_JSPORTS_ORGZIPCODE"
+			description="COM_JSPORTS_ORGZIPCODE_DESC">
+		</field>
+		<field name="contactname" type="text" default=""
+			label="COM_JSPORTS_CONTACTNAME"
+			description="COM_JSPORTS_CONTACTNAME_DESC">
+		</field>
+		<field name="orgemail" type="email" default=""
+			label="COM_JSPORTS_ORGEMAIL"
+			description="COM_JSPORTS_ORGEMAIL_DESC">
+		</field>
+		<field name="orgphone" type="tel" default=""
+			label="COM_JSPORTS_ORGPHONE"
+			description="COM_JSPORTS_ORGPHONE_DESC">
+		</field>
+			
+	</fieldset>
+	
+	
 	<fieldset name="component">
 
 		<field name="frontend_admin" type="radio" default="0"
