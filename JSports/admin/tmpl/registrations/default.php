@@ -59,7 +59,7 @@ $user      = Factory::getUser();
 						<?php echo HTMLHelper::_('searchtools.sort', 'COM_JSPORTS_TEAMNAME', 'a.teamname', $listDirn, $listOrder); ?>
 					</th>
 					<th scope="col" class="w-15">
-						<?php echo HTMLHelper::_('searchtools.sort', 'COM_JSPORTS_AGEGROUP', 'a.agegroup', $listDirn, $listOrder); ?>
+						<?php echo HTMLHelper::_('searchtools.sort', 'COM_JSPORTS_GROUP', 'a.grouping', $listDirn, $listOrder); ?>
 					</th>					
 					<th scope="col" class="w-25">
 						<?php echo HTMLHelper::_('searchtools.sort', 'COM_JSPORTS_NAME', 'a.name', $listDirn, $listOrder); ?>
@@ -102,7 +102,7 @@ $user      = Factory::getUser();
 						</a>
 					</th>
 					<td class="">
-						<?php echo $item->agegroup; ?>
+						<?php echo $item->grouping; ?>
 					</td>
 					<td class="">
 						<?php echo $item->name; ?>
