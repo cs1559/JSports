@@ -11,32 +11,28 @@
 			hint="JSEARCH_FILTER"
 		/>
 
-		<field name="programid" type="sql" 
+		<field name="id" type="sql" 
 			label="League"
-			query="SELECT id, name FROM #__jsports_programs where published in (0,1) order by name desc"
+			query="SELECT id, name, groupingscode FROM #__jsports_programs where published in (0,1) order by name desc"
 			key_field="id"
 			value_field="name" 
 			onchange="this.form.submit();"
 			header="- Select Program -"
 		/>
 		
-		<field
-			name="agegroup"
-			type="list"
-			label="COM_JSPORTS_AGEGROUP"
+		<field name="grouping" type="sql" 
+			label="Group"
+		    sql_select="a.*, b.id as programid"
+		    sql_from="#__jsports_groups_items as a, #__jsports_programs as b"
+		    sql_order="a.groupid ASC"
+		    sql_where="b.groupingscode = a.groupcode "
+			key_field="code"
+			value_field="name" 
 			onchange="this.form.submit();"
-			>
-			<option selected="selected" value="">- Select Age Group -</option>
-			<option value="7">7U</option>
-			<option value="8">8U</option>
-			<option value="9">9U</option>
-			<option value="10">10U</option>
-			<option value="11">11U</option>
-			<option value="12">12U</option>
-			<option value="13">13U</option>
-			<option value="14">14U</option>
-		</field>
-
+			sql_filter="id"
+			header="- Select Group -"
+		/>
+		
 		<field
 			name="published"
 			type="status"
