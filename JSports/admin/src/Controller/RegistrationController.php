@@ -24,10 +24,10 @@ use Joomla\CMS\MVC\Controller\FormController;
 class RegistrationController extends FormController
 {
     
-    public function save($key = null, $urlVar = null) {       
+//     public function save($key = null, $urlVar = null) {       
         
-        parent::save($key, $urlVar);
+//         parent::save($key, $urlVar);
         
-    }
+//     }
 
 }
