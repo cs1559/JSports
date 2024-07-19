@@ -39,7 +39,7 @@ class RegistrationModel extends AdminModel
     protected function canDelete($record)
     {
         
-           if (empty($record->id) || $record->state != -2) {
+           if (empty($record->id) || $record->published != -2) {
                 return false;
             }
             
@@ -63,10 +63,12 @@ class RegistrationModel extends AdminModel
      */
     protected function canEditState($record)
     {
-        // Check for existing article.
-        if (!empty($record->id))
-        {
-            return $this->getCurrentUser()->authorise('core.edit.state', 'com_jsports.registrations.' . (int) $record->id);
+
+        // You cannot "unpublish" a registration record once it's been published.  This is because of all the actions that take place to setup
+        // the team, etc. in the database.
+        
+        if ($record->published > 0) {
+            return false;
         }
         
         // Default to component settings if neither article nor category known.
@@ -160,15 +162,28 @@ class RegistrationModel extends AdminModel
      */
     public function publish(&$pks, $value = 1) {
         
-        $return = true;
-        foreach ($pks as $id) {
-            $rc = $this->processRegistration($id);
-            if (!$rc) {
-                $return = false;
+        if ($value > 0) {
+            $return = true;
+            
+            foreach ($pks as $id) {
+                $rc = $this->processRegistration($id);
+                if (!$rc) {
+                    $return = false;
+                }
             }
+            return $return;
+        } 
+            
+         return parent::publish($pks, $value);
+    }
+    
+    public function unpublish(&$pks, $value = 1) {
+        
+        if ($value > 0) {
+            return false;
         }
         
-        return $return;
+        return parent::unpublish($pks, $value);
     }
     
     
