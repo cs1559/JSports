@@ -28,6 +28,7 @@ class Teamlist2Field extends ListField
     protected $type = 'Teamlist2';
     protected $teamid = 0;
     protected $programid = 0;
+    protected $divisionid = 0;
     
     public function setup(\SimpleXMLElement $element, $value, $group = null)
     {
