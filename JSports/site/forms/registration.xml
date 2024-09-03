@@ -71,6 +71,7 @@
 			type="list"
 			label="COM_JSPORTS_SKILLLEVEL"
 			required="false" 
+			hint="NOTE:  Red is our TOP division"
 			>
 			<option selected="selected" value="">- Select Skill Level -</option>
 			<option value="R">Red</option>
@@ -88,6 +89,7 @@
 
 		<field name="playoffs" type="radio"
 			label="COM_JSPORTS_PLAYOFFS" class="btn-group btn-group-yesno" default="0"
+			hint="Are you planning on competing in the league playoffs"
 			validate="options">
 			<option value="1">Yes</option>
 			<option value="0">No</option>
@@ -99,6 +101,12 @@
 		<field name="tosack" type="checkbox"
 			label="COM_JSPORTS_TOS" size="40" require="true"/>
 
+		<field name="existingteam" type="radio"
+			label="COM_JSPORTS_RETURNINGTEAM" class="btn-group btn-group-yesno" default="0"
+			validate="options">
+			<option value="1">Yes</option>
+			<option value="0">No</option>
+		</field>
 		
 		<field name="captcha" type="captcha" label="COM_JSPORTS_CAPTCHA_LABEL" validate="captcha" namespace="contact"/>
 

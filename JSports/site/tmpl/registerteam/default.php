@@ -23,10 +23,10 @@ $itemid = $params->get('itemid');
 
 ?>
 
-<form action="<?php echo Route::_('index.php?option=com_jsports&view=registerteam&Itemid=' . $itemid); ?>"
+<form action="<?php echo Route::_('index.php?option=com_jsports&view=registration&layout=edit&Itemid=' . $itemid); ?>"
 	method="post" name="registerform" id="register-form" class="form-validate">
 
-<h1>Online Registration</h1>
+<h1>Online Registration - SELECT TEAM</h1>
 
 <strong>Please select the program you are wanting to register for:</strong>
 <br/><br/>

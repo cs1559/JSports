@@ -81,6 +81,7 @@ class RegistrationController extends BaseController
         $app->setUserState('com_jsports.edit.registration.agreementurl', $options->agreementurl);
         
         // Redirect to the default screen.
+        //$this->setRedirect(Route::_('index.php?option=com_jsports&view=registerteam&programid=' . $programid . '&Itemid=' . $itemid, false));
         $this->setRedirect(Route::_('index.php?option=com_jsports&view=registration&layout=' . $layout . '&Itemid=' . $itemid, false));
         
         return true;

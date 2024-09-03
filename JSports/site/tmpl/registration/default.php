@@ -48,6 +48,7 @@ HTMLHelper::_('behavior.keepalive');
 <?php echo $this->form->renderField('address');?>
 <?php echo $this->form->renderField('city');?>
 <?php echo $this->form->renderField('state');?>
+<?php echo $this->form->renderField('existingteam');?>
 <?php 
 if (!is_null($this->options)) {
 if ($this->options->includegroups) {
