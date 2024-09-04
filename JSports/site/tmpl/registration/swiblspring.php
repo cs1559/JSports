@@ -28,6 +28,15 @@ HTMLHelper::_('behavior.keepalive');
 <form action="<?php echo Route::_('index.php?option=com_jsports&view=registrations&layout=edit'); ?>"
 	method="post" name="registerform" id="register-form" class="form-validate">
 	
+<?php if (!is_null($this->program->registrationnotes)) {?>	
+<div>
+	<p>
+		<?php echo $this->program->registrationnotes; ?>	
+	</p>
+</div>	
+<?php } ?>
+
+	
 <div class="row">
 <?php echo $this->form->renderField('id');?>
 <?php echo $this->form->renderField('programid');?>

@@ -39,6 +39,22 @@
 			<option value="C">Closed</option>
 		</field>
 
+		<field name="sportcode" type="list"
+			label="COM_JSPORTS_SPORT" class="" default="B"
+			validate="options">
+			<option value="B">Baseball</option>
+			<option value="G">Golf</option>
+		</field>
+
+
+		<field name="groupingscode" type="sql" 
+			label="COM_JSPORTS_GROUPINGSCODE"
+			query="SELECT code, name FROM #__jsports_groups where published = 1 order by name"
+			key_field="code"
+			value_field="name" 
+			header="-Select Groups -"
+		/>
+
 		<field name="registrationtemplate" type="text"
 			label="COM_JSPORTS_REGISTRATIONTEMPLATE" />
 
@@ -46,12 +62,6 @@
 			label="COM_JSPORTS_STARTDATE"  default="0000-00-00"/>
 
 		<field name="programend" type="calendar"
-			label="COM_JSPORTS_ENDDATE"  default="0000-00-00"/>
-
-		<field name="registrationstart" type="calendar"
-			label="COM_JSPORTS_STARTDATE"  default="0000-00-00"/>
-
-		<field name="registrationend" type="calendar"
 			label="COM_JSPORTS_ENDDATE"  default="0000-00-00"/>
 
 		<field name="published" type="list" label="JSTATUS"
@@ -83,7 +93,7 @@
 			<option value="0">No</option>
 		</field>
 		
-				<field name="rostersenabled" type="radio"
+		<field name="rostersenabled" type="radio"
 			label="COM_JSPORTS_ROSTERSENABLED" class="btn-group btn-group-yesno" default="0"
 			validate="options">
 			<option value="1">Yes</option>
@@ -103,14 +113,31 @@
 			<option value="1">Yes</option>
 			<option value="0">No</option>
 		</field>
-		
-		<field name="includegroups" type="radio"
-			label="COM_JSPORTS_INCLUDEGROUPS" class="btn-group btn-group-yesno" default="0"
-			validate="options">
-			<option value="1">Yes</option>
-			<option value="0">No</option>
+				
+
+		<field name="standingspolicy" type="list" label="COM_JSPORTS_STANDINGSPOLICY"
+			class="form-select-color-state" default="POINTS" validate="options">
+			<option value="POINTS">Points (Points, RA, RS)</option>
+			<option value="WINPCT">Winning Percentage</option>
 		</field>
-	
+
+		<field name="registrationstart" type="calendar"
+			label="COM_JSPORTS_STARTDATE"  default="0000-00-00"/>
+
+		<field name="registrationend" type="calendar"
+			label="COM_JSPORTS_ENDDATE"  default="0000-00-00"/>
+
+		<field name="registrationnotes" type="textarea"
+			label="COM_JSPORTS_REGISTRATIONNOTES" rows="5" cols="75" required="false" />
+
+		<field name="cost" type="number" label="COM_JSPORTS_COST"
+			default="0" />
+			
+		<field name="registrationoptions" type="subform"
+		    formsource="/administrator/components/com_jsports/forms/registrationoptions.xml"
+		    label="" description="" />
+
+				
 	</fieldset>
 
 
