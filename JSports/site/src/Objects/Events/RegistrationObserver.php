@@ -37,6 +37,11 @@ class RegistrationObserver extends BaseObserver
         
         $program = ProgramsService::getItem($data->programid);
         
+        $returningteam = "No";
+        
+        if ($data->existingteam) {
+            $returningteam = "Yes";
+        }
         
         // @TODO - This needs to be refactored where the email content is abstracted from this class into more of a
         //      template solutions.
@@ -53,10 +58,11 @@ Address: " . $data->address . "<br/>
 City: " . $data->city . "<br/>
 State: " . $data->state . "<br/>
 </br>
+Returning Team: " . $returningteam . "<br/>
+</br>
 Registration Group: " . $data->grouping . "<br/>
 </br>
 Registered By: " . $data->registeredby . "<br/>
-
 
 </p>
 <p>

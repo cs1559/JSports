@@ -30,7 +30,7 @@
 			label="COM_JSPORTS_CITY" size="40" required="true"/>
 			
 		<field name="state" type="text"
-			label="COM_JSPORTS_STATE" size="5" />
+			label="COM_JSPORTS_STATE" size="5" maxlength="2" />
 			
 		<field name="email" type="email"
 			label="COM_JSPORTS_EMAIL" size="75" required="true"  />

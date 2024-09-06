@@ -16,6 +16,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Factory;
+use FP4P\Component\JSports\Administrator\Helpers\JSHelper;
 
 $listOrder = $this->escape($this->state->get('list.ordering'));
 $listDirn  = $this->escape($this->state->get('list.direction'));
@@ -61,6 +62,10 @@ $user      = Factory::getUser();
 					<th scope="col" class="w-15">
 						<?php echo HTMLHelper::_('searchtools.sort', 'COM_JSPORTS_GROUP', 'a.grouping', $listDirn, $listOrder); ?>
 					</th>					
+					<th scope="col" class="w-15">
+						<?php echo 'Returning'; ?>
+					</th>					
+					
 					<th scope="col" class="w-25">
 						<?php echo HTMLHelper::_('searchtools.sort', 'COM_JSPORTS_NAME', 'a.name', $listDirn, $listOrder); ?>
 					</th>
@@ -104,6 +109,10 @@ $user      = Factory::getUser();
 					<td class="">
 						<?php echo $item->grouping; ?>
 					</td>
+					<td class="">
+						<?php echo JSHelper::translateYesNo($item->existingteam); ?>
+					</td>
+					
 					<td class="">
 						<?php echo $item->name; ?>
 					</td>

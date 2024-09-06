@@ -45,6 +45,25 @@ class JSHelper
     /**
      * This function translates the roster classication into a readable value.
      *
+     * @param string $value (1 or 0)
+     * @return string
+     */
+    public static function translateYesNo($value = 0)
+    {
+        
+        switch ($value) {
+            case 1:
+                return 'Yes';
+                break;
+            default:
+                return 'No';
+                break;
+        }
+    }
+
+    /**
+     * This function translates the roster classication into a readable value.
+     *
      * @param string $code
      * @return string
      */
@@ -64,6 +83,7 @@ class JSHelper
         }
         
     }
+    
     
     /**
      * This function is used to present the 24 hour time into the normal HH:MM PM/AM format. 
