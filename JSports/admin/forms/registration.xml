@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
 
-	<fieldset name="details" label="COM_JSPORTS_DETAILS">
+		<fieldset addfieldprefix="FP4P\Component\JSports\Administrator\Fields" 
+			name="details" label="COM_JSPORTS_DETAILS">
 
 		<field name="id" type="number" label="JGLOBAL_FIELD_ID_LABEL"
 			default="0" class="readonly" readonly="true" />
@@ -66,6 +67,19 @@
 			label="COM_JSPORTS_IPADDR" size="40" readonly="true"/>
 
 
+		<field name="existingteam" type="radio"
+			label="COM_JSPORTS_RETURNINGTEAM" class="btn-group btn-group-yesno" default="0"
+			validate="options">
+			<option value="1">Yes</option>
+			<option value="0">No</option>
+		</field>
+
+		<field name="teamid" type="text"
+			label="COM_JSPORTS_TEAMID" size="40" />
+			
+		<field name="grouping" type="programgroupslist"
+			label="COM_JSPORTS_AGEGROUP"  required="true" />
+			
 	</fieldset>
 
 
