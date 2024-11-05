@@ -40,6 +40,7 @@ class GamesModel extends ListModel
 		{
 			$config['filter_fields'] = array(
 				'name', 'a.name',
+			    'gameid', 'a.id',
 			    'programid', 'a.programid',
 			    'divisionid', 'a.divisionid',
 			    'teamid', 'a.teamid',
@@ -49,7 +50,7 @@ class GamesModel extends ListModel
 		parent::__construct($config);
 	}
 
-	
+
 	public function getForm($data = array(), $loadData = true)
 	{
 	    // Get the form.
@@ -83,19 +84,27 @@ class GamesModel extends ListModel
 	    $input = Factory::getApplication()->input;
 	    $input = $input->post->get('jform', array(), 'array');
 
+	    if (array_key_exists('gameid', $input)) {
+	        $_gameid = $input['gameid'];
+	        $this->setState('gameid', $gameid);
+// 	        $this->setState('gameid', $_gameid);
+	    }
+	    
+	    
 	    if (array_key_exists('programid', $input)) {
     	    $_programid = $input['programid'];
-	        $this->setState('programid', $_programid);
+	        $this->setState('programid', $programid);
+// 	        $this->setState('programid', $_programid);
 	    }
 	    
 	    if (array_key_exists('divisionid', $input)) {
     	    $_divisionid = $input['divisionid'];
-            $this->setState('divisionid', $_divisionid);
+            $this->setState('divisionid', $divisionid);
 	    }
 	    
 	    if (array_key_exists('teamid', $input)) {
 	       $_teamid = $input['teamid'];
-	       $this->setState('teamid', $_teamid);
+	       $this->setState('teamid', $teamid);
 	    }
 	    
 		// List state information.
@@ -120,6 +129,7 @@ class GamesModel extends ListModel
 		// Compile the store id.
 		$id .= ':' . $this->getState('filter.search');
 //		$id .= ':' . $this->getState('filter.published');
+		$id .= ':' . $this->getState('filter.gameid');
 		$id .= ':' . $this->getState('filter.programid');
 		$id .= ':' . $this->getState('filter.divisionid');
 		$id .= ':' . $this->getState('filter.teamid');
@@ -140,25 +150,36 @@ class GamesModel extends ListModel
 	    
 	    $input = Factory::getApplication()->input;
 	    $input = $input->post->get('jform', array(), 'array');
-	    
- 	    if (array_key_exists('programid', $input)) {
-	       $_programid = $input['programid'];
- 	    } else {
- 	        $_programid = 0;
- 	    }
- 	    
-	    if (array_key_exists('divisionid', $input)) {
-	       $_divisionid = $input['divisionid'];
-	    } else {
-	        $_divisionid = null;
-	    }
-	    
-	    if (array_key_exists('teamid', $input)) {
-	       $_teamid = $input['teamid'];
-	    } else {
-	        $_teamid = null;
-	    }
 
+// 	    if (array_key_exists('gameid', $input)) {
+// 	        $_gameid = $input['gameid'];
+// 	    } else {
+// 	        $_gameid = 0;
+// 	    }
+	    
+//  	    if (array_key_exists('programid', $input)) {
+// 	       $_programid = $input['programid'];
+//  	    } else {
+//  	        $_programid = 0;
+//  	    }
+ 	    
+// 	    if (array_key_exists('divisionid', $input)) {
+// 	       $_divisionid = $input['divisionid'];
+// 	    } else {
+// 	        $_divisionid = null;
+// 	    }
+	    
+// 	    if (array_key_exists('teamid', $input)) {
+// 	       $_teamid = $input['teamid'];
+// 	    } else {
+// 	        $_teamid = null;
+// 	    }
+
+	    $_programid = (string) $this->getState('filter.programid');
+	    $_divisionid = (string) $this->getState('filter.divisionid');
+	    $_teamid = (string) $this->getState('filter.teamid');
+	    $_gameid = (string) $this->getState('filter.gameid');
+	    
     
 	    // Create a new query object.
 	    $db    = $this->getDatabase();
@@ -172,7 +193,15 @@ class GamesModel extends ListModel
 	            )
 	        );
 	    $query->from($db->quoteName('#__jsports_games') . ' AS a');   
-    
+
+	    // Filter by GAME ID
+	    $gameid = $_gameid;
+	    if (is_numeric($gameid))
+	    {
+	        $query->where($db->quoteName('a.id') . ' = :gameid');
+	        $query->bind(':gameid', $gameid, ParameterType::INTEGER);
+	    }
+	    
 	    // Filter by DIVISION ID
 	    $divisionid = $_divisionid;
 	    if (is_numeric($divisionid))

@@ -11,6 +11,13 @@
 			hint="JSEARCH_FILTER"
 		/>
 
+		<field
+			name="gameid"
+			type="text"
+			label="Game ID"
+			description="Game ID"
+		/>
+		
 		<field name="programid" type="sql" 
 			label="Program"
 			query="SELECT id, name FROM #__jsports_programs where published in (0,1) order by name desc"

@@ -79,9 +79,11 @@ class HtmlView extends BaseHtmlView
         $_programid = $this->state->get('programid');
         $_divisionid = $this->state->get('divisionid');
         $_teamid = $this->state->get('teamid');
+        $_gameid = $this->state->get('gameid');
         $defaults = array('programid' => $_programid, 
                 'divisionid' => $_divisionid,
                 'teamid' => $_teamid,
+                'gameid' => $_gameid,
         );
         $this->form->bind($defaults);
         
