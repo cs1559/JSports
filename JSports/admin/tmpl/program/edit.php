@@ -65,6 +65,8 @@ HTMLHelper::_('behavior.keepalive');
 						<?php echo $this->form->renderField('setupfinal'); ?>
 						<?php //echo $this->form->renderField('rostersenabled'); ?>
 						<?php echo $this->form->renderField('rosterslocked'); ?>
+						<?php echo $this->form->renderField('limitroster'); ?>
+						<?php echo $this->form->renderField('rostersize'); ?>
 						<?php echo $this->form->renderField('standingspolicy'); ?>
 					</div>
 				</div>

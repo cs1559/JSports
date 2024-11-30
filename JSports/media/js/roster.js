@@ -1,5 +1,6 @@
 
 
+/*
 jQuery( document ).ready(function() {
     console.log( "ready!" );
     val = jQuery('#jform_id').val();
@@ -15,6 +16,7 @@ jQuery( document ).ready(function() {
 		showStaffElements();
 	}
 });
+*/
 
 jQuery("#jform_classification").change(function(){
 

@@ -1,3 +1,9 @@
+# Registrations
+select teamname, grouping, name as 'coach name', address, city, email, phone, cellphone, registeredby, skilllevel, if (playoffs=1,'Yes','No') as "Playoffs"
+from jos2823_jsports_registrations
+where published = 0 and programid= 35
+order by grouping, name;
+
 # Identify teams with no contact person
 
 select t.* 

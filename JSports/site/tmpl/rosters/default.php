@@ -51,9 +51,6 @@ if ($this->program->rosterslocked) {
 
 ?>
 
-
-
-
 <form action="<?php echo Route::_('index.php?option=com_jsports&view=rosters'); ?>" method="post" name="adminForm" id="adminForm">
 	
 	<div class="teamprofile-header-container" >
@@ -68,8 +65,13 @@ if ($this->program->rosterslocked) {
 					   if ($this->canEdit) {
 					?>
 						<a class="btn btn-primary btn-sm" 
-							href="<?php echo Route::_('index.php?option=com_jsports&view=roster&layout=edit'
-							    . '&teamid=' . $this->team->id . '&programid=' . $this->program->id . '&id=0' ); ?>"><?php echo Text::_('COM_JSPORTS_ROSTER_ADD_BUTTON'); ?> </a>
+							href="<?php echo Route::_('index.php?option=com_jsports&view=roster&layout=player'
+							    . '&teamid=' . $this->team->id . '&programid=' . $this->program->id . '&id=0' ); ?>"><?php echo Text::_('COM_JSPORTS_ROSTER_ADD_BUTTON_PLAYER'); ?> </a>
+							    
+						<a class="btn btn-primary btn-sm" 
+							href="<?php echo Route::_('index.php?option=com_jsports&view=roster&layout=staff'
+							    . '&teamid=' . $this->team->id . '&programid=' . $this->program->id . '&id=0' ); ?>"><?php echo Text::_('COM_JSPORTS_ROSTER_ADD_BUTTON_STAFF'); ?></a>
+							    
 					<?php 
 					   } 
 					?>
@@ -130,7 +132,19 @@ if ($this->program->rosterslocked) {
 					
 				<?php if ($this->canEdit) {?>	
 					<td class="">
-						<a class="btn btn-primary btn-sm" href="<?php echo Route::_('index.php?option=com_jsports&view=roster&layout=edit&id=' . $item->id); ?>">Edit</a>
+						<?php 
+						switch ($item->classification) {
+						    case 'P':
+						      $layout = 'player';
+						      break;
+						    case 'S':
+						        $layout = 'staff';
+						        break;
+						    default:
+						        $layout = 'player';
+						} 
+					    ?>
+						<a class="btn btn-primary btn-sm" href="<?php echo Route::_('index.php?option=com_jsports&view=roster&layout=' . $layout . '&id=' . $item->id); ?>">Edit</a>
 						<a class="btn btn-danger btn-sm" onClick="return confirm('Are you sure?');" href="<?php echo Route::_('index.php?option=com_jsports&task=roster.delete&id=' . $item->id); ?>">Delete</a>
 					</td>				
 				<?php } ?>	
