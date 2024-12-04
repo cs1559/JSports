@@ -117,6 +117,13 @@
 		<field name="rostersize" type="text"
 			label="COM_JSPORTS_ROSTERSIZE" size="10" required="true" default="18" />
 			
+		<field name="includesubstitutes" type="radio"
+			label="COM_JSPORTS_INCLUDESUBSTITUTES" class="btn-group btn-group-yesno" default="0"
+			validate="options">
+			<option value="1">Yes</option>
+			<option value="0">No</option>
+		</field>			
+			
 		<field name="registrationonly" type="radio"
 			label="COM_JSPORTS_REGISTRATIONONLY" class="btn-group btn-group-yesno" default="0"
 			validate="options">
