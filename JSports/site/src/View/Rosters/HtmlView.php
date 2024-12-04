@@ -20,6 +20,8 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Administrator\Services\SecurityService;
+use FP4P\Component\JSports\Site\Services\ProgramsService;
+use FP4P\Component\JSports\Site\Services\RosterService;
 
 use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\MVC\View\GenericDataException;
@@ -39,6 +41,7 @@ class HtmlView extends BaseHtmlView
     protected $teamlastyearplayed;
     protected $program;
     protected $canEdit = false;
+    protected $canAddPlayers = true;
     
     /**
      * The pagination object
@@ -86,6 +89,7 @@ class HtmlView extends BaseHtmlView
         $this->program = $mod->program;
 
         $this->canEdit = SecurityService::canEditTeamRoster($this->team->id,$this->program->id);
+        $this->canAddPlayers = RosterService::canAddPlayers($this->team->id, $this->program->id);
         
         /*  2024-12-2  Changed logic in following line */
         if ($this->program->registrationonly) {
@@ -94,7 +98,7 @@ class HtmlView extends BaseHtmlView
         if (!$this->program->status == 'C') {
             $this->setLayout("unavailable");
         }
-        
+               
         // Check for errors.
         if (count($errors = $this->get('Errors')))
         {
