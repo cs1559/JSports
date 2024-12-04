@@ -49,6 +49,13 @@ if ($this->program->rosterslocked) {
     <?php 
 }
 
+if (!$this->canAddPlayers) {
+    
+    ?>
+    <div class="alert alert-warning"><strong>** YOUR ROSTER HAS REACHED THE MAX PLAYERS ALLOWED **</strong></div>		
+    <?php 
+}
+
 ?>
 
 <form action="<?php echo Route::_('index.php?option=com_jsports&view=rosters'); ?>" method="post" name="adminForm" id="adminForm">
@@ -63,11 +70,15 @@ if ($this->program->rosterslocked) {
 </div>
 					<?php 
 					   if ($this->canEdit) {
-					?>
+					       if ($this->canAddPlayers) {
+					     ?>
+					       
 						<a class="btn btn-primary btn-sm" 
 							href="<?php echo Route::_('index.php?option=com_jsports&view=roster&layout=player'
 							    . '&teamid=' . $this->team->id . '&programid=' . $this->program->id . '&id=0' ); ?>"><?php echo Text::_('COM_JSPORTS_ROSTER_ADD_BUTTON_PLAYER'); ?> </a>
-							    
+							  <?php 
+					       }
+							  ?> 
 						<a class="btn btn-primary btn-sm" 
 							href="<?php echo Route::_('index.php?option=com_jsports&view=roster&layout=staff'
 							    . '&teamid=' . $this->team->id . '&programid=' . $this->program->id . '&id=0' ); ?>"><?php echo Text::_('COM_JSPORTS_ROSTER_ADD_BUTTON_STAFF'); ?></a>
@@ -99,8 +110,11 @@ if ($this->program->rosterslocked) {
 						<?php echo Text::_('COM_JSPORTS_FIRSTNAME'); ?>
 					</th>
 					<th scope="col" class="w-15">
+						<?php echo Text::_('COM_JSPORTS_PLAYERNO'); ?>
+					</th>	
+					<th scope="col" class="w-15">
 						<?php echo Text::_('COM_JSPORTS_CLASSIFICATION'); ?>
-					</th>					
+					</th>
 					<?php if ($this->canEdit) {?>
 					<th scope="col" class="w-15">
 						<?php echo Text::_('COM_JSPORTS_ACTIONS'); ?>
@@ -123,11 +137,17 @@ if ($this->program->rosterslocked) {
 
 					<th scope="row" class="has-context">
 					<?php 
+					if ($item->substitute) {
+					    echo "* ";
+					}
+					?>
+					<?php 
 				       echo $this->escape($item->lastname);
 					?>
 					
 					</th>
 					<td class=""><?php echo $item->firstname; ?></td>
+					<td class=""><?php echo $item->playernumber; ?></td>
 					<td><?php echo JSHelper::translateRosterClassification($item->classification);?> </td>
 					
 				<?php if ($this->canEdit) {?>	
@@ -153,6 +173,8 @@ if ($this->program->rosterslocked) {
 		<?php endforeach; ?>
 			</tbody>
 		</table>
+		
+		<div>NOTE:  An '*' by the last name denotes a SUBSTITUTE player</div>
 
 		<?php // load the pagination. ?>
 		<?php echo $this->pagination->getListFooter(); ?>
