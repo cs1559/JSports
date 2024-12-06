@@ -74,10 +74,10 @@ class HtmlView extends BaseHtmlView
         $this->filterForm    = $this->get('FilterForm');
         $this->activeFilters = $this->get('ActiveFilters');
         
-        // Check for errors.
+        /* removed 12/6/2024 - this caused pagination issues */
+        //$this->pagination->limit = 30;
         
-        $this->pagination->limit = 30;
-        
+        // Check for errors.       
         if (count($errors = $this->get('Errors')))
         {
             throw new GenericDataException(implode("\n", $errors), 500);
