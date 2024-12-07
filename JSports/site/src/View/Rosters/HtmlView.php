@@ -95,7 +95,7 @@ class HtmlView extends BaseHtmlView
         if ($this->program->registrationonly) {
             $this->setLayout("unavailable");
         }
-        if (!$this->program->status == 'C') {
+        if ($this->program->status == "C") {
             $this->setLayout("unavailable");
         }
                
