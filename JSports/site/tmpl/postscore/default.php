@@ -45,6 +45,7 @@ $document->setTitle(Text::_('COM_JSPORTS_POSTSCORE_PAGE_TITLE'));
 	<?php echo $this->form->renderField('redirectteamid');?>
 					
 	<?php echo $this->form->renderField('id'); ?>
+	<?php echo $this->form->renderField('gamedate'); ?>
 	<input type="hidden" name="task" value="">
 	<?php echo HTMLHelper::_('form.token'); ?>
 	
