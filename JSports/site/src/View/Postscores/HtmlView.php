@@ -95,10 +95,10 @@ class HtmlView extends BaseHtmlView
         $this->canEdit = SecurityService::canEditTeamSchedule($this->team->id,$this->program->id);
         //$this->canEdit = SecurityService::canEditTeamSchedule($context);
 
-        if (!$this->program->registrationonly) {
+        if ($this->program->registrationonly) {
             $this->setLayout("unavailable");
         }
-        if (!$this->program->status == 'C') {
+        if ($this->program->status == "C") {
             $this->setLayout("unavailable");
         }
         
