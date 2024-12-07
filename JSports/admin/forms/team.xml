@@ -38,6 +38,7 @@
 			query="SELECT id, concat(name,' ','(',email,')') as name FROM #__users where block &lt;&gt; 1 order by SUBSTRING_INDEX(name, ' ', -1) "
 			key_field="id"
 			value_field="name" 
+			default="0"
 			header="-Select User -"
 		/>
 	
