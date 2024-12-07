@@ -53,10 +53,7 @@ class PostscoreModel extends FormModel
     }
     
     /**
-     * This function is an override function of the FormModel validate function.  This is a
-     * server side validation that adds a check to see if the teamid is equal to the opponent ID.
-     * If that passes validation, then the parent validate function is called.  Otherwise, a false boolean
-     * is returned.
+     * This function is an override function of the FormModel validate function.  
      *
      * @param unknown $form
      * @param unknown $data
@@ -64,6 +61,14 @@ class PostscoreModel extends FormModel
      * @return boolean|unknown
      */
     public function validate($form, $data, $group = null) {
+        
+        $startDate = strtotime(date('Y-m-d', strtotime($data['gamedate']) ) );
+        
+         $currentDate = strtotime(date('Y-m-d'));
+        if($startDate >= $currentDate) {
+            $this->setError(Text::_('COM_JSPORTS_ERR_POSTSCORE_FOR_FUTURE_GAME'));
+            return false;
+        }
         
         return parent::validate($form, $data, $group = null);
     }
