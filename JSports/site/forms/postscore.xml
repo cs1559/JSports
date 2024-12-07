@@ -6,6 +6,9 @@
 
 		<field name="id" type="hidden" label="COM_JSPORTS_GAMEID"
 			default="0" class="readonly" readonly="true" />
+			
+		<field name="gamedate" type="hidden" label="COM_JSPORTS_GAMEDATE"
+			default="0" class="readonly" readonly="true" />			
 
 		<field name="redirectteamid" type="hidden" label="COM_JSPORTS_TEAMID"
 			default="0" class="readonly" readonly="true" />
