@@ -106,6 +106,7 @@ HTMLHelper::_('behavior.keepalive');
 					<div class="col-md-8">
                          <ul>
                           <li>Registration</li>
+                          <li>Publish Team Registrations</li>
                           <li>Setup League/Program</li>
                           <li>Lock Program Setup</li>
                           <li>Set Program Status/Active</li>
