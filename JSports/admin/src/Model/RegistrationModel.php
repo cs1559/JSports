@@ -23,6 +23,7 @@ use Joomla\CMS\Table\Table;
 use Joomla\CMS\MVC\Model\ListModel;
 use FP4P\Component\JSports\Administrator\Services\RegistrationService;
 use Joomla\CMS\Filter\OutputFilter;
+use FP4P\Component\JSports\Site\Services\TeamService;
 
 
 class RegistrationModel extends AdminModel
@@ -210,49 +211,62 @@ class RegistrationModel extends AdminModel
         }
         try {
             
+            if ($item->teamid) {
+                $team = TeamService::getitem($item->teamid);
+                if (is_null($item)) {
+                    $createteam = true;
+                } else {
+                    $createteam = false;
+                }
+            } else {
+                $createteam = true;
+            }
             
             // begin transactio
             $db->transactionStart();
             
-            // =========================================================================================
-            // Create Team record
-            // =========================================================================================
-            $query = $db->getQuery(true);
-            $columns = array(
-                'id',
-                'name',
-                'alias',
-                'city',
-                'state',
-                'contactname',
-                'contactemail',
-                'contactphone',
-                'published'
-            );
-            $teamname = OutputFilter::stringURLUnicodeSlug($item->teamname);
-            
-            $values = array(
-                0,
-                $db->quote($item->teamname), // teamname
-                $db->quote($teamname), // alias
-                $db->quote($item->city), // city
-                $db->quote($item->state), // state
-                $db->quote($item->name), // contact name
-                $db->quote($item->email), // contact email
-                $db->quote($item->phone), // contact phone
-                1 // published
-            );
-            
-            $query->insert($db->quoteName('#__jsports_teams'))
-            ->columns($db->quoteName($columns))
-            ->values(implode(',', $values));
-            
-            $db->setQuery($query);
-            $db->execute();
-            
-            // Get the row that was just inserted
-            $new_row_id = $db->insertid();
-            
+            if ($createteam) {
+                // =========================================================================================
+                // Create Team record
+                // =========================================================================================
+                $query = $db->getQuery(true);
+                $columns = array(
+                    'id',
+                    'name',
+                    'alias',
+                    'city',
+                    'state',
+                    'contactname',
+                    'contactemail',
+                    'contactphone',
+                    'published'
+                );
+                $teamname = OutputFilter::stringURLUnicodeSlug($item->teamname);
+                
+                $values = array(
+                    0,
+                    $db->quote($item->teamname), // teamname
+                    $db->quote($teamname), // alias
+                    $db->quote($item->city), // city
+                    $db->quote($item->state), // state
+                    $db->quote($item->name), // contact name
+                    $db->quote($item->email), // contact email
+                    $db->quote($item->phone), // contact phone
+                    1 // published
+                );
+                
+                $query->insert($db->quoteName('#__jsports_teams'))
+                ->columns($db->quoteName($columns))
+                ->values(implode(',', $values));
+                
+                $db->setQuery($query);
+                $db->execute();
+                
+                // Get the row that was just inserted
+                $new_row_id = $db->insertid();
+            } else {
+                $new_row_id = $item->teamid;
+            }
             
             $query = $db->getQuery(true);
             // =========================================================================================
