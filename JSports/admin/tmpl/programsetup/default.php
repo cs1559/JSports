@@ -76,7 +76,9 @@ $user      = Factory::getUser();
 					</th>
 					
 					<th scope="col" class="w-5 d-none d-md-table-cell">
-						<?php echo HTMLHelper::_('searchtools.sort', 'JGRID_HEADING_ID', 'a.id', $listDirn, $listOrder); ?>
+						<?php //echo HTMLHelper::_('searchtools.sort', 'R', 'a.id', $listDirn, $listOrder); 
+	                       echo Text::_('ID');
+	                   ?>
 					</th>
 				</tr>
 			</thead>
@@ -102,7 +104,7 @@ $user      = Factory::getUser();
 
 
 					<td scope="row" class="has-context">
-						<?php echo $this->escape($item->teamname); ?>
+						<?php echo $this->escape($item->teamname) . ' (' . $item->teamid . ')'; ?>
 					</td>
 					<td class="">
 						<?php echo $item->agegroup; ?>
