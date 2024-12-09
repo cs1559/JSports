@@ -113,6 +113,32 @@ class RegistrationService
     }
     
     
+    public static function getRegistrationsByProgram($programid)
+    {
+        
+        $program = ProgramsService::getItem($programid);
+        
+        $table = '#__jsports_registrations';
+
+        $db = Factory::getDbo();
+        $query = $db->getQuery(true);
+        
+        $query->select('a.*');
+        $query->from($db->quoteName($table) . ' AS a ' );
+        $conditions = array(
+            $db->quoteName('a.programid') . ' = ' . $db->quote($programid)
+        );
+
+        $query->where($conditions);
+        
+        $query->order('a.grouping, a.teamname');
+
+        // $query->where($conditions);
+        $db->setQuery($query);
+        
+        return $db->loadAssocList();
+    }
+    
     
     
 }
