@@ -31,6 +31,13 @@ class RegistrationsController extends AdminController
     }
 
     public function publish() {
+        /* Set the model that is used in the process of registrations.  Forcing the registration model
+         * to be retrieved ensures that that PUBLISH event that is called is within that particular model.
+         * 
+         * In this instance, the registration model calls a function that processes each individual registration
+         * selected. 
+         */
+        
         $model = $this->getModel('Registration');
         
         parent::publish();
