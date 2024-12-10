@@ -84,7 +84,12 @@ class HtmlView extends BaseHtmlView
         $this->rosterplayers = $mod->rosterplayers;
         $this->canSeeRoster = $mod->canSeeRoster;
         $this->games = $mod->games;
-        $this->divisionname = $this->standings[0]['divisionname'];
+        
+        if (isset($this->standings[0])) {
+            $this->divisionname = $this->standings[0]['divisionname'];
+        } else {
+            $this->divisionname = "Not Available";
+        }
         
         
         
