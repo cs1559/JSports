@@ -87,7 +87,7 @@ class RegistrationModel extends AdminModel
      * @param   array   $options  Configuration array for model. Optional.
      *
      * @return  Table  A Table object
-     *
+     * 
      * @since   3.0
      * @throws  \Exception
      */
@@ -363,9 +363,7 @@ SWIBL<br/>
 Email: info@swibl.org<br/>
 </p> ";
         
-        
-        // http://localhost:8081/baseball/team/1224
-        
+                
         $subject = "SWIBL - Team Profile Available (" . $item->teamname . ')';
         
         $adminrecipients = array();
