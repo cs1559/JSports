@@ -338,6 +338,8 @@ class RegistrationModel extends AdminModel
         
         $params = ComponentHelper::getParams('com_jsports');
         $ccadmin = $params->get('ccadmin');
+        $adminemails = $params->get('adminemail');
+        $multiadmins = strpos(',', $adminemails);
         
         $teamname = OutputFilter::stringURLUnicodeSlug($item->teamname);
         
