@@ -26,6 +26,7 @@ use Joomla\CMS\Filter\OutputFilter;
 use FP4P\Component\JSports\Site\Services\TeamService;
 use FP4P\Component\JSports\Site\Services\MailService;
 use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Component\ComponentHelper;
 
 
 class RegistrationModel extends AdminModel
@@ -302,7 +303,13 @@ class RegistrationModel extends AdminModel
             //  Set registration record to published.
             // =========================================================================================
             $query = $db->getQuery(true);
-            $fields = array($db->quoteName('published') . ' = 1');
+            // Set fields to update on the registration record
+            if ($createteam) {
+                $fields = array($db->quoteName('published') . ' = 1', $db->quoteName('teamid') . ' = ' . $new_row_id);
+            } else {
+                $fields = array($db->quoteName('published') . ' = 1');
+            }
+
             $conditions = array($db->quoteName('id') . ' = ' .$item->id);
             
             $query->update($db->quoteName('#__jsports_registrations'))
@@ -319,7 +326,7 @@ class RegistrationModel extends AdminModel
         } catch (Exception $e) {
             // // catch any database errors.
             $db->transactionRollback();
-            Factory::getApplication()->enqueueMessage("REgistration publish failed for one or more registration records", 'error');
+            Factory::getApplication()->enqueueMessage("Registration publish failed for one or more registration records", 'error');
             return false;
             
         }
@@ -329,6 +336,9 @@ class RegistrationModel extends AdminModel
 
     private function sendProcessedNotification($teamid, $item) {
         
+        $params = ComponentHelper::getParams('com_jsports');
+        $ccadmin = $params->get('ccadmin');
+        
         $teamname = OutputFilter::stringURLUnicodeSlug($item->teamname);
         
         $uri = Uri::getInstance();
@@ -336,7 +346,7 @@ class RegistrationModel extends AdminModel
         $body = "
 <p>Your are receiving this email because your email address was associated with a team registration (ID: " . $item->id . ") for the upcoming SWIBL season.  Your registration 
 has been processed.  This means your team profile should now be available.  You can view your team profile by clicking  
-<a href='" . $uri->base() . "/baseball/team/" . $teamid . "-" . $teamname . "'>HERE</a>.
+<a href='" . $uri->root() . "/baseball/team/" . $teamid . "-" . $teamname . "'>HERE</a>.
 </p>
 <p>
 A team's profile is where all data is entered.  This includes game schedules, rosters, team contacts, etc.   Each profile will need an administrator to 
@@ -356,7 +366,7 @@ Email: info@swibl.org<br/>
         
         // http://localhost:8081/baseball/team/1224
         
-        $subject = "SWIBL - " . $item->teamname . " Registration Processed ";
+        $subject = "SWIBL - Team Profile Available (" . $item->teamname . ')';
         
         $adminrecipients = array();
         if ($ccadmin) {
@@ -373,7 +383,7 @@ Email: info@swibl.org<br/>
         
         $svc = new MailService();
         // to, subject, body, html mode, cc
-        $rc = $svc->sendMail('chris@localhost', $subject, $body, true, $adminrecipients);
+        $rc = $svc->sendMail($item->email, $subject, $body, true, $adminrecipients);
         if ($rc) {
             return true;
         } else {
