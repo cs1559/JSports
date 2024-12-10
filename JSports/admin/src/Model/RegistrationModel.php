@@ -24,6 +24,8 @@ use Joomla\CMS\MVC\Model\ListModel;
 use FP4P\Component\JSports\Administrator\Services\RegistrationService;
 use Joomla\CMS\Filter\OutputFilter;
 use FP4P\Component\JSports\Site\Services\TeamService;
+use FP4P\Component\JSports\Site\Services\MailService;
+use Joomla\CMS\Uri\Uri;
 
 
 class RegistrationModel extends AdminModel
@@ -311,7 +313,8 @@ class RegistrationModel extends AdminModel
             
             // commit transaction
             $db->transactionCommit();
-            
+        
+            $this->sendProcessedNotification($new_row_id, $item);
             
         } catch (Exception $e) {
             // // catch any database errors.
@@ -324,5 +327,59 @@ class RegistrationModel extends AdminModel
     }
     
 
+    private function sendProcessedNotification($teamid, $item) {
+        
+        $teamname = OutputFilter::stringURLUnicodeSlug($item->teamname);
+        
+        $uri = Uri::getInstance();
+        
+        $body = "
+<p>Your are receiving this email because your email address was associated with a team registration (ID: " . $item->id . ") for the upcoming SWIBL season.  Your registration 
+has been processed.  This means your team profile should now be available.  You can view your team profile by clicking  
+<a href='" . $uri->base() . "/baseball/team/" . $teamid . "-" . $teamname . "'>HERE</a>.
+</p>
+<p>
+A team's profile is where all data is entered.  This includes game schedules, rosters, team contacts, etc.   Each profile will need an administrator to 
+manage all of the team related data.  If you are a returning team and a new profile was not created, then your existing admin will continue to have 
+permission to edit the information.  If you are new to SWIBL, someone from your team will need to create an account on the SWIBL website and email the league
+indicating your name, role and SWIBL username.  This information will be used to grant your SWIBL account permissions to edit/maintain your specific teams 
+profile. 
+</p>
+<p>   
+<br/>
+If you have any questions regarding this email, please email the league and we'll respond as soon as possible.<br/>
+<br/>
+SWIBL<br/>
+Email: info@swibl.org<br/>
+</p> ";
+        
+        
+        // http://localhost:8081/baseball/team/1224
+        
+        $subject = "SWIBL - " . $item->teamname . " Registration Processed ";
+        
+        $adminrecipients = array();
+        if ($ccadmin) {
+            //             echo "email the admins";
+            //             echo $adminemails;
+            if ($multiadmins) {
+                //                 echo "there are multiple";
+                $adminrecipients = explode(',', $adminemails);
+            } else {
+                //                 echo $adminemails;
+                $adminrecipients = $adminemails;
+            }
+        }
+        
+        $svc = new MailService();
+        // to, subject, body, html mode, cc
+        $rc = $svc->sendMail('chris@localhost', $subject, $body, true, $adminrecipients);
+        if ($rc) {
+            return true;
+        } else {
+            return false;
+        }
+        
+    }
 }
 
