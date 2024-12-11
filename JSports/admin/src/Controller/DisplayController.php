@@ -31,16 +31,16 @@ class DisplayController extends BaseController
         
         $input = Factory::getApplication()->input;
         
-        if (strtolower($input->get('view'))== "programsetup"){
-            $programid = $input->get('programid');
+//         if (strtolower($input->get('view'))== "programsetup"){
+//             $programid = $input->get('programid');
             
-            if (!$programid) {
-                $app = Factory::getApplication();
-                $app->enqueueMessage("A Program must be selected", 'message');
-                $this->setRedirect('index.php?option=com_jsports&view=programs');
-                return;
-            }
-        }
+//             if (!$programid) {
+//                 $app = Factory::getApplication();
+//                 $app->enqueueMessage("A Program must be selected", 'message');
+//                 $this->setRedirect('index.php?option=com_jsports&view=programs');
+//                 return;
+//             }
+//         }
         
         
         
