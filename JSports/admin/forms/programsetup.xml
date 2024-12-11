@@ -8,19 +8,19 @@
 			default="0" class="readonly" readonly="true" />
 			
 		<field
-			name="agegroup"
+			name="grouping"
 			type="list"
 			onchange="this.form.submit();"
 			>
 			<option selected="selected" value="">- Select Age Group -</option>
-			<option value="7">7U</option>
-			<option value="8">8U</option>
-			<option value="9">9U</option>
-			<option value="10">10U</option>
-			<option value="11">11U</option>
-			<option value="12">12U</option>
-			<option value="13">13U</option>
-			<option value="14">14U</option>
+			<option value="7U">7U</option>
+			<option value="8U">8U</option>
+			<option value="9U">9U</option>
+			<option value="10U">10U</option>
+			<option value="11U">11U</option>
+			<option value="12U">12U</option>
+			<option value="13U">13U</option>
+			<option value="14U">14U</option>
 		</field>
 
 		<field
