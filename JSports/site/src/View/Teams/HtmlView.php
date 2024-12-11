@@ -21,6 +21,8 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Factory;
 //use FP4P\Component\JSports\Administrator\Services\LeagueService\LeagueService;
 //use FP4P\Component\JSports\Administrator\Table\LeaguesTable;
+use FP4P\Component\JSports\Site\Services\ProgramsService;
+use FP4P\Component\JSports\Administrator\Services\SecurityService;
 
 use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\MVC\View\GenericDataException;
@@ -64,6 +66,7 @@ class HtmlView extends BaseHtmlView
      */
     public $activeFilters;
     
+    public $showData;
     
     public function display($tpl = null)
     {
@@ -76,6 +79,19 @@ class HtmlView extends BaseHtmlView
         
         /* removed 12/6/2024 - this caused pagination issues */
         //$this->pagination->limit = 30;
+        
+        $programid = $this->state['filter.programid'];
+        $this->program = ProgramsService::getItem($programid);
+        
+        $this->showData = false;
+        if ($this->program->status == "P") {
+            if (SecurityService::isAdmin()) {
+                $this->showData = true;
+            }
+            $this->showData = false;
+        } else {
+            $this->showData = true;
+        }
         
         // Check for errors.       
         if (count($errors = $this->get('Errors')))
