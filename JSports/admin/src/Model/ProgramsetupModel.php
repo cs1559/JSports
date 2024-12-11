@@ -185,7 +185,7 @@ class ProgramsetupModel extends ListModel
 	    // Filter by PROGRAM.
  	    $programid = $this->getState('filter.programid');
  	    
- 	    echo "PROGRAM ID = " . $programid;
+ 	    //echo "PROGRAM ID = " . $programid;
 	    if (!empty($programid)) {	        
 	        $query->where($db->quoteName('a.programid') . ' = :programid');
 	        $query->bind(':programid', $programid, ParameterType::INTEGER);
