@@ -78,7 +78,7 @@
 			label="COM_JSPORTS_TEAMID" size="40" />
 			
 		<field name="grouping" type="programgroupslist"
-			label="COM_JSPORTS_AGEGROUP"  required="true" />
+			label="COM_JSPORTS_AGEGROUP"  required="false" default="XX" />
 			
 	</fieldset>
 
