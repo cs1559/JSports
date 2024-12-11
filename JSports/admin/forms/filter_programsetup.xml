@@ -13,7 +13,7 @@
 
 		<field name="programid" type="sql" 
 			label="Program"
-			query="SELECT id, name FROM #__jsports_programs where published in (0,1) order by name desc"
+			query="SELECT id, name FROM #__jsports_programs where published in (0,1) and status &lt;&gt; 'C' order by name desc"
 			key_field="id"
 			value_field="name" 
 			onchange="this.form.submit();"
