@@ -26,7 +26,7 @@
 			type="list"
 			onchange="this.form.submit();"
 			>
-			<option selected="selected" value="">- Select AgeX Group -</option>
+			<option selected="selected" value="">- Select Group -</option>
 			<option value="7">7U</option>
 			<option value="8">8U</option>
 			<option value="9">9U</option>
