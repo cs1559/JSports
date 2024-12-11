@@ -46,7 +46,7 @@ class ProgramsetupModel extends ListModel
 				'teamname', 'a.teamname',
 			    'programid', 'a.programid',
 			    'published', 'a.published',
-			    'agegroup', 'a.agegroup',
+			    'grouping', 'a.grouping',
 			);
 		}
 		$app = Factory::getApplication();
@@ -72,23 +72,19 @@ class ProgramsetupModel extends ListModel
 	    
 	    $app = Factory::getApplication();
 	    
-// 	    $programid = $app->input->get('programid', 0, 'int');
-// 	    if (empty($programid)) {
-// 	       $programid = $app->getUserState('com_jsports.programid');
-// 	    }
+	    $programid = $app->input->get('programid', 0, 'int');
+	    if (empty($programid)) {
+	       $programid = $app->getUserState('com_jsports.programid');
+	    }
 
-// 	    $this->setState('filter.programid', $programid);
-// 	    // keep the walk_id for adding new visits
-// 	    $app->setUserState('com_jsports.programid', $programid);
+	    $this->setState('filter.programid', $programid);
+	    $app->setUserState('com_jsports.programid', $programid);
 	    
-// 		$search = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
-// 		$this->setState('filter.search', $search);
+// 		$published = $this->getUserStateFromRequest($this->context . '.filter.published', 'filter_published', '');
+// 		$this->setState('filter.published', $published);
 
-		$published = $this->getUserStateFromRequest($this->context . '.filter.published', 'filter_published', '');
-		$this->setState('filter.published', $published);
-
-// 		$agegroup = $this->getUserStateFromRequest($this->context . '.filter.agegroup', 'filter_agegroup', '');
-// 		$this->setState('filter.agegroup', $agegroup);
+		$grouping = $this->getUserStateFromRequest($this->context . '.filter.grouping', 'filter_grouping', '');
+		$this->setState('filter.grouping', $grouping);
 		
 		// List state information.
 		parent::populateState($ordering, $direction);
@@ -125,10 +121,10 @@ class ProgramsetupModel extends ListModel
 	protected function getStoreId($id = '')
 	{
 		// Compile the store id.
-		$id .= ':' . $this->getState('filter.search');
-		$id .= ':' . $this->getState('filter.published');
+// 		$id .= ':' . $this->getState('filter.search');
+// 		$id .= ':' . $this->getState('filter.published');
 		$id .= ':' . $this->getState('filter.programid');
-		$id .= ':' . $this->getState('filter.agegroup');
+		$id .= ':' . $this->getState('filter.grouping');
 
 		return parent::getStoreId($id);
 	}
@@ -156,7 +152,7 @@ class ProgramsetupModel extends ListModel
 	    $query->select(
 	        $this->getState(
 	            'list.select',
-	            'a.*, b.name as programname, c.name as teamname, r.agegroup, r.name as contactname'
+	            'a.*, b.name as programname, c.name as teamname, r.grouping, r.name as contactname'
 	            )
 	        );
 	    $query->from($db->quoteName('#__jsports_map') . ' AS a, ' 
@@ -174,31 +170,34 @@ class ProgramsetupModel extends ListModel
 	    $query->where($conditions);
 	    
 	    // Filter by published state
-	    $published = (string) $this->getState('filter.published');
+// 	    $published = (string) $this->getState('filter.published');
 	    
-	    if (is_numeric($published))
-	    {
-	        $query->where($db->quoteName('a.published') . ' = :published');
-	        $query->bind(':published', $published, ParameterType::INTEGER);
-	    }
-	    elseif ($published === '')
-	    {
-	        $query->whereIn($db->quoteName('a.published'), array(0, 1));
-	    }
+// 	    if (is_numeric($published))
+// 	    {
+// 	        $query->where($db->quoteName('a.published') . ' = :published');
+// 	        $query->bind(':published', $published, ParameterType::INTEGER);
+// 	    }
+// 	    elseif ($published === '')
+// 	    {
+// 	        $query->whereIn($db->quoteName('a.published'), array(0, 1));
+// 	    }
 	    
 	    // Filter by PROGRAM.
-// 	    $programid = $this->getState('filter.programid');
-	    if (!empty($this->programid)) {	        
+ 	    $programid = $this->getState('filter.programid');
+ 	    
+ 	    echo "PROGRAM ID = " . $programid;
+	    if (!empty($programid)) {	        
 	        $query->where($db->quoteName('a.programid') . ' = :programid');
 	        $query->bind(':programid', $programid, ParameterType::INTEGER);
 	    }
 
 	    // Filter by AGE GROUP
-	    $agegroup = (string) $this->getState('filter.agegroup');
-	    if (is_numeric($agegroup))
+	    $grouping = (string) $this->getState('filter.grouping');
+	    if (!empty($grouping))
 	    {
-	        $query->where($db->quoteName('r.agegroup') . ' = :agegroup');
-	        $query->bind(':agegroup', $agegroup, ParameterType::INTEGER);
+	        $_group = $grouping . '%';
+	        $query->where($db->quoteName('r.grouping') . ' like :grouping');
+	        $query->bind(':grouping', $_group, ParameterType::STRING);
 	    }
 	    
 	    // Filter by search in TEAMNAME.
@@ -213,10 +212,10 @@ class ProgramsetupModel extends ListModel
 	    
 	    	    
 	    // Add the list ordering clause.
-	    $orderCol  = $this->state->get('list.ordering', 'a.agegroup');
+	    $orderCol  = $this->state->get('list.ordering', 'r.grouping');
 	    $orderDirn = $this->state->get('list.direction', 'ASC');
 	    
-	    $ordering = [$db->quoteName('r.agegroup') . ' ' . $db->escape($orderDirn), ];
+	    $ordering = [$db->quoteName('r.grouping') . ' ' . $db->escape($orderDirn), ];
 	    	    
 	    $query->order($ordering);
 	    
@@ -261,10 +260,11 @@ class ProgramsetupModel extends ListModel
 	        /* 2/12/2024 - added $db->quote to $value */
 	        $query->update($db->quoteName('#__jsports_map'))
 	        ->set($db->quoteName('published') . ' = :value')
-	        ->bind(':value', $db->quote($value) , ParameterType::INTEGER)
+	        ->bind(':value', $value , ParameterType::INTEGER)
 	        ->whereIn($db->quoteName('id'), $pks);
 	        $db->setQuery($query);
 	        $db->execute();
+	        
 	    }
 	
 
