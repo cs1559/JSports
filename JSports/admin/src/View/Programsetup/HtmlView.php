@@ -62,6 +62,7 @@ class HtmlView extends BaseHtmlView
      * @var  array
      */
     public $activeFilters;
+    public $programid;
     
     
     public function display($tpl = null)
@@ -70,18 +71,18 @@ class HtmlView extends BaseHtmlView
         $this->items         = $this->get('Items');
         $this->pagination    = $this->get('Pagination');
         $this->state         = $this->get('State');
-        //$this->filterForm    = $this->get('FilterForm');
-        $this->form    = $this->get('Form');
+        $this->filterForm    = $this->get('FilterForm');
+        $this->form    =       $this->get('Form');
         $this->activeFilters = $this->get('ActiveFilters');
         
         $input = Factory::getApplication()->input;
-        $programid = $input->get('programid');
+        $this->programid = $input->get('programid');
 
         $defaults = array(
-              'programid' => $programid,
+              'programid' => $this->programid,
         );
         $this->form->bind($defaults);
-        
+        $this->filterForm->bind($defaults);
         
         // Check for errors.
         if (count($errors = $this->get('Errors')))
