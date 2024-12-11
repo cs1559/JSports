@@ -129,7 +129,7 @@ class HtmlView extends BaseHtmlView
             }
         }
         
-        ToolbarHelper::custom('programsetup.assigndivisions', 'save', 'save', 'Save Division Assignments', false, 'adminForm');
+        ToolbarHelper::custom('programsetup.assigndivisions', 'save', 'save', 'Save Assignments', false, 'adminForm');
 
         ToolbarHelper::custom('programsetup.programsList', 'list', 'list', 'Program List', false, 'adminForm');
         
