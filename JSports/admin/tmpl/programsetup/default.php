@@ -32,9 +32,14 @@ $user      = Factory::getUser();
 		<div class="selection-criteria row" style="display: flex; flex-direction: row; ">
     	
     		<?php echo $this->form->renderField('programid'); ?>
-    			
+    
+        		<div class="w-25">
+       			<?php echo $this->filterForm->renderField('programid','filter'); ?>	
+    		</div>
+    		
+    					
     		<div class="w-25">
-       			<?php echo $this->form->renderField('agegroup'); ?>	
+       			<?php echo $this->filterForm->renderField('grouping','filter'); ?>	
     		</div>
     		
 		</div>
@@ -107,7 +112,7 @@ $user      = Factory::getUser();
 						<?php echo $this->escape($item->teamname) . ' (' . $item->teamid . ')'; ?>
 					</td>
 					<td class="">
-						<?php echo $item->agegroup; ?>
+						<?php echo $item->grouping; ?>
 					</td>
 					<td class="">
 						<?php echo $item->contactname; ?>
