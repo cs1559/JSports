@@ -24,6 +24,9 @@ use Joomla\CMS\Factory;
  */
 class TeamsModel extends ListModel
 {
+    
+    protected $programid;
+    
 	/**
 	 * Constructor.
 	 *
@@ -126,7 +129,7 @@ class TeamsModel extends ListModel
 	        );
 
 	   
-	    $programid = (string) $this->getState('filter.programid');
+	    $programid = (string) $this->getState('filter.programid');	    
 	    $divisionid = (string) $this->getState('filter.divisionid');
 	    
         if (strlen($programid) < 1) {
