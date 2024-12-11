@@ -44,15 +44,17 @@ class ProgramsetupController extends AdminController
         $input = Factory::getApplication()->input;
         $requestData = $input->post->get('jform', [], 'array');
         
+        $programid = $_REQUEST['programid'];
+        
         $assignments = $_REQUEST["div-assignment"];
         
         foreach ($assignments as $key => $value) {
-                $this->updateMap($key, $value);
+            $this->updateMap($key, $value);
         }
         
         Factory::getApplication()->enqueueMessage("Division assignments ahve been saved", 'message');
         
-        $this->setRedirect('index.php?option=com_jsports&view=programsetup&programid=' . $requestData['programid']);
+        $this->setRedirect('index.php?option=com_jsports&view=programsetup&programid=' . $programid);
         
     }
     
