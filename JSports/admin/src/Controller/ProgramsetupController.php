@@ -52,7 +52,7 @@ class ProgramsetupController extends AdminController
             $this->updateMap($key, $value);
         }
         
-        Factory::getApplication()->enqueueMessage("Division assignments ahve been saved", 'message');
+        Factory::getApplication()->enqueueMessage("Assignments have been saved", 'message');
         
         $this->setRedirect('index.php?option=com_jsports&view=programsetup&programid=' . $programid);
         
