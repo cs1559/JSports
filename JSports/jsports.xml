@@ -47,6 +47,7 @@
 			<menu link="option=com_jsports&amp;view=dashboard">Dashboard</menu>
 			<menu link="option=com_jsports&amp;view=leagues">Leagues</menu>
 			<menu link="option=com_jsports&amp;view=programs">Programs</menu>
+			<menu link="option=com_jsports&amp;view=programsetup">Program Setup</menu>
 			<menu link="option=com_jsports&amp;view=divisions">Divisions</menu>
 			<menu link="option=com_jsports&amp;view=teams">Teams</menu>
 			<menu link="option=com_jsports&amp;view=venues">Venues</menu>
