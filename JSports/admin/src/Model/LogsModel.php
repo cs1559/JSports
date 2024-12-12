@@ -137,8 +137,8 @@ class LogsModel extends ListModel
 	    }
 	    	    
 	    // Add the list ordering clause.
-	    $orderCol  = $this->state->get('list.ordering', 'a.id');
-	    $orderDirn = $this->state->get('list.direction', 'ASC');
+	    $orderCol  = $this->state->get('list.ordering', 'a.logdate');
+	    $orderDirn = $this->state->get('list.direction', 'DESC');
 	    
 	    $ordering = [$db->quoteName($orderCol) . ' ' . $db->escape($orderDirn), ];
 	    
@@ -149,8 +149,7 @@ class LogsModel extends ListModel
 	
 
 	/**
-	 * Method to get a list of proggrams.
-	 * Overridden to add a check for access levels.
+	 * Method to get a list of action logs.
 	 *
 	 * @return  mixed  An array of data items on success, false on failure.
 	 *

@@ -93,44 +93,15 @@ class HtmlView extends BaseHtmlView
 
         ToolbarHelper::title(Text::_('Sports Managment - View System/User Logs'));
                
-        $canDo = ContentHelper::getActions('com_jsports');
-        
-//         if ($canDo->get('core.create'))
-//         {
-//             $toolbar->addNew('venue.add');
-//         }
-        
-//         if ($canDo->get('core.edit.state'))
-//         {
-//             $dropdown = $toolbar->dropdownButton('status-group')
-//             ->text('JTOOLBAR_CHANGE_STATUS')
-//             ->toggleSplit(false)
-//             ->icon('icon-ellipsis-h')
-//             ->buttonClass('btn btn-action')
-//             ->listCheck(true);
-            
-//             $childBar = $dropdown->getChildToolbar();
-            
-//             $childBar->publish('venues.publish')->listCheck(true);
-            
-//             $childBar->unpublish('venues.unpublish')->listCheck(true);
-            
-//             $childBar->archive('venues.archive')->listCheck(true);
-            
-//             if ($this->state->get('filter.published') != -2)
-//             {
-//                 $childBar->trash('venues.trash')->listCheck(true);
-//             }
-//         }
-        
-//         if ($this->state->get('filter.published') == -2 && $canDo->get('core.delete'))
-//         {
-//             $toolbar->delete('venues.delete')
-//             ->text('JTOOLBAR_EMPTY_TRASH')
-//             ->message('JGLOBAL_CONFIRM_DELETE')
-//             ->listCheck(true);
-//         }
-        
+        $canDo = ContentHelper::getActions('com_jsports');     
+
+        $toolbar->delete('purge')
+        ->icon('icon-cog')
+        ->text('COM_JSPORTS_PURGELOGS')
+        ->message('JGLOBAL_CONFIRM_DELETE')
+        ->task('logs.purge')
+        ->listCheck(false);
+
         $toolbar->standardButton('dashboard')
         ->icon('fa fa-home')
         ->text('Dashboard')

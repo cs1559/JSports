@@ -124,6 +124,11 @@
 			label="COM_JSPORTS_CRONKEY"
 			description="COM_JSPORTS_CRONKEY">
 		</field>
+		
+		<field name="logdays" type="text" default="200"
+			label="COM_JSPORTS_LOGS_DAYS_TO_RETAIN"
+			description="COM_JSPORTS_LOGS_DAYS_TO_RETAIN">
+		</field>
 						
 	</fieldset>
 	
