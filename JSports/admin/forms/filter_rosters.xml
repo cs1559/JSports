@@ -14,7 +14,6 @@
 			header="- Select Program -"
 		/>
 
-
 		<field name="divisionid" type="sql" 
 			label="Division"
 		    sql_select="a.*"
