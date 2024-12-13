@@ -77,7 +77,7 @@ $user      = Factory::getUser();
 						<?php echo Text::_('COM_JSPORTS_PROGRAM'); ?>
 					</th>
 					<th scope="col" class="w-15">
-						<?php echo "Division Assignment"; ?>
+						<?php echo Text::_('COM_JSPORTS_ASSIGNMENT'); ?>
 					</th>
 					
 					<th scope="col" class="w-5 d-none d-md-table-cell">
