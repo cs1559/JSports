@@ -52,7 +52,7 @@
 			name="fullordering"
 			type="list"
 			label="JGLOBAL_SORT_BY"
-			default="a.name ASC"
+			default="a.name DESC"
 			onchange="this.form.submit();"
 			>
 			<option value="">JGLOBAL_SORT_BY</option>
