@@ -105,10 +105,12 @@ HTMLHelper::_('behavior.keepalive');
 				<div class="row">
 					<div class="col-md-8">
                          <ul>
-                          <li>Registration</li>
+                          <li>Create Program</li>
+                          <li>Open Registration</li>
+                          <li>Close Registration</li>
                           <li>Publish Team Registrations</li>
-                          <li>Setup League/Program</li>
-                          <li>Lock Program Setup</li>
+                          <li>Setup League/Program (Program Setup)</li>
+                          <li>Set Program Setup final (Program)</li>
                           <li>Set Program Status/Active</li>
                           <li>Lock Rosters</li>
                           <li>Close Season</li>
