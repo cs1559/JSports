@@ -28,14 +28,14 @@
 			name="fullordering"
 			type="list"
 			label="JGLOBAL_SORT_BY"
-			default="a.name ASC"
+			default="a.logdate DESC"
 			onchange="this.form.submit();"
 			>
 			<option value="">JGLOBAL_SORT_BY</option>
+ 			<option value="a.logdate ASC">COM_JSPORTS_LOGDATE_ASC</option>  
+	  		<option value="a.logdate DESC">COM_JSPORTS_LOGDATE_DESC</option> 
  			<option value="a.username ASC">COM_JSPORTS_NAME_ASC</option>  
 	  		<option value="a.username DESC">COM_JSPORTS_NAME_DESC</option>
- 			<option value="a.logdate ASC">COM_JSPORTS_NAME_ASC</option>  
-	  		<option value="a.logdate DESC">COM_JSPORTS_NAME_DESC</option> 
 	  		 
 		</field>
 
