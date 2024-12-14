@@ -25,6 +25,7 @@ defined('_JEXEC') or die;
 use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
+use FP4P\Component\JSports\Site\Services\LogService;
 
 class LogsController extends AdminController
 {
@@ -32,7 +33,6 @@ class LogsController extends AdminController
     
     public function display($cachable = false, $urlparams = array())
     {
-        
         return parent::display($cachable, $urlparams);
     }
 
@@ -71,7 +71,10 @@ class LogsController extends AdminController
         
         $rows = $db->getAffectedRows();
         
-        Factory::getApplication()->enqueueMessage($rows . " log messages removed (Older than " . $logdays . ' days)', 'message');
+        $msg = $rows . " log messages purged (Older than " . $logdays . ' days)';
+        Factory::getApplication()->enqueueMessage($msg, 'message');
+        LogService::info($msg);
+        
         $this->setRedirect('index.php?option=com_jsports&view=logs');
     }
     
