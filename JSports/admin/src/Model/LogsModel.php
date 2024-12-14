@@ -38,7 +38,6 @@ class LogsModel extends ListModel
 		{
 			$config['filter_fields'] = array(
 				'name', 'a.username',
-			    'logdate', 'a.logdate',
 			);
 		}
 
