@@ -179,7 +179,7 @@ class ProgramsModel extends ListModel
 	    
 	    
 	    // Add the list ordering clause.
-	    $orderCol  = $this->state->get('list.ordering', 'a.id');
+	    $orderCol  = $this->state->get('list.ordering', 'a.name');
 	    $orderDirn = $this->state->get('list.direction', 'DESC');
 	    
 	    $ordering = [$db->quoteName('a.name') . ' ' . $db->escape($orderDirn), ];
