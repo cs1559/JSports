@@ -167,7 +167,6 @@ class ProgramsService
         }
         
         
-//         // INSERT CURRENT STANDINGS INTO PAST STANDINGS (MIGRATE)
         $query = $db->getQuery(true);
         $sql = "delete from #__jsports_past_standings
                     where programid = " . $db->quote($programid);
@@ -213,7 +212,6 @@ class ProgramsService
         $result = $db->execute();
         
         
-        echo "UPDATING THE PROGRAM RECORD <br/>";
 //         // UPDATE THE PROGRAM RECORD
 //         // Change program status to CLOSED
 //         // Set registration flag to OFF
