@@ -39,7 +39,7 @@ class TeamsModel extends ListModel
 			$config['filter_fields'] = array(
 				'name', 'a.name',
 			    'city', 'a.city',
-			    'lastplayed', 'a.lastplayed',
+// 			    'lastplayed', 'a.lastplayed',
 			    'contactname', 'a.contactname',
 			    'ownerid', 'a.ownerid',
 			);
@@ -82,6 +82,9 @@ class TeamsModel extends ListModel
 		$city = $this->getUserStateFromRequest($this->context . '.filter.city', 'filter_city', '');
 		$this->setState('filter.city', $city);
 		
+		$programid = $this->getUserStateFromRequest($this->context . '.filter.programid', 'filter_programid', '');
+		$this->setState('filter.programid', $programid);
+		
 		$lastplayed = $this->getUserStateFromRequest($this->context . '.filter.lastplayed', 'filter_lastplayed', '');
 		$this->setState('filter.lastplayed', $lastplayed);
 		
@@ -109,6 +112,7 @@ class TeamsModel extends ListModel
 		$id .= ':' . $this->getState('filter.published');
 		$id .= ':' . $this->getState('filter.city');
 		$id .= ':' . $this->getState('filter.lastplayed');
+		$id .= ':' . $this->getState('filter.programid');
 		$id .= ':' . $this->getState('filter.contactname');
 
 		return parent::getStoreId($id);
@@ -132,36 +136,24 @@ class TeamsModel extends ListModel
 	    $query->select(
 	        $this->getState(
 	            'list.select',
-	            'a.*, b.lastplayed'
+	            'distinct a.*, b.programid, b.teamid'
 	            )
 	        );
 
 	   
-	    $lastplayed = (string) $this->getState('filter.lastplayed');
-	    if (is_numeric($lastplayed)) {
-// 	        $query->from($db->quoteName('#__jsports_teams') . ' AS a, ' .
-// 	            $db->quoteName('#__jsports_view_yearplayed') . ' AS b, ' .
-// 	            $db->quoteName('#__jsports_view_yearplayed') . ' AS c');
-// 	        $query->where($db->quoteName('a.id') . ' = ' . $db->quoteName('b.teamid') . ' and ' . 
-// 	            $db->quoteName('a.id') . ' = ' . $db->quoteName('c.teamid')
-// 	            );
+	    $programid = (string) $this->getState('filter.programid');
+	    if (is_numeric($programid)) {
 	        $query->from($db->quoteName('#__jsports_teams') . ' AS a, ' .
-	            $db->quoteName('#__jsports_view_yearplayed') . ' AS b ');
-	        $query->where($db->quoteName('a.id') . ' = ' . $db->quoteName('b.teamid'));
-	        
+            $db->quoteName('#__jsports_map') . ' AS b ');
+            $query->where($db->quoteName('a.id') . ' = ' . $db->quoteName('b.teamid'));	
+            $query->where ($db->quoteName('a.id') . ' in (select teamid from ' . $db->quotename('#__jsports_map') 
+                    . ' where programid = :programid )' );
 	    } else {
 	        $query->from($db->quoteName('#__jsports_teams') . ' AS a, ' .
 	            $db->quoteName('#__jsports_view_lastplayed') . ' AS b ');
 	        $query->where($db->quoteName('a.id') . ' = ' . $db->quoteName('b.teamid'));
 	    }
-	    
-	    
-// 	    $query->from($db->quoteName('#__jsports_teams') . ' AS a, ' . 
-// 	           $db->quoteName('#__jsports_view_lastplayed') . ' AS b, ' .
-// 	           $db->quoteName('#__jsports_view_yearplayed') . ' AS c');
-	    
-	    
-	        
+	    	        
 	    // Filter by published state
 	    $published = (string) $this->getState('filter.published');
 	    
@@ -201,22 +193,22 @@ class TeamsModel extends ListModel
 	        ->bind(':search', $search, ParameterType::STRING);
 	    }
 	    
-	    $lastplayed = (string) $this->getState('filter.lastplayed');
-	    if (is_numeric($lastplayed))
-	    {
-	        $query->where($db->quoteName('b.lastplayed') . ' = :lastplayed');
-	        $query->bind(':lastplayed', $lastplayed, ParameterType::INTEGER);
-	    }
-	    
-// 	    $programid = (string) $this->getState('filter.programid');
-// 	    if (is_numeric($programid))
+// 	    $lastplayed = (string) $this->getState('filter.lastplayed');
+// 	    if (is_numeric($lastplayed))
 // 	    {
-// 	        $query->where($db->quoteName('a.programid') . ' = :programid');
-// 	        $query->bind(':programid', $programid, ParameterType::INTEGER);
+// 	        $query->where($db->quoteName('b.lastplayed') . ' = :lastplayed');
+// 	        $query->bind(':lastplayed', $lastplayed, ParameterType::INTEGER);
 // 	    }
 	    
+	    $programid = (string) $this->getState('filter.programid');
+	    if (is_numeric($programid))
+	    {
+	        $query->where($db->quoteName('b.programid') . ' = :programid');
+	        $query->bind(':programid', $programid, ParameterType::INTEGER);
+	    }
+	    
 	    // Add the list ordering clause.
-	    $orderCol  = $this->state->get('list.ordering', 'a.id');
+	    $orderCol  = $this->state->get('list.ordering', 'a.name');
 	    $orderDirn = $this->state->get('list.direction', 'ASC');
 	    
 	    $ordering = [$db->quoteName('a.name') . ' ' . $db->escape($orderDirn), ];
@@ -230,6 +222,7 @@ class TeamsModel extends ListModel
 // 	    }
 	    
 	    $query->order($ordering);
+	    
 	    return $query;
 	}
 	

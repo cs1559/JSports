@@ -66,7 +66,7 @@ $user      = Factory::getUser();
 						<?php echo HTMLHelper::_('searchtools.sort', 'COM_JSPORTS_NAME', 'a.name', $listDirn, $listOrder); ?>
 					</th>
 					<th scope="col" class="w-10">
-						<?php echo Text::_('COM_JSPORTS_YEAR'); ?>
+						<?php echo Text::_('COM_JSPORTS_TEAMID'); ?>
 					</th>					
 					
 					<th scope="col" class="w-20">
@@ -114,7 +114,7 @@ $user      = Factory::getUser();
 						</a>
 					</th>
 					<td class="">
-						<?php echo $item->lastplayed; ?>
+						<?php echo $item->teamid; ?>
 					</td>
 					<td class="">
 						<?php echo $item->contactname; ?>
