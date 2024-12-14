@@ -12,15 +12,6 @@
 		/>
 
 		<field
-			name="published"
-			type="status"
-			label="JOPTION_SELECT_PUBLISHED"
-			onchange="this.form.submit();"
-			>
-			<option value="">- Select State -</option>
-		</field>
-
-		<field
 			name="status"
 			type="list"
 			label="Program Status"
@@ -41,6 +32,15 @@
 			<option selected="selected" value="">- Select Registration Status -</option>
 			<option value="0">Close</option>
 			<option value="1">Open</option>
+		</field>
+
+		<field
+			name="published"
+			type="status"
+			label="JOPTION_SELECT_PUBLISHED"
+			onchange="this.form.submit();"
+			>
+			<option value="">- Select State -</option>
 		</field>
 		
 
