@@ -16,6 +16,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Factory;
+use FP4P\Component\JSports\Site\Services\LogService;
 
 /**
  * Controller for a single Program
@@ -28,7 +29,7 @@ class ProgramController extends FormController
     public function save($key = null, $urlVar = null) {
         
         $data = $this->input->post->get('jform', array(), 'array');
-        
+        LogService::writeArray($data, 'PROGRAM');
         parent::save($key, $urlVar);
         
     }
