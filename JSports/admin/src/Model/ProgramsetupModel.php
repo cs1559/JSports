@@ -165,6 +165,8 @@ class ProgramsetupModel extends ListModel
 	        $db->quoteName('a.programid') . ' = ' . $db->quoteName('b.id'),    // Join to the PROGRAMS table
 	        $db->quoteName('a.teamid') . ' = ' . $db->quoteName('c.id'),       // Join to the TEAMS table
 	        $db->quoteName('a.regid') . ' = ' . $db->quoteName('r.id'),        // Join to the REGISTRATIONS table
+	        $db->quoteName('b.setupfinal') . ' = 0 ' ,      
+	        $db->quoteName('b.registrationonly') . ' = 0 ' ,       
 	    );
 	    
 	    $query->where($conditions);
@@ -213,7 +215,7 @@ class ProgramsetupModel extends ListModel
 	    	    
 	    // Add the list ordering clause.
 	    $orderCol  = $this->state->get('list.ordering', 'r.grouping');
-	    $orderDirn = $this->state->get('list.direction', 'ASC');
+	    $orderDirn = $this->state->get('list.direction', 'DESC');
 	    
 	    $ordering = [$db->quoteName('r.grouping') . ' ' . $db->escape($orderDirn), ];
 	    	    
