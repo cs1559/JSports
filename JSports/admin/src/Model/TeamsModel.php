@@ -136,7 +136,7 @@ class TeamsModel extends ListModel
 	    $query->select(
 	        $this->getState(
 	            'list.select',
-	            'distinct a.*, b.programid, b.teamid'
+	            'distinct a.*'
 	            )
 	        );
 
@@ -149,9 +149,9 @@ class TeamsModel extends ListModel
             $query->where ($db->quoteName('a.id') . ' in (select teamid from ' . $db->quotename('#__jsports_map') 
                     . ' where programid = :programid )' );
 	    } else {
-	        $query->from($db->quoteName('#__jsports_teams') . ' AS a, ' .
-	            $db->quoteName('#__jsports_view_lastplayed') . ' AS b ');
-	        $query->where($db->quoteName('a.id') . ' = ' . $db->quoteName('b.teamid'));
+	        $query->from($db->quoteName('#__jsports_teams') . ' AS a ');
+// 	            $db->quoteName('#__jsports_view_lastplayed') . ' AS b ');
+// 	        $query->where($db->quoteName('a.id') . ' = ' . $db->quoteName('b.teamid'));
 	    }
 	    	        
 	    // Filter by published state
