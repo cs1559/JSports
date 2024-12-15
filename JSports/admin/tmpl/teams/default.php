@@ -114,7 +114,7 @@ $user      = Factory::getUser();
 						</a>
 					</th>
 					<td class="">
-						<?php echo $item->teamid; ?>
+						<?php echo $item->id; ?>
 					</td>
 					<td class="">
 						<?php echo $item->contactname; ?>
