@@ -35,7 +35,7 @@
 
 		<field name="ownerid" type="sql" 
 			label="COM_JSPORTS_PROFILEOWNER"
-			query="SELECT id, concat(name,' ','(',email,')') as name FROM #__users where block &lt;&gt; 1 order by SUBSTRING_INDEX(name, ' ', -1) "
+			query="SELECT id, concat(name,' ','(',email,')') as name FROM #__users where block &lt;&gt; 1 and lastVisitDate is not null order by SUBSTRING_INDEX(name, ' ', -1) "
 			key_field="id"
 			value_field="name" 
 			default="0"
