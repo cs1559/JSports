@@ -36,7 +36,7 @@ HTMLHelper::_('behavior.keepalive');
 
 		<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'details', Text::_('COM_JSPORTS_DETAILS')); ?>
 		<div class="row">
-			<div class="col-md-7">
+			<div class="col-md-6">
 				<div class="row">
 					<div class="col-md-8">
 						<?php echo $this->form->renderField('programid'); ?>
@@ -51,12 +51,14 @@ HTMLHelper::_('behavior.keepalive');
 					</div>
 				</div>
 			</div>
-			<div class="col-md-5">
+			<div class="col-md-6">
 				<div class="card card-light">
 					<div class="card-body">
 						<?php echo $this->form->renderField('existingteam'); ?>
 						<?php echo $this->form->renderField('teamid'); ?>
 						<?php echo $this->form->renderField('grouping'); ?>
+						<?php echo $this->form->renderField('skilllevel'); ?>
+						<?php echo $this->form->renderField('playoffs'); ?>						
 						<?php echo $this->form->renderField('published')?>
 						<?php //echo LayoutHelper::render('joomla.edit.global', $this); ?>
 					</div>
@@ -70,6 +72,7 @@ HTMLHelper::_('behavior.keepalive');
 			<div class="col-md-9">
 				<div class="row">
 					<div class="col-md-8">
+
 						<?php echo $this->form->renderField('registeredby'); ?>
 						<?php echo $this->form->renderField('ipaddr'); ?>
 						<?php echo $this->form->renderField('tosack'); ?>
