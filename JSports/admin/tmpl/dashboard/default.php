@@ -127,6 +127,19 @@ $wa->useStyle('com_jsports.admin.style');
     				</div>
     				</a>
 				</div>
+				
+    			<div class="col">
+    				<a href="index.php?option=com_jsports&view=tools">
+    				<div class="card h-100 p-2 m-1">
+    					<div style="text-align: center;">
+    						<p class="card-text" ><h2>Tools</h2>
+    							<i class="fas fa-screwdriver-wrench fa-3x"></i>
+    						</p>
+    						
+    					</div>
+    				</div>
+    				</a>
+				</div>	
 			</div>
 		</div>
 		<div class="col-12 col-lg-4">
@@ -135,31 +148,6 @@ $wa->useStyle('com_jsports.admin.style');
 	</div>
 	
 </div>	
-	
-	
-
-
-<br/><br/><br/><br/>
-
-
-<a href="index.php?option=com_jsports&view=leagues">Leagues/Organization</a>
-<br />
-<a href="index.php?option=com_jsports&view=programs">Programs</a>
-<br />
-<a href="index.php?option=com_jsports&view=divisions">Divisions</a>
-<br />
-<a href="index.php?option=com_jsports&view=teams">Teams</a>
-<br />
-<a href="index.php?option=com_jsports&view=venues">Venues</a>
-<br />
-<a href="index.php?option=com_jsports&view=Registrations">Registrations</a>
-<br />
-<a href="index.php?option=com_jsports&view=Programsetup">Program Setup</a>
-<br />
-<a href="index.php?option=com_jsports&view=Rosters">Rosters</a>
-<br />
-<a href="index.php?option=com_jsports&view=Games">Games</a>
-<br />
 
 
 </div>
