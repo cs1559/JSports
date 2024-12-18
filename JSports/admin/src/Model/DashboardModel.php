@@ -25,6 +25,7 @@ class DashboardModel extends BaseModel
     
     public $title;
     public $version;
+    public $releasedate;
         
     
     /**
@@ -36,6 +37,8 @@ class DashboardModel extends BaseModel
                 
         $this->title  = "JSports - Sports Managment Component";
         $this->version = JSHelper::getVersion();
+        $this->releasedate = JSHelper::getReleasedate();
+        
     }
     
     public function getTitle()
@@ -46,5 +49,8 @@ class DashboardModel extends BaseModel
     public function getVersion() {
         return $this->version;
     }
-        
+  
+    public function getReleasedate() {
+        return $this->releasedate;
+    }
 }

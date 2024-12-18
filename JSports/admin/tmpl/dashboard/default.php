@@ -10,7 +10,7 @@ $wa->useStyle('com_jsports.admin.style');
 <div id="dashboard-container container">
 	<div class="row">
 		<div class="dashboard-heading brand mb-3 p-3">
-			<h2><?php echo $this->title . " - " . $this->version; ?></h2>
+			<h2><?php echo $this->title; ?></h2>
 		</div>
 	</DIV>
 	
@@ -42,6 +42,20 @@ $wa->useStyle('com_jsports.admin.style');
     				</div>
     				</a>
     			</div>
+    			
+				<div class="col">
+					<a href="index.php?option=com_jsports&view=programsetup">
+    				<div class="card h-100 p-2 m-1">
+    					<div style="text-align: center;">
+    						<p class="card-text" ><h2>Program Setup</h2>
+    							<i class="fas fa-puzzle-piece fa-3x"></i>
+    						</p>
+    						
+    					</div>
+    				</div>
+    				</a>
+    			</div>
+    			
     			<div class="col">
     				<a href="index.php?option=com_jsports&view=divisions">
     				<div class="card h-100 p-2 m-1">
@@ -140,10 +154,29 @@ $wa->useStyle('com_jsports.admin.style');
     				</div>
     				</a>
 				</div>	
+				
+    			<div class="col">
+    				<a href="index.php?option=com_jsports&view=dashboard">
+    				<div class="card h-100 p-2 m-1">
+    					<div style="text-align: center;">
+    						<p class="card-text" ><h2>Reports (Future)</h2>
+    							<i class="fas fa-file-lines fa-3x"></i>
+    						</p>
+    						
+    					</div>
+    				</div>
+    				</a>
+				</div>
+				
 			</div>
 		</div>
 		<div class="col-12 col-lg-4">
 			<h2>About JSports</h2>
+			<p>
+			Current Version: <?php echo $this->version; ?><br/>
+            Release Date:  <?php echo $this->releasedate; ?>
+
+            </p>
 		</div>
 	</div>
 	

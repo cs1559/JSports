@@ -28,6 +28,7 @@ class HtmlView extends BaseHtmlView
     {
         $this->title = $this->get('Title');
         $this->version = $this->get('Version');
+        $this->releasedate = $this->get('Releasedate');
         
          $this->addToolBar();
         
