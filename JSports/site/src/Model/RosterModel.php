@@ -124,7 +124,8 @@ class RosterModel extends FormModel
     	    } else {
     	        $adminFlag = 'No';
     	    }
-    	    $logger->info('Saving roster item id - ' . $roster->id . ' Name: '. $roster->firstname . ' ' . $roster->lastname . ' ADMIN='. $adminFlag);
+    	    $logger->info('Saving roster item id - ' . $roster->id . ' Name: '. $roster->firstname . ' ' . 
+    	           $roster->lastname . ' ADMIN='. $adminFlag . ' TYPE=' . $roster->classification);
     		return true;
     	} else {
     	    $errors = $roster->getErrors();
