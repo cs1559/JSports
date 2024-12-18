@@ -79,7 +79,28 @@
 			
 		<field name="grouping" type="programgroupslist"
 			label="COM_JSPORTS_AGEGROUP"  required="false" default="XX" />
-			
+
+		<field
+			name="skilllevel"
+			type="list"
+			label="COM_JSPORTS_SKILLLEVEL"
+			required="false" 
+			hint="NOTE:  Red is our TOP division"
+			>
+			<option selected="selected" value="">- Select Skill Level -</option>
+			<option value="R">Red (AA or higher)</option>
+			<option value="W">White (High A or low AA)</option>
+			<option value="B">Blue (Rec to Low A)</option>
+		</field>
+		
+		<field name="playoffs" type="radio"
+			label="COM_JSPORTS_PLAYOFFS" class="btn-group btn-group-yesno" default="0"
+			hint="Are you planning on competing in the league playoffs"
+			validate="options">
+			<option value="1">Yes</option>
+			<option value="0">No</option>
+		</field>
+					
 	</fieldset>
 
 
