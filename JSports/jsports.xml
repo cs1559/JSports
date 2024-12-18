@@ -3,14 +3,14 @@
 
 	<name>JSports</name>
 	<!-- The following elements are optional and free of formatting constraints -->
-	<creationDate>2024-12-15</creationDate>
+	<creationDate>2024-12-16</creationDate>
 	<author>Chris Strieter</author>
 	<authorEmail>chris@swibl.org</authorEmail>
 	<authorUrl>http://www.swibl.org</authorUrl>
 	<copyright>Copyright (c) 2006-2024. Chris Strieter. All rights reserved.</copyright>
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
 	<!--  The version string is recorded in the components table -->
-	<version>1.0.14</version>
+	<version>1.0.15a</version>
 	<!-- The description is optional and defaults to the name -->
 	<description>JSports is a sports management tool for sports league.  It was designed and built to meet the needs of a youth 
 	select sports league.   Currently functionality includes building of programs (e.g. seasons), division management, rostering, registration
@@ -42,20 +42,7 @@
 
 
 	<administration>
-	 	<menu link="index.php?option=com_jsports">JSports</menu>
-		<submenu>
-			<menu link="option=com_jsports&amp;view=dashboard">Dashboard</menu>
-			<menu link="option=com_jsports&amp;view=leagues">Leagues</menu>
-			<menu link="option=com_jsports&amp;view=programs">Programs</menu>
-			<menu link="option=com_jsports&amp;view=programsetup">Program Setup</menu>
-			<menu link="option=com_jsports&amp;view=divisions">Divisions</menu>
-			<menu link="option=com_jsports&amp;view=teams">Teams</menu>
-			<menu link="option=com_jsports&amp;view=venues">Venues</menu>
-			<menu link="option=com_jsports&amp;view=registrations">Registrations</menu>
-			<menu link="option=com_jsports&amp;view=games">Games</menu>
-			<menu link="option=com_jsports&amp;view=rosters">Rosters</menu>
-			<menu link="option=com_jsports&amp;view=logs">View Logs</menu>
-		</submenu>
+	 	<menu link="index.php?option=com_jsports;view=dashboard">JSports</menu>
 
 		<files folder="admin">
 			<!-- Admin Main File Copy Section -->
