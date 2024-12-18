@@ -1,3 +1,9 @@
+
+# Query to get coaches/admins emails for updating newsletter list.
+SELECT a.* FROM `jos2823_jsports_rosters` a, jos2823_jsports_programs b
+WHERE a.programid = b.id and length(email) > 0 and programid = 35 and b.status = 'A';
+
+
 # Registrations
 select teamname, grouping, name as 'coach name', address, city, email, phone, cellphone, registeredby, skilllevel, if (playoffs=1,'Yes','No') as "Playoffs"
 from jos2823_jsports_registrations
