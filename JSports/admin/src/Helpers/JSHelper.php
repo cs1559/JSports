@@ -125,5 +125,15 @@ class JSHelper
         $xml_obj = new \SimpleXMLElement(file_get_contents($xml_path));
         return strval($xml_obj->version); 
     }
+    
+    /**
+     * This function will return the version number of the component.
+     * @return string
+     */
+    public static function getReleasedate() {
+        $xml_path = JPATH_ADMINISTRATOR . '/components/com_jsports/jsports.xml';
+        $xml_obj = new \SimpleXMLElement(file_get_contents($xml_path));
+        return strval($xml_obj->creationDate);
+    }
 }
 
