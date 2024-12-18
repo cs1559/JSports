@@ -20,15 +20,6 @@
 			header="- Select Program -"
 		/>
 
-		<field name="lastplayed" type="sql" 
-			label="COM_JSPORTS_LASTPLAYED"
-			query="select lastplayed from #__jsports_view_lastplayed group by lastplayed order by lastplayed desc"
-			key_field="lastplayed"
-			value_field="lastplayed" 
-			onchange="this.form.submit();"
-			header="- Select Last Played Year -"
-		/>
-
 		<field
 			name="published"
 			type="status"
