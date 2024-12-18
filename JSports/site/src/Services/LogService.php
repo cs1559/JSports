@@ -66,5 +66,31 @@ class LogService
         $logger = MyApp::getLogger();
         $logger->info($msg);
     }
+    
+    
+    /**
+     * This function will purge log records from the database and return the number of rows
+     * affected.
+     * 
+     * @param number $logdays
+     * @return unknown
+     */
+    public static function purge($logdays = 200) {
+        
+        $db    = Factory::getDbo();
+        
+        $query = $db->getQuery(true);
+        
+        $sql = "delete from " . $db->quoteName("#__jsports_action_logs")
+        . " where logdate < (curdate() - interval " . $logdays . " day)";
+        
+        $query->setQuery($sql);
+        $db->setQuery($query);
+        $result = $db->execute();
+        
+        $rows = $db->getAffectedRows();
+        
+        return $rows;
+    }
 }
 

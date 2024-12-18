@@ -29,7 +29,7 @@ use FP4P\Component\JSports\Site\Services\LogService;
 
 class LogsController extends AdminController
 {
-    protected $default_view = 'leagues';
+    protected $default_view = 'logs';
     
     public function display($cachable = false, $urlparams = array())
     {
@@ -57,19 +57,8 @@ class LogsController extends AdminController
     public function purge() {
         $params = ComponentHelper::getParams('com_jsports');
         $logdays = $params->get('logdays');
-        
-        $db    = Factory::getDbo();
-        
-        $query = $db->getQuery(true);
-        
-        $sql = "delete from " . $db->quoteName("#__jsports_action_logs")
-        . " where logdate < (curdate() - interval " . $logdays . " day)";
-        
-        $query->setQuery($sql);
-        $db->setQuery($query);
-        $result = $db->execute();
-        
-        $rows = $db->getAffectedRows();
+       
+        $rows = LogService::purge($logdays);
         
         $msg = $rows . " log messages purged (Older than " . $logdays . ' days)';
         Factory::getApplication()->enqueueMessage($msg, 'message');
