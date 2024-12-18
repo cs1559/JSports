@@ -74,9 +74,9 @@
 			hint="NOTE:  Red is our TOP division"
 			>
 			<option selected="selected" value="">- Select Skill Level -</option>
-			<option value="R">Red</option>
-			<option value="W">White</option>
-			<option value="B">Blue</option>
+			<option value="R">Red (AA or higher)</option>
+			<option value="W">White (High A or low AA)</option>
+			<option value="B">Blue (Rec to Low A)</option>
 		</field>
 				
 		<field name="published" type="list" label="JSTATUS"
