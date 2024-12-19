@@ -17,7 +17,6 @@
 			value_field="name" 
 			onchange="this.form.submit();"
 			header="- Select Program -"
-			label="Program"
 		/>
 	
 		<field name="groupingxxx" type="sql"
@@ -36,7 +35,6 @@
 		<field
 			name="grouping"
 			type="list"
-			label="Group"
 			onchange="this.form.submit();"
 			>
 			<option selected="selected" value="%">- Select Group -</option>
