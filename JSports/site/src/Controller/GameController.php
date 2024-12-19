@@ -162,6 +162,10 @@ class GameController extends FormController
                 
         // Check for request forgeries.
         $this->checkToken();
+        
+        /*
+         * @todo Need to validate the session has been authenticated
+         */
 
         $app    = $this->app;
         $model  = $this->getModel('Game', 'Site');
