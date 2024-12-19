@@ -65,6 +65,16 @@ class DatabaseLogger extends Logger
             'msg',
         );
 
+        /**
+         * if for whatever reason the user is unknown, go ahead and populate a user name.  The assumption is that the component
+         * still allows a "save" if a timeout occurs while the user is on an edit screen.  
+         * 
+         * NOTE:  the save functions need to be "tightened" up to check for an authenticate session before allowing a save to 
+         * be performed.
+         */
+        if (!$user->id) {
+            $user->name = "Unknown";
+        }
         
         $values = array(
             0,
