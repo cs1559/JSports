@@ -131,8 +131,13 @@ class HtmlView extends BaseHtmlView
         
         ToolbarHelper::custom('programsetup.assigndivisions', 'save', 'save', 'Save Assignments', false, 'adminForm');
 
-        ToolbarHelper::custom('programsetup.programsList', 'list', 'list', 'Program List', false, 'adminForm');
+//         ToolbarHelper::custom('programsetup.programsList', 'list', 'list', 'Program List', false, 'adminForm');
         
+        $toolbar->standardButton('dashboard')
+        ->icon('fa fa-home')
+        ->text('Dashboard')
+        ->task('display.dashboard')
+        ->listCheck(false);
         
         if ($this->state->get('filter.published') == -2 && $canDo->get('core.delete'))
         {
