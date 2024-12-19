@@ -16,6 +16,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Factory;
+use FP4P\Component\JSports\Administrator\Helpers\JSHelper;
 
 $listOrder = $this->escape($this->state->get('list.ordering'));
 $listDirn  = $this->escape($this->state->get('list.direction'));
@@ -108,14 +109,14 @@ $user      = Factory::getUser();
 						<?php echo $item->description; ?>
 					</td>
 					<td class="">
-						<?php echo $item->active; ?>
+						<?php echo JSHelper::translateYesNo( $item->active); ?>
 					</td>
 					<td class="">
 						<?php echo $item->status; ?>
 					</td>
 				
 					<td class="">
-						<?php echo $item->registrationopen; ?>
+						<?php echo JSHelper::translateYesNo($item->registrationopen); ?>
 					</td>
 					<td class="">
 						<?php echo $item->id; ?>
