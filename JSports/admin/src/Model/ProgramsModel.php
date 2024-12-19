@@ -62,7 +62,7 @@ class ProgramsModel extends ListModel
 	 *
 	 * @since   1.6
 	 */
-	protected function populateState($ordering = 'a.id', $direction = 'asc')
+	protected function populateState($ordering = 'a.id', $direction = 'desc')
 	{
 	    
 	    $app = Factory::getApplication();
@@ -72,7 +72,6 @@ class ProgramsModel extends ListModel
 	       $programid = $app->getUserState('com_jsports.programid');
 	    }
 	    $this->setState('programid', $programid);
-	    // keep the walk_id for adding new visits
 	    $app->setUserState('com_jsports.programid', $programid);
 	    
 		$search = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
@@ -96,7 +95,7 @@ class ProgramsModel extends ListModel
 	 *
 	 * This is necessary because the model is used by the component and
 	 * different modules that might need different sets of data or different
-	 * ordering requirements.
+    	 * ordering requirements.
 	 *
 	 * @param   string  $id  A prefix for the store id.
 	 *
