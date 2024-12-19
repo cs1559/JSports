@@ -151,6 +151,9 @@ class GameModel extends AdminModel
      
         $user = Factory::getUser();
 
+        /*
+         * @todo Need to validate the session has been authenticated
+         */
         $data['enteredby'] =$user->username;
         
         $datetime = date_create()->format('Y-m-d H:i:s');
