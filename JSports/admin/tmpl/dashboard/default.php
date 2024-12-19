@@ -61,7 +61,7 @@ $wa->useStyle('com_jsports.admin.style');
     				<div class="card h-100 p-2 m-1">
     					<div style="text-align: center;">
     						<p class="card-text" ><h2>Divisions</h2>
-    							<i class="fas fa-baseball-ball fa-3x"></i>
+    							<i class="fas fa-layer-group fa-3x"></i>
     						</p>
     						
     					</div>
@@ -121,7 +121,7 @@ $wa->useStyle('com_jsports.admin.style');
     				<div class="card h-100 p-2 m-1">
     					<div style="text-align: center;">
     						<p class="card-text" ><h2>Games/Schedules</h2>
-    							<i class="fas fa-baseball-ball fa-3x"></i>
+    							<i class="fas fa-calendar-days fa-3x"></i>
     						</p>
     						
     					</div>
