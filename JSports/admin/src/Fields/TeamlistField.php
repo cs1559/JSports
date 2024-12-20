@@ -58,6 +58,8 @@ class TeamlistField extends ListField
             return $options;
         }
         
+        /* NOTE:  This list of teams will/should be filtered based on the division ID assocaited with the team id passed into this field */
+        
         $teams = TeamService::getTeamList($this->teamid, $this->programid);
         
         /*
@@ -75,6 +77,8 @@ class TeamlistField extends ListField
          */
         
         $options[] = HtmlHelper::_('select.option',"","-- Select Team --");
+        
+        /* Load the dropdown with teams from their assigned division */
         foreach ($teams as $item) {
             $text = $item['teamname'] . ' (' . $item['contactname'] . ')';
             //$options[] = HtmlHelper::_('select.option',$item['teamid'],$item['teamname']);
@@ -84,26 +88,50 @@ class TeamlistField extends ListField
         $divisionid = TeamService::getTeamDivisionId($this->teamid, $this->programid);
         $division = DivisionService::getItem($divisionid);
         
-
-
         if ($division->crossdivisional) {
-           // $options[] = Html::_('select.optgroup',"","Outside Division");
+           // $options[] = Html::_('select.optgroup',"","Outside Divisions");
         	$obj = new \stdClass();
         	$obj->value ="<OPTGROUP>";
         	$obj->text="Outside Divisions";
        		$options[] = $obj;
 
-            $teams = Teamservice::getTeamsByAgeGroup($this->programid, $division->agegroup, $division->id);
-            foreach ($teams as $item) {
-                $text = $item['teamname'] . ' (' . $item['contactname'] . ')';
-                //$options[] = HtmlHelper::_('select.option',$item['teamid'],$item['teamname']);
-                $options[] = HtmlHelper::_('select.option',$item['teamid'],$text);
-            }
-
+       		
+       		// get divisions within age group.
+       		$divisions = DivisionService::getDivisionList($this->programid, $division->agegroup);
+       		
+//        		print_r($divisions);
+//        		exit;
+       		
+       		// Loop through divisions
+       		foreach ($divisions as $div) {
+       		   // Loop through teams within the division
+       		    $obj = new \stdClass();
+       		    $obj->value ="<OPTGROUP>";
+       		    $obj->text=$div['name'] . " Division";
+       		    $options[] = $obj;
+       		    
+              		    
+//                 $teams = Teamservice::getTeamsByAgeGroup($this->programid, $division->agegroup, $division->id);
+       		    $teams = Teamservice::getTeamlist2($this->programid, $div['id']);
+                foreach ($teams as $item) {
+                    $text = $item['teamname'] . ' (' . $item['contactname'] . ')';
+                    //$options[] = HtmlHelper::_('select.option',$item['teamid'],$item['teamname']);
+                    $options[] = HtmlHelper::_('select.option',$item['teamid'],$text);
+                }
+                
+                // "Div optgroup"
                 $optGroup              = new \stdClass();
                 $optGroup->value       = '</OPTGROUP>';
                 $optGroup->text        = "";
-		$options[] = $optGroup;
+                $options[] = $optGroup;
+                
+       		}
+       		
+            // "Outside divisions optgroup"
+            $optGroup              = new \stdClass();
+            $optGroup->value       = '</OPTGROUP>';
+            $optGroup->text        = "";
+            $options[] = $optGroup;
         }
         
         $options = array_merge(parent::getOptions(), $options);

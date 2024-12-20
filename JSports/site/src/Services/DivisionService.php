@@ -45,23 +45,29 @@ class DivisionService
      * @param unknown $programid
      * @return array
      */
-    public static function getDivisionList($programid) {
+    public static function getDivisionList($programid, $group = null) {
         
         $db = Factory::getDbo();
         $query = $db->getQuery(true);
         
         $query->select('p.*');
         $query->from($db->quoteName('#__jsports_divisions') . ' AS p ');
-        $conditions = array(
-            $db->quoteName('p.published') . ' in (1) ',
-            $db->quoteName('p.programid') . ' = ' . $programid,
-        );
+        if (is_null($group)) {
+            $conditions = array(
+                $db->quoteName('p.published') . ' in (1) ',
+                $db->quoteName('p.programid') . ' = ' . $programid,
+            );
+        } else {
+            $conditions = array(
+                $db->quoteName('p.published') . ' in (1) ',
+               $db->quoteName('p.programid') . ' = ' . $programid,
+                $db->quoteName('p.agegroup') . ' = ' . $group
+            );
+        }
         $query->where($conditions);
         $query->order("ordering asc");
         $db->setQuery($query);
         return $db->loadAssocList();
-
-        
     }
     
 }
