@@ -64,7 +64,7 @@ class LogService
    
         
         $logger = MyApp::getLogger();
-        $logger->info($msg);
+        $logger->data($msg);
     }
     
     
