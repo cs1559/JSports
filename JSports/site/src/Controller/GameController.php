@@ -63,8 +63,8 @@ class GameController extends FormController
         // Check if the user is logged in
         if ($user->guest) {
             $app->enqueueMessage(Text::sprintf('COM_JSPORTS_INVALID_USERSESSION'), 'error');
-            $logger->info('Game ID: ' . $id. ' has been DELETED  ' . $item->gamedate . ' ' . $item->name . ' STATUS=' . $item->gamestatus);
-            $this->setRedirect(Route::_($lasturl, false));
+            $logger->info('Game ID: ' . $id. ' Game DELETE failed due to user session invalid');
+            $this->setRedirect(Route::_('index.php?option=com_jsports&view=schedules&teamid=' . $teamid, false));
             return false;
         }
    
@@ -122,6 +122,16 @@ class GameController extends FormController
         
         $input = Factory::getApplication()->input;
         $id     = $input->getInt("id");
+        
+        /* Code to prevent further action if user is NOT logged in */
+        $user = Factory::getUser();
+        // Check if the user is logged in
+        if ($user->guest) {
+            $app->enqueueMessage(Text::sprintf('COM_JSPORTS_INVALID_USERSESSION'), 'error');
+            $logger->info('Game ID: ' . $id. ' Game RESET failed due to user session invalid');
+            $this->setRedirect(Route::_('index.php?option=com_jsports&view=schedules&teamid=' . $teamid, false));
+            return false;
+        }
         
         if ($id == 0) {
             $this->setMessage("Invalid ID value provied - Game RESET failed",'error');
