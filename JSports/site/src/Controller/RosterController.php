@@ -111,6 +111,15 @@ class RosterController extends FormController
         $requestData = $app->getInput()->post->get('jform', [], 'array');
 
         $teamid = $requestData['teamid'];
+
+        /* Code to prevent further action if user is NOT logged in */
+        $user = Factory::getUser();
+        // Check if the user is logged in
+        if ($user->guest) {
+            $app->enqueueMessage(Text::sprintf('COM_JSPORTS_INVALID_USERSESSION'), 'error');
+            $this->setRedirect(Route::_('index.php?option=com_jsports&view=team&id=' . $requestData['teamid'], false));
+            return false;
+        }
         
         // Validate the posted data.
         $form = $model->getForm();

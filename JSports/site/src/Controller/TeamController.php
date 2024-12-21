@@ -17,6 +17,7 @@ use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Input\Input;
+use Joomla\CMS\Factory;
 
 use FP4P\Component\JSports\Site\Services\ProgramsService;
 use Joomla\CMS\Component\ComponentHelper;
@@ -59,7 +60,6 @@ class TeamController extends BaseController
         // Check for request forgeries.
         $this->checkToken();
 
-        
         $app    = $this->app;
         
         $model  = $this->getModel('Team', 'Site');
@@ -70,6 +70,16 @@ class TeamController extends BaseController
         $requestData = $app->getInput()->post->get('jform', [], 'array');
 
         $teamid = $requestData['id'];
+
+        /* Code to prevent further action if user is NOT logged in */
+        $user = Factory::getUser();
+        // Check if the user is logged in
+        if ($user->guest) {
+            $app->enqueueMessage(Text::sprintf('COM_JSPORTS_INVALID_USERSESSION'), 'error');
+            $this->setRedirect(Route::_('index.php?option=com_jsports&view=team&id=' . $requestData['id'], false));
+            return false;
+        }
+        
         
         // Validate the posted data.
         $form = $model->getForm();
