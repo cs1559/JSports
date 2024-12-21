@@ -51,7 +51,7 @@ $document->setTitle(Text::_('COM_JSPORTS_POSTSCORE_PAGE_TITLE'));
 	
 	<div class="control-group">
     <div class="controls">
-        <button type="submit" class="btn btn-primary validate" name="task" value="postscore.save2">
+        <button type="submit" class="btn btn-primary validate" name="task" value="postscore.save">
             <span class="icon-check" aria-hidden="true"></span>
             <?php echo Text::_('JSAVE'); ?>
         </button>
