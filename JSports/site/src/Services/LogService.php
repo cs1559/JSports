@@ -53,7 +53,7 @@ class LogService
    
     public static function writeArray(array $data, $context = '') {
         
-        $msg = " " . $context . " DATA: " . json_encode($data);
+        $msg = " " . $context . json_encode($data);
 //         if (json_validate($data)) {
 //             $msg = " DATA: " . $data;
 //         } elseif (is_array($data)) {
