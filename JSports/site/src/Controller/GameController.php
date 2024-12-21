@@ -49,14 +49,25 @@ class GameController extends FormController
      * @return boolean
      */
     public function delete() {
-        
+
         $logger = Myapp::getLogger();
-        
         $app = Factory::getApplication();
         
         $input = Factory::getApplication()->input;
         $id     = $input->getInt("id");
         
+        $lasturl = $_SERVER['HTTP_REFERER'];
+        
+        /* Code to prevent further action if user is NOT logged in */
+        $user = Factory::getUser();
+        // Check if the user is logged in
+        if ($user->guest) {
+            $app->enqueueMessage(Text::sprintf('COM_JSPORTS_INVALID_USERSESSION'), 'error');
+            $logger->info('Game ID: ' . $id. ' has been DELETED  ' . $item->gamedate . ' ' . $item->name . ' STATUS=' . $item->gamestatus);
+            $this->setRedirect(Route::_($lasturl, false));
+            return false;
+        }
+   
         if ($id == 0) {
             $this->setMessage("Invalid ID value provied - Game DELETE failed",'error');
             $this->setRedirect(Route::_('index.php?option=com_jsports&view=dashboard', false));
@@ -169,12 +180,23 @@ class GameController extends FormController
 
         $app    = $this->app;
         $model  = $this->getModel('Game', 'Site');
-//        $user   = $this->app->getIdentity();
+
         
         // Get the user data.
         $requestData = $app->getInput()->post->get('jform', [], 'array');
 
         $gameid = $requestData['id'];
+        $teamid = $requestData['teamid'];
+        
+        /* Code to prevent further action if user is NOT logged in */
+        $user = Factory::getUser();
+        // Check if the user is logged in
+        if ($user->guest) {
+            $app->enqueueMessage(Text::sprintf('COM_JSPORTS_INVALID_USERSESSION'), 'error');
+            $this->setRedirect(Route::_('index.php?option=com_jsports&view=schedules&teamid=' . $teamid, false));
+            return false;
+        }
+        
         
         // Validate the posted data.
         $form = $model->getForm();
