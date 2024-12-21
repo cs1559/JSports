@@ -54,19 +54,15 @@ class PostscoreController extends FormController
      * @throws  \Exception
      */
     
-    
-    public function save2($key = null, $urlVar = null)
+    /* 12/21/2024 - renamed this function to 'save' .. formerly save2 */
+    public function save($key = null, $urlVar = null)
     {
+        
         $japp = Application::getInstance();
                    
         // Check for request forgeries.
         $this->checkToken();
-
-        /*
-         * @todo Need to validate the session has been authenticated
-         */
-        
-        
+       
         $app    = $this->app;
         $model  = $this->getModel('Postscore', 'Site');
         
@@ -76,6 +72,15 @@ class PostscoreController extends FormController
         //$gameid = $requestData['id'];
         $teamid = $requestData['teamid'];
         $redirectteamid = $requestData['redirectteamid'];
+        
+        /* Code to prevent further action if user is NOT logged in */
+        $user = Factory::getUser();
+        // Check if the user is logged in
+        if ($user->guest) {
+            $app->enqueueMessage(Text::sprintf('COM_JSPORTS_INVALID_USERSESSION'), 'error');
+            $this->setRedirect(Route::_('index.php?option=com_jsports&view=postscores&teamid=' . $redirectteamid, false));
+            return false;
+        }
         
         // Validate the posted data.
         $form = $model->getForm();
