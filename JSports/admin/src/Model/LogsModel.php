@@ -56,7 +56,7 @@ class LogsModel extends ListModel
 	 *
 	 * @since   1.6
 	 */
-	protected function populateState($ordering = 'a.id', $direction = 'asc')
+	protected function populateState($ordering = 'a.logdate', $direction = 'desc')
 	{
 	    
 	    $app = Factory::getApplication();
@@ -154,7 +154,7 @@ class LogsModel extends ListModel
 	 *
 	 * @since   4.0.0
 	 */
-	public function getItems()
+	public function getItems()     
 	{
 		return parent::getItems();
 
