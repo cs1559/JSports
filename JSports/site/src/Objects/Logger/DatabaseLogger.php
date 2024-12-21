@@ -136,4 +136,8 @@ class DatabaseLogger extends Logger
         $this->write("[INFO] " . $msg);
     }
 
+    public function data($msg)
+    {
+        $this->write("[DATA] " . $msg);
+    }
 }
