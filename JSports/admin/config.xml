@@ -129,7 +129,15 @@
 			label="COM_JSPORTS_LOGS_DAYS_TO_RETAIN"
 			description="COM_JSPORTS_LOGS_DAYS_TO_RETAIN">
 		</field>
-						
+
+		<field name="activestandingsonly" type="radio" default="0"
+			label="COM_JSPORTS_ACTIVESTANDINGS_ENABLED"
+			description="COM_JSPORTS_ACTIVESTANDINGS_ENABLED_DESC"
+			layout="joomla.form.field.radio.switcher">
+			<option value="0">No</option>
+			<option value="1">Yes</option>
+		</field>
+								
 	</fieldset>
 	
 	<fieldset name="email" description="COM_JSPORTS_EMAIL_DESC" label="COM_JSPORTS_EMAIL_LABEL">

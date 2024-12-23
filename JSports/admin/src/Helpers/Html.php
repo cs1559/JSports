@@ -15,6 +15,7 @@ namespace FP4P\Component\JSports\Administrator\Helpers;
 use Joomla\CMS\Router\Route;
 use Joomla\Database\ParameterType;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Component\ComponentHelper;
 
 /**
  * The Html class is a helper class that returns various HTML elements. 
@@ -198,6 +199,9 @@ class Html
      */
     public static function getProgramsList($name="program-list", $defaultvalue=0) {
         
+        $params = ComponentHelper::getParams('com_jsports');
+        $activeonly = $params->get('activestandingsonly');
+        
         $db    = Factory::getDbo();
         $query = $db->getQuery(true);
         
@@ -205,6 +209,10 @@ class Html
             $db->quoteName('registrationonly') . ' = 0',    
             $db->quoteName('published') . ' = 1 ',
         );
+        
+        if ($activeonly) {
+            array_push($conditions, 'status = \'A\'');
+        }
         
         // Select all records from the user profile table where key begins with "custom.".
         // Order it by the ordering field.
