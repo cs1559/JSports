@@ -20,8 +20,12 @@
 		<field name="contactemail" type="email"
 			label="COM_JSPORTS_CONTACTEMAIL" size="70" required="true" />
 
-		<field name="contactphone" type="tel"
-			label="COM_JSPORTS_CONTACTPHONE" size="20" required="true" />
+		<field name="contactphone" type="telephone"
+			label="COM_JSPORTS_CONTACTPHONE" size="20"
+			pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" 
+			message="Please make sure it is in the 000-000-0000 format"
+			inputtype="tel"
+			maxlength="12" required="true" />
 						
 		<field name="city" type="text"
 			label="COM_JSPORTS_CITY" size="40" required="true" />

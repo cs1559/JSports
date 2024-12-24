@@ -26,8 +26,15 @@
 		<field name="email" type="emails" label="COM_JSPORTS_EMAIL"
 			size="75" />
 
-		<field name="phone" type="tel" label="COM_JSPORTS_PHONE"
-			size="20" />
+		<field name="phone" type="telephone"
+			label="COM_JSPORTS_PHONE" 
+			hint="Format: 000-000-0000"
+			pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" 
+			size="20" required="true" 
+			inputtype="tel"
+			message="Please make sure it is in the 000-000-0000 format"
+			maxlength="12"
+			/>
 
 		<field name="cellphone" type="tel" label="COM_JSPORTS_CELLPHONE"
 			size="20" />
