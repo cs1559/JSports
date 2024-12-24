@@ -37,8 +37,13 @@
 		<field name="zipcode" type="text"
 			label="COM_JSPORTS_ZIPCODE" size="10" required="false	" />			
 
-		<field name="phone" type="tel"
-			label="COM_JSPORTS_PHONE" size="20" />
+		<field name="phone" type="telephone"
+			label="COM_JSPORTS_PHONE" size="20" 
+			pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" 
+			message="Please make sure it is in the 000-000-0000 format"
+			inputtype="tel"
+			maxlength="12"
+			/>
 
 			
 		<field name="published" type="list" label="JSTATUS"
