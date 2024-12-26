@@ -147,7 +147,14 @@ if (!$this->canAddPlayers) {
 					
 					</th>
 					<td class=""><?php echo $item->firstname; ?></td>
-					<td class=""><?php echo $item->playernumber; ?></td>
+					<td class=""><?php
+					if ($item->classification == 'S') {
+					    echo "NA";
+					} else {
+					       echo $item->playernumber;
+					}
+					    ?>
+					 </td>
 					<td><?php echo JSHelper::translateRosterClassification($item->classification);?> </td>
 					
 				<?php if ($this->canEdit) {?>	
