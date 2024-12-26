@@ -76,7 +76,7 @@ class TeamlistField extends ListField
   
          */
         
-        $options[] = HtmlHelper::_('select.option',"","-- Select Team --");
+        $options[] = HtmlHelper::_('select.option',"0","-- Select Team --");
         
         /* Load the dropdown with teams from their assigned division */
         foreach ($teams as $item) {
