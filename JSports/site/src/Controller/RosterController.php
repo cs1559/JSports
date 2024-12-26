@@ -54,6 +54,15 @@ class RosterController extends FormController
         $redirecturl = "";
         $input = Factory::getApplication()->input;
         $id     = $input->getInt("id");
+        
+        /* Code to prevent further action if user is NOT logged in */
+        $user = Factory::getUser();
+        // Check if the user is logged in
+        if ($user->guest) {
+            $app->enqueueMessage(Text::sprintf('COM_JSPORTS_INVALID_USERSESSION'), 'error');
+            $this->setRedirect(Route::_('index.php?option=com_jsports&view=schedules&teamid=' . $teamid, false));
+            return false;
+        }
        
         if ($id == 0) {
             $this->setMessage("Invalid ID value provied - Roster DELETE failed",'error');
@@ -67,8 +76,8 @@ class RosterController extends FormController
         $svc = new RosterService();
         $item = $svc->getItem($id);
         
+        // Default redirect URL
         $redirectURL = 'index.php?option=com_jsports&view=dashboard';
-        
         
         try {
             $result = RosterService::delete($id);
