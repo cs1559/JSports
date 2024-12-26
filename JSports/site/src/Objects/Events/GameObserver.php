@@ -27,11 +27,18 @@ class GameObserver extends BaseObserver
         if (!$eventemails) {
             return true;
         }
+        
         $ccadmin = $params->get('ccadmin');
         $adminemails = $params->get('adminemail');
         $multiadmins = strpos(',', $adminemails);
+        $orgemail = $params->get('orgemail');
         
         $data = (object) $args['data'];
+        
+        // Do not send an email for any NON-LEAGUE game.
+        if (!$data->leaguegame) {
+            return true;
+        }
         
         // @TODO - This needs to be refactored where the email content is abstracted from this class into more of a
         //      template solutions.
@@ -50,7 +57,7 @@ class GameObserver extends BaseObserver
 <br/>Please notify the league if there are any discrepancies with the score that has been posted.<br/>
 <p>
 SWIBL<br/>
-Email: info@swibl.org<br/>
+Email: " . $orgemail . "<br/>
 </p> ";
         
         $subject = "SWIBL - Game Score Posted";
@@ -71,10 +78,6 @@ Email: info@swibl.org<br/>
                 $adminrecipients = $adminemails;
             }
         }
-        
-//         print_r($recipients);
-//         print_r($adminrecipients);
-//         exit;
         
         $svc = new MailService();
         // to, subject, body, html mode, cc
