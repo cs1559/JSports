@@ -1,0 +1,6 @@
+@import url("jsports.css");
+
+/* This overrides a template based rule from the template */
+fieldset {
+  margin-bottom: 0em !important; 
+}

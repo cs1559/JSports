@@ -4,6 +4,13 @@
 	background-color: blue;
 }
 
+.nonleague-game {
+	color: red !important;
+}
+
+.league-game {	
+}
+
 #spinner:not([hidden]) {
   position: fixed;
   top: 0;
