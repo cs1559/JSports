@@ -175,7 +175,7 @@ $wa->useStyle('com_jsports.admin.style');
 			<p>
 			Current Version: <?php echo $this->version; ?><br/>
             Release Date:  <?php echo $this->releasedate; ?>
-
+			<hr/>
             </p>
 		</div>
 	</div>

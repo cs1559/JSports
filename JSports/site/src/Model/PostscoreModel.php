@@ -65,7 +65,7 @@ class PostscoreModel extends FormModel
         $startDate = strtotime(date('Y-m-d', strtotime($data['gamedate']) ) );
         
          $currentDate = strtotime(date('Y-m-d'));
-        if($startDate >= $currentDate) {
+        if($startDate > $currentDate) {
             $this->setError(Text::_('COM_JSPORTS_ERR_POSTSCORE_FOR_FUTURE_GAME'));
             return false;
         }

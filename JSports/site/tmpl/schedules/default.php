@@ -64,12 +64,13 @@ $document->setTitle(Text::_('COM_JSPORTS_TEAMSCHEDULE_PAGE_TITLE'));
 						<a class="btn btn-primary btn-sm" 
 							href="<?php echo Route::_('index.php?option=com_jsports&view=game&layout=edit'
 							    . '&teamid=' . $this->team->id . '&programid=' . $this->program->id . '&id=0' ); ?>">Add Game </a>
+
 					<?php 
 					   } 
 					?>
-<a class="btn btn-primary btn-sm" href="<?php echo Route::_('index.php?option=com_jsports&view=team&id=' . $this->team->id); ?>">Team Profile </a>
-<?php echo $this->program->name . " (" . $this->program->status . ")"; ?>
-<hr class="hr-bar">
+                    <a class="btn btn-primary btn-sm" href="<?php echo Route::_('index.php?option=com_jsports&view=team&id=' . $this->team->id); ?>">Team Profile </a>
+                    <?php echo $this->program->name . " (" . $this->program->status . ")"; ?>
+                    <hr class="hr-bar">
 	
 	<?php if (empty($this->items)) : 
 	       ?>
@@ -91,7 +92,7 @@ $document->setTitle(Text::_('COM_JSPORTS_TEAMSCHEDULE_PAGE_TITLE'));
 						<?php echo Text::_('COM_JSPORTS_NAME'); ?> (Away @ Home)
 					</th>								
 					<th scope="col" class="w-5">
-						<?php echo Text::_('Time'); ?>
+						<?php echo Text::_('COM_JSPORTS_TIME'); ?>
 					</th>				
 					<th scope="col" class="w-15">
 						<?php echo Text::_('COM_JSPORTS_STATUS'); ?>
@@ -107,6 +108,12 @@ $document->setTitle(Text::_('COM_JSPORTS_TEAMSCHEDULE_PAGE_TITLE'));
 			
 			$n = count($this->items);
 			foreach ($this->items as $i => $item) :
+			
+			     if (!$item->leaguegame) {
+			         $gameclass="nonleague-game";
+			     } else {
+			         $gameclass="league-game";        
+		         }
 				?>
 				<tr class="row<?php echo $i % 2; ?>">
 					<th scope="row" class="has-context">
@@ -115,7 +122,7 @@ $document->setTitle(Text::_('COM_JSPORTS_TEAMSCHEDULE_PAGE_TITLE'));
 					?>
 					
 					</th>
-					<td class="">
+					<td class="<?php echo $gameclass; ?>">
 						<?php echo $item->name; ?><br/>
 						<span style="font-style: italic"><?php echo $item->location; ?></span>
 					</td>

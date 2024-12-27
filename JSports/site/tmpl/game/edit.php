@@ -22,21 +22,21 @@ use FP4P\Component\JSports\Administrator\Helpers\Html;
 HTMLHelper::_('behavior.formvalidator');
 HTMLHelper::_('behavior.keepalive');
 
+$wa = $this->document->getWebAssetManager();
+$wa->getRegistry()->addExtensionRegistryFile('com_jsports');
+$wa->useStyle('com_jsports.jsports.style');
+$wa->useStyle('com_jsports.game.style');
+
 ?>
 
 <h1><?php echo $this->team->name; ?> Add/Edit Game </h1>
 <form action="<?php echo Route::_('index.php?option=com_jsports&view=game&layout=edit&id=' . (int) $this->item->id); ?>"
 	method="post" name="gameForm" id="game-form" class="form-validate">
 
-		
- 	
-	<?php // echo "Home: " . Html::getHomeTeamlist($this->teamid, $this->programid); ?>
-	<?php // echo "Away: " . Html::getAwatTeamlist($this->teamid, $this->programid); ?>
-	
-	<?php echo $this->form->renderField('opponentid'); ?>
-	<?php echo $this->form->renderField('homeindicator'); ?>	
-	<?php echo $this->form->renderField('leaguegame'); ?>	
-			
+		<?php echo $this->form->renderField('leaguegame'); ?>	
+		<?php echo $this->form->renderField('opponentid'); ?>
+		<?php echo $this->form->renderField('nonleagueteam'); ?>
+		<?php echo $this->form->renderField('homeindicator'); ?>			
 		<?php echo $this->form->renderField('location'); ?>	
 		<?php echo $this->form->renderField('programid'); ?>
 		<?php echo $this->form->renderField('teamid'); ?>
@@ -45,6 +45,7 @@ HTMLHelper::_('behavior.keepalive');
 		<?php echo $this->form->renderField('gametime'); ?>
 		<?php echo $this->form->renderField('gamestatus'); ?>						
 		<?php echo $this->form->renderField('id'); ?>
+		
 	<input type="hidden" name="task" value="">
 	<?php echo HTMLHelper::_('form.token'); ?>
 	

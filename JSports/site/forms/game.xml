@@ -16,16 +16,24 @@
 		<field name="divisionid" type="hidden" label="COM_JSPORTS_DIVISIONID"
 			default="0" class="readonly" readonly="true" />
 
+		<field name="leaguegame" type="radio" label="COM_JSPORTS_LEAGUEGAME"
+			class="btn-group btn-group-yesno" description="NOTE:  Non-league games do not impact standings" default="1" validate="options">
+				<option value="1">Yes</option>
+				<option value="0">No</option>
+		</field>
+		
 		<field name="opponentid" type="teamlist" label="COM_JSPORTS_OPPONENT" class="" teamid="teamid" programid="programid"
-				required="true"/>
-				
+				required="true" default="0" showon="leaguegame:1"/>
+
+		<field name="nonleagueteam" type="text" label="COM_JSPORTS_OPPONENT_NAME" default="TBD"
+				required="true" showon="leaguegame:0"/>
+										
 		<field name="hometeamname" type="text" label="COM_JSPORTS_HOMETEAM"
 			default="0" class="readonly" readonly="true" />
 				
 		<field name="awayteamname" type="text" label="COM_JSPORTS_AWAYTEAM"
 			default="0" class="readonly" readonly="true" />
 				
-
 
 		<field name="hometeamid" type="teamlist" label="Home Team" class="" teamid="teamid" programid="programid"
 				required="false"/>
@@ -34,7 +42,7 @@
 		<field name="awayteamid" type="teamlist" label="Away Team" class="" teamid="teamid" programid="programid"
 				required="false"/>
 
-		<field name="gamedate" type="calendar" label="COM_JSPORTS_GAMEDATE"
+		<field name="gamedate" type="calendar" label="COM_JSPORTS_GAMEDATE" format="%Y-%m-%d"
 			default="0" class=""  require="true"/>
 			
 		<field name="gametime" type="time" label="COM_JSPORTS_GAMETIME"
@@ -43,14 +51,8 @@
 				required="true"
 			class="inputbox" />
 
-		<field name="leaguegame" type="radio" label="COM_JSPORTS_LEAGUEGAME"
-			class="btn-group btn-group-yesno" hint="Non-league games do not impact standings" default="1" validate="options">
-				<option value="1">Yes</option>
-				<option value="0">No</option>
-		</field>
-
 		<field name="homeindicator" type="radio" label="COM_JSPORTS_HOMEINDICATOR"
-			class="btn-group btn-group-yesno" hint="Are you the home team?" default="1" validate="options">
+			class="btn-group btn-group-yesno" default="1" validate="options">
 				<option value="1">Yes</option>
 				<option value="0">No</option>
 		</field>

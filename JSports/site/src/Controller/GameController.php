@@ -236,7 +236,7 @@ class GameController extends FormController
             $app->setUserState('com_jsports.edit.game.data', $requestData);
 
             // Redirect back to the edit screen.
-            $this->setRedirect(Route::_('index.php?option=com_jsports&view=game&layout=edit&id=' .$gameid, false));
+            $this->setRedirect(Route::_('index.php?option=com_jsports&view=game&layout=edit&id=' .$gameid . '&teamid=' . $teamid, false));
             
             return false;
         }
@@ -252,7 +252,7 @@ class GameController extends FormController
             // Redirect back to the edit screen.
             $this->setMessage(Text::sprintf('COM_JSPORTS_GAME_SAVE_FAILED', $model->getError()), 'warning');
             $this->setRedirect(
-                Route::_('index.php?option=com_jsports&view=game&layout=edit&id=' . $data['teamid']
+                Route::_('index.php?option=com_jsports&view=game&layout=edit&id=' . $gameid . '&teamid=' . $data['teamid']
                     , false));
             
             return false;

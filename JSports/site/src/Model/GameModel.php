@@ -48,9 +48,9 @@ class GameModel extends FormModel
     protected function populateState() {
         /** @var SiteApplication $app */
         $app = Factory::getContainer()->get(SiteApplication::class);
-	$this->setState('game.id', $app->getInput()->getInt('id'));
-	$this->setState('game.teamid', $app->getInput()->getInt('teamid'));
-	$this->setState('game.programid', $app->getInput()->getInt('programid'));
+    	$this->setState('game.id', $app->getInput()->getInt('id'));
+    	$this->setState('game.teamid', $app->getInput()->getInt('teamid'));
+    	$this->setState('game.programid', $app->getInput()->getInt('programid'));
 
     }
     
@@ -70,6 +70,13 @@ class GameModel extends FormModel
         if ($data['teamid'] == $data['opponentid']) {
             $this->setError(Text::_('COM_JSPORTS_ERR_OPPONENT_SAME'));
             return false;
+        }
+        
+        if ($data['leaguegame']) {
+            if (!$data['opponentid']) {
+                $this->setError('Missing opponent');
+                return false;
+            }
         }
         return parent::validate($form, $data, $group = null);
     }
@@ -163,24 +170,41 @@ class GameModel extends FormModel
     	$datetime = date_create()->format('Y-m-d H:i:s');
     	$table->dateupdated = $datetime;
     	   	
-    	if ($data['homeindicator']) {
-    	    $hometeam = TeamService::getItem($data['teamid']);
-    	    $awayteam = TeamService::getItem($data['opponentid']);
-    	    $table->hometeamid = $data['teamid'];
-    	    $table->hometeamname = $hometeam->name;
-    	    $table->awayteamid = $data['opponentid'];
-    	    $table->awayteamname = $awayteam->name;
+    	if ($data['leaguegame']) {
+        	if ($data['homeindicator']) {
+        	    $hometeam = TeamService::getItem($data['teamid']);
+        	    $awayteam = TeamService::getItem($data['opponentid']);
+        	    $table->hometeamid = $data['teamid'];
+        	    $table->hometeamname = $hometeam->name;
+        	    $table->awayteamid = $data['opponentid'];
+        	    $table->awayteamname = $awayteam->name;
+        	} else {
+        	    $hometeam = TeamService::getItem($data['opponentid']);
+        	    $awayteam = TeamService::getItem($data['teamid']);
+        	    $table->hometeamid = $hometeam->id;
+        	    $table->hometeamname = $hometeam->name;
+        	    $table->awayteamid = $awayteam->id;
+        	    $table->awayteamname = $awayteam->name;
+        	}
+        	$table->name = $awayteam->name . " @ " . $hometeam->name;
     	} else {
-    	    $hometeam = TeamService::getItem($data['opponentid']);
-    	    $awayteam = TeamService::getItem($data['teamid']);
-    	    $table->hometeamid = $hometeam->id;
-    	    $table->hometeamname = $hometeam->name;
-    	    $table->awayteamid = $awayteam->id;
-    	    $table->awayteamname = $awayteam->name;
+    	    if ($data['homeindicator']) {
+    	        $hometeam = TeamService::getItem($data['teamid']);
+    	        $table->hometeamid = $data['teamid'];
+    	        $table->hometeamname = $hometeam->name;
+    	        $table->awayteamid = 0;
+    	        $table->awayteamname = $data['nonleagueteam'];
+    	    } else {
+    	        $awayteam = TeamService::getItem($data['teamid']);
+    	        $table->hometeamid = 0;
+    	        $table->hometeamname = $data['nonleagueteam'];
+    	        $table->awayteamid = $awayteam->id;
+    	        $table->awayteamname = $awayteam->name;
+    	    }
+    	    $table->name = $table->awayteamname . " @ " . $table->hometeamname;
     	}
-    	
     	  	
-    	$table->name = $awayteam->name . " @ " . $hometeam->name;
+    	//$table->name = $awayteam->name . " @ " . $hometeam->name;
     	
     	$table->check();
 	          
