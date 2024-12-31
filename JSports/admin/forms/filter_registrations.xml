@@ -58,7 +58,7 @@
 			<option value="a.teamname ASC">COM_JSPORTS_TEAMNAME_ASC</option>
 			<option value="a.teamname DESC">COM_JSPORTS_TEAMNAME_DESC</option>
  			<option value="a.name ASC">COM_JSPORTS_NAME_ASC</option>  
-	  		<option value="a.name DESC">COM_JSPORTS_NAME_DSC</option> 
+	  		<option value="a.name DESC">COM_JSPORTS_NAME_DESC</option> 
 		</field>
 
 		<field
