@@ -8,7 +8,7 @@
 			default="0" class="readonly" readonly="true" />
 
 		<field name="programid" type="sql" label="COM_JSPORTS_PROGRAM"
-			query="SELECT id, name FROM #__jsports_programs"
+			query="SELECT id, name FROM #__jsports_programs where status in ('A','P')"
 			key_field="id" value_field="name" header="-Select Program-" />
 
 		<field name="name" type="text" label="COM_JSPORTS_NAME"
