@@ -28,22 +28,9 @@ $user      = Factory::getUser();
 
 ?>
 <form action="<?php echo Route::_('index.php?option=com_jsports&view=programsetup'); ?>" method="post" name="adminForm" id="adminForm">
-	
-		<div class="selection-criteria row" style="display: flex; flex-direction: row; ">
-    	
-    		<?php echo $this->form->renderField('programid'); ?>
-    
-        		<div class="w-25">
-       			<?php echo $this->filterForm->renderField('programid','filter'); ?>	
-    		</div>
+	   
+	<?php echo LayoutHelper::render('joomla.searchtools.default', array('view' => $this)); ?>
     		
-    					
-    		<div class="w-25">
-       			<?php echo $this->filterForm->renderField('grouping','filter'); ?>	
-    		</div>
-    		
-		</div>
-	
 	<?php // echo LayoutHelper::render('joomla.searchtools.default', array('view' => $this)); ?>
 	
 	<?php if (empty($this->items)) : 
