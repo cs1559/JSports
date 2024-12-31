@@ -38,9 +38,6 @@ class GameController extends FormController
     public function display($cachable = false, $urlparams = [])
     {
         
-//        $params = ComponentHelper::getParams('com_jsports');
-//        $itemid = $params->get('itemid');
-
         parent::display($cachable = false, $urlparams = []);
     }
     
@@ -69,7 +66,7 @@ class GameController extends FormController
         }
    
         if ($id == 0) {
-            $this->setMessage("Invalid ID value provied - Game DELETE failed",'error');
+            $this->setMessage(Text::_('COM_JSPORTS_GAME_INVALID_ID_DELETE_FAILED'), 'error');
             $this->setRedirect(Route::_('index.php?option=com_jsports&view=dashboard', false));
             return false;
         }
@@ -82,7 +79,7 @@ class GameController extends FormController
         $rUrl = 'index.php?option=com_jsports&view=schedules&teamid=' . 
                 $item->teamid . '&programid=' . $item->programid;
         if ($item->gamestatus === 'C') {
-            $this->setMessage("Completed Game CANNOT be deleted",'info');
+            $this->setMessage(Text::_('COM_JSPORTS_GAME_CANNOT_BE_DELETED'),'info');
             $redirectURL = $rUrl;
         } else {
             
@@ -90,10 +87,10 @@ class GameController extends FormController
                 $result = GameService::delete($id);
                 if ($result) {
                     $logger->info('Game ID: ' . $id. ' has been DELETED  ' . $item->gamedate . ' ' . $item->name . ' STATUS=' . $item->gamestatus);
-                    $this->setMessage("Game ITEM was successfully deleted",'info');
+                    $this->setMessage(Text::_('COM_JSPORTS_GAME_SUCCESSFULLY_DELETED'),'info');
                 } else {
                     $logger->error('Game ID: ' . $id. ' has NOT been deleted');
-                    $this->setMessage("Game was NOT deleted",'info');
+                    $this->setMessage(Text::_('COM_JSPORTS_GAME_NOT_DELETED'),'info');
                 }
                 $redirectURL = $rUrl;
                 
@@ -134,7 +131,7 @@ class GameController extends FormController
         }
         
         if ($id == 0) {
-            $this->setMessage("Invalid ID value provied - Game RESET failed",'error');
+            $this->setMessage(Text::_('COM_JSPORTS_GAME_INVALID_ID_RESET_FAILED'),'error');
             $this->setRedirect(Route::_('index.php?option=com_jsports&view=dashboard', false));
             return false;
         }
@@ -149,7 +146,7 @@ class GameController extends FormController
                 $result = GameService::reset($id);
                 if ($result) {
                     $logger->info('Game ID: ' . $id . ' status has been reset');
-                    $this->setMessage("Game status was successfully reset",'info');
+                    $this->setMessage(Text::_('COM_JSPORTS_GAME_RESET_SUCCESSFUL'),'info');
                 } else {
                     $this->setMessage("Game status was NOT reset",'info');
                 }
@@ -175,18 +172,12 @@ class GameController extends FormController
      *
      * @return  void|boolean
      *
-     * @since   1.6
-     * @throws  \Exception
      */
     public function save($key = null, $urlVar = null)
     {
                 
         // Check for request forgeries.
         $this->checkToken();
-        
-        /*
-         * @todo Need to validate the session has been authenticated
-         */
 
         $app    = $this->app;
         $model  = $this->getModel('Game', 'Site');
@@ -294,8 +285,6 @@ class GameController extends FormController
      * goes back to the team schedules page.
      *
      * @return  void
-     *
-     * @since   4.0.0
      */
     public function cancel($key = null)
     {
