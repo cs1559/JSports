@@ -105,7 +105,7 @@ $user      = Factory::getUser();
 
 					<th scope="row" class="has-context">
 						<a class="hasTooltip" href="<?php echo Route::_('index.php?option=com_jsports&task=registration.edit&id=' . $item->id); ?>">
-							<?php echo $editIcon; ?><?php echo $this->escape($item->teamname); ?>
+							<?php echo $this->escape($item->teamname); ?>
 						</a>
 					</th>
 					<td class="">
