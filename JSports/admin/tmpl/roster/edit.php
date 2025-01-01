@@ -22,12 +22,13 @@ $wa = $this->document->getWebAssetManager();
 $wa->getRegistry()->addExtensionRegistryFile('com_jsports');
 $wa->useScript('com_jsports.roster.script');
 
+/*
 if ($this->item->classification == "S") {
     ?><script>showStaffElements(); </script><?php
 } else {
     ?><script>hideStaffElements(); </script><?php
 }
-
+*/
 
 ?>
 

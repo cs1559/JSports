@@ -12,6 +12,12 @@
 		<field name="programid" type="hidden" label="COM_JSPORTS_PROGRAMID"
 			default="0" class="readonly" readonly="true" />
 
+		<field name="classification" type="list" label="COM_JSPORTS_CLASSIFICATION"
+			class="form-select-color-state" default="S" validate="options">
+				<option value="P">Player</option>
+				<option value="S">Staff</option>
+		</field>
+			
 		<field name="firstname" type="text"
 			label="COM_JSPORTS_FIRSTNAME" size="30" required="true" />
 
@@ -19,26 +25,24 @@
 			label="COM_JSPORTS_LASTNAME" size="40" required="true" />
 
 		<field name="playernumber" type="text"
-			label="COM_JSPORTS_PLAYERNUMBER" size="2" required="false" />
+			label="COM_JSPORTS_PLAYERNUMBER" size="2" required="false" 
+			showon="classification:P"/>
 
 		<field name="email" type="email"
-			label="COM_JSPORTS_EMAIL" size="40" required="false" />
-
-		<field name="classification" type="list" label="COM_JSPORTS_CLASSIFICATION"
-			class="form-select-color-state" default="P" validate="options">
-				<option value="P">Player</option>
-				<option value="S">Staff</option>
-			</field>
+			label="COM_JSPORTS_EMAIL" size="40" required="false" showon="classification:S" />
 
 		<field name="staffadmin" type="radio"
 			label="COM_JSPORTS_ADMINPRIVLEGES" class="btn-group btn-group-yesno" default="0"
+			showon="classification:'S'"
 			validate="options">
 			<option value="1">Yes</option>
 			<option value="0">No</option>
 		</field>
 
 		<field name="role" type="list" 	label="COM_JSPORTS_ROLE" 
-			class="form-select-color-state" default="Asst Coach" validate="options">
+			class="form-select-color-state" default="Asst Coach" 
+			showon="classification:S"
+			validate="options">
 			<option value="Head Coach">COM_JSPORTS_HEADCOACH</option>
 			<option value="Asst Coach">COM_JSPORTS_ASSTCOACH</option>
 			<option value="Team Manager">COM_JSPORTS_TEAM_MANAGER</option>
@@ -52,6 +56,7 @@
 			value_field="name" 
 			default="0"
 			header="-Select User -"
+			showon="classification:S"
 		/>
 		
 	</fieldset>
