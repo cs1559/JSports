@@ -122,7 +122,7 @@ class LogsModel extends ListModel
 	    if (!empty($username)) {
 	        $search = '%' . trim($username) . '%';
 	        $query->where($db->quoteName('a.username') . ' like :username');
-	        $query->bind(':username', $status, ParameterType::STRING);
+	        $query->bind(':username', $username, ParameterType::STRING);
 	    }
 
 	    // Filter by search in date.
