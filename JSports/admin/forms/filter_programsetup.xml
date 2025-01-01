@@ -18,19 +18,6 @@
 			onchange="this.form.submit();"
 			header="- Select Program -"
 		/>
-	
-		<field name="groupingxxx" type="sql"
-			query="SELECT a.code, a.name, p.id as programid FROM #__jsports_groups_items AS a, #__jsports_programs as p 
-			  		where a.code = p.groupingscode order by a.name ASC
-			  "
-			label="Group"
-			key_field="code" 
-			value_field="name" 
-			onchange="this.form.submit();"
-			header="- Select GroupZ -" 
-			sql_filter="programid" 
-		/>
-
 		
 		<field
 			name="grouping"
@@ -81,5 +68,6 @@
 			default="25"
 			onchange="this.form.submit();"
 		/>
+		
 	</fields>
 </form>
