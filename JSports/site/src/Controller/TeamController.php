@@ -18,7 +18,7 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Input\Input;
 use Joomla\CMS\Factory;
-
+use FP4P\Component\JSports\Site\Objects\Application as Myapp;
 use FP4P\Component\JSports\Site\Services\ProgramsService;
 use Joomla\CMS\Component\ComponentHelper;
 
@@ -60,7 +60,12 @@ class TeamController extends BaseController
         // Check for request forgeries.
         $this->checkToken();
 
+        $input = Factory::getApplication()->input;
+        $origowner     = $input->getInt("origowner");
+        
         $app    = $this->app;
+        
+        $logger = Myapp::getLogger();
         
         $model  = $this->getModel('Team', 'Site');
         $user   = $this->app->getIdentity();
@@ -113,9 +118,18 @@ class TeamController extends BaseController
             
             return false;
         }
+
+        $data['updatedby'] = $user->username;
+        $data['dateupdated'] = date("Y-m-d H:i:s");
         
         // Attempt to save the data.
         $return = $model->save($data);
+        
+        $logger->info('TeamID: ' . $teamid. ' Team profile page UPDATED');
+        
+        if ($origowner != $requestData['ownerid']) {
+            $logger->info('TeamID: ' . $teamid. ' Team profile has been changed from UID ' . $origowner . ' to UID ' . $requestData['ownerid']);
+        }
         
         // Check for errors.
         if ($return === false) {

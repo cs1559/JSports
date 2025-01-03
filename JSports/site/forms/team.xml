@@ -43,6 +43,8 @@
 			header="-Select User -"
 		/>
 
+		<field name="origowner" type="hidden" required="false" />
+	
 		<field name="websiteurl" type="URL" label="COM_JSPORTS_WEBSITEURL"
 			hint="Enter your team or organizations website URL"
 			default="" />

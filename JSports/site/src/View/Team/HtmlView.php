@@ -62,6 +62,8 @@ class HtmlView extends BaseHtmlView
        
         $this->form = $this->getModel()->getForm($this->item,true);
         $this->form->bind($this->item);
+               
+        $user = Factory::getUser();
 
         $mod = $this->getModel();
 
@@ -110,6 +112,7 @@ class HtmlView extends BaseHtmlView
             $this->teamlogo = $defaultlogo;
         }
 
+        
         if (!SecurityService::isCoach()) {
             $this->data->contactphone = 'Unavailable';
             $this->data->contactemail = 'Unavailable';

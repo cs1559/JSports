@@ -165,24 +165,24 @@ class TeamModel extends FormModel
         
         $team = TeamService::getTeamsTable();
 
-	$team->bind($data);
-	$team->check();
-
-	// Block of code to prevent an "incorrect integer value" own the ownerid field.
-	if (strlen($data["ownerid"]) < 1) {
-		$data["ownerid"] = 0;
-	}
-        
-        //@TODO Need to add code to catch any error that may exist.
-	if ($team->save($data)) {
-		return true;
-	} else {
-	    $errors = $team->getErrors();
-	    $this->setError($errors[0]);
-		$app = Factory::getApplication();
-		$app->enqueueMessage($errors[0],'error');
-		return false;
-	}
+    	$team->bind($data);
+    	$team->check();
+    
+    	// Block of code to prevent an "incorrect integer value" own the ownerid field.
+    	if (strlen($data["ownerid"]) < 1) {
+    		$data["ownerid"] = 0;
+    	}
+            
+            //@TODO Need to add code to catch any error that may exist.
+    	if ($team->save($data)) {
+    		return true;
+    	} else {
+    	    $errors = $team->getErrors();
+    	    $this->setError($errors[0]);
+    		$app = Factory::getApplication();
+    		$app->enqueueMessage($errors[0],'error');
+    		return false;
+    	}
 
     	return true;
     }
