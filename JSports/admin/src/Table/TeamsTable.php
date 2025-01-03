@@ -27,8 +27,12 @@ class TeamsTable extends Table
     function check() {
         
         // Apply the FilterOutput stringURLUnicodeSlug function
-        if (strlen($this->alias)<1) {
+        if (is_null($this->alias)) {
             $this->alias = OutputFilter::stringURLUnicodeSlug($this->name);
+        } else {
+            if (strlen($this->alias)<1) {
+                $this->alias = OutputFilter::stringURLUnicodeSlug($this->name);
+            }
         }
         return parent::check();
     }
