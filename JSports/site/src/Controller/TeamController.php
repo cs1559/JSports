@@ -128,7 +128,8 @@ class TeamController extends BaseController
         $logger->info('TeamID: ' . $teamid. ' Team profile page UPDATED');
         
         if ($origowner != $requestData['ownerid']) {
-            $logger->info('TeamID: ' . $teamid. ' Team profile has been changed from UID ' . $origowner . ' to UID ' . $requestData['ownerid']);
+            $myapp = myApp::getInstance();
+            $myapp->triggerEvent('onAfterProfileOwnerUpdate', ['data' => $data, 'origowner' => $origowner, 'requestData' => $requestData]);
         }
         
         // Check for errors.
