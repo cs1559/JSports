@@ -35,7 +35,7 @@ HTMLHelper::_('behavior.keepalive');
 		<?php echo $this->form->renderField('id'); ?>
 		<?php echo $this->form->renderField('ownerid'); ?>
 		
-	<input type="hidden" name="origowner" value="<?php echo $this->item->ownerid; ?>
+	<input type="hidden" name="origowner" value="<?php echo $this->item->ownerid; ?>">
 	<input type="hidden" name="task" value="">
 	<?php echo HTMLHelper::_('form.token'); ?>
 	
