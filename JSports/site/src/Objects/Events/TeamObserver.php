@@ -49,8 +49,8 @@ class TeamObserver extends BaseObserver
             $fromuser = "NOT DEFINED";
         }
         
-        $logger->info('TeamID: ' . $data['ownerid']. ' Team profile ownership has changed from ' . $fromuser . ' (UID:' . $data['ownerid'] .
-                ') to ' . $touser . '(UID:' . $origowner . ')');
+        $logger->info('TeamID: ' . $data['ownerid']. ' Team profile ownership has changed from ' . $fromuser . ' (UID:' . $origowner .
+            ') to ' . $touser . '(UID:' . $data['ownerid'] . ')');
         
     }
     
