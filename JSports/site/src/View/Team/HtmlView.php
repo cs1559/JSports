@@ -21,6 +21,7 @@ use Joomla\CMS\CMSObject;
 use Joomla\CMS\Component\ComponentHelper;
 use FP4P\Component\JSports\Administrator\Helpers\Html;
 use FP4P\Component\JSports\Administrator\Services\SecurityService;
+use FP4P\Component\JSports\Site\Services\TeamService;
 
 /**
  * HTML Team View
@@ -72,6 +73,10 @@ class HtmlView extends BaseHtmlView
             'programid' => $mod->recentprogram->id
         );
         $this->canEdit = SecurityService::canEditTeam($context);
+
+        if (!$this->canEdit) {
+            TeamService::hit($this->data->id);
+        }
         
         $this->standings = $mod->standings;
         

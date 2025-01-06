@@ -226,9 +226,22 @@ select distinct email from (
         }
 
         return $emails;
+       
+    }
+    
+    public static function hit($teamid) {
         
+        $db = Factory::getDbo();
+        $query = $db->getQuery(true);
         
-                                    
+        $conditions = array($db->quoteName('id') . ' = ' .$teamid);
+        
+        $query->update($db->quoteName('#__jsports_teams'))
+            ->set($db->quoteName('hits') . ' = ' . $db->quoteName('hits') . ' + 1 ')
+	        ->where($conditions);
+	        $db->setQuery($query);
+	        $db->execute();
+        
     }
     
 }
