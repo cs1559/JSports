@@ -47,6 +47,7 @@ class HtmlView extends BaseHtmlView
     protected $standings;
     protected $canSeeRoster;
     protected $divisionname;
+    protected $active;
     
     /**
      * Execute and display a template script.
@@ -78,6 +79,7 @@ class HtmlView extends BaseHtmlView
             TeamService::hit($this->data->id);
         }
         
+        $this->active = TeamService::isActive($this->data->id);
         $this->standings = $mod->standings;
         
         // Retrieve the directory for this teams logo

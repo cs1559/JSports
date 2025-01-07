@@ -36,6 +36,8 @@ $wa->useStyle('com_jsports.teamprofile.style');
 $params = ComponentHelper::getParams('com_jsports');
 $showlinks = $params->get('showpagelinks');
 $showstandings = $params->get('showstandings');
+$showlocation = $params->get('showlocation');
+$showhits = $params->get('showhits');
 
 $document->setTitle(Text::_('COM_JSPORTS_TEAMPROFILE_PAGE_TITLE'));
 ?>
@@ -70,13 +72,15 @@ $document->setTitle(Text::_('COM_JSPORTS_TEAMPROFILE_PAGE_TITLE'));
 
 			<div class="teamprofile-section container">  <!--  LOGO/General Data -->
 				<div class="row">
-					<div class="teamprofile-logo col-lg-6 text-center">
+					<div class="teamprofile-logo col-lg-3 text-center">
 						<img class="img-responsive" src="<?php echo $this->teamlogo;?>" />
 					</div>
-					<div class="teamprofile-info col-lg-6">
-						<strong>Team ID:</strong><?php echo $this->data->id; ?><br /> <strong>Contact
-							Name: </strong><?php echo $this->data->contactname; ?><br /> <strong>City/State:
-						</strong><?php echo $this->data->city . ", " . $this->data->state; ?><br />
+					<div class="teamprofile-info col-lg-5">
+						<strong>Team ID:</strong><?php echo $this->data->id; ?><br /> 
+						<strong>Contact Name: </strong><?php echo $this->data->contactname; ?><br /> 
+						<?php if ($showlocation) {?>
+							<strong>City/State:</strong><?php echo $this->data->city . ", " . $this->data->state; ?><br />
+						<?php } ?>
 						<strong>Contact Phone:</strong><?php echo $this->data->contactphone; ?><br />
 						<strong>Contact Email: </strong><?php echo $this->data->contactemail; ?><br />
 						<strong>Website: </strong>
@@ -89,8 +93,20 @@ $document->setTitle(Text::_('COM_JSPORTS_TEAMPROFILE_PAGE_TITLE'));
 						    echo 'N/A';
 						}
 					   ?><br />
-						      
+						      					
+					</div>
+					
+					<div class="teamprofile-info col-lg-4">
 						<strong>Most Recent Program: </strong><?php echo $this->recentprogram->name; ?><br />
+						<strong>Status:</strong><?php 
+						if ($this->active) {
+						    echo Text::_('COM_JSPORTS_ACTIVE');
+						} else {
+						    echo Text::_('COM_JSPORTS_NONACTIVE');  
+						}?> <br/>
+						<?php if ($showhits) { ?>
+							<strong>Hits:</strong><?php echo $this->data->hits; ?><br />
+						<?php } ?>
 					</div>
 				</div>
 			</div>   <!--  end of section -->
@@ -314,25 +330,13 @@ $document->setTitle(Text::_('COM_JSPORTS_TEAMPROFILE_PAGE_TITLE'));
 			</div>   <!--  end of section -->
 
 
-			<div class="teamprofile-section">						
-
-						 <input type="hidden" name="task" value="">
-						<?php echo HTMLHelper::_('form.token'); ?>
-
-							<div class="control-group">
-									<div class="controls">
-										<button type="submit" class="btn btn-primary" name="view"
-											value="Dashboard" formnovalidate>
-											<span class="icon-times" aria-ahidden="true"></span>
-            							<?php echo Text::_('COM_JSPORTS_DASHBOARD'); ?>
-        </button>
-										<input type="hidden" name="option" value="com_jsports"> 
-									</div>  <!--  end of controls -->
-								</div>  <!--  end of control group -->
+			<div class="teamprofile-section">									
 			</div>	  <!--  end of section -->
 	
 	
 	
+		 <input type="hidden" name="task" value="">
+			<?php echo HTMLHelper::_('form.token'); ?>
 
 		
 	</form>

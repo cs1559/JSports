@@ -229,6 +229,11 @@ select distinct email from (
        
     }
     
+    /**
+     * This function updates the team profile HIT counter (# of views).
+     * 
+     * @param int $teamid
+     */
     public static function hit($teamid) {
         
         $db = Factory::getDbo();
@@ -241,6 +246,33 @@ select distinct email from (
 	        ->where($conditions);
 	        $db->setQuery($query);
 	        $db->execute();
+        
+    }
+    
+    /**
+     * This function determines if the team is an ACTIVE team within the league.  ACTIVE status
+     * is determined if their team ID is are defined in an ACTIVE program.
+     * 
+     * @param int $teamid
+     * @return int (0 = false, >1 = true)
+     */
+    public static function isActive($teamid) {
+        
+        $db = Factory::getDbo();
+        $query = $db->getQuery(true);
+        
+        $sql = "
+            SELECT * FROM `#__jsports_teams` 
+            WHERE id in (
+                select teamid from #__jsports_map m, #__jsports_programs p 
+                where m.programid = p.id and teamid = " . $teamid . " and p.status = 'A' 
+                    and m.published = 1
+        )";
+        
+        $query->setQuery($sql);
+        $db->setQuery($query);
+        $rows = $db->loadObjectList();
+        return count($rows);
         
     }
     
