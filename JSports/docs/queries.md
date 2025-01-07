@@ -1,3 +1,30 @@
+# Identify if a team is ACTIVE
+SELECT * FROM `jos2823_jsports_teams` 
+WHERE id in (select teamid from jos2823_jsports_map m, jos2823_jsports_programs p where m.programid = p.id and p.status = 'A' and m.published = 1);
+
+# Locate players who may be on multiple rosters
+select d.name, d.agegroup, t.name, lastname, firstname,  soundex(concat(lastname,firstname)) as soundex 
+from xkrji_jsports_rosters r, xkrji_jsports_teams t, xkrji_jsports_map m, xkrji_jsports_divisions d
+where m.programid = 33
+and r.programid = m.programid
+and r.teamid = t.id
+and t.id = m.teamid
+and m.divisionid = d.id
+order by lastname, firstname;
+
+
+
+select d.agegroup,lastname, firstname, d.name,  t.name,   soundex(concat(lastname,firstname)) as soundex, count(soundex(concat(lastname,firstname))) as cnt1
+from jos2823_jsports_rosters r, jos2823_jsports_teams t, jos2823_jsports_map m, jos2823_jsports_divisions d
+where m.programid = 35
+and r.programid = m.programid
+and r.teamid = t.id
+and t.id = m.teamid
+and m.divisionid = d.id
+group by d.agegroup, soundex
+having cnt1 > 1
+order by d.agegroup, soundex, lastname, firstname;
+
 
 # Query to get coaches/admins emails for updating newsletter list.
 SELECT a.* FROM `jos2823_jsports_rosters` a, jos2823_jsports_programs b
