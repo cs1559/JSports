@@ -171,6 +171,23 @@
 	</fieldset>
 	
 	<fieldset name="teamproile" description="COM_JSPORTS_TEAMPROFILE_DESC" label="COM_JSPORTS_TEAMPROFILE_LABEL">
+	
+		<field name="showlocation" type="radio" default="0"
+			label="COM_JSPORTS_SHOWLOCATION_ENABLED"
+			description="COM_JSPORTS_SHOWLOCATION_ENABLED_DESC"
+			layout="joomla.form.field.radio.switcher">
+			<option value="0">No</option>
+			<option value="1">Yes</option>
+		</field>
+
+		<field name="showhits" type="radio" default="0"
+			label="COM_JSPORTS_SHOWHITS_ENABLED"
+			description="COM_JSPORTS_SHOWHITS_ENABLED_DESC"
+			layout="joomla.form.field.radio.switcher">
+			<option value="0">No</option>
+			<option value="1">Yes</option>
+		</field>
+				
 		<field name="showpagelinks" type="radio" default="0"
 			label="COM_JSPORTS_SHOWPAGELINKS_ENABLED"
 			description="COM_JSPORTS_SHOWPAGELINKS_ENABLED_DESC"
