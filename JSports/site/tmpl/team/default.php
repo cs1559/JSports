@@ -76,14 +76,14 @@ $document->setTitle(Text::_('COM_JSPORTS_TEAMPROFILE_PAGE_TITLE'));
 						<img class="img-responsive" src="<?php echo $this->teamlogo;?>" />
 					</div>
 					<div class="teamprofile-info col-lg-5">
-						<strong>Team ID:</strong><?php echo $this->data->id; ?><br /> 
-						<strong>Contact Name: </strong><?php echo $this->data->contactname; ?><br /> 
+						<strong>Team ID:</strong>&nbsp;<?php echo $this->data->id; ?><br /> 
+						<strong>Contact Name: </strong>&nbsp;<?php echo $this->data->contactname; ?><br /> 
 						<?php if ($showlocation) {?>
-							<strong>City/State:</strong><?php echo $this->data->city . ", " . $this->data->state; ?><br />
+							<strong>City/State:</strong>&nbsp;<?php echo $this->data->city . ", " . $this->data->state; ?><br />
 						<?php } ?>
-						<strong>Contact Phone:</strong><?php echo $this->data->contactphone; ?><br />
-						<strong>Contact Email: </strong><?php echo $this->data->contactemail; ?><br />
-						<strong>Website: </strong>
+						<strong>Contact Phone:</strong>&nbsp;<?php echo $this->data->contactphone; ?><br />
+						<strong>Contact Email: </strong>&nbsp;<?php echo $this->data->contactemail; ?><br />
+						<strong>Website: </strong>&nbsp;
 						<?php
 						if (!is_null($this->data->websiteurl)) {
     						if (strlen($this->data->websiteurl) > 5) {
@@ -97,15 +97,15 @@ $document->setTitle(Text::_('COM_JSPORTS_TEAMPROFILE_PAGE_TITLE'));
 					</div>
 					
 					<div class="teamprofile-info col-lg-4">
-						<strong>Most Recent Program: </strong><?php echo $this->recentprogram->name; ?><br />
-						<strong>Status:</strong><?php 
+						<strong>Most Recent Program: </strong>&nbsp;<?php echo $this->recentprogram->name; ?><br />
+						<strong>Status:</strong>&nbsp;<?php 
 						if ($this->active) {
 						    echo Text::_('COM_JSPORTS_ACTIVE');
 						} else {
 						    echo Text::_('COM_JSPORTS_NONACTIVE');  
 						}?> <br/>
 						<?php if ($showhits) { ?>
-							<strong>Hits:</strong><?php echo $this->data->hits; ?><br />
+							<strong>Hits:</strong>&nbsp;<?php echo $this->data->hits; ?><br />
 						<?php } ?>
 					</div>
 				</div>
