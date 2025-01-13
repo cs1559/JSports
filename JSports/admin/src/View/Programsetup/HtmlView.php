@@ -128,10 +128,11 @@ class HtmlView extends BaseHtmlView
                 $childBar->trash('programsetup.trash')->listCheck(true);
             }
         }
-        
-        ToolbarHelper::custom('programsetup.assigndivisions', 'save', 'save', 'Save Assignments', false, 'adminForm');
 
-//         ToolbarHelper::custom('programsetup.programsList', 'list', 'list', 'Program List', false, 'adminForm');
+        // If there are no items then do not display the 'Save Assignments' button.
+        iF (count($this->items)) {        
+            ToolbarHelper::custom('programsetup.assigndivisions', 'save', 'save', 'Save Assignments', false, 'adminForm');
+        }
         
         $toolbar->standardButton('dashboard')
         ->icon('fa fa-home')
