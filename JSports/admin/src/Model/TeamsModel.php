@@ -39,7 +39,6 @@ class TeamsModel extends ListModel
 			$config['filter_fields'] = array(
 				'name', 'a.name',
 			    'city', 'a.city',
-// 			    'lastplayed', 'a.lastplayed',
 			    'contactname', 'a.contactname',
 			    'ownerid', 'a.ownerid',
 			);
@@ -85,8 +84,8 @@ class TeamsModel extends ListModel
 		$programid = $this->getUserStateFromRequest($this->context . '.filter.programid', 'filter_programid', '');
 		$this->setState('filter.programid', $programid);
 		
-		$lastplayed = $this->getUserStateFromRequest($this->context . '.filter.lastplayed', 'filter_lastplayed', '');
-		$this->setState('filter.lastplayed', $lastplayed);
+// 		$lastplayed = $this->getUserStateFromRequest($this->context . '.filter.lastplayed', 'filter_lastplayed', '');
+// 		$this->setState('filter.lastplayed', $lastplayed);
 		
 		// List state information.
 		parent::populateState($ordering, $direction);
