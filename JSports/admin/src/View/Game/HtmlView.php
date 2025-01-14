@@ -20,6 +20,7 @@ use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
+use FP4P\Component\JSports\Site\Services\ProgramsService;
 
 /**
  * View to edit an article.
@@ -56,6 +57,8 @@ class HtmlView extends BaseHtmlView
      */
     protected $canDo;
     
+    protected $program;
+    
     /**
      * Execute and display a template script.
      *
@@ -77,6 +80,8 @@ class HtmlView extends BaseHtmlView
             throw new GenericDataException(implode("\n", $errors), 500);
         }
         
+        $this->program = ProgramsService::getItem($this->item->programid);
+        
         $this->addToolbar();
         
         return parent::display($tpl);
@@ -95,6 +100,8 @@ class HtmlView extends BaseHtmlView
         Factory::getApplication()->input->set('hidemainmenu', true);
         $isNew      = ($this->item->id == 0);
         
+        $pgmstat = $this->program->status;
+        
         $toolbar = Toolbar::getInstance();
         
         ToolbarHelper::title(
@@ -102,15 +109,18 @@ class HtmlView extends BaseHtmlView
             );
         
         $canDo = ContentHelper::getActions('com_jsports');
-        if ($canDo->get('core.create'))
-        {
-            $toolbar->apply('game.apply');
-            $toolbar->save('game.save');
-            $toolbar->save2new('game.save2new');
-//             ToolbarHelper::custom('game.savenew', 'save', 'save', 'Save / New', false, 'game-form');
-        }
-        if ($canDo->get('core.delete')) {
-            $toolbar->delete('game.delete');
+        
+        if ($pgmstat != 'C') {
+            if ($canDo->get('core.create'))
+            {
+                $toolbar->apply('game.apply');
+                $toolbar->save('game.save');
+                $toolbar->save2new('game.save2new');
+    //             ToolbarHelper::custom('game.savenew', 'save', 'save', 'Save / New', false, 'game-form');
+            }
+            if ($canDo->get('core.delete')) {
+                $toolbar->delete('game.delete');
+            }
         }
         if ($isNew)
         {
