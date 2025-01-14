@@ -9,7 +9,9 @@
 
 		<field name="programid" type="sql" label="COM_JSPORTS_PROGRAM"
 			query="SELECT id, name FROM #__jsports_programs where status in ('A','P')"
-			key_field="id" value_field="name" header="-Select Program-" />
+			key_field="id" value_field="name" header="-Select Program-" 
+			onchange="refreshGroupList();"
+			/>
 
 		<field name="name" type="text" label="COM_JSPORTS_NAME"
 			size="40" required="true" />
@@ -24,6 +26,7 @@
 			size="5" />
 
 		<field name="email" type="emails" label="COM_JSPORTS_EMAIL"
+			required="true"
 			size="75" />
 
 		<field name="phone" type="telephone"
