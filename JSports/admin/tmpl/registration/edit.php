@@ -17,11 +17,18 @@ use Joomla\CMS\Router\Route;
 HTMLHelper::_('behavior.formvalidator');
 HTMLHelper::_('behavior.keepalive');
 
+$wa = $this->document->getWebAssetManager();
+$wa->getRegistry()->addExtensionRegistryFile('com_jsports');
+$wa->useScript('com_jsports.registration.script');
+$wa->useStyle('com_jsports.jsports.style');
+
+
 ?>
 
 <form action="<?php echo Route::_('index.php?option=com_jsports&view=registration&layout=edit&id=' . (int) $this->item->id); ?>"
 	method="post" name="adminForm" id="registration-form" class="form-validate form-horizontal">
 
+	<div hidden id="spinner"></div>
 	<div class="row">
 		<div class="col-md-9">
 			<?php echo $this->form->renderField('teamname'); ?>
@@ -40,7 +47,7 @@ HTMLHelper::_('behavior.keepalive');
 				<div class="row">
 					<div class="col-md-8">
 						<?php echo $this->form->renderField('programid'); ?>
-						<?php echo $this->form->renderField('teamname'); ?>
+						<?php //echo $this->form->renderField('teamname'); ?>
 						<?php echo $this->form->renderField('name'); ?>
 						<?php echo $this->form->renderField('address'); ?>
 						<?php echo $this->form->renderField('city'); ?>
