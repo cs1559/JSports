@@ -82,6 +82,16 @@
 				"defer" : true
 			}
 		}, {
+			"name" : "com_jsports.registration.script",
+			"type" : "script",
+			"uri" : "com_jsports/registration.js",
+			"dependencies" : [
+				"jquery"
+			],
+			"attributes" : {
+				"defer" : true
+			}
+		}, {
 			"name" : "com_jsports.jsports.script",
 			"type" : "script",
 			"uri" : "com_jsports/jsports.js",
@@ -92,5 +102,6 @@
 				"defer" : true
 			}
 		}
-	]
+	],
+	"description" : "JSports Assets"
 }
