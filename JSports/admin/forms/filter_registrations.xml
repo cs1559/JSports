@@ -13,6 +13,7 @@
 
 		<field name="id" type="sql" 
 			label="League"
+			default="0"
 			query="SELECT id, name, groupingscode FROM #__jsports_programs where published in (0,1) order by name desc"
 			key_field="id"
 			value_field="name" 
@@ -31,6 +32,8 @@
 			onchange="this.form.submit();"
 			sql_filter="id"
 			header="- Select Group -"
+			showon="id!:0"
+			
 		/>
 		
 		<field
