@@ -147,7 +147,7 @@ class ProgramsModel extends ListModel
 	    }
 	    elseif ($published === '')
 	    {
-	        $query->whereIn($db->quoteName('a.published'), array(0, 1));
+	        $query->whereIn($db->quoteName('a.published'), array(0, 1, -1, 2));
 	    }
 	    
 	    // Filter by search in date.
