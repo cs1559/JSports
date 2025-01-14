@@ -122,7 +122,7 @@ $document->setTitle(Text::_('COM_JSPORTS_TEAMPROFILE_PAGE_TITLE'));
 <?php } ?>
     		
 			<div class="teamprofile-section container">  <!--  Team Staff Data -->
-				<h3 id="teamstaff">Team Staff</h3>
+				<h3 id="teamstaff"><?php echo Text::_('COM_JSPORTS_PROFILE_STAFF_HEADING'); ?></h3>
 				<hr class="hr-bar">
 				
 				<?php if (count($this->rosterstaff) > 0) { ?>
@@ -156,7 +156,7 @@ $document->setTitle(Text::_('COM_JSPORTS_TEAMPROFILE_PAGE_TITLE'));
 <?php if ($showstandings) { ?>
 
 			<div class="teamprofile-section container">  <!--  Divisional Standings -->
-				<h3 id="divisionstandings">Division Standings (<?php echo $this->divisionname; ?>)</h3>
+				<h3 id="divisionstandings"><?php echo Text::_('COM_JSPORTS_PROFILE_STANDINGS_HEADING'); ?>&nbsp; (<?php echo $this->divisionname; ?>)</h3>
 				<hr class="hr-bar">
 				
 				<?php if (count($this->standings) > 0) { ?>
@@ -203,7 +203,7 @@ $document->setTitle(Text::_('COM_JSPORTS_TEAMPROFILE_PAGE_TITLE'));
 
 <?php } ?>
 			<div class="teamprofile-section container">
-					<h3 id="teamstats">Team Statistics</h3>
+					<h3 id="teamstats"><?php echo Text::_('COM_JSPORTS_PROFILE_STATISTICS_HEADING'); ?></h3>
 					<hr class="hr-bar">
 						<div class="teamprofile-table-wrapper">
 								<table class="table">
@@ -260,7 +260,7 @@ $document->setTitle(Text::_('COM_JSPORTS_TEAMPROFILE_PAGE_TITLE'));
 											<th scope="col">W/L</th>
 											<th scope="col">Away</th>
 											<th scope="col">Home</th>
-											<th scope="col">Status</th>
+											<th scope="col">Status*</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -284,12 +284,14 @@ $document->setTitle(Text::_('COM_JSPORTS_TEAMPROFILE_PAGE_TITLE'));
                             	<?php } ?>
 									</tbody>
 								</table>
+								<span class="game-legend"><?php echo Text::_('COM_JSPORTS_GAME_LEGEND'); ?></span>
+								<br/>
 						</div>
 			</div>  <!--  end of section  -->
 
 			<!-- ROSTER SECTION -->
 			<div class="teamprofile-section container">  <!--  Team Staff Data -->
-				<h3 id="roster">Team Roster</h3>
+				<h3 id="roster"><?php echo Text::_('COM_JSPORTS_PROFILE_ROSTER_HEADING'); ?></h3>
 				<hr class="hr-bar">
 				
 				<?php 
