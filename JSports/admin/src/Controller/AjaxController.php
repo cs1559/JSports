@@ -18,6 +18,7 @@ use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Services\DivisionService;
 use FP4P\Component\JSports\Site\Services\TeamService;
+use FP4P\Component\JSports\Site\Services\ProgramsService;
    
 /**
  * The AjaxController supports a series of functions used in AJAX calls by the front-end side of the component 
@@ -63,6 +64,25 @@ class AjaxController extends BaseController
         foreach ($teams as $team) {
             $options = $options . "<option value='" . $team['teamid'] . "'>" . 
                 $team['teamname'].' (' .$team['contactname'].')' . "</option>";
+        }
+        echo $options;
+    }
+    
+    /**
+     * This function is called by jQuery ajax calls to populate the options for a GROUP
+     * drop down list based on a selected Program id .
+     */
+    public function buildGroupList() {
+        
+        $input = Factory::getApplication()->input;
+        $programid     = $input->getInt("programid");
+        
+        $groups = ProgramsService::getProgramGroups($programid);
+        
+        $options  = "<option value=''>-- Select Group -- </option>";
+        foreach ($groups as $group) {
+            $options = $options . "<option value='" . $group['code'] . "'>" .
+                $group['name'] . "</option>";
         }
         echo $options;
     }
