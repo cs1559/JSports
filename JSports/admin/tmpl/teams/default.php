@@ -20,26 +20,17 @@ use Joomla\CMS\Factory;
 $listOrder = $this->escape($this->state->get('list.ordering'));
 $listDirn  = $this->escape($this->state->get('list.direction'));
 
-/*
 $states = array (
 		'0' => Text::_('JUNPUBLISHED'),
 		'1' => Text::_('JPUBLISHED'),
 		'2' => Text::_('JARCHIVED'),
 		'-2' => Text::_('JTRASHED')
-		
-
 );
-*/
-
 
 $editIcon = '<span class="fa fa-pen-square me-2" aria-hidden="true"></span>';
 
 $clientId  = (int) $this->state->get('client_id', 0);
 $user      = Factory::getUser();
-// $canCheckin = $user->authorise('core.manage', 'com_checkin') || $item->checked_out == $user->get('id') || is_null($item->checked_out);
-//$canChange  = $user->authorise('core.edit.state', 'com_modules.module.' . $item->id) && $canCheckin;
-
-
 
 ?>
 <form action="<?php echo Route::_('index.php?option=com_jsports&view=teams'); ?>" method="post" name="adminForm" id="adminForm">
