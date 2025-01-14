@@ -2,7 +2,7 @@
 /**
  * JSports Component for Joomla! 4.x
  *
- * @version     0.0.1
+ * @version     1.0.0
  * @package     JSports
  * @subpackage  Schedules.Site
  * @category    Templates
@@ -95,7 +95,7 @@ $document->setTitle(Text::_('COM_JSPORTS_TEAMSCHEDULE_PAGE_TITLE'));
 						<?php echo Text::_('COM_JSPORTS_TIME'); ?>
 					</th>				
 					<th scope="col" class="w-15">
-						<?php echo Text::_('COM_JSPORTS_STATUS'); ?>
+						<?php echo Text::_('COM_JSPORTS_STATUS'); ?>*
 					</th>				
 					
 					<th scope="col" class="w-5 d-none d-md-table-cell">
@@ -161,7 +161,8 @@ $document->setTitle(Text::_('COM_JSPORTS_TEAMSCHEDULE_PAGE_TITLE'));
 		<?php endforeach; ?>
 			</tbody>
 		</table>
-
+		<span class="game-legend"><?php echo Text::_('COM_JSPORTS_GAME_LEGEND'); ?></span>
+		<br/>
 		<?php // load the pagination. ?>
 		<?php echo $this->pagination->getListFooter(); ?>
 		</div>
