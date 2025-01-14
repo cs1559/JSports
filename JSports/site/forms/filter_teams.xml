@@ -6,7 +6,7 @@
 		<field
 			name="search"
 			type="text"
-			label="Seach by Team Name"
+			label="Seach by Team/Contact Name"
 			description=""
 			hint=""
 		/>
