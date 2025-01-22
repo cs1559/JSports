@@ -11,11 +11,21 @@
  */
 namespace FP4P\Component\JSports\Site\Services;
 
+/**
+ * GameService - This is a service class that exposes certain functions that
+ * various components within the applicaiton related to GAMES.
+ *
+ * REVISION HISTORY:
+ * 2025-01-16  Cleaned up code and added inline comments.
+ *             Added code to trigger certain events.  
+ */
+
 use FP4P\Component\JSports\Administrator\Table\GamesTable;
 use FP4P\Component\JSports\Site\Objects\Application;
 use Joomla\Database\ParameterType;
 use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Objects\Scoring\ScoringEngine;
+use FP4P\Component\JSports\Site\Services\LogService;
 
 class GameService
 {
@@ -65,8 +75,12 @@ class GameService
         
         $rc = $table->delete();
         
-        $app->triggerEvent('onAfterGameDelete', ['data' => $table, 'returnCode'=> $rc]);
-        
+        if ($rc) {
+         //   LogService::info("Game " . $id . " - game [ " . $table->name . "] deleted ");
+            $app->triggerEvent('onAfterGameDelete', ['data' => $table, 'returnCode'=> $rc]);
+        } else {
+           // LogService::error("Error deleting game " . $id . " - game [ " . $table->name . "] ");
+        }
         return $rc;
     }
 
@@ -97,7 +111,9 @@ class GameService
         $table->bind($data);
         
         $table->store();
-        
+
+        $app->triggerEvent('onAfterGameReset', ['data' => $table]);
+        //LogService::info("Game " . $id . " [" . $table->name . "] - game reset ");
         return true;
     }
     
