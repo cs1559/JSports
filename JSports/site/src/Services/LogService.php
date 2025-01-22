@@ -12,17 +12,23 @@
 
 namespace FP4P\Component\JSports\Site\Services;
 
+/**
+ * The LogService class is a "helper" class that encapsulates the logging functions. The
+ * intention is to simplify both site/admin classes to write a log record if desired.
+ * @author cs155
+ *
+ */
+
+/**
+ * REVISION HISTORY:
+ * 2025-01-16  Cleaned up code and added inline comments.
+ */
+
 use FP4P\Component\JSports\Administrator\Table\DivisionsTable;
 use Joomla\Database\ParameterType;
 use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Objects\Application as Myapp;
 
-/**
- * The LogService class is a "helper" class that encapsulates the logging functions. The 
- * intention is to simplify both site/admin classes to write a log record if desired.
- * @author cs155
- *
- */
 class LogService
 {
     
