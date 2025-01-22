@@ -12,6 +12,13 @@
 
 namespace FP4P\Component\JSports\Site\Controller;
 
+/**
+ * REVISION HISTORY:
+ * 2025-01-15  Added log messages for SUCCESS/FAILURE of the upload process.  Also added logic
+ *             to address potential issue of the GD library isn't enabled on the PHP instance. It
+ *             was triggering an error on invoking the 'imagecreatetruecolor' function. 
+ */
+
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Router\Route;
@@ -22,14 +29,14 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\Folder;
 use FP4P\Component\JSports\Site\Services\TeamService;
-
+use FP4P\Component\JSports\Site\Services\LogService;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
 // phpcs:enable PSR1.Files.SideEffects
 
 /**
- * Controller object for an individiaul REGISTRATION entry
+ * Controller object for uploading a team logo
  *
  * @since  1.6
  */
@@ -94,6 +101,7 @@ class LogouploadController extends BaseController
 
         // 02-26-2024 - changed filename delimeter
         //$filename = $filepath . "\\" . $filename;
+        $origfile = $filename;
         $filename = $filepath . "/" . $filename;
         
         // DEfine what file types are allowed to be uploaded.
@@ -134,7 +142,11 @@ class LogouploadController extends BaseController
             list($width,$height)=getimagesize($logofile['tmp_name']);
             $newwidth=$rwidth; //600;//set file width to 600
             $newheight=($height/$width)*$rheight; // 600;//the height are set according to ratio
-            $tmp=imagecreatetruecolor($newwidth,$newheight);
+            if (function_exists('imagecreatetruecolor')) {
+                $tmp=imagecreatetruecolor($newwidth,$newheight);
+            } else {
+                $tmp=imagecreate($newwidth,$newheight);
+            }
             imagecopyresampled($tmp,$src,0,0,0,0,$newwidth,$newheight,$width,$height);//resample the image
             
             
@@ -170,10 +182,12 @@ class LogouploadController extends BaseController
         
             if ($rc) {
                 $this->setMessage(Text::_('COM_JSPORTS_TEAMLOGO_SAVE_SUCCESS'));
+                LogService::info("Team Logo has been updated - " . $origfile);
             } else {
                 $this->setMessage(Text::_('COM_JSPORTS_TEAMLOGO_SAVE_FAIL'));
+                LogService::error("Update of team logo has failed - " . $origfile);
             }
-            
+
             // Redirect to the edit screen.
             $this->setRedirect(Route::_('index.php?option=com_jsports&view=team&id=' . $teamid, false));
             
