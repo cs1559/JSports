@@ -10,15 +10,13 @@
  *
  */
 
-/**
- * ================================================================================
- * LEAGUES MAY NOT BE REQUIRED AND MAYBE REMOVED IN A LATER RELASE.  MANY OF THE
- * OPTIONS ASSOCIATED WITH A LEAGUE ARE SUPPORTED AT THE PROGRAM LEVEL OR AT THE 
- * COMPONENT LEVEL.
- * ================================================================================ 
- */
 
 namespace FP4P\Component\JSports\Administrator\Controller;
+
+/**
+ * REVISION HISTORY:
+ * 2025-01-16  Cleaned up the code and added comments.
+ */
 
 defined('_JEXEC') or die;
 
@@ -54,7 +52,12 @@ class LogsController extends AdminController
     }
     
 
+    /**
+     * This function supports the purging of the log records so it doesn't become unnecessarily 
+     * too large.  The number of days is a configurable option within the component.
+     */
     public function purge() {
+        // Retrieve the number of logdays to retain
         $params = ComponentHelper::getParams('com_jsports');
         $logdays = $params->get('logdays');
        
