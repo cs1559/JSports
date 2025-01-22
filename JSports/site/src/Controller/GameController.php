@@ -28,9 +28,10 @@ use FP4P\Component\JSports\Site\Objects\Application as Myapp;
 // phpcs:enable PSR1.Files.SideEffects
 
 /**
- * Controller object for an individiaul GOLF entry
+ * GameController - This is a controller class that handles GAME functions.  Most
+ * of the functions are inherited from the parent class (FormController) but certain
+ * functions are overridden in this class.
  *
- * @since  1.6
  */
 class GameController extends FormController
 {
@@ -89,7 +90,7 @@ class GameController extends FormController
                     $logger->info('Game ID: ' . $id. ' has been DELETED  ' . $item->gamedate . ' ' . $item->name . ' STATUS=' . $item->gamestatus);
                     $this->setMessage(Text::_('COM_JSPORTS_GAME_SUCCESSFULLY_DELETED'),'info');
                 } else {
-                    $logger->error('Game ID: ' . $id. ' has NOT been deleted');
+                    $logger->error('Game ID: ' . $id. ' has NOT been deleted' );
                     $this->setMessage(Text::_('COM_JSPORTS_GAME_NOT_DELETED'),'info');
                 }
                 $redirectURL = $rUrl;
