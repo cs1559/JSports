@@ -12,6 +12,14 @@
 
 namespace FP4P\Component\JSports\Site\Services;
 
+/**
+ * DivisionService - This is a service class that exposes certain functions that
+ * various components within the applicaiton that can call statically.
+ * 
+ * REVISION HISTORY:
+ * 2025-01-16  Cleaned up code and added inline comments.
+ */
+
 use FP4P\Component\JSports\Administrator\Table\DivisionsTable;
 use Joomla\Database\ParameterType;
 use Joomla\CMS\Factory;
@@ -20,7 +28,7 @@ class DivisionService
 {
     
     /**
-     * This function will return an individual row based on the PROGRAM ID.
+     * This function will return an individual row based on the DivisionID.
      *
      * @param number $id
      * @return \FP4P\Component\JSports\Administrator\Table\DivisionsTable|NULL
