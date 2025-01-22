@@ -11,6 +11,11 @@
  */
 namespace FP4P\Component\JSports\Site\Controller;
 
+/**
+ * REVISION HISTORY:
+ * 2025-01-16  Cleaned up code and added inline comments.
+ */
+
 defined('_JEXEC') or die;
 
 use Joomla\CMS\MVC\Controller\BaseController;
@@ -31,6 +36,13 @@ use FP4P\Component\JSports\Site\Services\MailService;
 class BatchController extends BaseController
 {
 
+    /**
+     * This function will perform the batch operation to update the league standings.  It is expected
+     * that this function is performed via a CRON JOB.  
+     * 
+     * @param boolean $cachable
+     * @param array $urlparams
+     */   
     public function updatestandings($cachable = false, $urlparams = array()) {
 
         $params = ComponentHelper::getParams('com_jsports');
@@ -82,6 +94,10 @@ class BatchController extends BaseController
     }
     
     
+    /**
+     * This function is a helper function to test email functionality.
+     * 
+     */
     public function testEmail(){
         $recipients = array();
         $recipients[]='cs1559@sbcglobal.net';
