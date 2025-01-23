@@ -203,10 +203,30 @@
 			<option value="0">No</option>
 			<option value="1">Yes</option>
 		</field>
+
+		<field name="downloadcvsschedule" type="radio" default="0"
+			label="COM_JSPORTS_CSV_SCHEDULE_DOWNLOAD_ENABLED"
+			description="COM_JSPORTS_CSV_SCHEDULE_DOWNLOAD_ENABLED_DESC"
+			layout="joomla.form.field.radio.switcher">
+			<option value="0">No</option>
+			<option value="1">Yes</option>
+		</field>
 			
 	</fieldset>
 	
 	
+	<fieldset name="games" description="COM_JSPORTS_GAMES_DESC" label="COM_JSPORTS_GAMES_LABEL">
+	
+		<field name="resetgamescore" type="radio" default="0"
+			label="COM_JSPORTS_GAME_RESETSCORE_LABEL"
+			description="COM_JSPORTS_GAME_RESETSCORE_DESC"
+			layout="joomla.form.field.radio.switcher">
+			<option value="0">No</option>
+			<option value="1">Yes</option>
+		</field>
+		
+	</fieldset>
+		
 	<fieldset name="permissions" description="JCONFIG_PERMISSIONS_DESC" label="JCONFIG_PERMISSIONS_LABEL">
 			<field name="rules" type="rules" component="com_jsports" class="inputbox" filter="rules" validate="rules" label="JCONFIG_PERMISSIONS_LABEL" section="component"/>
 	</fieldset>
