@@ -48,6 +48,8 @@ class HtmlView extends BaseHtmlView
     protected $canSeeRoster;
     protected $divisionname;
     protected $active;
+    protected $teamid;
+    protected $programid;
     
     /**
      * Execute and display a template script.
@@ -69,6 +71,9 @@ class HtmlView extends BaseHtmlView
 
         $mod = $this->getModel();
 
+        $this->teamid = $this->data->id;
+        $this->programid = $mod->recentprogram->id;
+        
         $context = array('teamid' => $this->data->id,
             'ownerid' => $this->data->ownerid,
             'programid' => $mod->recentprogram->id
