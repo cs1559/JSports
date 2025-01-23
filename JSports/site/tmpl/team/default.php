@@ -38,6 +38,7 @@ $showlinks = $params->get('showpagelinks');
 $showstandings = $params->get('showstandings');
 $showlocation = $params->get('showlocation');
 $showhits = $params->get('showhits');
+$downloadschedule = $params->get('downloadcvsschedule');
 
 $document->setTitle(Text::_('COM_JSPORTS_TEAMPROFILE_PAGE_TITLE'));
 ?>
@@ -248,7 +249,13 @@ $document->setTitle(Text::_('COM_JSPORTS_TEAMPROFILE_PAGE_TITLE'));
 
 			<!--  SCHEDULE SECTION -->
 			<div class="teamprofile-section container">   
-				<h3 id="schedule">Schedule - <?php echo $this->recentprogram->name; ?></h3>
+				<h3 id="schedule">Schedule - <?php echo $this->recentprogram->name; ?>
+				<?php if ($downloadschedule) { ?>
+						<a href="index.php?option=com_jsports&task=team.downloadSchedule&tmpl=component&teamid=<?php echo $this->teamid; ?>&programid=<?php echo $this->programid;?>" target="new" title="Download as CSV" download>
+							<span class="fa fa-solid fa-download fa-sm mt-4 me-2" aria-hidden="true" style="float: right;"></span>
+						</a>
+				<?php } ?>
+				</h3>
 					<hr class="hr-bar">
 						<div class="teamprofile-table-wrapper">
 								<table class="table">
@@ -271,11 +278,14 @@ $document->setTitle(Text::_('COM_JSPORTS_TEAMPROFILE_PAGE_TITLE'));
 										<td><?php echo $game->gamedate; ?></td>
 										<td><?php echo JSHelper::displayGameTime($game->gametime);?> </td>
 										<td><?php echo $game->name; 
-										// Display indicator for NON-LEAGUE GAME
-										if (!$game->leaguegame) {
-										    echo '**';
-										}
-										?></td>
+    										// Display indicator for NON-LEAGUE GAME
+    										if (!$game->leaguegame) {
+    										    echo '**';
+    										}
+    										?>
+    										<br/>
+    										<span class="game-location"><?php echo $game->location; ?></span>
+										</td>
 										<td><?php echo GameService::getWinLoss($this->data->id,$game); ?></td>
 										<td><?php echo $game->awayteamscore; ?></td>
 										<td><?php echo $game->hometeamscore; ?></td>
