@@ -3,14 +3,14 @@
 
 	<name>JSports</name>
 	<!-- The following elements are optional and free of formatting constraints -->
-	<creationDate>2025-01-14</creationDate>
+	<creationDate>2025-01-22</creationDate>
 	<author>Chris Strieter</author>
 	<authorEmail>chris@swibl.org</authorEmail>
 	<authorUrl>http://www.swibl.org</authorUrl>
 	<copyright>Copyright (c) 2006-2025. Chris Strieter. All rights reserved.</copyright>
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
 	<!--  The version string is recorded in the components table -->
-	<version>1.0.24</version>
+	<version>1.0.25</version>
 	<!-- The description is optional and defaults to the name -->
 	<description>JSports is a sports management tool for sports league.  It was designed and built to meet the needs of a youth 
 	select sports league.   Currently functionality includes building of programs (e.g. seasons), division management, rostering, registration
