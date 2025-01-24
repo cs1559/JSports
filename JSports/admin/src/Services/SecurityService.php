@@ -30,6 +30,11 @@ use FP4P\Component\JSports\Site\Services\UserService;
 use FP4P\Component\JSports\Site\Services\ProgramsService;
 use FP4P\Component\JSports\Site\Services\DivisionService;
 
+/**
+ * @deprecated
+ * @author cs155
+ *
+ */
 class SecurityService
 {
     
@@ -198,17 +203,39 @@ class SecurityService
      * @param unknown $item         // Item from the SchedulesModel.
      */
     public static function canEditGame($teamid, Object $item ){
+        $params = ComponentHelper::getParams('com_jsports');
+        $editawaygame = $params->get('editawaygame');
+        
         $canEdit = true;
+        
+        // Get current user
+        $user = Factory::getUser();
+        
+        // If the user is a GUEST, return FALSE
+        if ($user->guest) {
+            return false;
+        }
         
         // If the user is a "super user" or "administrator" immediately grant them access
         if (SecurityService::isAdmin()) {
             return true;
         }
         
-        //if ($teamid != $item->teamid) {
-        if ($teamid != $item->hometeamid) {
+        $teamAdmin = UserService::isTeamAdmin($teamid, $item->programid, $user->id);
+        if (!$teamAdmin) {
             return false;
         }
+        
+        // IF THE COMPONENT IS CONFIGURED TO NOT ALLOW USERS TO EDIT AWAY GAMES
+        if (!$editawaygame) {
+            
+            if ($teamid != $item->hometeamid) {
+                return false;
+            }
+            
+        }
+        
+        
         if ($item->gamestatus === 'C') {
             return false;
         }
