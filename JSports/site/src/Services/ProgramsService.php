@@ -15,7 +15,7 @@ namespace FP4P\Component\JSports\Site\Services;
 use FP4P\Component\JSports\Administrator\Table\ProgramsTable;
 use Joomla\Database\ParameterType;
 use Joomla\CMS\Factory;
-use FP4P\Component\JSports\Administrator\Services\SecurityService;
+use FP4P\Component\JSports\Site\Services\SecurityService;
 
 class ProgramsService
 {

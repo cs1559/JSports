@@ -20,7 +20,7 @@
  *              function is called.
  *
  */
-namespace FP4P\Component\JSports\Administrator\Services;
+namespace FP4P\Component\JSports\Site\Services;
 
 
 use Joomla\CMS\Component\ComponentHelper;

@@ -23,7 +23,7 @@ use FP4P\Component\JSports\Site\Services\ProgramsService;
 use FP4P\Component\JSports\Site\Services\GameService;
 use FP4P\Component\JSports\Site\Services\RosterService;
 use FP4P\Component\JSports\Site\Services\StandingsService;
-use FP4P\Component\JSports\Administrator\Services\SecurityService;
+use FP4P\Component\JSports\Site\Services\SecurityService;
 
 use FP4P\Component\JSports\Site\Services\UserService;
 

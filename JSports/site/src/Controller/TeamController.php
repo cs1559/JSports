@@ -21,6 +21,7 @@ use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Objects\Application as Myapp;
 use FP4P\Component\JSports\Site\Services\ProgramsService;
 use Joomla\CMS\Component\ComponentHelper;
+use FP4P\Component\JSports\Site\Services\TeamService;
 use FP4P\Component\JSports\Site\Services\GameService;
 use FP4P\Component\JSports\Administrator\Helpers\JSHelper;
 
@@ -30,9 +31,8 @@ use FP4P\Component\JSports\Administrator\Helpers\JSHelper;
 // phpcs:enable PSR1.Files.SideEffects
 
 /**
- * Controller object for an individiaul TEAM entry
+ * Controller object for an individiaul TEAM PROFILE
  *
- * @since  1.6
  */
 class TeamController extends BaseController
 {
@@ -45,7 +45,7 @@ class TeamController extends BaseController
         
         $params = ComponentHelper::getParams('com_jsports');
         $itemid = $params->get('itemid');
-
+        
         parent::display($cachable = false, $urlparams = []);
     }
     
@@ -59,10 +59,10 @@ class TeamController extends BaseController
      */
     public function save()
     {
-                
+        
         // Check for request forgeries.
         $this->checkToken();
-
+        
         $input = Factory::getApplication()->input;
         $origowner     = $input->getInt("origowner");
         
@@ -76,9 +76,9 @@ class TeamController extends BaseController
         
         // Get the user data.
         $requestData = $app->getInput()->post->get('jform', [], 'array');
-
+        
         $teamid = $requestData['id'];
-
+        
         /* Code to prevent further action if user is NOT logged in */
         $user = Factory::getUser();
         // Check if the user is logged in
@@ -95,7 +95,7 @@ class TeamController extends BaseController
         if (!$form) {
             throw new \Exception($model->getError(), 500);
         }
-               
+        
         // Validate the posted data.
         $data = $model->validate($form, $requestData);
         
@@ -112,7 +112,7 @@ class TeamController extends BaseController
                     $app->enqueueMessage($errors[$i], 'warning');
                 }
             }
-                      
+            
             // Save the data in the session.
             $app->setUserState('com_jsports.edit.team.data', $requestData);
             
@@ -121,7 +121,7 @@ class TeamController extends BaseController
             
             return false;
         }
-
+        
         $data['updatedby'] = $user->username;
         $data['dateupdated'] = date("Y-m-d H:i:s");
         
@@ -149,27 +149,27 @@ class TeamController extends BaseController
         
         // Redirect the user and adjust session state based on the chosen task.
         switch ($this->getTask()) {
-//             case 'apply':
-//                 // Check out the profile.
-//                 $app->setUserState('com_users.edit.profile.id', $return);
-                
-//                 // Redirect back to the edit screen.
-//                 $this->setMessage(Text::_('COM_USERS_PROFILE_SAVE_SUCCESS'));
-                
-//                 $redirect = $app->getUserState('com_users.edit.profile.redirect', '');
-                
-//                 // Don't redirect to an external URL.
-//                 if (!Uri::isInternal($redirect)) {
-//                     $redirect = null;
-//                 }
-                
-//                 if (!$redirect) {
-//                     $redirect = 'index.php?option=com_users&view=profile&layout=edit&hidemainmenu=1';
-//                 }
-                
-//                 $this->setRedirect(Route::_($redirect, false));
-//                 break;
-                
+            //             case 'apply':
+            //                 // Check out the profile.
+            //                 $app->setUserState('com_users.edit.profile.id', $return);
+            
+            //                 // Redirect back to the edit screen.
+            //                 $this->setMessage(Text::_('COM_USERS_PROFILE_SAVE_SUCCESS'));
+            
+            //                 $redirect = $app->getUserState('com_users.edit.profile.redirect', '');
+            
+            //                 // Don't redirect to an external URL.
+            //                 if (!Uri::isInternal($redirect)) {
+            //                     $redirect = null;
+            //                 }
+            
+            //                 if (!$redirect) {
+            //                     $redirect = 'index.php?option=com_users&view=profile&layout=edit&hidemainmenu=1';
+            //                 }
+            
+            //                 $this->setRedirect(Route::_($redirect, false));
+            //                 break;
+            
             default:
                 // Clear the profile id from the session.
                 $app->setUserState('com_jsports.edit.team.data', null);
@@ -206,10 +206,10 @@ class TeamController extends BaseController
     {
         // Check for request forgeries.
         $this->checkToken();
-
-        $app    = $this->app;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+        
+        $app    = $this->app;
         // Get the user data.
-        $requestData = $app->getInput()->post->get('jform', [], 'array'); 
+        $requestData = $app->getInput()->post->get('jform', [], 'array');
         $teamid = $requestData['id'];
         
         // Flush the data from the session.
@@ -218,20 +218,22 @@ class TeamController extends BaseController
         // Redirect to user profile.
         $this->setRedirect(Route::_('index.php?option=com_jsports&view=team&id=' . $teamid, false));
     }
-
+    
     /**
      * this function supports downloading a team's program schedule.  The client must provide a TEAMID and
      * PROGRAMID value in the URL string.
-     * 
+     *
      */
     public function downloadSchedule() {
         $app = Factory::getApplication();
         $input = $app->input;
-
+        
         $teamid     = $input->getInt("teamid");
         $programid     = $input->getInt("programid");
-
+        
         $games = GameService::getTeamSchedule($teamid, $programid);
+        $team = TeamService::getItem($teamid);
+        $program = ProgramsService::getItem($programid);
         
         $fnprefix = 'team-schedule';
         $date = date('Y-m-d-s');
@@ -242,24 +244,27 @@ class TeamController extends BaseController
         $app->setHeader('Cache-Control', 'no-cache', true);
         $app->sendHeaders();
         
+        echo '"Team: ' . $team->name . '"'. "\n";
+        echo '"Program: ' . $program->name . '"'. "\n";
+        echo "\n";
         // Send HEADER ROW
-        echo "DATE, TIME, GAME, LOCATION, W/L, AWAY SCORE, HOME SCORE, STATUS\n";
+        echo "DATE, TIME, GAME, LOCATION, W/L, AWAY SCORE, HOME SCORE, STATUS" . "\n";
         //... send the rows
         foreach ($games as $game) {
             if (!$game->leaguegame) {
                 $game->name = $game->name . '**';
             }
-            echo $game->gamedate . "," .  
-                JSHelper::displayGameTime($game->gametime) . "," .
-                $game->name . "," .
-                $game->location . "," .
-                GameService::getWinLoss($teamid,$game) . "," .
-                $game->awayteamscore . ", " .
-                $game->hometeamscore . ", " .
-                $game->gamestatus . "\n";
+            echo '"' . $game->gamedate . '",' .
+                '"' .JSHelper::displayGameTime($game->gametime) . '",' .
+                '"' .$game->name . '",' .
+                '"' .$game->location . '",' .
+                '"' .GameService::getWinLoss($teamid,$game) . '",' .
+                '"' .$game->awayteamscore . '",' .
+                '"' .$game->hometeamscore . '",' .
+                '"' .$game->gamestatus . '"' . "\n";
         }
         
         $app->close();
     }
-
+    
 }

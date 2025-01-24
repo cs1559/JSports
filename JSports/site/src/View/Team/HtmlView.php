@@ -20,7 +20,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\CMSObject;
 use Joomla\CMS\Component\ComponentHelper;
 use FP4P\Component\JSports\Administrator\Helpers\Html;
-use FP4P\Component\JSports\Administrator\Services\SecurityService;
+use FP4P\Component\JSports\Site\Services\SecurityService;
 use FP4P\Component\JSports\Site\Services\TeamService;
 
 /**
