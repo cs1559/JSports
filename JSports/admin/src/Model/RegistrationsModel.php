@@ -23,7 +23,8 @@ defined('_JEXEC') or die;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Database\ParameterType;
 use Joomla\CMS\Factory;
-use FP4P\Component\JSports\Administrator\Services\RegistrationService;
+//use FP4P\Component\JSports\Administrator\Services\RegistrationService;
+use FP4P\Component\JSports\Site\Services\RegistrationService;
 use Joomla\CMS\Filter\OutputFilter; 
 
 /**
