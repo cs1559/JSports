@@ -18,7 +18,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Factory;
-use FP4P\Component\JSports\Administrator\Services\SecurityService;
+use FP4P\Component\JSports\Site\Services\SecurityService;
 use FP4P\Component\JSports\Administrator\Helpers\JSHelper;
 
 $clientId  = (int) $this->state->get('client_id', 0);
