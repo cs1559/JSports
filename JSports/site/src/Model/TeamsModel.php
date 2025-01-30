@@ -172,10 +172,9 @@ class TeamsModel extends ListModel
 	    if (!empty($search))
 	    {
 	        $search = '%' . trim($search) . '%';
-	        $query->where($db->quoteName('a.name') . ' LIKE :search')
-	        ->bind(':search', $search, ParameterType::STRING);
+	        $query->where('UPPER(concat(a.name,a.contactname)) LIKE upper(:search)')
+	        ->bind(':search', $search, ParameterType::STRING);     
 	    }
-	    
 	    
 	    $programid = (string) $this->getState('filter.programid');
         $programid = abs((int) $programid);
