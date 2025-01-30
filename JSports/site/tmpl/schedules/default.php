@@ -19,6 +19,7 @@
  *      - Reversed "Home @ Away" to "Away @ Home"
  * 2024-02-22   Changed logic on when to display the EDIT/DELETE buttons.
  * 2024-03-01   Added DIV with jsports-table-wrapper to make table responsive.
+ * 2025-01-28   Use SITE SecurityService instead of Admin
  */
 
 defined('_JEXEC') or die;
@@ -28,7 +29,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Factory;
-use FP4P\Component\JSports\Administrator\Services\SecurityService;
+use FP4P\Component\JSports\Site\Services\SecurityService;
 use FP4P\Component\JSports\Site\Services\GameService;
 use FP4P\Component\JSports\Administrator\Helpers\JSHelper;
 
