@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" version="3.0" method="upgrade">
+
+	<name>JSports</name>
+	<!-- The following elements are optional and free of formatting constraints -->
+	<creationDate>2025-01-29</creationDate>
+	<author>Chris Strieter</author>
+	<authorEmail>chris@swibl.org</authorEmail>
+	<authorUrl>http://www.swibl.org</authorUrl>
+	<copyright>Copyright (c) 2006-2025. Chris Strieter. All rights reserved.</copyright>
+	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+	<!--  The version string is recorded in the components table -->
+	<version>1.0.27</version>
+	<!-- The description is optional and defaults to the name -->
+	<description>JSports is a sports management tool for sports league.  It was designed and built to meet the needs of a youth 
+	select sports league.   Currently functionality includes building of programs (e.g. seasons), division management, rostering, registration
+	and more.
+
+	</description>
+
+	<namespace path="src/">FP4P\Component\JSports</namespace>
+
+	<!-- Site Main File Copy Section -->
+	<!-- Note the folder attribute: This attribute describes the folder
+		to copy FROM in the package to install therefore files copied
+		in this section are copied from /site/ in the package -->
+		
+	<files folder="site">
+		<folder>forms</folder>
+		<folder>language</folder>
+		<folder>src</folder>
+		<folder>tmpl</folder>
+		<filename>index.html</filename>
+	</files>
+
+	<media destination="com_jsports" folder="media">
+		<folder>images</folder>
+		<folder>css</folder>
+		<folder>js</folder>
+		<filename>joomla.asset.json</filename>
+	</media>
+
+
+	<administration>
+	 	<menu link="index.php?option=com_jsports;view=dashboard">JSports</menu>
+
+		<files folder="admin">
+			<!-- Admin Main File Copy Section -->
+			<filename>index.html</filename>
+			<filename>jsports.php</filename>
+			<filename>access.xml</filename>
+			<filename>config.xml</filename>
+			<folder>help</folder>
+			<folder>src</folder>
+			<folder>sql</folder>
+			<folder>forms</folder>
+			<folder>services</folder>
+			<folder>tmpl</folder>
+			<folder>language</folder>
+		</files>
+
+		<install>
+			<sql>
+				<file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
+			</sql>
+		</install>
+		<uninstall>
+			<sql>
+				<!-- file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file> -->
+			</sql>
+		</uninstall>
+		<update>
+			<schemas>
+				<schemapath type="mysql">sql/updates/mysql</schemapath>
+			</schemas>
+		</update>
+	</administration>
+
+</extension>
