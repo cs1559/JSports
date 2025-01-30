@@ -26,10 +26,16 @@ use Joomla\Database\ParameterType;
 use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Objects\Scoring\ScoringEngine;
 use FP4P\Component\JSports\Site\Services\LogService;
+use Joomla\CMS\Component\ComponentHelper;
 
 class GameService
 {
     
+    /**
+     * This function returns an instance of the GameTable class.
+     * 
+     * @return \FP4P\Component\JSports\Administrator\Table\GamesTable
+     */
     public static function getGamesTable() {
         $db = Factory::getDbo();
         return new GamesTable($db);
@@ -50,8 +56,7 @@ class GameService
         $item = null;
         
         $row = $table->load($id);
-        
-        
+         
         if ($row) {
             return $table;
         }
@@ -92,6 +97,9 @@ class GameService
      */
     public static function reset($id = 0) {
         
+        $params = ComponentHelper::getParams('com_jsports');
+        $resetgamescore = $params->get('resetgamescore');
+        
         $user = Factory::getUser();
         $app = Application::getInstance();
         
@@ -102,17 +110,28 @@ class GameService
         $status = 'S';
         
         // Change the status of the game and identify who actually posted the score.
-        $data = array(
-            'gamestatus' => 'S',
-            'hometeamscore' => 0,
-            'awayteamscore' => 0,
-        );
+        if ($resetgamescore) {
+            $data = array(
+                'gamestatus' => 'S',
+                'hometeamscore' => 0,
+                'awayteamscore' => 0,
+                'hometeampoints' => 0,
+                'awayteampoints' => 0,
+            );
+        } else {
+            $data = array(
+                'gamestatus' => 'S',
+                'hometeampoints' => 0,
+                'awayteampoints' => 0,
+            );
+        }
         
         $table->bind($data);
         
         $table->store();
 
         $app->triggerEvent('onAfterGameReset', ['data' => $table]);
+        
         //LogService::info("Game " . $id . " [" . $table->name . "] - game reset ");
         return true;
     }
@@ -232,7 +251,8 @@ class GameService
     
     /**
      * This function will return a list of most recent games.
-     * @param unknown $programid
+     * 
+     * @param int $programid
      * @return array Objects
      */
     public static function getRecentGames($programid = null, $limit = 15) {
@@ -261,9 +281,9 @@ class GameService
     /**
      * This function will retrieve a team's games for a given program.
      *
-     * @param unknown $teamid
-     * @param unknown $programid
-     * @return unknown
+     * @param int $teamid
+     * @param int $programid
+     * @return array
      */
     public static function getTeamSchedule($teamid, $programid) {
         // Create a new query object.
