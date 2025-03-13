@@ -65,6 +65,7 @@ from #__jsports_games score, #__jsports_teams team, #__jsports_map m
 where score.hometeamid = team.id 
 		and score.hometeamid = m.teamid  and m.published = 1 
 		and score.programid in (select id from #__jsports_programs where status <> 'C')
+        and score.programid = m.programid
 		and gamestatus = 'C' 
 		and leaguegame = 1 	
 group by programid, divisionid, id, team.name
@@ -77,6 +78,7 @@ where score.awayteamid = team.id
 		and score.awayteamid = m.teamid  
 		and m.published = 1 
 		and score.programid  in (select id from #__jsports_programs where status <> 'C')
+        and score.programid = m.programid
 		and gamestatus = 'C' 
 		and leaguegame = 1
 group by programid, divisionid, id, team.name 
