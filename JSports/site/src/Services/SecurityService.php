@@ -198,8 +198,8 @@ class SecurityService
      * @param unknown $item         // Item from the SchedulesModel.
      */
     public static function canEditGame($teamid, Object $item ){
-        $params = ComponentHelper::getParams('com_jsports');
-        $editawaygame = $params->get('editawaygame');
+      //  $params = ComponentHelper::getParams('com_jsports');
+      //  $editawaygame = $params->get('editawaygame');
         
         $canEdit = true;
         
@@ -222,13 +222,13 @@ class SecurityService
         }
         
         // IF THE COMPONENT IS CONFIGURED TO NOT ALLOW USERS TO EDIT AWAY GAMES
-        if (!$editawaygame) {
+//         if (!$editawaygame) {
             
             if ($teamid != $item->hometeamid) {
                 return false;
             }
             
-        }
+//         }
         
         
         if ($item->gamestatus === 'C') {
