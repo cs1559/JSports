@@ -40,6 +40,7 @@ class HtmlView extends BaseHtmlView
     protected $team;
     protected $canEdit = false;
     
+    protected $contextid;
       
     /**
      * The model state
@@ -66,7 +67,9 @@ class HtmlView extends BaseHtmlView
         $this->program = $mod->program;
         $this->teamid = $mod->teamid;
         $this->programid = $mod->programid;
-
+        $this->contextid = $mod->contextid;
+        
+        $this->form->setValue('contextid',null, $mod->contextid);
 
         if ($itemid == 0) {
             $this->form->setValue('teamid',null,$mod->teamid);

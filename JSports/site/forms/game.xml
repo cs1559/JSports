@@ -10,6 +10,9 @@
 		<field name="teamid" type="hidden" label="COM_JSPORTS_TEAMID"
 			default="0" class="readonly" readonly="true" />
 
+		<field name="contextid" type="hidden" label="COM_JSPORTS_TEAMID"
+			default="0" class="readonly" readonly="true" />
+			
 		<field name="programid" type="hidden" label="COM_JSPORTS_PROGRAMID"
 			default="0" class="readonly" readonly="true" />
 

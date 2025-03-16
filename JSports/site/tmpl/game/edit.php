@@ -45,8 +45,10 @@ $wa->useStyle('com_jsports.game.style');
 		<?php echo $this->form->renderField('gametime'); ?>
 		<?php echo $this->form->renderField('gamestatus'); ?>						
 		<?php echo $this->form->renderField('id'); ?>
+		<?php echo $this->form->renderField('contextid'); ?>
 		
 	<input type="hidden" name="task" value="">
+
 	<?php echo HTMLHelper::_('form.token'); ?>
 	
 	<div class="control-group">

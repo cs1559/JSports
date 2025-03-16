@@ -44,6 +44,7 @@ class GameModel extends FormModel
     protected $team;
     protected $_context = 'com_jsports.game';
     protected $_item = [];
+    protected $contextid = 0;
     
     protected function populateState() {
         /** @var SiteApplication $app */
@@ -87,7 +88,8 @@ class GameModel extends FormModel
 
         $input = Factory::getApplication()->input;
         $id     = $input->getInt("id");
-     
+        $this->contextid = $input->getInt("contextid");
+        
         $svc = new GameService();
         $item = $svc->getItem($id);
 
@@ -100,7 +102,10 @@ class GameModel extends FormModel
         
         // Get a Team record and place within our model
         $this->team = TeamService::getItem($item->teamid);
-        
+
+        if ($this->contextid < 1) {
+            $this->contextid = $this->team->id;
+        }
         if (is_null($this->team)) {
             $this->setError(Text::_('COM_JSPORTS_ERR_MISSING_TEAM'));
         }

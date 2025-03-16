@@ -53,6 +53,7 @@ class GameController extends FormController
         
         $input = Factory::getApplication()->input;
         $id     = $input->getInt("id");
+        $contextid = $input->getInt("contextid");
         
         $lasturl = $_SERVER['HTTP_REFERER'];
         
@@ -62,7 +63,7 @@ class GameController extends FormController
         if ($user->guest) {
             $app->enqueueMessage(Text::sprintf('COM_JSPORTS_INVALID_USERSESSION'), 'error');
             $logger->info('Game ID: ' . $id. ' Game DELETE failed due to user session invalid');
-            $this->setRedirect(Route::_('index.php?option=com_jsports&view=schedules&teamid=' . $teamid, false));
+            $this->setRedirect(Route::_('index.php?option=com_jsports&view=schedules&teamid=' . $contextid, false));
             return false;
         }
    
@@ -77,8 +78,9 @@ class GameController extends FormController
         $item = $svc->getItem($id);
         
         $redirectURL = 'index.php?option=com_jsports&view=dashboard';
-        $rUrl = 'index.php?option=com_jsports&view=schedules&teamid=' . 
-                $item->teamid . '&programid=' . $item->programid;
+        $rUrl = 'index.php?option=com_jsports&view=schedules&teamid=' .
+            $contextid . '&programid=' . $item->programid;
+               // $item->teamid . '&programid=' . $item->programid;
         if ($item->gamestatus === 'C') {
             $this->setMessage(Text::_('COM_JSPORTS_GAME_CANNOT_BE_DELETED'),'info');
             $redirectURL = $rUrl;
@@ -99,8 +101,9 @@ class GameController extends FormController
                 $errors = $item->getErrors();
                 $this->setError($errors[0]);
                 $app->enqueueMessage($errors[0],'error');
-                $redirectURL = 'index.php?option=com_jsports&view=schedules&teamid=' . 
-                    $item->teamid   . '&programid=' . $item->programid;
+                $redirectURL = 'index.php?option=com_jsports&view=schedules&teamid=' .
+                    $contextid . '&programid=' . $item->programid;
+                   // $item->teamid   . '&programid=' . $item->programid;
             }
         }
         
@@ -189,6 +192,7 @@ class GameController extends FormController
 
         $gameid = $requestData['id'];
         $teamid = $requestData['teamid'];
+        $contextid = $requestData['contextid'];
         
         /* Code to prevent further action if user is NOT logged in */
         $user = Factory::getUser();
@@ -228,7 +232,8 @@ class GameController extends FormController
             $app->setUserState('com_jsports.edit.game.data', $requestData);
 
             // Redirect back to the edit screen.
-            $this->setRedirect(Route::_('index.php?option=com_jsports&view=game&layout=edit&id=' .$gameid . '&teamid=' . $teamid, false));
+            //$this->setRedirect(Route::_('index.php?option=com_jsports&view=game&layout=edit&id=' .$gameid . '&teamid=' . $teamid, false));
+            $this->setRedirect(Route::_('index.php?option=com_jsports&view=game&layout=edit&id=' .$gameid . '&teamid=' . $contextid, false));
             
             return false;
         }
@@ -265,8 +270,10 @@ class GameController extends FormController
                 }
                 
                 if (!$redirect) {
-                    $redirect = 'index.php?option=com_jsports&view=schedules&teamid=' .  $data['teamid'] .
-                        '&programid='  . $data['programid'];
+//                     $redirect = 'index.php?option=com_jsports&view=schedules&teamid=' .  $data['teamid'] .
+//                         '&programid='  . $data['programid'];
+                    $redirect = 'index.php?option=com_jsports&view=schedules&teamid=' .  $data['contextid'] .
+                    '&programid='  . $data['programid'];
                 }
                 
 
@@ -296,11 +303,13 @@ class GameController extends FormController
         // Get the team id.
         $requestData = $app->getInput()->post->get('jform', [], 'array');
         $teamid = $requestData['teamid'];
+        $contextid = $requestData['contextid'];
         
         // Flush the data from the session.
         $this->app->setUserState('com_jsports.edit.game.data', null);
         
         // Redirect to team schedule.
-        $this->setRedirect(Route::_('index.php?option=com_jsports&view=schedules&teamid=' . $teamid, false));
+//         $this->setRedirect(Route::_('index.php?option=com_jsports&view=schedules&teamid=' . $teamid, false));
+        $this->setRedirect(Route::_('index.php?option=com_jsports&view=schedules&teamid=' . $contextid, false));
     }
 }
