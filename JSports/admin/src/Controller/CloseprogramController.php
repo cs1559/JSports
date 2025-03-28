@@ -38,7 +38,7 @@ class CloseprogramController extends AdminController
         $input = Factory::getApplication()->input;
         $programid     = $input->getInt("programid");
         
-            $programid = 33;
+          //  $programid = 33;
             
             $result = ProgramsService::closeProgram($programid);
              
