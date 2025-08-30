@@ -172,6 +172,28 @@ class TeamService
         return $db->loadAssocList();
     }
 
+    public static function getTeamsByProgram($programid)
+    {
+        $db = Factory::getDbo();
+        $query = $db->getQuery(true);
+        
+//         $sql = "SELECT a.id as teamid, a.name as teamname, a.contactname, a.contactphone,
+        $sql = "SELECT a.id as teamid, a.name as teamname, a.contactname, a.contactphone,
+a.contactemail, a.city, a.state, m.divisionid, d.name as divisionname,
+                        d.agegroup, a.contactname FROM " . $db->quoteName('#__jsports_teams') . " as a, " . $db->quoteName('#__jsports_map') . " as m, " . $db->quoteName('#__jsports_divisions') . " as d
+                where m.teamid = a.id
+                and m.divisionid = d.id
+                and m.programid = " . $programid . "
+                and m.published = 1 
+                ";
+        
+        $query->setQuery($sql);
+        $db->setQuery($query);
+        
+        // Load the results as a list of stdClass objects (see later for more options on retrieving data).
+        return $db->loadAssocList();
+    }
+    
     public static function getTeamsByAgeGroup($programid, $agegroup, $divisionid)
     {
         $db = Factory::getDbo();
