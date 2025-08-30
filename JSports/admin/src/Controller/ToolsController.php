@@ -123,7 +123,19 @@ class ToolsController extends BaseController
         $this->setRedirect('index.php?option=com_jsports&view=tools');
         
         
-        
-        
     }
+    
+    public function auditTeamProfiles($cachable = false, $urlparams = array()) {
+        
+        // Get Current Season/Programs
+        // Get Teams for the Current Season
+        // Loop through each teams
+        
+        die('auditTeamProfiles');
+    }
+    
+    public function cancelAuditprofiles() {
+        $this->setRedirect('index.php?option=com_jsports&view=tools');
+    }
+    
 }
