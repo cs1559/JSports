@@ -8,7 +8,7 @@ CREATE TABLE `#__jsports_action_logs` (
 	 `username` varchar(30) NOT NULL,
 	 `msg` text NOT NULL,
  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ------------------------------------------------------------------------------------
 --  Divisions Table - Divisions all exist within the context of a program.
@@ -27,7 +27,7 @@ CREATE TABLE `#__jsports_divisions` (
  PRIMARY KEY (`id`),
 	 KEY `division_season_idx` (`programid`),
 	 KEY `program_idx` (`programid`,`ordering`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4mb4 COLLATE=utf8mb4_unicode_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 -- ------------------------------------------------------------------------------------
@@ -66,7 +66,7 @@ CREATE TABLE `#__jsports_games` (
 	 KEY `xconfseason` (`leaguegame`,`programid`),
 	 KEY `scores_idx4` (`programid`,`leaguegame`),
 	 KEY `xstatusxseason` (`gamestatus`,`programid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4mb4 COLLATE=utf8mb4_unicode_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ------------------------------------------------------------------------------------
 -- ------------------------------------------------------------------------------------
@@ -75,7 +75,7 @@ CREATE TABLE `#__jsports_groups` (
 	 `name` varchar(30) NOT NULL,
 	 `published` tinyint(3) DEFAULT 0,
  PRIMARY KEY (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ------------------------------------------------------------------------------------
 -- ------------------------------------------------------------------------------------
@@ -85,7 +85,7 @@ CREATE TABLE `#__jsports_groups_items` (
 	 `code` varchar(4) NOT NULL,
 	 `name` varchar(30) NOT NULL,
  PRIMARY KEY (`groupid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ------------------------------------------------------------------------------------
 -- League table.  This table is the highest "node" in the main data hierarchy.
@@ -99,7 +99,7 @@ CREATE TABLE `#__jsports_leagues` (
 	 `published` tinyint(4) NOT NULL DEFAULT 0,
 	 `configuration` text DEFAULT NULL,
  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4mb4 COLLATE=utf8mb4_unicode_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 -- ------------------------------------------------------------------------------------
@@ -116,7 +116,7 @@ CREATE TABLE `#__jsports_map` (
 	 KEY `divmap_season_idx` (`programid`,`divisionid`),
 	 KEY `divmap_season_idx2` (`programid`),
 	 KEY `divmap_season_idx3` (`teamid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4mb4 COLLATE=utf8mb4_unicode_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 -- ------------------------------------------------------------------------------------
@@ -142,7 +142,7 @@ CREATE TABLE `#__jsports_past_standings` (
 	 `runsallowed` int(11) NOT NULL,
 	 KEY `standings_idx1` (`programid`,`divisionid`) USING BTREE,
 	 KEY `primary_idx` (`programid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ------------------------------------------------------------------------------------
 -- Programs - this table stores all data related to a program/season.
@@ -182,7 +182,7 @@ CREATE TABLE `#__jsports_programs` (
  `registrationoptions` text NOT NULL,
  PRIMARY KEY (`id`),
  KEY `season_idx2` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 -- ------------------------------------------------------------------------------------
@@ -203,7 +203,7 @@ CREATE TABLE `#__jsports_recordhistory` (
  `points` decimal(48,0) DEFAULT NULL,
  PRIMARY KEY (`teamid`,`programid`,`divisionid`),
  KEY `record_history_idx` (`programid`,`teamid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4mb4 COLLATE=utf8mb4_unicode_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ------------------------------------------------------------------------------------
 --  Registrations - This table stores all of the regisration data.
@@ -240,7 +240,7 @@ CREATE TABLE `#__jsports_registrations` (
 	 KEY `divmap_season_idx` (`programid`,`divisionid`),
 	 KEY `divmap_season_idx2` (`programid`,`paid`),
 	 KEY `divmap_season_idx3` (`teamid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4mb4 COLLATE=utf8mb4_unicode_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 -- ------------------------------------------------------------------------------------
@@ -262,7 +262,7 @@ CREATE TABLE `#__jsports_rosters` (
 	 `published` int(11) NOT NULL DEFAULT 0,
  PRIMARY KEY (`id`),
  	KEY `simple_roster_idx1` (`teamid`,`programid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 -- ------------------------------------------------------------------------------------
@@ -291,7 +291,7 @@ CREATE TABLE `#__jsports_teams` (
  PRIMARY KEY (`id`),
  UNIQUE KEY `id` (`id`),
  UNIQUE KEY `owner_teamid` (`ownerid`,`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4mb4 COLLATE=utf8mb4_unicode_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 -- ------------------------------------------------------------------------------------
@@ -314,4 +314,19 @@ CREATE TABLE `#__jsports_venues` (
 	 `phone` varchar(20) DEFAULT NULL,
 	 `zipcode` varchar(20) DEFAULT NULL,
  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4mb4 COLLATE=utf8mb4_unicode_ci 	
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+-- ------------------------------------------------------------------------------------
+-- Record History - stores an individual teams record per program
+-- ------------------------------------------------------------------------------------
+CREATE TABLE `#__jsports_teamprofile_audit` (
+ `teamid` int(11) NOT NULL DEFAULT 0,
+ `programid` int(11) NOT NULL DEFAULT 0,
+ `auditdate` datetime DEFAULT NULL,
+ `status` int(11) NOT NULL DEFAULT 0,
+ `messages` text DEFAULT NULL,
+PRIMARY KEY (`teamid`, 'programid')
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+ 
+ 
