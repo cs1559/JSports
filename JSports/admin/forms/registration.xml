@@ -101,6 +101,7 @@
 			<option value="R">Red (AA or higher)</option>
 			<option value="W">White (High A or low AA)</option>
 			<option value="B">Blue (Rec to Low A)</option>
+			<option value="E">Elite (12U-14U Only)</option>
 		</field>
 		
 		<field name="playoffs" type="radio"
