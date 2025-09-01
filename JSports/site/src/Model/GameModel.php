@@ -44,14 +44,15 @@ class GameModel extends FormModel
     protected $team;
     protected $_context = 'com_jsports.game';
     protected $_item = [];
+    protected $contextid = 0;
     
     protected function populateState() {
         /** @var SiteApplication $app */
         $app = Factory::getContainer()->get(SiteApplication::class);
-    	$this->setState('game.id', $app->getInput()->getInt('id'));
-    	$this->setState('game.teamid', $app->getInput()->getInt('teamid'));
-    	$this->setState('game.programid', $app->getInput()->getInt('programid'));
-
+        $this->setState('game.id', $app->getInput()->getInt('id'));
+        $this->setState('game.teamid', $app->getInput()->getInt('teamid'));
+        $this->setState('game.programid', $app->getInput()->getInt('programid'));
+        
     }
     
     /**
@@ -84,14 +85,15 @@ class GameModel extends FormModel
     
     
     public function getItem(){
-
+        
         $input = Factory::getApplication()->input;
         $id     = $input->getInt("id");
-     
+        $this->contextid = $input->getInt("contextid");
+        
         $svc = new GameService();
         $item = $svc->getItem($id);
-
-       
+        
+        
         if ($id == 0) {
             $this->teamid = $input->getInt('teamid');
             $this->programid = $input->getInt('programid');
@@ -101,25 +103,28 @@ class GameModel extends FormModel
         // Get a Team record and place within our model
         $this->team = TeamService::getItem($item->teamid);
         
+        if ($this->contextid < 1) {
+            $this->contextid = $this->team->id;
+        }
         if (is_null($this->team)) {
             $this->setError(Text::_('COM_JSPORTS_ERR_MISSING_TEAM'));
         }
         return $item;
     }
-        
+    
     
     public function getForm($data = array(), $loadData = true)
     {
         $form = $this->loadForm('com_jsports.game', 'game', ['control' => 'jform', 'load_data' => true]);
-
+        
         if (empty($form))
         {
-	    return false;
+            return false;
             $errors = $this->getErrors();
             throw new Exception(implode("\n", $errors), 500);
         }
         $game = $this->getItem($this->getState('game.id'));
-
+        
         return $form;
     }
     
@@ -129,7 +134,7 @@ class GameModel extends FormModel
         // Check the session for previously entered form data.
         $data = Factory::getApplication()->getUserState(
             'com_jsports_form.game.data',	             // a unique name to identify the data in the session
-                array($this->data)	                     // prefill data if no data found in session
+            array($this->data)	                     // prefill data if no data found in session
             );
         
         if (empty($data)) {
@@ -138,7 +143,7 @@ class GameModel extends FormModel
             var_dump($data);
             exit;
         }
-
+        
         $this->preprocessData('com_jsports.game', $data);
         
         return $data;
@@ -157,76 +162,76 @@ class GameModel extends FormModel
         $isNew = false;
         
         $user = Factory::getUser();
-            
+        
         $table = GameService::getGamesTable();
-    	$table->bind($data);
-    
-    	// Set default values if its a new record.
-    	if ($data['id'] == 0) {
+        $table->bind($data);
+        
+        // Set default values if its a new record.
+        if ($data['id'] == 0) {
             $table->enteredby = $user->username;
             $isNew = true;
-    	}
-    	$table->updatedby = $user->username;
-    	$datetime = date_create()->format('Y-m-d H:i:s');
-    	$table->dateupdated = $datetime;
-    	   	
-    	if ($data['leaguegame']) {
-        	if ($data['homeindicator']) {
-        	    $hometeam = TeamService::getItem($data['teamid']);
-        	    $awayteam = TeamService::getItem($data['opponentid']);
-        	    $table->hometeamid = $data['teamid'];
-        	    $table->hometeamname = $hometeam->name;
-        	    $table->awayteamid = $data['opponentid'];
-        	    $table->awayteamname = $awayteam->name;
-        	} else {
-        	    $hometeam = TeamService::getItem($data['opponentid']);
-        	    $awayteam = TeamService::getItem($data['teamid']);
-        	    $table->hometeamid = $hometeam->id;
-        	    $table->hometeamname = $hometeam->name;
-        	    $table->awayteamid = $awayteam->id;
-        	    $table->awayteamname = $awayteam->name;
-        	}
-        	$table->name = $awayteam->name . " @ " . $hometeam->name;
-    	} else {
-    	    if ($data['homeindicator']) {
-    	        $hometeam = TeamService::getItem($data['teamid']);
-    	        $table->hometeamid = $data['teamid'];
-    	        $table->hometeamname = $hometeam->name;
-    	        $table->awayteamid = 0;
-    	        $table->awayteamname = $data['nonleagueteam'];
-    	    } else {
-    	        $awayteam = TeamService::getItem($data['teamid']);
-    	        $table->hometeamid = 0;
-    	        $table->hometeamname = $data['nonleagueteam'];
-    	        $table->awayteamid = $awayteam->id;
-    	        $table->awayteamname = $awayteam->name;
-    	    }
-    	    $table->name = $table->awayteamname . " @ " . $table->hometeamname;
-    	}
-    	  	
-    	//$table->name = $awayteam->name . " @ " . $hometeam->name;
-    	
-    	$table->check();
-	          
+        }
+        $table->updatedby = $user->username;
+        $datetime = date_create()->format('Y-m-d H:i:s');
+        $table->dateupdated = $datetime;
+        
+        if ($data['leaguegame']) {
+            if ($data['homeindicator']) {
+                $hometeam = TeamService::getItem($data['teamid']);
+                $awayteam = TeamService::getItem($data['opponentid']);
+                $table->hometeamid = $data['teamid'];
+                $table->hometeamname = $hometeam->name;
+                $table->awayteamid = $data['opponentid'];
+                $table->awayteamname = $awayteam->name;
+            } else {
+                $hometeam = TeamService::getItem($data['opponentid']);
+                $awayteam = TeamService::getItem($data['teamid']);
+                $table->hometeamid = $hometeam->id;
+                $table->hometeamname = $hometeam->name;
+                $table->awayteamid = $awayteam->id;
+                $table->awayteamname = $awayteam->name;
+            }
+            $table->name = $awayteam->name . " @ " . $hometeam->name;
+        } else {
+            if ($data['homeindicator']) {
+                $hometeam = TeamService::getItem($data['teamid']);
+                $table->hometeamid = $data['teamid'];
+                $table->hometeamname = $hometeam->name;
+                $table->awayteamid = 0;
+                $table->awayteamname = $data['nonleagueteam'];
+            } else {
+                $awayteam = TeamService::getItem($data['teamid']);
+                $table->hometeamid = 0;
+                $table->hometeamname = $data['nonleagueteam'];
+                $table->awayteamid = $awayteam->id;
+                $table->awayteamname = $awayteam->name;
+            }
+            $table->name = $table->awayteamname . " @ " . $table->hometeamname;
+        }
+        
+        //$table->name = $awayteam->name . " @ " . $hometeam->name;
+        
+        $table->check();
+        
         //@TODO Need to add code to catch any error that may exist.
-    	if ($table->save($data)) {
-    	    if ($isNew) {
-    	        $logger->info('Game id: ' . $table->id . " - " .  
-    	            $table->name . " has been inserted - Date: " . $table->gamedate . " Time: " . JSHelper::displayGameTime($table->gametime));
-    	    } else {
-    	        $logger->info('Game id: ' . $table->id . ' has been updated - Date: ' . 
-    	            $table->gamedate . ' Time: ' . JSHelper::displayGameTime($table->gametime) . ' STATUS = ' . $data['gamestatus']);
-    	    }
-    		return true;
-    	} else {
-    	    $errors = $table->getErrors();
-    	    $this->setError($errors[0]);
-    		$app = Factory::getApplication();
-    		$app->enqueueMessage($errors[0],'error');
-    		return false;
-    	}
-
-    	return true;
+        if ($table->save($data)) {
+            if ($isNew) {
+                $logger->info('Game id: ' . $table->id . " - " .
+                    $table->name . " has been inserted - Date: " . $table->gamedate . " Time: " . JSHelper::displayGameTime($table->gametime));
+            } else {
+                $logger->info('Game id: ' . $table->id . ' has been updated - Date: ' .
+                    $table->gamedate . ' Time: ' . JSHelper::displayGameTime($table->gametime) . ' STATUS = ' . $data['gamestatus']);
+            }
+            return true;
+        } else {
+            $errors = $table->getErrors();
+            $this->setError($errors[0]);
+            $app = Factory::getApplication();
+            $app->enqueueMessage($errors[0],'error');
+            return false;
+        }
+        
+        return true;
     }
     
     

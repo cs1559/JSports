@@ -54,7 +54,7 @@ class RegistrationObserver extends BaseObserver
                 break;
             default:
                 $skill = "ERROR";
-                
+                break;
         }
         
         if ($data->existingteam) {

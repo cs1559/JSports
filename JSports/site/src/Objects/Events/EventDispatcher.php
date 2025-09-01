@@ -33,8 +33,8 @@ class EventDispatcher extends Observable
             $obs1 = new RegistrationObserver();
             $instance->attach($obs1);
             
-            $obs1 = new TeamObserver();
-            $instance->attach($obs1);
+            $obs2 = new TeamObserver();
+            $instance->attach($obs2);
         }
         return $instance;
     }
