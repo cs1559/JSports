@@ -39,6 +39,24 @@ class RegistrationObserver extends BaseObserver
         
         $returningteam = "No";
         
+        switch ($data->skilllevel) {
+            case 'R':
+                $skill = "Red"; 
+                break;
+            case 'W':
+                $skill = "White";
+                break;
+            case 'B':
+                $skill = "Blue";
+                break;
+            case 'E':
+                $skill = "Elite";
+                break;
+            default:
+                $skill = "ERROR";
+                
+        }
+        
         if ($data->existingteam) {
             $returningteam = "Yes";
         }
@@ -60,7 +78,7 @@ State: " . $data->state . "<br/>
 </br>
 Returning Team: " . $returningteam . "<br/>
 </br>
-Registration Group: " . $data->grouping . "<br/>
+Registration Group: " . $data->grouping . " - " . $data->skilllevel ."<br/>
 </br>
 Registered By: " . $data->registeredby . "<br/>
 
