@@ -78,7 +78,7 @@ State: " . $data->state . "<br/>
 </br>
 Returning Team: " . $returningteam . "<br/>
 </br>
-Registration Group: " . $data->grouping . " - " . $data->skilllevel ."<br/>
+Registration Group: " . $data->grouping . " - " . $skill ."<br/>
 </br>
 Registered By: " . $data->registeredby . "<br/>
 
