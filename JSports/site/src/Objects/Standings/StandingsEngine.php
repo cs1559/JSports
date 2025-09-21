@@ -66,13 +66,8 @@ where score.hometeamid = team.id
 		and score.hometeamid = m.teamid  and m.published = 1
 		and score.programid in (select id from #__jsports_programs where status <> 'C')
         and score.programid = m.programid
-<<<<<<< HEAD
-		and gamestatus = 'C' 
-		and leaguegame = 1 	
-=======
 		and gamestatus = 'C'
 		and leaguegame = 1
->>>>>>> refs/remotes/origin/v1.0.27-branch
 group by programid, divisionid, id, team.name
 UNION
 select  m.divisionid, awayteamid id, score.programid, team.name teamname,
@@ -84,11 +79,7 @@ where score.awayteamid = team.id
 		and m.published = 1
 		and score.programid  in (select id from #__jsports_programs where status <> 'C')
         and score.programid = m.programid
-<<<<<<< HEAD
-		and gamestatus = 'C' 
-=======
 		and gamestatus = 'C'
->>>>>>> refs/remotes/origin/v1.0.27-branch
 		and leaguegame = 1
 group by programid, divisionid, id, team.name
 ) temp
