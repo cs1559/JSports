@@ -37,6 +37,17 @@
 		/>
 		
 		<field
+			name="existingteam"
+			type="list"
+			label="Existing Team"
+			onchange="this.form.submit();"
+			>
+			<option selected="selected" value="">- Existing Team? -</option>
+			<option value="0">No</option>
+			<option value="1">Yes</option>
+		</field>
+		
+		<field
 			name="published"
 			type="status"
 			label="JOPTION_SELECT_PUBLISHED"

@@ -49,6 +49,7 @@ class RegistrationsModel extends ListModel
 			$config['filter_fields'] = array(
 				'name', 'a.name',
 				'teamname', 'a.teamname',
+			    'existingteam', 'a.existingteam',
 			    'programid', 'a.programid',
 			    'published', 'a.published',
 			    'grouping', 'a.grouping',
@@ -92,6 +93,9 @@ class RegistrationsModel extends ListModel
 		$grouping = $this->getUserStateFromRequest($this->context . '.filter.grouping', 'filter_grouping', '');
 		$this->setState('filter.grouping', $grouping);
 		
+		$existingteam = $this->getUserStateFromRequest($this->context . '.filter.existingteam', 'filter_existingteam', '');
+		$this->setState('filter.existingteam', $existingteam);
+		
 		// List state information.
 		parent::populateState($ordering, $direction);
 	}
@@ -117,6 +121,7 @@ class RegistrationsModel extends ListModel
 // 		$id .= ':' . $this->getState('filter.programid');
 		$id .= ':' . $this->getState('filter.id');
 		$id .= ':' . $this->getState('filter.grouping');
+		$id .= ':' . $this->getState('filter.existingteam');
 
 		return parent::getStoreId($id);
 	}
@@ -171,6 +176,14 @@ class RegistrationsModel extends ListModel
 	    if (strlen($grouping)>0) {
 	       $query->where($db->quoteName('a.grouping') . ' = :grouping');
 	       $query->bind(':grouping', $grouping, ParameterType::STRING);
+	    }
+	    
+	    // Filter by EXISTINGTEAM
+	    $existingteam = $this->getState('filter.existingteam');
+	    
+	    if (!empty($existingteam)) {	
+	        $query->where($db->quoteName('a.existingteam') . ' = :existingteam');
+	        $query->bind(':existingteam', $existingteam, ParameterType::INTEGER);
 	    }
 	    
 	    // Filter by search in TEAMNAME.
