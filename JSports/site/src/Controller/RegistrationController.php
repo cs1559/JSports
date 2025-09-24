@@ -18,6 +18,7 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Input\Input;
 use FP4P\Component\JSports\Site\Objects\Application;
+use FP4P\Component\JSports\Site\Objects\Application as Myapp;
 
 
 use FP4P\Component\JSports\Site\Services\ProgramsService;
@@ -53,7 +54,7 @@ class RegistrationController extends BaseController
         
         $params = ComponentHelper::getParams('com_jsports');
         $itemid = $params->get('itemid');
-              
+        
         $formdata = new Input($this->input->get('jform','','array'));
         
         // Locate the program ID from the form from the calling page.
@@ -62,7 +63,7 @@ class RegistrationController extends BaseController
         $program = $svc->getItem($programid);
         $options = json_decode($program->registrationoptions);
         
-       // $layout = $program->registrationtemplate;
+        // $layout = $program->registrationtemplate;
         $layout = $options->registrationtemplate;
         
         if (strlen($layout) < 1) {
@@ -73,7 +74,7 @@ class RegistrationController extends BaseController
         
         $vName = $this->input->get('view', 'registration');
         $this->input->set('view', $vName);
-                
+        
         // Set the registration id to edit in the session.
         $app->setUserState('com_jsports.edit.registration.id', $registrationId);
         $app->setUserState('com_jsports.edit.registration.programid', $programid);
@@ -97,12 +98,13 @@ class RegistrationController extends BaseController
      */
     public function save()
     {
-                
+        
+        $logger = Myapp::getLogger();
         $japp = Application::getInstance();
         
         // Check for request forgeries.
-//         $this->checkToken();
-
+        //         $this->checkToken();
+        
         
         $app    = $this->app;
         
@@ -137,7 +139,7 @@ class RegistrationController extends BaseController
                     $app->enqueueMessage($errors[$i], 'warning');
                 }
             }
-                      
+            
             // Save the data in the session.
             $app->setUserState('com_jsports.edit.registration.data', $requestData);
             
@@ -162,9 +164,12 @@ class RegistrationController extends BaseController
             
             return false;
         }
+        
+        $logger->custom('Registration', 'Id: ' . $lastid . '  Team:' . $data['teamname'] . '  by ' . $data['registeredby'] . " Program: " . $data['programid'] . " Group: " . $data['grouping'] .
+            ' Skill: ' . $data['skilllevel'] . ' IP ADDR: ' . $_SERVER['REMOTE_ADDR']);
 
         $japp->triggerEvent('onAfterRegistration', ['data' => $data, 'regid' => $lastid]);
-       
+        
         // Redirect the user and adjust session state based on the chosen task.
         switch ($this->getTask()) {
             default:
