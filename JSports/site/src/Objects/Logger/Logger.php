@@ -56,5 +56,6 @@ abstract class Logger
     abstract function write($msg);
     abstract function debug($msg);
     abstract function writeObject($obj);
+    abstract function custom($tag, $msg);
     
 }

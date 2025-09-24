@@ -96,5 +96,10 @@ class FileLogger extends Logger
     {
         $this->write("[INFO] " . $msg);
     }
+    
+    public function custom($tag,$msg)
+    {
+        $this->write("[". strtoupper($tag) . "] " . $msg);
+    }
 
 }
