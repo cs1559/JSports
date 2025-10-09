@@ -16,6 +16,7 @@ use Joomla\Database\ParameterType;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Mail\Mail;
 use Joomla\CMS\Component\ComponentHelper;
+use FP4P\Component\JSports\Site\Objects\Application as Myapp;
 
 class MailService
 {
@@ -78,12 +79,18 @@ class MailService
             $mailer->Encoding = 'base64';
             $mailer->setBody($body);
             $mailer->addCC($cc);
-            $send = $mailer->Send();
-            if ( $send !== true ) {
-                return false;
-            } else {
+            try {
+                $send = $mailer->Send();
+                if ( $send !== true ) {
+                    return false;
+                } else {
+                    return true;
+                }
+            } catch (Exception $e) {
+                $logger = Myapp::getLogger();
+                $logger->error($e->getMessage());
                 return true;
-            }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+            }
     }
     
 }
