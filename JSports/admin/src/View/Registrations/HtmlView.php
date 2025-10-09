@@ -130,6 +130,8 @@ class HtmlView extends BaseHtmlView
             ->listCheck(true);
         }
         
+        ToolbarHelper::custom('registrations.export', 'download', 'download', 'Export CSV', false);
+        
         $toolbar->standardButton('dashboard')
         ->icon('fa fa-home')
         ->text('Dashboard')

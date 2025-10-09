@@ -144,7 +144,8 @@ class RegistrationsModel extends ListModel
 	    $query->select(
 	        $this->getState(
 	            'list.select',
-	            'a.*'
+	            'a.id, a.programid, a.divisionid, a.teamid, a.teamname, a.teamid, a.grouping, a.skilllevel, a.name, a.address, ' .
+	            'a.email, a.phone, a.cellphone, a.registeredby, a.playoffs, a.existingteam, a.published'
 	            )
 	        );
 	    $query->from($db->quoteName('#__jsports_registrations') . ' AS a');
