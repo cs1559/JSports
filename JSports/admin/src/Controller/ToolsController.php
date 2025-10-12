@@ -49,7 +49,8 @@ class ToolsController extends BaseController
             
             if (!$adapter->alreadyOnList($contact['email'])) {
                 //echo 'Email: ' . $contact['email'] . ' Found: ' . $adapter->alreadyOnList($contact['email']) . '<br/>';
-                $adapter->addSubscriber($contact['firstname'] . ' ' . $contact['lastname'],$contact['email']);
+                //$adapter->addSubscriber($contact['firstname'] . ' ' . $contact['lastname'],$contact['email']);
+                $adapter->addSubscriber($contact['name'] ,$contact['email']);
                 $ctr = $ctr + 1;
             }
 

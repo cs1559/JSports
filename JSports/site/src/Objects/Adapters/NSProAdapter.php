@@ -47,9 +47,25 @@ $source and $source_id are only required if you want to send a confirmation mess
         $db = Factory::getDbo();
         $query = $db->getQuery(true);
         
-        $sql = "SELECT * FROM `#__jsports_rosters` WHERE length(email)> 0 
-                and programid in (select id from #__jsports_programs where status = 'A');";
+        /*
+         * 
+         * SELECT concat('firstname',' ','lastname') as name, email FROM `xkrji_jsports_rosters` WHERE length(email)> 0 
+                and programid in (select id from xkrji_jsports_programs where status = 'A')
+union
+select name, email from xkrji_jsports_registrations where programid in (SELECT programid FROM `xkrji_jsports_programs` WHERE registrationopen = 1)
+and length(email)>0;
+
+         */
         
+//         $sql = "SELECT * FROM `#__jsports_rosters` WHERE length(email)> 0 
+//                 and programid in (select id from #__jsports_programs where status = 'A');";
+        $sql = "
+            SELECT concat('firstname',' ','lastname') as name, email FROM `#__jsports_rosters` WHERE length(email)> 0
+                and programid in (select id from #__jsports_programs where status = 'A')
+            union
+            select name, email from #__jsports_registrations where programid in (SELECT id FROM `#__jsports_programs` WHERE registrationopen = 1)
+                and length(email)>0";
+       
         $query->setQuery($sql);
         $db->setQuery($query);
         
