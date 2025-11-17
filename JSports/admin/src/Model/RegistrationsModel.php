@@ -202,7 +202,7 @@ class RegistrationsModel extends ListModel
 	    $orderCol  = $this->state->get('list.ordering', 'a.id');
 	    $orderDirn = $this->state->get('list.direction', 'ASC');
 	    
-	    $ordering = [$db->quoteName('a.name') . ' ' . $db->escape($orderDirn), ];
+	    $ordering = [$db->quoteName('a.teamname') . ' ' . $db->escape($orderDirn), ];
 	    	    
 	    $query->order($ordering);
 	    
