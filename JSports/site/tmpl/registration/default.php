@@ -63,6 +63,13 @@ if ($this->options->includeskills) {
 }
 }
 ?>
+<?php
+if (!is_null($this->options)) {
+if ($this->options->includeplayoffs) {
+    echo $this->form->renderField('playoffs');
+}
+}
+?>
 <?php 
 if (!is_null($this->options)) {
 if ($this->options->includeagreement) {
