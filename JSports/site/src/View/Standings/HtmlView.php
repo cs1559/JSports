@@ -56,7 +56,7 @@ class HtmlView extends BaseHtmlView
         $this->program = $this->get('Program');
         $this->divisions = $this->get('Divisions');
         if (!$this->program->publishstandings) {
-             $this->setLayout("nonpublished");
+             //$this->setLayout("nonpublished");
         }
         
         return parent::display($tpl);
