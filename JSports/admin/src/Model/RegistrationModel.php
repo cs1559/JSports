@@ -28,7 +28,7 @@ use FP4P\Component\JSports\Site\Services\TeamService;
 use FP4P\Component\JSports\Site\Services\MailService;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Component\ComponentHelper;
-
+use FP4P\Component\JSports\Site\Objects\Application as Myapp;
 
 class RegistrationModel extends AdminModel
 {
@@ -204,6 +204,8 @@ class RegistrationModel extends AdminModel
      */
     protected function processRegistration($regid) {
         
+        $logger = Myapp::getLogger();
+        
         $db = $this->getDatabase();
         
         $rsvc = new RegistrationService();
@@ -257,7 +259,7 @@ class RegistrationModel extends AdminModel
                     $db->quote($item->name), // contact name
                     $db->quote($item->email), // contact email
                     $db->quote($item->phone), // contact phone
-                    $db->quote($item->tournament), // tournament indicator
+                    $db->quote($item->playoffs), // tournament indicator
                     1 // published
                 );
                 
@@ -270,6 +272,9 @@ class RegistrationModel extends AdminModel
                 
                 // Get the row that was just inserted
                 $new_row_id = $db->insertid();
+                
+                $logger->info('Team Profile ' . $item->teamname . ' was published/created - ID: ' . $new_row_id);
+                
             } else {
                 $new_row_id = $item->teamid;
             }
@@ -301,6 +306,7 @@ class RegistrationModel extends AdminModel
             $db->setQuery($query);
             $db->execute();
             
+            $logger->info('Team ' . $item->teamname . ' mapping record was created - ID: ' . $new_row_id);
             
             // =========================================================================================
             //  Set registration record to published.
@@ -308,10 +314,9 @@ class RegistrationModel extends AdminModel
             $query = $db->getQuery(true);
             // Set fields to update on the registration record
             if ($createteam) {
-                $fields = array($db->quoteName('published') . ' = 1', $db->quoteName('tournament') . ' = ' . $item->tournament, 
-                        $db->quoteName('teamid') . ' = ' . $new_row_id);e
+                $fields = array($db->quoteName('published') . ' = 1', $db->quoteName('teamid') . ' = ' . $new_row_id);
             } else {
-                $fields = array($db->quoteName('published') . ' = 1', $db->quoteName('tournament') . ' = ' . $item->tournament);
+                $fields = array($db->quoteName('published') . ' = 1');
             }
 
             $conditions = array($db->quoteName('id') . ' = ' .$item->id);
@@ -324,7 +329,7 @@ class RegistrationModel extends AdminModel
             
             // commit transaction
             $db->transactionCommit();
-        
+
             $this->sendProcessedNotification($new_row_id, $item);
             
         } catch (Exception $e) {
