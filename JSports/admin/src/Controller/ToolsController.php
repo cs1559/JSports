@@ -57,7 +57,9 @@ class ToolsController extends BaseController
         }
 //         exit;
         
-        $app->enqueueMessage("Newsletter list updated - " . $ctr . " emails added" , 'message');
+        $msg = "Newsletter list updated - " . $ctr . " emails imported";
+        $app->enqueueMessage($msg , 'message');
+        LogService::info($msg);
         $this->setRedirect('index.php?option=com_jsports&view=tools');
    
     }
