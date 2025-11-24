@@ -32,6 +32,11 @@ $showposition = $params->get('showposition');
 		<h1><span id="standings-league-description">League Standings - <?php echo $this->program->name; ?></span></h1>
 		<br/>
 		<span class="system_message"><?php // echo $season_note; ?></span>
+		<?php 
+		if (!$this->program->publishstandings) {
+                echo "<h3>Standings for this program have not been published</h3>";
+		} else {
+        ?>
 		<div>
 			<?php 
 			foreach ($this->divisions as $div) {
@@ -160,6 +165,9 @@ $showposition = $params->get('showposition');
 	?>
 			<a class="btn btn-primary btn-sm" href="#top">Back to Top</a>
 			
-	<?php } ?>
+	<?php } 
+	
+}   // IF/THEN IF PUBLISHED
+	?>
 </div>
 
