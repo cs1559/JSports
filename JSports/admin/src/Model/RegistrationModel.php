@@ -243,6 +243,7 @@ class RegistrationModel extends AdminModel
                     'contactname',
                     'contactemail',
                     'contactphone',
+                    'tournament',
                     'published'
                 );
                 $teamname = OutputFilter::stringURLUnicodeSlug($item->teamname);
@@ -256,6 +257,7 @@ class RegistrationModel extends AdminModel
                     $db->quote($item->name), // contact name
                     $db->quote($item->email), // contact email
                     $db->quote($item->phone), // contact phone
+                    $db->quote($item->tournament), // tournament indicator
                     1 // published
                 );
                 
