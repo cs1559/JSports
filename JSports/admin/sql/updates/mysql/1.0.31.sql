@@ -1,3 +1,3 @@
-alter table #__jsports_team add tournament tinyint default 0;
-alter table #__jsports_team add show_contact_info tinyint default 0;
-alter table #__jsports_team add open_roster tinyint default 0;
+alter table `#__jsports_teams` add `tournament` tinyint CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci default 0 after ownerid;
+alter table `#__jsports_teams` add `show_contact_info` tinyint CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci default 0 after tournament;
+alter table `#__jsports_teams` add `open_roster` tinyint  CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_cidefault 0 after show_contact_info;
