@@ -308,9 +308,10 @@ class RegistrationModel extends AdminModel
             $query = $db->getQuery(true);
             // Set fields to update on the registration record
             if ($createteam) {
-                $fields = array($db->quoteName('published') . ' = 1', $db->quoteName('teamid') . ' = ' . $new_row_id);
+                $fields = array($db->quoteName('published') . ' = 1', $db->quoteName('tournament') . ' = ' . $item->tournament, 
+                        $db->quoteName('teamid') . ' = ' . $new_row_id);e
             } else {
-                $fields = array($db->quoteName('published') . ' = 1');
+                $fields = array($db->quoteName('published') . ' = 1', $db->quoteName('tournament') . ' = ' . $item->tournament);
             }
 
             $conditions = array($db->quoteName('id') . ' = ' .$item->id);
