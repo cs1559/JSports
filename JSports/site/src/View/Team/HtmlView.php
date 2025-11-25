@@ -125,7 +125,7 @@ class HtmlView extends BaseHtmlView
         }
 
         
-        if (!SecurityService::isCoach()) {
+        if (!SecurityService::isCoach() && !$this->data->showcontactinfo) {
             $this->data->contactphone = 'Unavailable';
             $this->data->contactemail = 'Unavailable';
         }
