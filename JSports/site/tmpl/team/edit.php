@@ -35,6 +35,11 @@ HTMLHelper::_('behavior.keepalive');
 		<?php echo $this->form->renderField('websiteurl'); ?>							
 		<?php echo $this->form->renderField('id'); ?>
 		<?php echo $this->form->renderField('ownerid'); ?>
+		<h4>Profile Attributes</h4>
+		<hr/>
+		<?php echo $this->form->renderField('tournament'); ?>
+		<?php echo $this->form->renderField('openroster'); ?>
+		<?php echo $this->form->renderField('showcontactinfo'); ?>
 		
 	<input type="hidden" name="origowner" value="<?php echo $this->item->ownerid; ?>">
 	<input type="hidden" name="task" value="">

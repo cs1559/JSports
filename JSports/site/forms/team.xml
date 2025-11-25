@@ -68,7 +68,23 @@
 			<option value="-2">JTRASHED</option>
 		</field>
 
+		<field name="tournament" type="radio" label="COM_JSPORTS_TOURNAMENT"
+			class="btn-group btn-group-yesno" description="" default="0" validate="options">
+				<option value="1">Yes</option>
+				<option value="0">No</option>
+		</field>
+
+		<field name="openroster" type="radio" label="COM_JSPORTS_OPENROSTER"
+			class="btn-group btn-group-yesno" description="" default="0" validate="options">
+				<option value="1">Yes</option>
+				<option value="0">No</option>
+		</field>
 		
+		<field name="showcontactinfo" type="radio" label="COM_JSPORTS_SHOWCONTACTINFO"
+			class="btn-group btn-group-yesno" description="" default="0" validate="options">
+				<option value="1">Yes</option>
+				<option value="0">No</option>
+		</field>		
 	</fieldset>
 
 
