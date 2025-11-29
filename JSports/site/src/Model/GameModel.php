@@ -102,11 +102,7 @@ class GameModel extends FormModel
         
         // Get a Team record and place within our model
         $this->team = TeamService::getItem($item->teamid);
-<<<<<<< HEAD
 
-=======
-        
->>>>>>> refs/remotes/origin/v1.0.27-branch
         if ($this->contextid < 1) {
             $this->contextid = $this->team->id;
         }
