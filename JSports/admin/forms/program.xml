@@ -59,10 +59,10 @@
 			label="COM_JSPORTS_REGISTRATIONTEMPLATE" />
 
 		<field name="programstart" type="calendar"
-			label="COM_JSPORTS_STARTDATE"  default="0000-00-00"/>
+			label="COM_JSPORTS_STARTDATE"  default="0000-00-00" required="true" />
 
 		<field name="programend" type="calendar"
-			label="COM_JSPORTS_ENDDATE"  default="0000-00-00"/>
+			label="COM_JSPORTS_ENDDATE"  default="0000-00-00" required="true" />
 
 		<field name="published" type="list" label="JSTATUS"
 			class="form-select-color-state" default="1" validate="options">
