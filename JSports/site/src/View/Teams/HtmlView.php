@@ -65,6 +65,7 @@ class HtmlView extends BaseHtmlView
     public $activeFilters;
     
     public $showData;
+    public $isProgramPending;
     
     public function display($tpl = null)
     {
@@ -74,6 +75,7 @@ class HtmlView extends BaseHtmlView
         $this->state         = $this->get('State');
         $this->filterForm    = $this->get('FilterForm');
         $this->activeFilters = $this->get('ActiveFilters');
+        $this->isProgramPending = false;
         
         /* removed 12/6/2024 - this caused pagination issues */
         //$this->pagination->limit = 30;
@@ -83,6 +85,7 @@ class HtmlView extends BaseHtmlView
         
         $this->showData = false;
         if ($this->program->status == "P") {
+            $this->isProgramPending = true;
             if (SecurityService::isAdmin()) {
                 $this->showData = true;
             }

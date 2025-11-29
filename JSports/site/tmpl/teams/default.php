@@ -55,7 +55,17 @@ $wa->useStyle('com_jsports.teamlist.style');
 		<?php echo $this->filterForm->renderField('limit', 'list'); ?>	
 	
 	</div>
-	
+
+<?php 
+    if ($this->isProgramPending) {
+        ?>
+        <br/>
+        <div class="alert alert-warning" role="alert">
+            <strong>NOTE:  INFORMATION IS PENDING ... ALL DATA IS SUBJECT TO CHANGE</strong>
+        </div>
+        <?php 
+    }
+?>
 	<h3>Teams</h3>
 		
 	<div class="teamlist-table-wrapper">
@@ -76,7 +86,6 @@ $wa->useStyle('com_jsports.teamlist.style');
 						<?php echo HTMLHelper::_('searchtools.sort', 'COM_JSPORTS_NAME', 'a.name', $listDirn, $listOrder) . '<br/>'; 
 						
 						?>
-						
 					</th>
 					<th scope="col" class="w-20">
 						<?php echo Text::_('COM_JSPORTS_CONTACTNAME'); ?>
