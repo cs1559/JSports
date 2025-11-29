@@ -35,12 +35,32 @@ HTMLHelper::_('behavior.keepalive');
 		<?php echo $this->form->renderField('websiteurl'); ?>							
 		<?php echo $this->form->renderField('id'); ?>
 		<?php echo $this->form->renderField('ownerid'); ?>
-		<h4>Profile Attributes</h4>
-		<hr/>
-		<?php echo $this->form->renderField('tournament'); ?>
+		
+		
+		<?php 
+		  if ($this->attributesenabled) {
+		      if ($this->canEditAttributes) { ?>
+    			<h4>Profile Attributes</h4>
+    			<hr/>
+		<?php
+		      $newLabel = Text::sprintf('COM_JSPORTS_TOURNAMENT', $this->recentprogram->name);
+		      $this->form->setFieldAttribute('tournament', 'label', $newLabel);
+		      if ($this->canEditTournamentFlag) {
+		          $this->form->setFieldAttribute('tournament', 'disabled', 'false');
+		      } else {
+		          $this->form->setFieldAttribute('tournament', 'disabled', 'true');
+		      }
+		      
+		      if ($this->canEditTournamentFlag) {
+		          echo $this->form->renderField('tournament'); 
+		      }
+		?>
 		<?php echo $this->form->renderField('openroster'); ?>
 		<?php echo $this->form->renderField('showcontactinfo'); ?>
-		
+		<?php 
+                }
+            }
+		?>
 	<input type="hidden" name="origowner" value="<?php echo $this->item->ownerid; ?>">
 	<input type="hidden" name="task" value="">
 	<?php echo HTMLHelper::_('form.token'); ?>

@@ -50,6 +50,8 @@ class HtmlView extends BaseHtmlView
     protected $active;
     protected $teamid;
     protected $programid;
+    protected $canEditTournamentFlag = false;
+    protected $attributesenabled = false;
     
     /**
      * Execute and display a template script.
@@ -90,6 +92,7 @@ class HtmlView extends BaseHtmlView
         // Retrieve the directory for this teams logo
         $params = ComponentHelper::getParams('com_jsports');
         $logodir = $params->get('logodir');
+        $this->attributesenabled = $params->get('enableattributes');
         
         $this->programs = $mod->programs;
         $this->programstats = $mod->recordhistory;
@@ -98,6 +101,8 @@ class HtmlView extends BaseHtmlView
         $this->rosterplayers = $mod->rosterplayers;
         $this->canSeeRoster = $mod->canSeeRoster;
         $this->games = $mod->games;
+        $this->canEditTournamentFlag = $mod->canEditTournamentFlag;
+        $this->canEditAttributes = $mod->canEditAttributes;
         
         if (isset($this->standings[0])) {
             $this->divisionname = $this->standings[0]['divisionname'];

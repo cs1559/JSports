@@ -50,7 +50,8 @@ class TeamModel extends FormModel
     protected $games;
     protected $standings;
     protected $canSeeRoster = false;
-
+    protected $canEditTournamentFlag = false;
+    protected $canEditAttributes = false;
     
     protected $form = 'team';
     
@@ -72,7 +73,28 @@ class TeamModel extends FormModel
         
         $psvc = new ProgramsService();
         $this->recentprogram = $psvc->getItem($recentprogramid);
-               
+        
+        
+        if ($this->recentprogram->status != "C") {
+            $this->canEditAttributes = true;
+            
+            // Convert MySQL datetime string to PHP DateTime object
+            $eventDate = new \DateTime($this->recentprogram->programend);
+            $now       = new \DateTime();    // system date/time
+            
+            // Create a 3-week interval
+            $threeWeeks = new \DateInterval('P21D');
+            
+            // Create comparison windows
+            $eventMinus3Weeks = (clone $eventDate)->sub($threeWeeks);
+            
+            if ($now >= $eventMinus3Weeks) {
+                $this->canEditTournamentFlag = false;
+            } else {   
+                $this->canEditTournamentFlag = true;
+            }
+        }
+        
         $rsvc = new RosterService();
         $this->rosterstaff = $rsvc->getRosterStaff($id, $recentprogramid);
         
@@ -190,7 +212,7 @@ class TeamModel extends FormModel
     
     
     public function getTeamPrograms($teamid) {
-                
+        -        
         $db    = $this->getDatabase();
         $query = $db->getQuery(true);
         

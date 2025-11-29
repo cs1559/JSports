@@ -61,6 +61,15 @@ $document->setTitle(Text::_('COM_JSPORTS_TEAMPROFILE_PAGE_TITLE'));
     		<?php
                     if ($this->canEdit) {
                         echo $this->profilemenu;
+                        
+                        if (!$this->data->tournament) {
+                            ?>
+                            <br/>
+                            <div class="alert alert-warning" role="alert">
+	                            <strong>NOTE:  Team is NOT currently registered to play in the year end tournament</strong>
+                            </div>
+                            <?php 
+                        }
                     }
                     ?>
     			</div> <!--  END OF ACTIONS -->

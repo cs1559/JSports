@@ -211,7 +211,15 @@
 			<option value="0">No</option>
 			<option value="1">Yes</option>
 		</field>
-			
+
+		<field name="enableattributes" type="radio" default="0"
+			label="COM_JSPORTS_PROFILE_ATTRIBUTES_ENABLED"
+			description="COM_JSPORTS_PROFILE_ATTRIBUTES_ENABLED_DESC"
+			layout="joomla.form.field.radio.switcher">
+			<option value="0">No</option>
+			<option value="1">Yes</option>
+		</field>
+					
 	</fieldset>
 	
 	
