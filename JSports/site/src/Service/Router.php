@@ -117,6 +117,10 @@ class Router extends RouterView
         $venues->setKey('id');
         $this->registerView($venues);
         
+        $openings = new RouterViewConfiguration('openings');
+        $openings->setKey('id');
+        $this->registerView($openings);
+        
         parent::__construct($app, $menu);
 
         $this->attachRule(new MenuRules($this));
