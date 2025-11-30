@@ -1,7 +1,59 @@
 <h1>JSports - Sports Management</h1>
+JSports is a Joomla component written specifically for Southwest Illinois Baseball League (SWIBL.org).  It is used
+for the ongoing management of a youth baseball league; however, the component itself can be used for other sports leagues.
 
-** Currently Under Construction **
+<h2>Component Configurations</h2>
+<hr>
+<h3>Organization</h3>
+This tab covers data attributes related to the actual organization operating the league.
 
+<ul>
+	<li><b>Organization Name</b> - Name of the organization</li>
+	<li><b>Address 1</b> - Mailing address (line 1)</li>
+	<li><b>Address 2</b> - Mailing address (line 2 if applicable)</li>
+	<li><b>City</b></li>
+	<li><b>State</b></li>
+	<li><b>Zipcode</b></li>
+	<li><b>Contact Name</b> = Primary contact name in the organization]</li>
+	<li><b>Email</b> - Organizations primary email address</li>
+	<li><b>Phone</b> - Organizations phone number</li>
+</ul>
+<h3>Options</h3>
+<ul>
+	<li><b>Front End Administration</b></li>
+	<li><b>Registration Enabled</b> - This setting will enable/disable registration for the entire site the component is installed on</li>
+	<li><b>Logo Path</b></li>
+	<li><b>Team Logo Directory Prefix</b></li>
+	<li><b>Remove IDs from URLs</b> - Currently not used</li>
+	<li><b>Show Standings Position</b> - This option will modify the standings display to include a position number such as 1, 2, 3, etc.</li>
+	<li><b>Item Id</b></li>
+	<li><b>CRON Key</b> - This is a user defined key value that is used by the CRON job to update the standings to prevent unauthorized execution of the cron script.</li>
+	<li><b>Days to retain in Logs</b> - The default number of days to keep a records in the log table.</li>
+	<li><b>Active Standings Only</b> - This setting limits the number of programs included in the drop down display of programs to select from for displaying the standings.</li>	
+</ul>
+<h3>Email</h3>
+<ul>
+<li><b>Enable Event Emails</b></li>
+<li><b>FROM Email Address</b></li>
+<li><b>Name of the FROM person </b></li>
+<li><b>Copy League Admin</b></li>	
+<li><b>Admin Email(s)</b></li>
+</ul>
+<h3>Team Profile</h3>
+<ul>
+<li><b>Show Location</b> - Setting to show/hide location (or city) on the team profile.</li>
+<li><b>Show Hit Counter</b> - Displays the number of times a profile has been viewed.</li>
+<li><b>Show Page Links</b> - Displays a page link menu that enables users to jump to specific sections of the profile.</li>
+<li><b>Show Division Standings</b> - Displays the divisional standings for the teams most recent season on the profile page.</li>
+<li><b>Enable Team Schedule Download</b> - Enables/Disables a users (incl. guest) ability to download a teams game schedule.</li>
+<li><b>Enable Profile Attributes</b> - Enables a team to manage specific attributes such as playing in tournament, making contact info public, etc.</li>
+</ul>
+<h3>Games</h3>
+<ul>
+<li><b>Reset Game Score to 0-0</b> - When enabled, when an admin resets a game, the score is also reset to 0-0; otherwise, the score will remain the same but the game status will be changed to scheduled.</li>
+<li><b>Notify ADMIN of possible forfeit</b> - This feature, when enabled, will send an email notification to the league administrators if a game entered COULD be a forfeit (7-0 score).</li>
+</ul>
+<h3>Permissions</h3>
 
 <h2>League Administration</h2>
 <p>
