@@ -31,8 +31,6 @@ $user      = Factory::getUser();
 	   
 	<?php echo LayoutHelper::render('joomla.searchtools.default', array('view' => $this)); ?>
     		
-	<?php // echo LayoutHelper::render('joomla.searchtools.default', array('view' => $this)); ?>
-	
 	<?php if (empty($this->items)) : 
 	       ?>
 		
@@ -52,7 +50,7 @@ $user      = Factory::getUser();
 						<?php echo HTMLHelper::_('searchtools.sort', 'COM_JSPORTS_STATE', 'a.published', $listDirn, $listOrder); ?>
 					</th>
 					<th scope="col" class="w-20">
-						<?php echo HTMLHelper::_('searchtools.sort', 'COM_JSPORTS_TEAMNAME', 'a.teamname', $listDirn, $listOrder); ?>
+						<?php echo HTMLHelper::_('searchtools.sort', 'COM_JSPORTS_TEAMNAME', 'c.teamname', $listDirn, $listOrder); ?>
 					</th>
 					<th scope="col" class="w-5">
 						<?php echo HTMLHelper::_('searchtools.sort', 'COM_JSPORTS_AGEGROUP', 'r.agegroup', $listDirn, $listOrder); ?>

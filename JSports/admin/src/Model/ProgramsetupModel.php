@@ -67,7 +67,7 @@ class ProgramsetupModel extends ListModel
 	 *
 	 * @since   1.6
 	 */
-	protected function populateState($ordering = 'a.id', $direction = 'asc')
+	protected function populateState($ordering = 'c.name', $direction = 'asc')
 	{
 	    
 	    $app = Factory::getApplication();
@@ -80,8 +80,8 @@ class ProgramsetupModel extends ListModel
 	    $this->setState('filter.programid', $programid);
 	    $app->setUserState('com_jsports.programid', $programid);
 	    
-// 		$published = $this->getUserStateFromRequest($this->context . '.filter.published', 'filter_published', '');
-// 		$this->setState('filter.published', $published);
+		$published = $this->getUserStateFromRequest($this->context . '.filter.published', 'filter_published', '');
+		$this->setState('filter.published', $published);
 
 		$grouping = $this->getUserStateFromRequest($this->context . '.filter.grouping', 'filter_grouping', '');
 		$this->setState('filter.grouping', $grouping);
@@ -118,11 +118,11 @@ class ProgramsetupModel extends ListModel
 	 *
 	 * @since   1.6
 	 */
-	protected function getStoreId($id = '')
+	protected function getStoreId($id = 'programsetup')
 	{
 		// Compile the store id.
-// 		$id .= ':' . $this->getState('filter.search');
-// 		$id .= ':' . $this->getState('filter.published');
+		$id .= ':' . $this->getState('filter.search');
+		$id .= ':' . $this->getState('filter.published');
 		$id .= ':' . $this->getState('filter.programid');
 		$id .= ':' . $this->getState('filter.grouping');
 
@@ -165,24 +165,24 @@ class ProgramsetupModel extends ListModel
 	        $db->quoteName('a.programid') . ' = ' . $db->quoteName('b.id'),    // Join to the PROGRAMS table
 	        $db->quoteName('a.teamid') . ' = ' . $db->quoteName('c.id'),       // Join to the TEAMS table
 	        $db->quoteName('a.regid') . ' = ' . $db->quoteName('r.id'),        // Join to the REGISTRATIONS table
-	        $db->quoteName('b.setupfinal') . ' = 0 ' ,      
-	        $db->quoteName('b.registrationonly') . ' = 0 ' ,       
+	        $db->quoteName('b.setupfinal') . ' = 0 ' ,      // Prevent someone from altering setup after its been finalized
+	        $db->quoteName('b.registrationonly') . ' = 0 ' ,       // Eliminate registration only programs as this does not apply
 	    );
 	    
 	    $query->where($conditions);
 	    
 	    // Filter by published state
-// 	    $published = (string) $this->getState('filter.published');
+	    $published = (string) $this->getState('filter.published');
 	    
-// 	    if (is_numeric($published))
-// 	    {
-// 	        $query->where($db->quoteName('a.published') . ' = :published');
-// 	        $query->bind(':published', $published, ParameterType::INTEGER);
-// 	    }
-// 	    elseif ($published === '')
-// 	    {
-// 	        $query->whereIn($db->quoteName('a.published'), array(0, 1));
-// 	    }
+	    if (is_numeric($published))
+	    {
+	        $query->where($db->quoteName('a.published') . ' = :published');
+	        $query->bind(':published', $published, ParameterType::INTEGER);
+	    }
+	    elseif ($published === '')
+	    {
+	        $query->whereIn($db->quoteName('a.published'), array(0, 1));
+	    }
 	    
 	    // Filter by PROGRAM.
  	    $programid = $this->getState('filter.programid');
@@ -219,7 +219,9 @@ class ProgramsetupModel extends ListModel
 	    
 	    $ordering = [$db->quoteName('r.grouping') . ' ' . $db->escape($orderDirn), ];
 	    	    
-	    $query->order($ordering);
+	    $query->order($db->escape($orderCol . ' ' . $orderDirn));
+	    
+	    //$query->order($ordering);
 	    
 	    return $query;
 	}
