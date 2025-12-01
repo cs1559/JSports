@@ -24,7 +24,7 @@ use Joomla\CMS\Component\ComponentHelper;
 use FP4P\Component\JSports\Site\Services\TeamService;
 use FP4P\Component\JSports\Site\Services\GameService;
 use FP4P\Component\JSports\Administrator\Helpers\JSHelper;
-
+use FP4P\Component\JSports\Site\Services\LogService;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
@@ -129,6 +129,8 @@ class TeamController extends BaseController
         $return = $model->save($data);
         
         $logger->info('TeamID: ' . $teamid. ' Team profile page UPDATED');
+        
+        LogService::writeArray($data,'TEAMPROFILE');
         
         if ($origowner != $requestData['ownerid']) {
             $myapp = myApp::getInstance();
