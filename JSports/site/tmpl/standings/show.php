@@ -23,7 +23,13 @@ $wa->useStyle('com_jsports.standings.style');
 $params = ComponentHelper::getParams('com_jsports');
 $showposition = $params->get('showposition');
 
+if (!$this->program->setupfinal) {
+    $season_note = "Setup is NOT final and information displayed is subject to change";
+} else {
+    $season_note = null;
+}
 ?>
+
 
 <div id="standings-container">
 
@@ -31,8 +37,14 @@ $showposition = $params->get('showposition');
 
 		<h1><span id="standings-league-description">League Standings - <?php echo $this->program->name; ?></span></h1>
 		<br/>
-		<span class="system_message"><?php // echo $season_note; ?></span>
-		<?php 
+
+		<?php
+		if (!is_null($season_note)) {
+		    ?>
+		    	<div class="alert alert-primary"><?php echo $season_note; ?></div>
+			<?php 
+		}
+		
 		if (!$this->program->publishstandings) {
                 echo "<h3>Standings for this program have not been published</h3>";
 		} else {
