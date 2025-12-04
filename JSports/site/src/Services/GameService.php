@@ -295,7 +295,7 @@ class GameService
         ->where($db->quoteName('a.programid') . ' = ' . $db->quote($programid))
         ->where(" (" . $db->quoteName('a.teamid') . ' = ' . $db->quote($teamid)
             . " or " . $db->quoteName('a.opponentid') . ' = ' . $db->quote($teamid) . ")")
-        ->order("gamedate asc");
+        ->order("gamedate asc, gametime asc");
         $db->setQuery($query);
         return $db->loadObjectList();
             
