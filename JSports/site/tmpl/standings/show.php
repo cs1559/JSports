@@ -24,7 +24,7 @@ $params = ComponentHelper::getParams('com_jsports');
 $showposition = $params->get('showposition');
 
 if (!$this->program->setupfinal) {
-    $season_note = "Setup is NOT final and information displayed is subject to change";
+    $season_note = Text::_('COM_JSPORTS_PROGRAM_PENDING');
 } else {
     $season_note = null;
 }
