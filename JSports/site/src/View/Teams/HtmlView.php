@@ -94,6 +94,10 @@ class HtmlView extends BaseHtmlView
             $this->showData = true;
         }
         
+        if (!$this->program->setupfinal && $this->program->id > 0) {
+            $this->isProgramPending = true;
+        }
+         
         // Check for errors.       
         if (count($errors = $this->get('Errors')))
         {

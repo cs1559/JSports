@@ -97,6 +97,9 @@ class HtmlView extends BaseHtmlView
         if ($this->program->status == 'P') {
             $this->setLayout("unavailable");
         }
+        if (!$this->program->setupfinal && !SecurityService::isAdmin())  {
+            $this->setLayout("unavailable");
+        }
         
         // Check for errors.
         if (count($errors = $this->get('Errors')))

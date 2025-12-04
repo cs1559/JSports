@@ -100,6 +100,9 @@ class HtmlView extends BaseHtmlView
         if ($this->program->status == "C") {
             $this->setLayout("unavailable");
         }
+        if (!$this->program->setupfinal) {
+            $this->setLayout("unavailable");
+        }
         
         // Check for errors.
         if (count($errors = $this->get('Errors')))
