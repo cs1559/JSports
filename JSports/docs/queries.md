@@ -1,3 +1,30 @@
+#Query to identify top 3 teams in a division
+WITH standings_data AS (
+  SELECT 
+    programid, 
+    divisionid, 
+    teamid,
+    points,
+    ROW_NUMBER() OVER (
+      PARTITION BY programid, divisionid
+      ORDER BY 
+        programid, divisionid, points DESC
+    ) row_num 
+  FROM 
+    jos2823_jsports_past_standings
+  where programid = 35
+) 
+SELECT 
+    programid,
+    divisionid,
+    teamid,
+    points, row_num
+FROM 
+  standings_data 
+WHERE 
+  row_num <= 3
+order by programid, divisionid, points desc;
+
 # Identify if a team is ACTIVE
 SELECT * FROM `jos2823_jsports_teams` 
 WHERE id in (select teamid from jos2823_jsports_map m, jos2823_jsports_programs p where m.programid = p.id and p.status = 'A' and m.published = 1);
