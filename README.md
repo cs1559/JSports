@@ -1,7 +1,7 @@
 # JSports - Sports Management
 
 # About JSports
-This component is a sports management component that was built to assist in the management of a youth sports league.  This sports league consistently has an annual team membership of nearly 145+ teams per yaar.  The key functional areas within this component include, but not limited, to the following:
+This component is a sports management component that was built to assist in the management of a youth sports league.  This sports league consistently has an annual team membership of nearly 145+ teams per yaar.  See the component live at swibl.org.  The key functional areas within this component include, but not limited, to the following:
 
 - League/Organization 
 - Programs (similiar to a "season")
@@ -56,7 +56,7 @@ GNU/GPLv2, see [http://www.gnu.org/licenses/gpl-2.0.html](http://www.gnu.org/lic
 # Contact
 
 Developer:
-Chris Stireter - chris@swibl.org
+Chris Strieter - chris@swibl.org
 
 Project Link:  [https://github.com/cs1559/JSports](https://github.com/cs1559/JSports)
 
