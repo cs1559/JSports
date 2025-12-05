@@ -232,8 +232,9 @@ class GameController extends FormController
             $app->setUserState('com_jsports.edit.game.data', $requestData);
 
             // Redirect back to the edit screen.
-            //$this->setRedirect(Route::_('index.php?option=com_jsports&view=game&layout=edit&id=' .$gameid . '&teamid=' . $teamid, false));
-            $this->setRedirect(Route::_('index.php?option=com_jsports&view=game&layout=edit&id=' .$gameid . '&teamid=' . $contextid, false));
+            // @TODO  Need to look at how the context id is set
+            $this->setRedirect(Route::_('index.php?option=com_jsports&view=game&layout=edit&id=' .$gameid . '&teamid=' . $teamid, false));
+            //$this->setRedirect(Route::_('index.php?option=com_jsports&view=game&layout=edit&id=' .$gameid . '&teamid=' . $contextid, false));
             
             return false;
         }
@@ -270,9 +271,10 @@ class GameController extends FormController
                 }
                 
                 if (!$redirect) {
-//                     $redirect = 'index.php?option=com_jsports&view=schedules&teamid=' .  $data['teamid'] .
-//                         '&programid='  . $data['programid'];
-                    $redirect = 'index.php?option=com_jsports&view=schedules&teamid=' .  $data['contextid'] .
+                    $redirect = 'index.php?option=com_jsports&view=schedules&teamid=' .  $data['teamid'] .
+                        '&programid='  . $data['programid'];
+                    //@TODO  need to look at.
+                    //$redirect = 'index.php?option=com_jsports&view=schedules&teamid=' .  $data['contextid'] .
                     '&programid='  . $data['programid'];
                 }
                 
@@ -309,7 +311,7 @@ class GameController extends FormController
         $this->app->setUserState('com_jsports.edit.game.data', null);
         
         // Redirect to team schedule.
-//         $this->setRedirect(Route::_('index.php?option=com_jsports&view=schedules&teamid=' . $teamid, false));
-        $this->setRedirect(Route::_('index.php?option=com_jsports&view=schedules&teamid=' . $contextid, false));
+        $this->setRedirect(Route::_('index.php?option=com_jsports&view=schedules&teamid=' . $teamid, false));
+//         $this->setRedirect(Route::_('index.php?option=com_jsports&view=schedules&teamid=' . $contextid, false));
     }
 }
