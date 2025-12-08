@@ -171,6 +171,16 @@ class SecurityService
             return true;
         }
         
+    
+        $divisionid = TeamService::getTeamDivisionId($teamid, $programid);
+        $division = DivisionService::getItem($divisionid);
+
+        // If the league manages the schedule for a divsion, then return false
+        // regardless if the user owns the team profile.
+        if ($division->leaguemanaged) {
+            return false;
+        }
+        
         if (is_null($ownerid)) {
             $user = Factory::getUser();
             $ownerid = $user->id;

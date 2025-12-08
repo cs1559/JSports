@@ -60,7 +60,13 @@
 			<option value="0">No</option>
 		</field>
 		
+		<field name="leaguemanaged" type="radio"
+			label="COM_JSPORTS_LEAGUEMANAGED_SCHEDULE" class="btn-group btn-group-yesno" default="0"
+			validate="options">
+			<option value="1">Yes</option>
+			<option value="0">No</option>
+		</field>
+			
 	</fieldset>
-
 
 </form>

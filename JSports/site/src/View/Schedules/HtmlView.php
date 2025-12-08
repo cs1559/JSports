@@ -20,6 +20,8 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Services\SecurityService;
+use FP4P\Component\JSports\Site\Services\TeamService;
+use FP4P\Component\JSports\Site\Services\DivisionService;
 
 use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\MVC\View\GenericDataException;
@@ -86,6 +88,9 @@ class HtmlView extends BaseHtmlView
         $this->program = $mod->program;
                        
         $this->canEdit = SecurityService::canEditTeamSchedule($this->team->id,$this->program->id);
+
+        $divisionid = TeamService::getTeamDivisionId($this->team->id, $this->program->id);
+        $division = DivisionService::getItem($divisionid);
         
         /* Updated 12-2-2024 */
         if ($this->program->registrationonly) {
@@ -100,6 +105,10 @@ class HtmlView extends BaseHtmlView
         if (!$this->program->setupfinal && !SecurityService::isAdmin())  {
             $this->setLayout("unavailable");
         }
+        if ($division->leaguemanaged && !SecurityService::isAdmin())  {
+            $this->setLayout("leaguemanaged");
+        }
+        
         
         // Check for errors.
         if (count($errors = $this->get('Errors')))
