@@ -61,6 +61,10 @@ $wa->useStyle('com_jsports.teamlist.style');
 					</th>
 					<th scope="col" class="w-20">
 						<?php //echo HTMLHelper::_('searchtools.sort', 'COM_JSPORTS_DIVISION', 'c.divisionname', $listDirn, $listOrder); ?>
+						<?php echo Text::_('COM_JSPORTS_AGEGROUP'); ?>
+					</th>					
+					<th scope="col" class="w-20">
+						<?php //echo HTMLHelper::_('searchtools.sort', 'COM_JSPORTS_DIVISION', 'c.divisionname', $listDirn, $listOrder); ?>
 						<?php echo Text::_('COM_JSPORTS_DIVISION'); ?>
 					</th>
 									
@@ -85,6 +89,9 @@ $wa->useStyle('com_jsports.teamlist.style');
 					<td class="">
 						<?php echo $item->contactname; ?>
 					</td>
+					<td class="">
+						<?php echo $item->agegroup; ?>
+					</td>						
 					<td class="">
 						<?php echo $item->divisionname; ?>
 					</td>					

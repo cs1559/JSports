@@ -128,7 +128,7 @@ class OpeningsModel extends ListModel
 	    $query->select(
 	        $this->getState(
 	            'list.select',
-	            'a.*, b.programid, c.name as divisionname, concat(a.name,a.contactname) as searchfield'
+	            'a.*, b.programid, c.agegroup, c.name as divisionname, concat(a.name,a.contactname) as searchfield'
 	            )
 	        );
 
