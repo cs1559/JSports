@@ -155,7 +155,6 @@ class LogouploadController extends BaseController
                 case 'jpeg':
                 case 'JPG':
                 case 'jpg':
-                    echo "here i am";
                     $statusupload = imagejpeg($tmp,$filename,5);//upload the image
                     break;
                     
@@ -176,8 +175,7 @@ class LogouploadController extends BaseController
 
             // Update the team database record with the filename
             $svc = new TeamService();
-            
-            
+                       
             $rc = $svc->updateTeamLogoFilename($teamid, $logofile['name']);
         
             if ($rc) {
