@@ -17,6 +17,7 @@ use Joomla\Database\ParameterType;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Component\ComponentHelper;
 
+
 /**
  * The Html class is a helper class that returns various HTML elements. 
  * @deprecated
@@ -85,6 +86,8 @@ class Html
      */
     public static function getTeamProfileMenu($id = 0, $label="Actions", $class="form-select") {
         
+        $params = ComponentHelper::getParams('com_jsports');
+        
         $html =  "<div id=\"profile-actions-menu\">";
         if (strlen($label) > 0) {
             $html = $html . "<label for=\"profile-actions\" id=\"profile-actions-label\">" . $label . ":</label>";
@@ -97,6 +100,12 @@ class Html
         $menuOptions["Manage Schedule"] = Route::_('index.php?option=com_jsports&view=schedules&teamid=' . $id);
         $menuOptions["Post Score(s)"] = Route::_('index.php?option=com_jsports&view=postscores&teamid=' . $id);
         $menuOptions["Upload Logo"] = Route::_('index.php?option=com_jsports&view=logoupload&id=' . $id);
+        
+        $enablebulletins = $params->get('enablebulletins');
+        if ($enablebulletins) {
+            $menuOptions["Manage Bulletins"] = Route::_('index.php?option=com_jsports&view=bulletins&id=' . $id);
+        }
+        
         
         $options = "<option value=\"\">" . "-- Select Action--" . "</option>";
         foreach ($menuOptions as $key => $value) {
