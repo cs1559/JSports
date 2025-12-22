@@ -113,7 +113,7 @@ class PostscoreModel extends FormModel
             $errors = $this->getErrors();
             throw new Exception(implode("\n", $errors), 500);
         }
-        $game = $this->getItem($this->getState('postsx`core.game.id'));
+        $game = $this->getItem($this->getState('postscore.game.id'));
 
         return $form;
     }
