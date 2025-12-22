@@ -99,7 +99,7 @@ $user      = Factory::getUser();
 						<?php echo JSHelper::translateBulletinType($item->bulletintype); ?>
 					</td>
 					<td class="">
-						<?php echo $item->content; ?>
+						<?php echo substr($item->content,0,50); ?>
 					</td>
 					
 					<td class="">
