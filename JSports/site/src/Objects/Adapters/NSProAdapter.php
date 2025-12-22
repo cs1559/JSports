@@ -101,7 +101,7 @@ and length(email)>0;
         $mailinglist = array($this->defaultlist);
         
         //add_or_update_subscriber($name, $email, $datetime, 0, $mailing_lists, $update = true, $source = 'component', $source_id = 'auto')
-        /* 2025-12-22  Chanced $conf variable from 0 to 1 - default email address to confirmed.
+        // 2025-12-22  Changed $conf variable from 0 to 1 - default email address to confirmed. 
         add_or_update_subscriber($name, $email, $datetime, 0, $this->defaultlist);
         
     }
