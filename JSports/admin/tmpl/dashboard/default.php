@@ -154,6 +154,20 @@ $wa->useStyle('com_jsports.admin.style');
     				</div>
     				</a>
 				</div>	
+
+    			<div class="col">
+    				<a href="index.php?option=com_jsports&view=bulletins">
+    				<div class="card h-100 p-2 m-1">
+    					<div style="text-align: center;">
+    						<p class="card-text" ><h2>Bulletins</h2>
+    							<i class="fas fa-bullhorn fa-3x"></i>
+    						</p>
+    						
+    					</div>
+    				</div>
+    				</a>
+				</div>
+
 				
     			<div class="col">
     				<a href="index.php?option=com_jsports&view=dashboard">

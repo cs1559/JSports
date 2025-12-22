@@ -1,4 +1,4 @@
 <?php 
-JLoader::registerNamespace('jsports\\common\\', JPATH_COMPONENT_ADMINISTRATOR . '//common');
+//JLoader::registerNamespace('jsports\\common\\', JPATH_COMPONENT_ADMINISTRATOR . '//common');
 
 ?>

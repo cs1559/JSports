@@ -12,6 +12,10 @@
 
 namespace FP4P\Component\JSports\Administrator\Helpers;
 
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Filesystem\Folder;
+
 class JSHelper
 {
     /**
@@ -134,6 +138,72 @@ class JSHelper
         $xml_path = JPATH_ADMINISTRATOR . '/components/com_jsports/jsports.xml';
         $xml_obj = new \SimpleXMLElement(file_get_contents($xml_path));
         return strval($xml_obj->creationDate);
+    }
+
+    /**
+     * This function translates the game status value into something more meaningful.
+     *
+     * @param string $code
+     * @return string
+     */
+    public static function translateBulletinType($code = "")
+    {
+        
+        switch ($code) {
+            case 'G':
+                return 'General';
+                break;
+            case 'T':
+                return 'Tournament';
+                break;
+            case 'Y':
+                return 'Tryouts';
+                break;
+            default:
+                return '*error*';
+                break;
+        }
+    }
+    
+    /**
+     * @deprecated
+     * @param unknown $key
+     * @return string
+     */
+    public static function getBulletinFilePath($key) {
+        $params = ComponentHelper::getParams('com_jsports');
+        $attachmentdir = $params->get('attachmentdir');
+        
+        $value = rtrim($attachmentdir); // optional: remove trailing whitespace
+        
+        if (substr($attachmentdir, -1) !== '/') {
+            $attachmentdir .= '/';
+        }
+        
+if (substr($attachmentdir, 0, 1) !== '/') {
+    $attachmentdir = '/' . $attachmentdir;
+}
+
+        $filepath = Folder::makeSafe( $attachmentdir . '/Bulletin-' . $key .'/');
+        
+        $filepath = JPATH_ROOT . $filepath;
+        
+        return $filepath;
+    }
+
+    /**
+     * @deprecated
+     * @param unknown $key
+     * @param unknown $filename
+     * @return string
+     */
+    public static function getBulletinAttachmentURL($key, $filename) {
+        $params = ComponentHelper::getParams('com_jsports');
+        $attachmentdir = $params->get('attachmentdir');
+        
+        $filepath =  Uri::root() . $attachmentdir . '/Bulletin-' . $key .'/' . $filename;
+        
+        return $filepath;
     }
 }
 

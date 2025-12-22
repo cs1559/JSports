@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+
+		<fieldset addfieldprefix="FP4P\Component\JSports\Administrator\Fields" 
+			name="details" label="COM_JSPORTS_DETAILS">
+
+		<field name="id" type="number" label="JGLOBAL_FIELD_ID_LABEL"
+			default="0" class="readonly" readonly="true" />
+
+		<field name="title" type="text" label="COM_JSPORTS_BULLETIN_TITLE"
+			size="40" required="true" />
+
+		<field name="bulletintype" type="list" required="true"
+			label="COM_JSPORTS_BULLETIN_TYPE">
+			<option selected="selected" value="">- Select Type -</option>
+			<option value="G">General</option>
+			<option value="T">Tournament</option>
+			<option value="Y">Tryout</option>
+		</field>
+		
+		<field name="content" type="editor"
+			label="COM_JSPORTS_BULLETIN_CONTENT" rows="10" cols="70" required="true" />
+
+		<field name="published" type="list" label="JSTATUS"
+			class="form-select-color-state" default="0" validate="options">
+			<option value="1">JPUBLISHED</option>
+			<option value="0">JUNPUBLISHED</option>
+			<option value="2">JARCHIVED</option>
+			<option value="-2">JTRASHED</option>
+		</field>
+
+
+		<field name="teamid" type="text"
+			label="COM_JSPORTS_TEAMID" size="40" />
+
+		<field name="ownerid" type="text"
+			label="COM_JSPORTS_OWNERID" size="40" />
+		
+		<field name="location" type="text"
+			label="COM_JSPORTS_LOCATION" size="40" />
+
+		<field name="startdate" type="calendar" label="COM_JSPORTS_STARTDATE"
+			default="0000-00-00"  class=""  require="true"/>
+			
+		<field name="enddate" type="calendar" label="COM_JSPORTS_ENDDATE"
+			default="0000-00-00"  class=""  require="true"/>
+
+		<field name="externalurl" type="URL"
+			size="100"
+			label="COM_JSPORTS_BULLETIN_EXTERNALURL" class="" default=""
+			hint="External URL associated with the bulletin">
+		</field>
+							
+		<field name="createdate" type="calendar" label="COM_JSPORTS_CREATEDATE" 
+			description="Date in which the record was originally created" readonly="true" disabled="true"
+			filter="user_utc"></field>
+			
+		<field name="updatedate" type="calendar" label="COM_JSPORTS_UPDATEDATE"  
+			description="Date in which the record was last updated"  readonly="true" disabled="true"
+			filter="user_utc"></field>
+			
+		<field name="updatedby" type="text" label="COM_JSPORTS_UPDATEDBY" 
+			description="Username of the person who last updated the record"  readonly="true"></field>			
+	
+		<field name="attachment" type="hiddens" label="COM_JSPORTS_FILENAME" 
+			description=""  readonly="true"></field>
+					
+		<field name="afile" 
+				type="file" label="COM_JSPORTS_FILEUPLOAD"
+				description="Choose an file (image or PDF) from your computer with maximum 100KB" 
+				accept="image/*, application/pdf"
+    			  enctype="multipart/form-data"
+			/>
+			
+	</fieldset>
+
+
+</form>
