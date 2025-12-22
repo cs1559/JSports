@@ -57,6 +57,9 @@ $user      = Factory::getUser();
 					</th>
 					<th scope="col" class="w-10">
 						<?php echo HTMLHelper::_('searchtools.sort', 'COM_JSPORTS_BULLETIN_TYPE', 'a.bulletintype', $listDirn, $listOrder); ?>
+					</th>
+					<th scope="col" class="w-10">
+						<?php echo Text::_('COM_JSPORTS_BULLETIN_APPROVED_LABEL'); ?>
 					</th>					
 					<th scope="col" class="w-40">
 						<?php echo Text::_('COM_JSPORTS_BULLETIN_CONTENT'); ?>
@@ -98,6 +101,9 @@ $user      = Factory::getUser();
 					<td class="">
 						<?php echo JSHelper::translateBulletinType($item->bulletintype); ?>
 					</td>
+					<td class="">
+						<?php echo JSHelper::translateYesNo($item->approved); ?>
+					</td>					
 					<td class="">
 						<?php echo substr($item->content,0,50); ?>
 					</td>

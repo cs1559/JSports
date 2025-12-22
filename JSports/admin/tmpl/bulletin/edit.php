@@ -60,8 +60,9 @@ $wa->useStyle('com_jsports.jsports.style');
 				<div class="card card-light">
 					<div class="card-body">
 						<?php echo $this->form->renderField('id'); ?>
-						<?php echo $this->form->renderField('teamid'); ?>				
 						<?php echo $this->form->renderField('published')?>
+						<?php echo $this->form->renderField('approved')?>
+						<?php echo $this->form->renderField('teamid'); ?>				
 						<?php //echo LayoutHelper::render('joomla.edit.global', $this); ?>
 					</div>
 				</div>

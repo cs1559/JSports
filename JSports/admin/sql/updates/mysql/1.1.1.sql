@@ -4,6 +4,7 @@ CREATE TABLE `#__jsports_bulletins` (
 	 `teamid` int(11) DEFAULT 0,
 	 `bulletintype` varchar(1) DEFAULT 'B',
 	 `title` varchar(50) DEFAULT 'B',	
+	 `approved` tinyint DEFAULT 0,
 	 `content` text DEFAULT null,
 	 `startdate` date DEFAULT NULL COMMENT 'Start Date',
 	 `enddate` date DEFAULT NULL COMMENT 'End Date',
