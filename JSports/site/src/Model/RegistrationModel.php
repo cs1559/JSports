@@ -77,7 +77,7 @@ class RegistrationModel extends FormModel
      *
      * @param array $data
      * @param boolean $loadData
-     * @throws Exception
+     * @throws \Exception
      * @return unknown
      */
     public function getForm($data = array(), $loadData = true)
@@ -98,7 +98,7 @@ class RegistrationModel extends FormModel
         if (empty($form))
         {
             $errors = $this->getErrors();
-            throw new Exception(implode("\n", $errors), 500);
+            throw new \Exception(implode("\n", $errors), 500);
         }
         
         return $form;

@@ -61,9 +61,10 @@ class HtmlView extends BaseHtmlView
         $this->data       = $this->get('Data');
         $this->state      = $this->get('State');
         $this->item       = $this->get('Item');
+        $this->team       = $this->getModel()->team;
 
         $isNew = false;
-        $programid = Factory::getApplication()->getUserState('com_jsports.edit.registration.programid',0);
+        $programid = Factory::getApplication()->getUserState('com_jsports.edit.bulletin.programid',0);
         if ($programid) {
             $isNew = true;
         }
@@ -73,20 +74,7 @@ class HtmlView extends BaseHtmlView
         if ($isNew) {
             $this->item->programid = $programid;
         }
-        
-        $this->program = ProgramsService::getItem($programid);
-        if (!is_null($this->program->registrationoptions)) {
-            $this->options = json_decode($this->program->registrationoptions);
-        } 
-        
-        $this->agreementurl = $app->getUserState('com_jsports.edit.registration.agreementurl', '');
-     
-        // Cleanout the agreement url state
-        $app->setUserState('com_jsports.edit.registration.agreementurl','');
-        
-        
-        $this->form->bind($this->item);
-        
+                
          // Check for errors.
         if (count($errors = $this->get('Errors')))
         {

@@ -23,6 +23,7 @@ use FP4P\Component\JSports\Site\Services\SecurityService;
 
 use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\MVC\View\GenericDataException;
+use Joomla\CMS\Form\Form;
 
 
 class HtmlView extends BaseHtmlView
@@ -58,7 +59,7 @@ class HtmlView extends BaseHtmlView
     /**
      * Form object for search filters
      *
-     * @var  \JForm
+     * @var  Form
      */
     public $filterForm;
     

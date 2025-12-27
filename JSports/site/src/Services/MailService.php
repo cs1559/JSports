@@ -86,7 +86,7 @@ class MailService
                 } else {
                     return true;
                 }
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 $logger = Myapp::getLogger();
                 $logger->error($e->getMessage());
                 return true;
