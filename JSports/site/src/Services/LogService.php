@@ -25,6 +25,7 @@ namespace FP4P\Component\JSports\Site\Services;
  */
 
 use FP4P\Component\JSports\Administrator\Table\DivisionsTable;
+use Joomla\Database\DatabaseInterface;
 use Joomla\Database\ParameterType;
 use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Objects\Application as Myapp;
@@ -78,12 +79,13 @@ class LogService
      * This function will purge log records from the database and return the number of rows
      * affected.
      * 
-     * @param number $logdays
-     * @return unknown
+     * @param int $logdays
+     * @return int
      */
     public static function purge($logdays = 200) {
         
-        $db    = Factory::getDbo();
+        //$db    = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         
         $query = $db->getQuery(true);
         
