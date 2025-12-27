@@ -22,6 +22,7 @@ use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Services\ProgramsService;
 use FP4P\Component\JSports\Site\Services\RosterService;
 use Joomla\CMS\Component\ComponentHelper;
+use Exception;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
@@ -84,8 +85,8 @@ class RosterController extends FormController
             $this->setMessage("Roster ITEM was successfully deleted",'info');
             $redirectURL = 'index.php?option=com_jsports&view=rosters&teamid=' . $item->teamid;
             
-        } catch (Exception $e) {
-            $errors = $team->getErrors();
+        } catch (\Exception $e) {
+            $errors = $item->getErrors();
             $this->setError($errors[0]);
             $app->enqueueMessage($errors[0],'error');
             $redirectURL = 'index.php?option=com_jsports&view=rosters&teamid=' . $item->teamid;
