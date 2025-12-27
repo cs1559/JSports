@@ -42,7 +42,7 @@ class EmailValidator
         // Connect to the mail server
         $connection = @fsockopen($mxHost, 25, $errno, $errstr, 10);
         if (!$connection) {
-            return new ValidatorReponse(101,"Failed to connect to the server.");
+            return new ValidatorResponse(101,"Failed to connect to the server.");
         }
         
         // Perform SMTP handshake
