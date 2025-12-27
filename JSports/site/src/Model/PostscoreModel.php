@@ -111,7 +111,7 @@ class PostscoreModel extends FormModel
         {
 	    return false;
             $errors = $this->getErrors();
-            throw new Exception(implode("\n", $errors), 500);
+            throw new \Exception(implode("\n", $errors), 500);
         }
         $game = $this->getItem($this->getState('postscore.game.id'));
 
@@ -143,8 +143,8 @@ class PostscoreModel extends FormModel
     /**
      * This function will save/store the data captured on the Registration EDIT form and save it to the database.
      *
-     * @param unknown $data
-     * @return unknown
+     * @param array $data
+     * @return boolean
      */
     
 
