@@ -21,7 +21,6 @@ namespace FP4P\Component\JSports\Site\Services;
  */
 
 use FP4P\Component\JSports\Administrator\Table\DivisionsTable;
-use Joomla\Database\ParameterType;
 use Joomla\CMS\Factory;
 
 class DivisionService
@@ -50,7 +49,7 @@ class DivisionService
     /**
      * This function will return a list of 'published' divisions within a specific program.
      *
-     * @param unknown $programid
+     * @param int $programid
      * @return array
      */
     public static function getDivisionList($programid, $group = null) {
