@@ -18,6 +18,7 @@
 namespace FP4P\Component\JSports\Site\Services;
 
 use FP4P\Component\JSports\Administrator\Table\TeamsTable;
+use Joomla\Database\DatabaseInterface;
 use Joomla\Database\ParameterType;
 use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Services\DivisionService;
@@ -27,7 +28,8 @@ class TeamService
 
     public static function getTeamsTable()
     {
-        $db = Factory::getDbo();
+//         $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         return new TeamsTable($db);
     }
 
@@ -39,7 +41,8 @@ class TeamService
      */
     public static function getItem($id = 0)
     {
-        $db = Factory::getDbo();
+//         $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $team = new TeamsTable($db);
 
         $row = $team->load($id);
@@ -53,7 +56,8 @@ class TeamService
 
     public function updateTeamLogoFilename($teamid, $filename)
     {
-        $db = Factory::getDbo();
+//         $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
 
         $fields = array(
@@ -78,7 +82,8 @@ class TeamService
 
     public static function getMostRecentProgram($teamid)
     {
-        $db = Factory::getDbo();
+//         $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
 
         // Select the required fields from the table.
@@ -102,7 +107,8 @@ class TeamService
 
     public static function getTeamDivisionId($teamid, $programid)
     {
-        $db = Factory::getDbo();
+//         $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
 
         $query->select($db->quoteName(array(
@@ -127,7 +133,8 @@ class TeamService
 
     public static function getTeamList($teamid, $programid, $divisionid = null)
     {
-        $db = Factory::getDbo();
+//         $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
 
         if (is_null($divisionid)) {
@@ -152,7 +159,8 @@ class TeamService
 
     public static function getTeamList2($programid, $divisionid)
     {
-        $db = Factory::getDbo();
+//         $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
 
         $sql = "SELECT a.id as teamid, a.name as teamname, m.divisionid, d.name as divisionname, 
@@ -174,7 +182,8 @@ class TeamService
 
     public static function getTeamsByProgram($programid)
     {
-        $db = Factory::getDbo();
+//         $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
         
 //         $sql = "SELECT a.id as teamid, a.name as teamname, a.contactname, a.contactphone,
@@ -196,7 +205,8 @@ a.contactemail, a.city, a.state, m.divisionid, d.name as divisionname,
     
     public static function getTeamsByAgeGroup($programid, $agegroup, $divisionid)
     {
-        $db = Factory::getDbo();
+//         $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
 
         $sql = "SELECT a.id as teamid, a.name as teamname, m.divisionid, 
@@ -221,7 +231,8 @@ a.contactemail, a.city, a.state, m.divisionid, d.name as divisionname,
     public static function getTeamEmailAddresses($teamid)
     {
                 
-        $db = Factory::getDbo();
+//         $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
         
         $sql = "
@@ -258,7 +269,8 @@ select distinct email from (
      */
     public static function hit($teamid) {
         
-        $db = Factory::getDbo();
+//         $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
         
         $conditions = array($db->quoteName('id') . ' = ' .$teamid);
@@ -280,7 +292,8 @@ select distinct email from (
      */
     public static function isActive($teamid) {
         
-        $db = Factory::getDbo();
+//         $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
         
         $sql = "

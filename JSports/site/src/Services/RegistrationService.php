@@ -13,6 +13,7 @@
 namespace FP4P\Component\JSports\Site\Services;
 
 use FP4P\Component\JSports\Administrator\Table\RegistrationsTable;
+use Joomla\Database\DatabaseInterface;
 use Joomla\Database\ParameterType;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Component\ComponentHelper;
@@ -21,7 +22,8 @@ class RegistrationService
 {
    
     public static function getRegistrationTable() {
-        $db = Factory::getDbo();
+//         $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         return new RegistrationsTable($db);
       
     }
@@ -34,7 +36,8 @@ class RegistrationService
      */
     public function getItem($id = 0) {
         
-        $db = Factory::getDbo();
+//         $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $registrations = new RegistrationsTable($db);
         $row = $registrations->load($id);
         
@@ -68,7 +71,8 @@ class RegistrationService
         
         // Create a new query object.
         
-        $db    = Factory::getDbo();
+//         $db    = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
         
         /*
@@ -120,7 +124,8 @@ class RegistrationService
         
         $table = '#__jsports_registrations';
 
-        $db = Factory::getDbo();
+//         $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
         
         $query->select('a.*');

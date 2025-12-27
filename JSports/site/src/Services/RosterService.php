@@ -14,6 +14,7 @@ namespace FP4P\Component\JSports\Site\Services;
 
 use FP4P\Component\JSports\Administrator\Table\RostersTable;
 use FP4P\Component\JSports\Site\Services\ProgramsService;
+use Joomla\Database\DatabaseInterface;
 use Joomla\Database\ParameterType;
 use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Objects\Application as Myapp;
@@ -22,7 +23,8 @@ class RosterService
 {
     
     public static function getRostersTable() {
-        $db = Factory::getDbo();
+//         $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         return new RostersTable($db);
        
     }
@@ -36,7 +38,8 @@ class RosterService
      */
     public function getItem($id = 0) {
         
-        $db = Factory::getDbo();
+//         $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $table = new RostersTable($db);
         
         $row = $table->load($id);
@@ -60,7 +63,8 @@ class RosterService
         $svc = new RosterService();
         $item = $svc->getItem($id);
         
-        $db = Factory::getDbo();
+//         $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         
         $query = $db->getQuery(true);
         
@@ -119,7 +123,8 @@ class RosterService
      * @return unknown
      */
     private static function getRosterDataByType($teamid, $programid, $classification, $includesubs = true) {
-        $db = Factory::getDbo();
+//         $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
               
         $query->select('p.*');

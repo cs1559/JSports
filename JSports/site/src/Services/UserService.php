@@ -13,18 +13,21 @@
 namespace FP4P\Component\JSports\Site\Services;
 
 use FP4P\Component\JSports\Administrator\Table\GamesTable;
+use Joomla\Database\DatabaseInterface;
 use Joomla\Database\ParameterType;
 use Joomla\CMS\Factory;
+use Joomla\CMS\User\User;
 
 class UserService
 {
     /**
      * This is a helper function that returns the current user object from Joomla.
      *
-     * @return unknown
+     * @return User
      */
     public static function getUser() {
-        return Factory::getUser();
+//         return Factory::getUser();
+        return Factory::getApplication()->getIdentity();
         
     }
 
@@ -35,7 +38,7 @@ class UserService
      * NOTE:  THERE IS A POTENTIAL ISSUE WHEN A TEAM PLAYS MULTIPLE YEARS AND A STAFF MEMBER WAS GIVEN PERMISSION BUT THEY WERE NO LONGER
      * WITH THE TEAM IN THEIR FINAL SEASON.  THAT USER MAY HAVE ACCESS TO EDIT THE TEAM INFORMATION.
      *
-     * @param unknown $uid
+     * @param int $uid
      * @return array|unknown
      */
     public static function getUserTeams($uid = null) {
@@ -48,7 +51,8 @@ class UserService
                 
             }
         }
-        $db = Factory::getDbo();
+//         $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
 
         $sql = "select distinct t.*,  p.name as lastprogramname
@@ -79,13 +83,13 @@ class UserService
     /**
      * This function will return a list of TEAM ID's they are associated with.
      *
-     * @param unknown $uid
+     * @param int $uid
      * @return array|NULL[]
      */
     public static function getUserTeamIds($uid = null) {
         
         if (is_null($uid)) {
-            $user = Factory::getUser();
+            $user = Factory::getApplication()->getIdentity();
             $uid = $user->id;
             if ($user->guest) {
                 return array();
@@ -105,14 +109,15 @@ class UserService
     /**
      * This function will determine if a user is an "admin" for a team during a given program.
      *
-     * @param unknown $teamid
-     * @param unknown $programid
-     * @param unknown $uid
+     * @param int $teamid
+     * @param int $programid
+     * @param int $uid
      * @return number
      */
     public static function isTeamAdmin($teamid, $programid, $uid) {
         
-        $db    = Factory::getDbo();
+//         $db    = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
         $query2 = $db->getQuery(true);
         
@@ -148,10 +153,10 @@ class UserService
      * this function just indicates if the user is a guest or not.  the intention was to abstract this joomla specific logic to
      * the core code.
      *
-     * @return unknown
+     * @return boolean
      */
     public static function isGuest() {
-        $user = Factory::getUser();
+        $user = Factory::getApplication()->getIdentity();
         return $user->guest;
     }
     
@@ -175,7 +180,7 @@ and r.userid = 640;
      * the getAssignedAgeGroups will return an array of age groups a given user has been assigned too either based
      * on the owner id of the team or as a result of a user id being assigned at the ROSTER level.
      *
-     * @param unknown $uid
+     * @param int $uid
      * @return array
      */
     public static function getAssignedAgeGroups($uid = null) {
@@ -189,7 +194,8 @@ and r.userid = 640;
             }
         }
         
-        $db    = Factory::getDbo();
+//         $db    = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
         $query2 = $db->getQuery(true);
         

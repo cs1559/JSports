@@ -13,6 +13,7 @@
 namespace FP4P\Component\JSports\Site\Services;
 
 use FP4P\Component\JSports\Administrator\Table\ProgramsTable;
+use Joomla\Database\DatabaseInterface;
 use Joomla\Database\ParameterType;
 use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Services\SecurityService;
@@ -28,7 +29,8 @@ class ProgramsService
      */
     public static function getItem($id = 0) {
         
-        $db = Factory::getDbo();
+//         $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $programs = new ProgramsTable($db);
                 
         $row = $programs->load($id);
@@ -47,7 +49,8 @@ class ProgramsService
      * @return unknown
      */
     public static function getNonCompletedPrograms($activeonly = false) {
-        $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        //$db = Factory::getDbo();
         $query = $db->getQuery(true);
         
         $query->select('p.*');
@@ -82,7 +85,8 @@ class ProgramsService
     
     public static function getProgramList() {
         
-        $db = Factory::getDbo();
+//         $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
         
         $query->select('p.*');
@@ -100,7 +104,8 @@ class ProgramsService
     
     
     public static function getMostRecentProgram() {
-        $db = Factory::getDbo();
+//         $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
         
         $query->select('p.*');
@@ -128,7 +133,8 @@ class ProgramsService
         
         $pgm = ProgramsService::getItem($programid);
         
-        $db = Factory::getDbo();
+//         $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
         
         $query->select('p.*');
@@ -147,7 +153,8 @@ class ProgramsService
     
     public static function closeProgram($programid) {
 
-        $db = Factory::getDbo();
+//         $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
         
         $returncode = 0;
@@ -263,7 +270,8 @@ class ProgramsService
         
         echo "DELETING STANDINGS FROM PAST STANDINGS TABLE<br/>";
         
-        $db = Factory::getDbo();
+//         $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
         
         
