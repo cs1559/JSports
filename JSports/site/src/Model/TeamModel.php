@@ -151,7 +151,7 @@ class TeamModel extends FormModel
         if (empty($form))
         {
             $errors = $this->getErrors();
-            throw new Exception(implode("\n", $errors), 500);
+            throw new \Exception(implode("\n", $errors), 500);
         }
         
         return $form;
@@ -180,8 +180,8 @@ class TeamModel extends FormModel
     /**
      * This function will save/store the data captured on the Registration EDIT form and save it to the database.
      *
-     * @param unknown $data
-     * @return unknown
+     * @param array $data
+     * @return boolean
      */
     public function save($data) {
         
