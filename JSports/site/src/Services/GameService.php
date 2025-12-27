@@ -22,6 +22,7 @@ namespace FP4P\Component\JSports\Site\Services;
 
 use FP4P\Component\JSports\Administrator\Table\GamesTable;
 use FP4P\Component\JSports\Site\Objects\Application;
+use Joomla\Database\DatabaseInterface;
 use Joomla\Database\ParameterType;
 use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Objects\Scoring\ScoringEngine;
@@ -171,7 +172,7 @@ class GameService
     	try {
     	    ScoringEngine::scoreGame($table);
     	    
-    	} catch (Exception $e) {
+    	} catch (\Exception $e) {
     	    echo "GameService::postScore <br/>";
     	    return false;
     	}
@@ -187,8 +188,8 @@ class GameService
     /**
      * This function simply returns a "W" or "L" or "T" for a team based on their context (home/away).
      *
-     * @param unknown $teamid
-     * @param unknown $item
+     * @param int $teamid
+     * @param object $item
      * @return string
      */
     public static function getWinLoss($teamid, $item) {
@@ -221,12 +222,13 @@ class GameService
     /**
      * This function will retrieve a list of upcoming games that are still "scheduled";
      *
-     * @param unknown $programid
-     * @param number $limit
-     * @return unknown
+     * @param int $programid
+     * @param int $limit
+     * @return array
      */
     public static function getUpcomingGames($programid = null, $limit = 25) {
-        $db = Factory::getDbo();
+       // $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
         
         $query->select('g.*, d.name as divisionname');
