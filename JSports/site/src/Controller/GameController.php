@@ -22,6 +22,7 @@ use FP4P\Component\JSports\Site\Services\ProgramsService;
 use FP4P\Component\JSports\Site\Services\GameService;
 use Joomla\CMS\Component\ComponentHelper;
 use FP4P\Component\JSports\Site\Objects\Application as Myapp;
+use FP4P\Component\JSports\Site\Services\BulletinService;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
@@ -97,7 +98,7 @@ class GameController extends FormController
                 }
                 $redirectURL = $rUrl;
                 
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 $errors = $item->getErrors();
                 $this->setError($errors[0]);
                 $app->enqueueMessage($errors[0],'error');
@@ -156,7 +157,7 @@ class GameController extends FormController
                 }
                 $redirectURL = $rUrl;
                 
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 $errors = $item->getErrors();
                 $this->setError($errors[0]);
                 $app->enqueueMessage($errors[0],'error');
@@ -164,6 +165,8 @@ class GameController extends FormController
                     $item->teamid   . '&programid=' . $item->programid;
             }
         
+            
+            BulletinService::
         $this->setRedirect(Route::_($redirectURL));
         
     }
