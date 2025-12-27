@@ -23,6 +23,7 @@ use FP4P\Component\JSports\Site\Services\TeamService;
 use Joomla\CMS\Application\SiteApplication;
 use FP4P\Component\JSports\Site\Objects\Application as Myapp;
 use FP4P\Component\JSports\Administrator\Helpers\JSHelper;
+use Joomla\CMS\Form\Form;
 
 /**
  * GameModel - Methods/functions to manage games within the component.
@@ -61,10 +62,10 @@ class GameModel extends FormModel
      * If that passes validation, then the parent validate function is called.  Otherwise, a false boolean
      * is returned.
      *
-     * @param unknown $form
-     * @param unknown $data
-     * @param unknown $group
-     * @return boolean|unknown
+     * @param Form $form
+     * @param array $data
+     * @param string $group
+     * @return array | boolean
      */
     public function validate($form, $data, $group = null) {
         
