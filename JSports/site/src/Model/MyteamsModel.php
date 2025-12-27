@@ -34,7 +34,7 @@ class MyteamsModel extends BaseModel
     /**
      * This function will retrieve a list of teams assocaited with the user.
      *
-     * @return unknown
+     * @return array
      */
     public function getTeams(){
   
