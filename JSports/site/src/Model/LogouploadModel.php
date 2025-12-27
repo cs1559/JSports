@@ -74,7 +74,7 @@ class LogouploadModel extends FormModel
         if (empty($form))
         {
             $errors = $this->getErrors();
-            throw new Exception(implode("\n", $errors), 500);
+            throw new \Exception(implode("\n", $errors), 500);
         }
         
         return $form;
