@@ -39,7 +39,7 @@ class UserService
      * WITH THE TEAM IN THEIR FINAL SEASON.  THAT USER MAY HAVE ACCESS TO EDIT THE TEAM INFORMATION.
      *
      * @param int $uid
-     * @return array|unknown
+     * @return array|null
      */
     public static function getUserTeams($uid = null) {
         
