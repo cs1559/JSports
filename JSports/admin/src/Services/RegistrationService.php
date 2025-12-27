@@ -13,7 +13,8 @@ class RegistrationService
 {
     
     public static function getRegistrationTable() {
-        $db = Factory::getDbo();
+//         $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $registrations = new RegistrationsTable($db);
         return $registrations;
     }
@@ -26,7 +27,8 @@ class RegistrationService
      */
     public function getItem($id = 0) {
         
-        $db = Factory::getDbo();
+//         $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $registrations = new RegistrationsTable($db);
         
         $item = null;
@@ -53,7 +55,8 @@ class RegistrationService
     public function isRegistrationAvailable() {
     
         // Create a new query object.
-        $db    = Factory::getDbo();
+//         $db    = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
         
         $id = 1;

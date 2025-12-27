@@ -73,7 +73,7 @@ class ProgramsetupController extends AdminController
      */
     protected function updateMap($id, $divisionid) {
         
-        $db    = Factory::getDbo();
+        $db    = Factory::getContainer()->get(DatabaseInterface::class);
         
         $query = $db->getQuery(true);
         

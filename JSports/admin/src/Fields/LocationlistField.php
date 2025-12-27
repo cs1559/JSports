@@ -33,7 +33,8 @@ class LocationlistField extends ComboField
         
         $options = array();
         
-        $db    = Factory::getDbo();
+//         $db    = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
         
         $query->select($db->quoteName(array('id', 'name','city','state')));

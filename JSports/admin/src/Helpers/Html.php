@@ -31,7 +31,8 @@ class Html
      */
     public static function getProgramDivisions($programid, $itemkey=0, $defaultvalue=0) {
         
-        $db    = Factory::getDbo();
+//         $db    = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
         
         // Select all records from the user profile table where key begins with "custom.".
@@ -103,7 +104,7 @@ class Html
         
         $enablebulletins = $params->get('enablebulletins');
         if ($enablebulletins) {
-            $menuOptions["Manage Bulletins"] = Route::_('index.php?option=com_jsports&view=bulletins&id=' . $id);
+            $menuOptions["Manage Bulletins"] = Route::_('index.php?option=com_jsports&view=bulletins&teamid=' . $id);
         }
         
         
@@ -174,7 +175,8 @@ class Html
     }
     
     protected static function getOpponentData($teamid, $programid) {
-        $db    = Factory::getDbo();
+//         $db    = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
         
         $sql = "SELECT a.id as teamid, a.name as teamname, m.divisionid, d.name as divisionname, d.agegroup FROM " .
@@ -211,7 +213,8 @@ class Html
         $params = ComponentHelper::getParams('com_jsports');
         $activeonly = $params->get('activestandingsonly');
         
-        $db    = Factory::getDbo();
+//         $db    = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
         
         $conditions = array(
