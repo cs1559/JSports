@@ -37,7 +37,7 @@ class AuditService
      * affected.
      * 
      * @param number $logdays
-     * @return unknown
+     * @return array
      */
     public static function purge($logdays = 200) {
         
