@@ -124,6 +124,7 @@ class GameController extends FormController
         
         $input = Factory::getApplication()->input;
         $id     = $input->getInt("id");
+        $teamid     = $input->getInt("teamid");
         
         /* Code to prevent further action if user is NOT logged in */
         $user = Factory::getUser();
@@ -141,12 +142,13 @@ class GameController extends FormController
             return false;
         }
         
-        // Get the record to be deleted so you know the team ID and the program ID.
+        // Get the record to be reset so you know the team ID and the program ID.
         $svc = new GameService();
         $item = $svc->getItem($id);
         
         $redirectURL = 'index.php?option=com_jsports&view=dashboard';
-        $rUrl = 'index.php?option=com_jsports&view=schedules&teamid=' . $item->teamid . '&programid=' . $item->programid;
+//         $rUrl = 'index.php?option=com_jsports&view=schedules&teamid=' . $item->teamid . '&programid=' . $item->programid;
+        $rUrl = 'index.php?option=com_jsports&view=schedules&teamid=' . $teamid . '&programid=' . $item->programid;
             try {
                 $result = GameService::reset($id);
                 if ($result) {
@@ -162,11 +164,10 @@ class GameController extends FormController
                 $this->setError($errors[0]);
                 $app->enqueueMessage($errors[0],'error');
                 $redirectURL = 'index.php?option=com_jsports&view=schedules&teamid=' .
-                    $item->teamid   . '&programid=' . $item->programid;
+                    $itemid   . '&programid=' . $item->programid;
             }
         
             
-            BulletinService::
         $this->setRedirect(Route::_($redirectURL));
         
     }
