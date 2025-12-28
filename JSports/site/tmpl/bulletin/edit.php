@@ -31,12 +31,13 @@ $wa->useStyle('com_jsports.game.style');
 
 <h1><?php echo $this->team->name; ?> - Add/Edit Bulletin </h1>
 <form action="<?php echo Route::_('index.php?option=com_jsports&view=bulletin&layout=edit&id=' . (int) $this->item->id); ?>"
-	method="post" name="bulletinForm" id="bulletin-form" class="form-validate">
+	method="post" enctype="multipart/form-data" name="bulletinForm" id="bulletin-form" class="form-validate">
 
 		<?php echo $this->form->renderField('bulletintype'); ?>
+		<?php echo $this->form->renderField('title'); ?>
 		<?php echo $this->form->renderField('content'); ?>
 		<br/>
-		<?php echo $this->form->renderField('location'); ?>
+		<?php //echo $this->form->renderField('location'); ?>
 		<?php //echo $this->form->renderField('startdate'); ?>
 		<?php //echo $this->form->renderField('enddate'); ?>
 		<?php echo $this->form->renderField('externalurl'); ?>
