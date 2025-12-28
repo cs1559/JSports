@@ -29,18 +29,24 @@ use FP4P\Component\JSports\Site\Services\TeamService;
 use FP4P\Component\JSports\Site\Services\UserService;
 use FP4P\Component\JSports\Site\Services\ProgramsService;
 use FP4P\Component\JSports\Site\Services\DivisionService;
+use Joomla\CMS\User\User;
+use FP4P\Component\JSports\Administrator\Table\GamesTable;
 
 class SecurityService
 {
     
+    public static function getUser() : User {
+        $user = Factory::getApplication()->getIdentity();
+        return $user;
+    }
+    
     /**
-     * Function that determines if a sepcific user can EDIT a team.
+     * Function that determines if a sepcific user can EDIT a team.  the context MUST contain a teamid.
      *
-     * @param unknown $teamid
-     * @param unknown $ownerid
+     * @param array
      * @return boolean
      */
-    public static function canEditTeam(array $context) {
+    public static function canEditTeam(array $context) : bool {
         
         if (isset($context['teamid'])) {
             $teamid = $context['teamid'];
@@ -71,7 +77,8 @@ class SecurityService
         }
         
         // Get current user
-        $user = Factory::getUser();
+        //$user = Factory::getUser();
+        $user = SecurityService::getUser();
         
         // If the user is a GUEST, return FALSE
         if ($user->guest) {
@@ -91,13 +98,13 @@ class SecurityService
                 return false;
             }
             
-            if ($team->ownerid === $user->id) {
+            if ((int) $team->ownerid === (int) $user->id) {
                 return true;
             }
             return false;
         }
         
-        if ($ownerid === $user->id) {
+        if ((int) $ownerid === (int) $user->id) {
             return true;
         }
         
@@ -117,12 +124,12 @@ class SecurityService
      * from being edited if the rosters are "locked" (set at the program level) and
      * if the program/season is currently CLOSED.
      *
-     * @param int $teamid
-     * @param int $programid
-     * @param int $ownerid
-     * @return boolean|unknown
+     * @param number $teamid
+     * @param number $programid
+     * @param number $ownerid
+     * @return boolean
      */
-    public static function canEditTeamRoster($teamid, $programid, $ownerid = null) {
+    public static function canEditTeamRoster($teamid, $programid, $ownerid = null) : bool {
         
         // If the user is a "super user" or "administrator" immediately grant them access
         if (SecurityService::isAdmin()) {
@@ -130,7 +137,8 @@ class SecurityService
         }
 
         if (is_null($ownerid)) {
-            $user = Factory::getUser();
+            //$user = Factory::getUser();
+            $user = SecurityService::getUser();
             $ownerid = $user->id;
         }
         
@@ -159,12 +167,12 @@ class SecurityService
      * This function verifies that a specific user can EDIT a team's schedule.
      * Additional business rules can be added here.
      *
-     * @param int $teamid
-     * @param int $programid
-     * @param int $ownerid
-     * @return boolean|unknown
+     * @param number $teamid
+     * @param number $programid
+     * @param number $ownerid
+     * @return boolean
      */
-    public static function canEditTeamSchedule($teamid, $programid, $ownerid = null) {
+    public static function canEditTeamSchedule($teamid, $programid, $ownerid = null) : bool {
 
         // If the user is a "super user" or "administrator" immediately grant them access
         if (SecurityService::isAdmin()) {
@@ -182,7 +190,8 @@ class SecurityService
         }
         
         if (is_null($ownerid)) {
-            $user = Factory::getUser();
+            //$user = Factory::getUser();
+            $user = SecurityService::getUser();
             $ownerid = $user->id;
         }
         
@@ -196,25 +205,22 @@ class SecurityService
         );
         return SecurityService::canEditTeam($context);
         
-//        return SecurityService::canEditTeam(array('teamid' => $teamid, 'ownerid' => $ownerid));
-        
-        //return SecurityService::canEditTeam($teamid, $ownerid);
-        
     }
     
     /**
      *
-     * @param unknown $teamid
-     * @param unknown $item         // Item from the SchedulesModel.
+     * @param number $teamid
+     * @param GamesTable $item         
      */
-    public static function canEditGame($teamid, Object $item ){
+    public static function canEditGame($teamid, object $item ){
       //  $params = ComponentHelper::getParams('com_jsports');
       //  $editawaygame = $params->get('editawaygame');
         
         $canEdit = true;
         
         // Get current user
-        $user = Factory::getUser();
+        //$user = Factory::getUser();
+        $user = SecurityService::getUser();
         
         // If the user is a GUEST, return FALSE
         if ($user->guest) {
@@ -239,7 +245,6 @@ class SecurityService
             }
             
 //         }
-        
         
         if ($item->gamestatus === 'C') {
             return false;
@@ -272,7 +277,8 @@ class SecurityService
      */
     public static function isAdmin(){
         // Get current user
-        $user = Factory::getUser();
+        //$user = Factory::getUser();
+        $user = SecurityService::getUser();
         
         // Chekcs to  see if the user is in an ADMINISTRATOR ROLE.
         if ($user->authorise('core.jsports.admin','com_jsports')) {
@@ -289,9 +295,15 @@ class SecurityService
     }
     
     
+    /**
+     * This function returns a boolean if the specific user is a "coach".  Coach, in this context, is 
+     * any user who is assigned as owner of a team or part of their staff.
+     * @return boolean
+     */
     public static function isCoach() {
         
-        $user = Factory::getUser();
+        //$user = Factory::getUser();
+        $user = SecurityService::getUser();
         
         // If the current user a guest, return false
         if ($user->guest) {
@@ -308,15 +320,28 @@ class SecurityService
             return true;
         }
         
-        
         return false;
     }
     
     
-    
-    public static function canViewTeamRoster($teamid, $divisionid = 0) {
+    /**
+     * This function will check to see if a specific user can view another teams roster.  the general
+     * rule is that they CANNOT unless they are an admin or within the same age group.
+     * 
+     * @param number $teamid
+     * @param number $divisionid
+     * @return boolean
+     */
+    public static function canViewTeamRoster($teamid, $divisionid = 0) : bool {
         
         $retval= false;
+        
+        //$user = Factory::getUser();
+        $user = SecurityService::getUser();
+        
+        if ($user->guest) {
+            return false;
+        }
         
         // 2024-03-11 - added to allow all league admins to view roster.
         if (SecurityService::isAdmin()) {
@@ -335,6 +360,37 @@ class SecurityService
         
         return $retval;
     }
+    
+    
+    /**
+     * This function determines if a user can edit a specific team bulletin.
+     * 
+     * @param int $teamid
+     * @return boolean
+     */
+    public static function canEditTeamBulletins($teamid) : bool {
+        $retval = false;
+        //$user = Factory::getUser();
+        $user = SecurityService::getUser();
+        
+        // If the current user a guest, return false
+        if ($user->guest) {
+            return false;
+        }
+        
+        // If the user is assigned with ADMINISTRATOR permissions, then yes.
+        if (SecurityService::isAdmin()) {
+            return true;
+        }
+        $teamids = UserService::getUserTeamIds($user->id);
+        if (in_array($teamid, $teamids, true)) {
+            return true;
+        }
+        
+        return $retval;
+    }
+    
+    
 }
 
 
