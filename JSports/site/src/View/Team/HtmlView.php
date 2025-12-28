@@ -21,6 +21,8 @@ use Joomla\CMS\Component\ComponentHelper;
 use FP4P\Component\JSports\Administrator\Helpers\Html;
 use FP4P\Component\JSports\Site\Services\SecurityService;
 use FP4P\Component\JSports\Site\Services\TeamService;
+use FP4P\Component\JSports\Administrator\Table\TeamsTable;
+use FP4P\Component\JSports\Administrator\Table\ProgramsTable;
 
 /**
  * HTML Team View
@@ -29,17 +31,39 @@ use FP4P\Component\JSports\Site\Services\TeamService;
  */
 class HtmlView extends BaseHtmlView
 {
-
-    protected $item;      
+    /**
+     * 
+     * @var TeamsTable
+     */
+    protected $item;  
+    
     protected $programs;
+    /**
+     * 
+     * @var ProgramsTable
+     */
     protected $recentprogram;
+    /**
+     * This variable is an array of objects that correspond to the Rosters table for a specific classification type (P)
+     * 
+     * @var array
+     */
     protected $rosterplayers;
+    /**
+     * This variable is an array of objects that correspond to the Rosters table for a specific classification type (S)
+     *
+     * @var array
+     */ 
     protected $rosterstaff;
     /**
      * Flag to determine if the user can edit the team profile.
      * @var boolean
      */
     protected $canEdit = false;
+    /**
+     * This is an array of array of standings records.  The standingservice returns an associated list from the standings query.
+     * @var array
+     */
     protected $standings;
     /**
      * Flat to indicate if the user can see the team's roster
@@ -88,6 +112,7 @@ class HtmlView extends BaseHtmlView
      */
     public function display($tpl = null)
     {
+        // @TODO  This "getters" will need to be updated for Joomla 7
         $this->data       = $this->get('Data');
         $this->state      = $this->get('State');
         $this->item       = $this->get('Item');
