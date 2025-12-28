@@ -21,6 +21,7 @@ use FP4P\Component\JSports\Site\Services\GameService;
 use FP4P\Component\JSports\Site\Services\TeamService;
 use Joomla\CMS\Application\SiteApplication;
 use FP4P\Component\JSports\Site\Objects\Application as Myapp;
+use Joomla\CMS\Form\Form;
 
 /**
  * GameModel - Methods/functions to manage games within the component.
@@ -55,10 +56,10 @@ class PostscoreModel extends FormModel
     /**
      * This function is an override function of the FormModel validate function.  
      *
-     * @param unknown $form
-     * @param unknown $data
-     * @param unknown $group
-     * @return boolean|unknown
+     * @param Form   $form
+     * @param array $data
+     * @param string $group
+     * @return array|false
      */
     public function validate($form, $data, $group = null) {
         

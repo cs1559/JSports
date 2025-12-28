@@ -20,6 +20,7 @@ use FP4P\Component\JSports\Site\Services\TeamService;
 use FP4P\Component\JSports\Site\Services\ProgramsService;
 use FP4P\Component\JSports\Site\Services\GameService;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Form\Form;
 
 /**
  * Methods supporting a list of LEAGUE records.
@@ -155,10 +156,10 @@ class PostscoresModel extends ListModel
 	/**
 	 * This function is an override function of the FormModel validate function.
 	 *
-	 * @param unknown $form
-	 * @param unknown $data
-	 * @param unknown $group
-	 * @return boolean|unknown
+	 * @param Form $form
+	 * @param array $data
+	 * @param string $group
+	 * @return array|boolean
 	 */
 	public function validate($form, $data, $group = null) {
 	    
