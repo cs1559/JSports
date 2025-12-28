@@ -21,15 +21,23 @@ namespace FP4P\Component\JSports\Site\Services;
  */
 
 use FP4P\Component\JSports\Administrator\Table\BulletinsTable;
+use Joomla\Database\DatabaseInterface;
 use Joomla\Database\ParameterType;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Uri\Uri;
-use Joomla\CMS\Filesystem\Folder;
+use Joomla\Filesystem\Folder;
 use FP4P\Component\JSports\Site\Services\LogService;
+use FP4P\Component\JSports\Site\Objects\Application as Myapp;
 
 class BulletinService
 {
+   
+    public static function getBulletinsTable()
+    {
+        $db = Factory::getDbo();
+        return new BulletinsTable($db);
+    }
     
     /**
      * This function will return an individual row based on the Bulletin ID.
@@ -51,6 +59,40 @@ class BulletinService
         return null;
     }
 
+    public static function delete($id = 0) {
+        
+        $logger = Myapp::getLogger();
+        
+        $svc = new BulletinService();
+        $item = $svc->getItem($id);
+        
+        $db = Factory::getDbo();
+        
+        $query = $db->getQuery(true);
+        
+        $conditions = array(
+            $db->quoteName('id') . '=' .$db->quote($id));
+        
+        $query->delete($db->quoteName('#__jsports_bulletins'));
+        $query->where($conditions);
+        
+        $db->setQuery($query);
+        
+        $rc = $db->execute();
+        $logger->info('Deleting bullet item - ' . $item->title . ' ID: ' . $id);
+        
+        return $rc;
+        
+    }
+    
+    /**
+     * This function returns the path (incl. folder) defined at the component level where the bulletin attachments are stored.
+     * The full path is defined as the value from the component options PLUS "Bulletin-" appanded with the bulletin ID.  
+     * However, the arguemnt (key) can be really any value passed by the calling client.
+     * 
+     * @param string $key
+     * @return string
+     */
     public static function getBulletinFilePath($key) {
         $params = ComponentHelper::getParams('com_jsports');
         $attachmentdir = $params->get('attachmentdir');
@@ -84,7 +126,7 @@ class BulletinService
     
     /**
      * This function will remove the attachments underlying folder and all files within it.
-     * @param unknown $key
+     * @param string $key
      * @return boolean
      */
     public static function deleteAttachmentFolder($key) {
@@ -117,12 +159,13 @@ class BulletinService
     /**
      * This function will update the bulletin's attachment filename.
      * 
-     * @param unknown $id
-     * @param unknown $name
+     * @param int $id
+     * @param string $name
      * @return boolean
      */
     public static function updateAttachmentFilename($id, $name) {
-        $db = Factory::getDbo();
+//         $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
         
         $fields = array(
@@ -145,7 +188,7 @@ class BulletinService
             
             $db->execute();
             return true;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             LogService::error($e->getMessage());
             return false;
         }

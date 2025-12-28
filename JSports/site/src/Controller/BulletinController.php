@@ -16,12 +16,14 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
-use Joomla\CMS\Input\Input;
+use Joomla\CMS\Input\Input; 
 use FP4P\Component\JSports\Site\Objects\Application;
 use FP4P\Component\JSports\Site\Objects\Application as Myapp;
-
-
+use Joomla\CMS\Factory;
+use FP4P\Component\JSports\Site\Services\BulletinService;
 use FP4P\Component\JSports\Site\Services\ProgramsService;
+use FP4P\Component\JSports\Site\Services\LogService;
+use FP4P\Component\JSports\Administrator\Helpers\JSHelper;
 use Joomla\CMS\Component\ComponentHelper;
 
 // phpcs:disable PSR1.Files.SideEffects
@@ -39,56 +41,6 @@ class BulletinController extends BaseController
     
     
     /**
-     * Method to check out a user for editing and redirect to the edit form.
-     *
-     * @return  boolean
-     *
-     * @since   1.6
-     */
-    public function edit($key = null, $urlVar = 'id')
-    {
-        
-        $app            = $this->app;
-        $user           = $this->app->getIdentity();
-        $registrationId = (int) $this->input->get('id');
-        
-        $params = ComponentHelper::getParams('com_jsports');
-        $itemid = $params->get('itemid');
-        
-        $formdata = new Input($this->input->get('jform','','array'));
-        
-        // Locate the program ID from the form from the calling page.
-        $programid = $formdata->get('programid');
-        $svc = new ProgramsService();
-        $program = $svc->getItem($programid);
-        $options = json_decode($program->registrationoptions);
-        
-        // $layout = $program->registrationtemplate;
-        $layout = $options->registrationtemplate;
-        
-        if (strlen($layout) < 1) {
-            $layout = 'default';
-        }
-        
-        //@TODO  Need to add check for the existence of the file.
-        
-        $vName = $this->input->get('view', 'registration');
-        $this->input->set('view', $vName);
-        
-        // Set the registration id to edit in the session.
-        $app->setUserState('com_jsports.edit.registration.id', $registrationId);
-        $app->setUserState('com_jsports.edit.registration.programid', $programid);
-        //$app->setUserState('com_jsports.edit.registration.agreementurl', $program->agreementurl);
-        $app->setUserState('com_jsports.edit.registration.agreementurl', $options->agreementurl);
-        
-        // Redirect to the default screen.
-        //$this->setRedirect(Route::_('index.php?option=com_jsports&view=registerteam&programid=' . $programid . '&Itemid=' . $itemid, false));
-        $this->setRedirect(Route::_('index.php?option=com_jsports&view=registration&layout=' . $layout . '&Itemid=' . $itemid, false));
-        
-        return true;
-    }
-    
-    /**
      * Method to save a registration data.
      *
      * @return  void|boolean
@@ -98,104 +50,130 @@ class BulletinController extends BaseController
      */
     public function save()
     {
-        
-        $logger = Myapp::getLogger();
-        $japp = Application::getInstance();
-        
         // Check for request forgeries.
-        //         $this->checkToken();
-        
+        $this->checkToken('post');
         
         $app    = $this->app;
-        
-        $model  = $this->getModel('Registration', 'Site');
+        $input = $app->input;
+
         $user   = $this->app->getIdentity();
         $userId = (int) $user->get('id');
-        
-        // Get the user data.
-        $requestData = $app->getInput()->post->get('jform', [], 'array');
-        
-        
-        // Validate the posted data.
-        $form = $model->getForm();
-        
-        if (!$form) {
-            throw new \Exception($model->getError(), 500);
-        }
-        
-        // Validate the posted data.
-        $data = $model->validate($form, $requestData);
-        
-        // Check for errors.
-        if ($data === false) {
-            // Get the validation messages.
-            $errors = $model->getErrors();
-            
-            // Push up to three validation messages out to the user.
-            for ($i = 0, $n = count($errors); $i < $n && $i < 3; $i++) {
-                if ($errors[$i] instanceof \Exception) {
-                    $app->enqueueMessage($errors[$i]->getMessage(), 'warning');
-                } else {
-                    $app->enqueueMessage($errors[$i], 'warning');
-                }
-            }
-            
-            // Save the data in the session.
-            $app->setUserState('com_jsports.edit.registration.data', $requestData);
-            
-            // Redirect back to the edit screen.
-            $this->setRedirect(Route::_('index.php?option=com_jsports&view=register', false));
-            
-            return false;
-        }
-        
-        // Attempt to save the data.
-        $return = $model->save($data);
-        $lastid = $return;
-        
-        // Check for errors.
-        if ($return === false) {
-            // Save the data in the session.
-            $app->setUserState('com_jsports.edit.registration.data', $data);
-            
-            // Redirect back to the edit screen.
-            $this->setMessage(Text::sprintf('COM_JSPORTS_REGISTRATION_FAILED', $model->getError()), 'warning');
-            $this->setRedirect(Route::_('index.php?option=com_jsports&view=dashboard', false));
-            
-            return false;
-        }
-        
-        $logger->custom('Registration', 'Id: ' . $lastid . '  Team:' . $data['teamname'] . '  by ' . $data['registeredby'] . " Program: " . $data['programid'] . " Group: " . $data['grouping'] .
-            ' Skill: ' . $data['skilllevel'] . ' IP ADDR: ' . $_SERVER['REMOTE_ADDR']);
 
-        $japp->triggerEvent('onAfterRegistration', ['data' => $data, 'regid' => $lastid]);
+        // Posted form data
+        $requestData   = $input->post->get('jform', [], 'array');
+        $teamid = $requestData['teamid'];
+ //       $bulletinTitle = $requestData['title'] ?? '';
         
-        // Redirect the user and adjust session state based on the chosen task.
-        switch ($this->getTask()) {
-            default:
-                // Clear the profile id from the session.
-                $app->setUserState('com_jsports.edit.registration.data', null);
-                
-                $redirect = $app->getUserState('com_jsports.edit.registration.redirect', '');
-                
-                // Don't redirect to an external URL.
-                if (!Uri::isInternal($redirect)) {
-                    $redirect = null;
-                }
-                
-                if (!$redirect) {
-                    //$redirect = 'index.php?option=com_jsports&view=dashboard';
-                    $redirect = 'index.php?option=com_jsports&view=registration&layout=complete' . '&id=' . $lastid;
-                }
-                
-                // Redirect to the list screen.
-                $this->setMessage(Text::_('COM_JSPORTS_REGISTRATION_SAVE_SUCCESS'));
-                $this->setRedirect(Route::_($redirect, false));
-                break;
+        //check user session
+        if ($user->guest) {
+            $app->enqueueMessage(Text::_('COM_JSPORTS_INVALID_USERSESSION'), 'error');
+            $this->setRedirect(Route::_('index.php?option=com_jsports&view=team&id=' . $teamid, false));
+            return false;
         }
         
-        // Flush the data from the session.
-        $app->setUserState('com_jsports.edit.registration.data', null);
+        $model  = $this->getModel('Bulletin', 'Site');
+
+        // File upload array (jform[afile])
+        $files = $input->files->get('jform', [], 'array');
+        
+        // Determine if "new" based on incoming id (before save)
+        $incomingId = (int) ($requestData['id'] ?? $input->getInt('id'));
+        $isNew = $incomingId === 0;
+        
+//        $model = $this->getModel();
+        $result = $model->save($requestData);
+        
+        if (!$result) {
+            $msg = "An error occurred saving the bulletin.";
+            if ($model->uploadError) {
+                $msg = $msg . " File upload failed - check logs.";
+            }
+            LogService::error($msg);
+            $app->enqueueMessage($msg, "error");
+            $this->setRedirect('index.php?option=com_jsports&view=bulletins&teamid=' . $teamid);
+            return false;
+        } else {
+            $msg = "Bulletin has been saved.";
+            if ($model->uploadError) {
+                $msg = $msg . " File upload failed - check logs.";
+                $app->enqueueMessage($msg, "warning");
+                LogService::error($msg);
+                $this->setRedirect('index.php?option=com_jsports&view=bulletins&teamid=' . $teamid);
+                return false;
+            } else {
+                $app->enqueueMessage($msg, "message");
+                LogService::info($msg);
+                $this->setRedirect('index.php?option=com_jsports&view=bulletins&teamid=' . $teamid);
+                return true;
+            }
+            LogService::info($msg);
+            
+        }
+        
+        return true;
+        
+        // ================================
+    }
+    
+    public function delete() {
+        
+        $this->checkToken('get'); // or 'post' if your delete is a POST
+        
+        $app   = $this->app;
+        $input = $app->input;
+        
+        $id    = $input->getInt('id');
+        $teamId = $input->getInt('teamid');
+        
+        $user = $app->getIdentity();
+        if ($user->guest) {
+            $app->enqueueMessage(Text::_('COM_JSPORTS_INVALID_USERSESSION'), 'error');
+            $this->setRedirect(Route::_('index.php?option=com_jsports&view=bulletins&teamid=' . $teamId, false));
+            return false;
+        }
+        
+        if ($id <= 0) {
+            $app->enqueueMessage('Invalid ID value provided - Bulletin DELETE failed', 'error');
+            $this->setRedirect(Route::_('index.php?option=com_jsports&view=bulletins&teamid=' . $teamId, false));
+            return false;
+        }
+        
+        try {
+            $item = (new BulletinService())->getItem($id);
+            BulletinService::delete($id);
+            
+            $app->enqueueMessage("Bulletin '{$item->title}' was successfully deleted", 'message');
+            $this->setRedirect(Route::_('index.php?option=com_jsports&view=bulletins&teamid=' . (int) $item->teamid, false));
+            return true;
+            
+        } catch (\Exception $e) {
+            LogService::error('Bulletin delete failed: ' . $e->getMessage());
+            $app->enqueueMessage('Delete failed: ' . $e->getMessage(), 'error');
+            $this->setRedirect(Route::_('index.php?option=com_jsports&view=bulletins&teamid=' . $teamId, false));
+            return false;
+        }
+    }
+    
+    public function deleteAttachment($key = null, $urlVar = null) {
+
+        // Check for request forgeries.
+        $this->checkToken();
+        
+        $jinput = Factory::getApplication()->input;
+        $files  = $jinput->files->get('jform', [], 'array');
+        $bulletinid = $jinput->getInt('id');
+        
+        $filepath = JSHelper::getBulletinFilePath($bulletinid);
+        
+        if (BulletinService::deleteAttachmentFolder($bulletinid)) {
+            Factory::getApplication()->enqueueMessage("Attachment has been deleted", 'message');
+            LogService::info("Attachment folder for Bulletin ID " . $bulletinid . " has been deleted");
+            $this->setRedirect('index.php?option=com_jsports&view=bulletin&layout=edit&id=' . $bulletinid);
+        } else {
+            LogService::error("Something happened when trying to remove folder for Bulletin ID " . $bulletinid . " ");
+            Factory::getApplication()->enqueueMessage("Something happened when attempting to remove the attachment folder", 'warning');
+        }
+        
     }
     
     /**
@@ -209,19 +187,16 @@ class BulletinController extends BaseController
     {
         // Check for request forgeries.
         $this->checkToken();
+        $app    = $this->app;
+        // Get the team id.
+        $requestData = $app->getInput()->post->get('jform', [], 'array');
+        $teamid = $requestData['teamid'];
         
         // Flush the data from the session.
-        $this->app->setUserState('com_users.edit.profile', null);
+        $this->app->setUserState('com_jsports.edit.bulletin', null);
         
         // Redirect to user profile.
-        $this->setRedirect(Route::_('index.php?option=com_users&view=profile', false));
+        $this->setRedirect(Route::_('index.php?option=com_jsports&view=bulletins&teamid=' . $teamid, false));
     }
-    
-    public function complete() {
-        echo "Registration complete";
-        exit;
-    }
-    
-    
-    
+
 }

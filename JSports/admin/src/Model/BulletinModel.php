@@ -40,7 +40,7 @@ class BulletinModel extends AdminModel
             return false;
         }
         
-        $bulletinId = $this->getState('bulletin.id');
+        $bulletinId = $this->getState($this->getName() . '.id');
         
         // Fallbacks if needed
         if ($bulletinId <= 0) {
@@ -53,7 +53,9 @@ class BulletinModel extends AdminModel
         }
 
         // Log create
-        if ($isNew && $bulletinId > 0) {
+        $isNew = empty($data['id']) || (int) $data['id'] === 0;
+        
+        if ($isNew) {
             LogService::info("Bulletin created - {$bulletinTitle} - ID: {$bulletinId}");
         }
 
@@ -111,11 +113,13 @@ class BulletinModel extends AdminModel
      */
     protected function canDelete($record)
     {
+        $user = Factory::getApplication()->getIdentity();
+        
         if (empty($record->id) || (int) $record->published !== -2) {
             return false;
         }
 
-        return $this->getCurrentUser()->authorise(
+        return $user->authorise(
             'core.delete',
             'com_jsports.bulletin.' . (int) $record->id
         );
