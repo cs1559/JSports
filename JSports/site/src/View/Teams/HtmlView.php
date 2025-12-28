@@ -15,15 +15,11 @@ namespace FP4P\Component\JSports\Site\View\Teams;
 defined('_JEXEC') or die;
 
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
-use Joomla\CMS\Toolbar\Toolbar;
-use Joomla\CMS\Toolbar\ToolbarHelper;
-use Joomla\CMS\Language\Text;
-use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Services\ProgramsService;
 use FP4P\Component\JSports\Site\Services\SecurityService;
-
-use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\MVC\View\GenericDataException;
+use Joomla\CMS\Pagination\Pagination;
+use Joomla\CMS\Form\Form;
 
 class HtmlView extends BaseHtmlView
 {
@@ -39,21 +35,21 @@ class HtmlView extends BaseHtmlView
     /**
      * The pagination object
      *
-     * @var  \JPagination
+     * @var  Pagination
      */
     protected $pagination;
     
     /**
      * The model state
      *
-     * @var  \JObject
+     * @var  object
      */
     protected $state;
     
     /**
      * Form object for search filters
      *
-     * @var  \JForm
+     * @var  Form
      */
     public $filterForm;
     

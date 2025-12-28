@@ -17,10 +17,10 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Language\Text;
-use Joomla\CMS\Factory;
-
 use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\MVC\View\GenericDataException;
+use Joomla\CMS\Pagination\Pagination;
+use Joomla\CMS\Form\Form;
 
 class HtmlView extends BaseHtmlView
 {
@@ -36,21 +36,21 @@ class HtmlView extends BaseHtmlView
     /**
      * The pagination object
      *
-     * @var  \JPagination
+     * @var  Pagination
      */
     protected $pagination;
     
     /**
      * The model state
      *
-     * @var  \JObject
+     * @var  object
      */
     protected $state;
     
     /**
      * Form object for search filters
      *
-     * @var  \JForm
+     * @var  Form
      */
     public $filterForm;
     
@@ -77,70 +77,70 @@ class HtmlView extends BaseHtmlView
             throw new GenericDataException(implode("\n", $errors), 500);
         }
         
-        $this->addToolbar();
+//         $this->addToolbar();
         
         return parent::display($tpl);
         
     }
     
-    protected function addToolBar()
-    {
+//     protected function addToolBar()
+//     {
         
-        // Get the toolbar object instance
-        $toolbar = Toolbar::getInstance('toolbar');
+//         // Get the toolbar object instance
+//         $toolbar = Toolbar::getInstance('toolbar');
 
-        ToolbarHelper::title(Text::_('Sports Managment - Venues'));
+//         ToolbarHelper::title(Text::_('Sports Managment - Venues'));
                
-        $canDo = ContentHelper::getActions('com_jsports');
+//         $canDo = ContentHelper::getActions('com_jsports');
         
-        if ($canDo->get('core.create'))
-        {
-            $toolbar->addNew('venue.add');
-        }
+//         if ($canDo->get('core.create'))
+//         {
+//             $toolbar->addNew('venue.add');
+//         }
         
-        if ($canDo->get('core.edit.state'))
-        {
-            $dropdown = $toolbar->dropdownButton('status-group')
-            ->text('JTOOLBAR_CHANGE_STATUS')
-            ->toggleSplit(false)
-            ->icon('icon-ellipsis-h')
-            ->buttonClass('btn btn-action')
-            ->listCheck(true);
+//         if ($canDo->get('core.edit.state'))
+//         {
+//             $dropdown = $toolbar->dropdownButton('status-group')
+//             ->text('JTOOLBAR_CHANGE_STATUS')
+//             ->toggleSplit(false)
+//             ->icon('icon-ellipsis-h')
+//             ->buttonClass('btn btn-action')
+//             ->listCheck(true);
             
-            $childBar = $dropdown->getChildToolbar();
+//             $childBar = $dropdown->getChildToolbar();
             
-            $childBar->publish('venues.publish')->listCheck(true);
+//             $childBar->publish('venues.publish')->listCheck(true);
             
-            $childBar->unpublish('venues.unpublish')->listCheck(true);
+//             $childBar->unpublish('venues.unpublish')->listCheck(true);
             
-            $childBar->archive('venues.archive')->listCheck(true);
+//             $childBar->archive('venues.archive')->listCheck(true);
             
-            if ($this->state->get('filter.published') != -2)
-            {
-                $childBar->trash('venues.trash')->listCheck(true);
-            }
-        }
+//             if ($this->state->get('filter.published') != -2)
+//             {
+//                 $childBar->trash('venues.trash')->listCheck(true);
+//             }
+//         }
         
-        if ($this->state->get('filter.published') == -2 && $canDo->get('core.delete'))
-        {
-            $toolbar->delete('venues.delete')
-            ->text('JTOOLBAR_EMPTY_TRASH')
-            ->message('JGLOBAL_CONFIRM_DELETE')
-            ->listCheck(true);
-        }
+//         if ($this->state->get('filter.published') == -2 && $canDo->get('core.delete'))
+//         {
+//             $toolbar->delete('venues.delete')
+//             ->text('JTOOLBAR_EMPTY_TRASH')
+//             ->message('JGLOBAL_CONFIRM_DELETE')
+//             ->listCheck(true);
+//         }
         
-        $toolbar->standardButton('dashboard')
-        ->icon('fa fa-home')
-        ->text('Dashboard')
-        ->task('display.dashboard')
-        ->listCheck(false);
+//         $toolbar->standardButton('dashboard')
+//         ->icon('fa fa-home')
+//         ->text('Dashboard')
+//         ->task('display.dashboard')
+//         ->listCheck(false);
         
-        if ($canDo->get('core.create'))
-        {
-            $toolbar->preferences('com_jsports');
-        }
+//         if ($canDo->get('core.create'))
+//         {
+//             $toolbar->preferences('com_jsports');
+//         }
         
-    }
+//     }
    
 }
 

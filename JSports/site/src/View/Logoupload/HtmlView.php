@@ -16,8 +16,6 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
-use Joomla\CMS\Factory;
-use Joomla\CMS\CMSObject;
 
 /**
  * HTML Logo Upload View
@@ -26,29 +24,11 @@ use Joomla\CMS\CMSObject;
  */
 class HtmlView extends BaseHtmlView
 {
-    /**
-     * The item model state
-     *
-     * @var    \Joomla\Registry\Registry
-     * @since  1.6xxx
-    /**
-     * The item object details
-     *
-     * @var    \JObject
-     * @since  1.6
-     */
-    protected $item;
-      
+
+    protected $item;     
     protected $teamlogo;
     protected $teamname;
     
-    /**
-     * Execute and display a template script.
-     *
-     * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
-     *
-     * @return  mixed  A string if successful, otherwise an Error object.
-     */
     public function display($tpl = null)
     {
         $this->data       = $this->get('Data');
@@ -57,6 +37,7 @@ class HtmlView extends BaseHtmlView
         
         $this->form       = $this->getModel()->getForm($this->item,true);
        
+        //@TODO  This hardcoded value needs to be modified to be configurable from the component options feature of Joomla
         $this->teamlogo = "/media/com_jsports/images/swibl-large.png";
         
         $this->teamname = $this->item->name;

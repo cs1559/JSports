@@ -26,35 +26,50 @@ use FP4P\Component\JSports\Site\Services\RosterService;
 use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\Form\Form;
+use Joomla\CMS\Pagination\Pagination;
+use FP4P\Component\JSports\Administrator\Table\TeamsTable;
 
 class HtmlView extends BaseHtmlView
 {
-    public $form;
-    
     /**
-     * An array of items
-     *
-     * @var  array
+     * 
+     * @var Form
+     */
+    public $form;
+    /**
+     * 
+     * @var array
      */
     protected $items;
     
+    /**
+     * 
+     * @var TeamsTable 
+     */
     protected $team;
     protected $teamlastyearplayed;
     protected $program;
+    /**
+     * 
+     * @var boolean
+     */
     protected $canEdit = false;
+    
+    /**
+     * 
+     * @var boolean
+     */
     protected $canAddPlayers = true;
     
     /**
-     * The pagination object
-     *
-     * @var  \JPagination
+     * 
+     * @var Pagination
      */
     protected $pagination;
     
     /**
-     * The model state
-     *
-     * @var  \JObject
+     * 
+     * @var object
      */
     protected $state;
     
@@ -71,8 +86,7 @@ class HtmlView extends BaseHtmlView
      * @var  array
      */
     public $activeFilters;
-    
-    
+        
     public function display($tpl = null)
     {
         

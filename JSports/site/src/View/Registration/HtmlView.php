@@ -11,14 +11,11 @@
  */
 namespace FP4P\Component\JSports\Site\View\Registration;
 
-
-
 defined('_JEXEC') or die;
 
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Factory;
-use Joomla\CMS\CMSObject;
 use FP4P\Component\JSports\Site\Services\ProgramsService;
 
 /**
@@ -29,23 +26,8 @@ use FP4P\Component\JSports\Site\Services\ProgramsService;
 class HtmlView extends BaseHtmlView
 {
     protected $program;
-    
-    /**
-     * The item object details
-     *
-     * @var    \JObject
-     * @since  1.6
-     */
     protected $item;
-    
-    /**
-     * The list of visit reports/visit dates for this walk
-     *
-     * @var    \JObject
-     * @since  1.6
-     */
-    protected $agreementurl = "";
-   
+    protected $agreementurl = "";   
     protected $options = null;
     
     /**
@@ -84,11 +66,11 @@ class HtmlView extends BaseHtmlView
         // Cleanout the agreement url state
         $app->setUserState('com_jsports.edit.registration.agreementurl','');
         
-        
         $this->form->bind($this->item);
         
          // Check for errors.
-        if (count($errors = $this->get('Errors')))
+//         if (count($errors = $this->get('Errors')))
+        if (count($errors = $this->getErrors()))
         {
             throw new GenericDataException(implode("\n", $errors), 500);
         }

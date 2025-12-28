@@ -17,7 +17,6 @@ defined('_JEXEC') or die;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Factory;
-use Joomla\CMS\CMSObject;
 use Joomla\CMS\Component\ComponentHelper;
 use FP4P\Component\JSports\Administrator\Helpers\Html;
 use FP4P\Component\JSports\Site\Services\SecurityService;
@@ -31,26 +30,53 @@ use FP4P\Component\JSports\Site\Services\TeamService;
 class HtmlView extends BaseHtmlView
 {
 
-    /**
-     * The item object details
-     *
-     * @var    \JObject
-     * @since  1.6
-     */
-    protected $item;
-      
+    protected $item;      
     protected $programs;
     protected $recentprogram;
     protected $rosterplayers;
     protected $rosterstaff;
+    /**
+     * Flag to determine if the user can edit the team profile.
+     * @var boolean
+     */
     protected $canEdit = false;
     protected $standings;
+    /**
+     * Flat to indicate if the user can see the team's roster
+     * @var boolean
+     */
     protected $canSeeRoster;
+    /**
+     * Division Name
+     * @var string
+     */
     protected $divisionname;
+    /**
+     * Flag to indicate if the team is active for the current season/program.
+     * @var boolean
+     */
     protected $active;
+    /**
+     * Team ID - required to define context for the request
+     * @var int
+     */
     protected $teamid;
+    /**
+     * Program ID - required to define context
+     * @var int
+     */
     protected $programid;
+    /**
+     * 
+     * @var boolean
+     */
     protected $canEditTournamentFlag = false;
+    /**
+     * Flag to indicate whether or not the team profile attribtues are enabled and editable by team admins.  This is set
+     * at the component options level.
+     * 
+     * @var boolean
+     */
     protected $attributesenabled = false;
     
     /**
@@ -69,7 +95,8 @@ class HtmlView extends BaseHtmlView
         $this->form = $this->getModel()->getForm($this->item,true);
         $this->form->bind($this->item);
                
-        $user = Factory::getUser();
+//    $user = Factory::getUser();
+//         $user = Factory::getApplication()->getIdentity();
 
         $mod = $this->getModel();
 
@@ -110,12 +137,11 @@ class HtmlView extends BaseHtmlView
             $this->divisionname = "Not Available";
         }
         
-        
-        
         if ($this->canEdit) {
             $this->profilemenu = Html::getTeamProfileMenu($this->data->id, "");
         }
         
+        //@TODO  This default logo needs to be configurable
         $defaultlogo = '/media/com_jsports/images/swibl-square-logo.png';
         // Test for NULL to avoid deprecated error with strlen
         if (!is_null($this->data->logo)) {

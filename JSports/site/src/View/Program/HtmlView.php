@@ -29,17 +29,7 @@ use FP4P\Component\JSports\Site\Services\RegistrationService;
  */
 class HtmlView extends BaseHtmlView
 {
-    /**
-     * The item model state
-     *
-     * @var    \Joomla\Registry\Registry
-     * @since  1.6xxx
-    /**
-     * The item object details
-     *
-     * @var    \JObject
-     * @since  1.6
-     */
+
     protected $item;
     
     /**
@@ -67,7 +57,6 @@ class HtmlView extends BaseHtmlView
             Factory::getApplication()->enqueueMessage("You must be logged in to register", 'error');
             return false;
         }
-
         
         // Check to if the user can even register.
         $svc = new RegistrationService();

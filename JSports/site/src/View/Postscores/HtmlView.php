@@ -15,16 +15,10 @@ namespace FP4P\Component\JSports\Site\View\Postscores;
 defined('_JEXEC') or die;
 
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
-use Joomla\CMS\Toolbar\Toolbar;
-use Joomla\CMS\Toolbar\ToolbarHelper;
-use Joomla\CMS\Language\Text;
-use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Services\SecurityService;
-
-use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\Form\Form;
-
+use Joomla\CMS\Pagination\Pagination;
 
 class HtmlView extends BaseHtmlView
 {
@@ -45,15 +39,11 @@ class HtmlView extends BaseHtmlView
     /**
      * The pagination object
      *
-     * @var  \JPagination
+     * @var  Pagination
      */
     protected $pagination;
     
-    /**
-     * The model state
-     *
-     * @var  \JObject
-     */
+
     protected $state;
     
     /**
@@ -86,12 +76,12 @@ class HtmlView extends BaseHtmlView
         $this->teamlastyearplayed = $mod->teamlastyearplayed;
         $this->program = $mod->program;
         
-        $error = $mod->getError();
+//         $error = $mod->getError();
                 
-        $context = array(
-            'teamid' => $this->team->id,
-            'programid' => $this->program->id
-        );
+//         $context = array(
+//             'teamid' => $this->team->id,
+//             'programid' => $this->program->id
+//         );
         $this->canEdit = SecurityService::canEditTeamSchedule($this->team->id,$this->program->id);
         //$this->canEdit = SecurityService::canEditTeamSchedule($context);
 

@@ -25,6 +25,7 @@ use FP4P\Component\JSports\Site\Services\SecurityService;
 use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\Form\Form;
+use Joomla\CMS\Pagination\Pagination;
 
 class HtmlView extends BaseHtmlView
 {
@@ -40,14 +41,12 @@ class HtmlView extends BaseHtmlView
     /**
      * The pagination object
      *
-     * @var  \JPagination
+     * @var  Pagination
      */
     protected $pagination;
     
     /**
      * The model state
-     *
-     * @var  \JObject
      */
     protected $state;
     

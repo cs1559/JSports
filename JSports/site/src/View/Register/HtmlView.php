@@ -29,20 +29,9 @@ use FP4P\Component\JSports\Site\Services\RegistrationService;
  */
 class HtmlView extends BaseHtmlView
 {
-    /**
-     * The item model state
-     *
-     * @var    \Joomla\Registry\Registry
-     * @since  1.6xxx
-     /**
-     * The item object details
-     *
-     * @var    \JObject
-     * @since  1.6
-     */
+
     protected $item;
-    
-    
+        
     /**
      * Execute and display a template script.
      *

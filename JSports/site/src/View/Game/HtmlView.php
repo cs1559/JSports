@@ -15,38 +15,16 @@ namespace FP4P\Component\JSports\Site\View\Game;
 defined('_JEXEC') or die;
 
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
-use Joomla\CMS\Toolbar\Toolbar;
-use Joomla\CMS\Toolbar\ToolbarHelper;
-use Joomla\CMS\Language\Text;
 use Joomla\CMS\Factory;
-use FP4P\Component\JSports\Administrator\Helpers\Html;
-
-use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\MVC\View\GenericDataException;
-
-use Joomla\CMS\Form\Formhelper;
 
 class HtmlView extends BaseHtmlView
 {
     public $form;
-    
-    /**
-     * An array of items
-     *
-     * @var  array
-     */
     protected $items;
-    
     protected $team;
-    protected $canEdit = false;
-    
+    protected $canEdit = false;    
     protected $contextid;
-      
-    /**
-     * The model state
-     *
-     * @var  \JObject
-     */
     protected $state;
     
     public function display($tpl = null)

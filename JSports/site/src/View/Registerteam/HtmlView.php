@@ -12,8 +12,6 @@
 
 namespace FP4P\Component\JSports\Site\View\Registerteam;
 
-
-
 defined('_JEXEC') or die;
 
 use Joomla\CMS\MVC\View\GenericDataException;
@@ -29,27 +27,9 @@ use FP4P\Component\JSports\Site\Services\RegistrationService;
  */
 class HtmlView extends BaseHtmlView
 {
-    /**
-     * The item model state
-     *
-     * @var    \Joomla\Registry\Registry
-     * @since  1.6xxx
-     /**
-     * The item object details
-     *
-     * @var    \JObject
-     * @since  1.6
-     */
+
     protected $item;
-    
-    
-    /**
-     * Execute and display a template script.
-     *
-     * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
-     *
-     * @return  mixed  A string if successful, otherwise an Error object.
-     */
+   
     public function display($tpl = null)
     {
         $user       = $this->getCurrentUser();

@@ -27,6 +27,7 @@ use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\Pagination\Pagination;
 use Joomla\CMS\Form\Form;
+use FP4P\Component\JSports\Administrator\Table\TeamsTable;
 
 
 class HtmlView extends BaseHtmlView
@@ -39,10 +40,20 @@ class HtmlView extends BaseHtmlView
      * @var  array
      */
     protected $items;
-    
+
+    /**
+     * 
+     * @var TeamsTable
+     */
     protected $team;
+    
     protected $teamlastyearplayed;
     protected $program;
+    
+    /**
+     * 
+     * @var boolean
+     */
     protected $canEdit = false;
       
     /**

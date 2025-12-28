@@ -14,12 +14,8 @@ namespace FP4P\Component\JSports\Site\View\Standings;
 
 defined('_JEXEC') or die;
 
-use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
-use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Factory;
-use FP4P\Component\JSports\Site\Model\DashboardModel;
-use Joomla\CMS\Input\Input;
 
 
 /**
@@ -29,12 +25,7 @@ use Joomla\CMS\Input\Input;
  */
 class HtmlView extends BaseHtmlView
 {
-    /**
-     * The item object details
-     *
-     * @var    \JObject
-     * @since  1.6
-     */
+
     protected $standings;
     protected $program;
     protected $divisions;
@@ -49,8 +40,8 @@ class HtmlView extends BaseHtmlView
      */
     public function display($tpl = null)
     {
-        $input = Factory::getApplication()->input;
-        $programid = (int) $input->get('programid');
+//        $input = Factory::getApplication()->input;
+//         $programid = (int) $input->get('programid');
         
         $this->standings = $this->get('ProgramStandings');
         $this->program = $this->get('Program');

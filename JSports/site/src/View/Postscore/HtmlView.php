@@ -14,39 +14,16 @@ namespace FP4P\Component\JSports\Site\View\Postscore;
 defined('_JEXEC') or die;
 
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
-use Joomla\CMS\Toolbar\Toolbar;
-use Joomla\CMS\Toolbar\ToolbarHelper;
-use Joomla\CMS\Language\Text;
 use Joomla\CMS\Factory;
-use FP4P\Component\JSports\Administrator\Helpers\Html;
-
-use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\MVC\View\GenericDataException;
-
-// use Joomla\CMS\Form\Formhelper;
-
-// FormHelper::loadFieldClass('list');
 
 class HtmlView extends BaseHtmlView
 {
     public $form;
-    
-    /**
-     * An array of items
-     *
-     * @var  array
-     */
-    protected $items;
-    
+    protected $items;    
     protected $team;
     protected $canEdit = false;
     protected $redirectteam = 0;
-        
-    /**
-     * The model state
-     *
-     * @var  \JObject
-     */
     protected $state;
     
     public function display($tpl = null)
@@ -65,8 +42,7 @@ class HtmlView extends BaseHtmlView
         
         // NOTE:  Need to research to see if there is a better way of getting the model data into the template
         $mod = $this->getModel();
-      
-        
+              
         $this->team = $mod->team;
         $this->program = $mod->program;
         $this->teamid = $mod->teamid;

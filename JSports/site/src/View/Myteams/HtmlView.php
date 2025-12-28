@@ -14,13 +14,7 @@ namespace FP4P\Component\JSports\Site\View\Myteams;
 
 defined('_JEXEC') or die;
 
-use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
-use Joomla\CMS\Helper\ContentHelper;
-use Joomla\CMS\Factory;
-use FP4P\Component\JSports\Site\Model\DashboardModel;
-use FP4P\Component\JSports\Site\Services\UserService;
-
 
 /**
  * HTML Dashboard View
@@ -29,12 +23,7 @@ use FP4P\Component\JSports\Site\Services\UserService;
  */
 class HtmlView extends BaseHtmlView
 {
-    /**
-     * The item object details
-     *
-     * @var    \JObject
-     * @since  1.6
-     */
+
     protected $item;
     protected $teams;
     

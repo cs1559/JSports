@@ -18,8 +18,6 @@ defined('_JEXEC') or die;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Factory;
-use Joomla\CMS\CMSObject;
-use FP4P\Component\JSports\Site\Services\ProgramsService;
 
 /**
  * HTML Registration View
@@ -30,20 +28,8 @@ class HtmlView extends BaseHtmlView
 {
     protected $program;
     
-    /**
-     * The item object details
-     *
-     * @var    \JObject
-     * @since  1.6
-     */
     protected $item;
     
-    /**
-     * The list of visit reports/visit dates for this walk
-     *
-     * @var    \JObject
-     * @since  1.6
-     */
     protected $agreementurl = "";
    
     protected $options = null;
@@ -57,7 +43,7 @@ class HtmlView extends BaseHtmlView
      */
     public function display($tpl = null)
     {
-        $app = Factory::getApplication();
+//         $app = Factory::getApplication();
         $this->data       = $this->get('Data');
         $this->state      = $this->get('State');
         $this->item       = $this->get('Item');
