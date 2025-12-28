@@ -21,7 +21,8 @@ use Joomla\CMS\Form\Field\ListField;
 use Joomla\CMS\Form\Field\ComboField;
 use Joomla\CMS\HTML\HTMLHelper;
 use FP4P\Component\JSports\Administrator\Helpers\Html;
-use FP4P\Component\JSports\Site\Services\TeamService;
+use FP4P\Component\JSports\Site\Services\TeamService;   
+use Joomla\Database\DatabaseInterface;
 
 
 class LocationlistField extends ComboField

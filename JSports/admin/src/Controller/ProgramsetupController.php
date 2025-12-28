@@ -17,6 +17,7 @@ defined('_JEXEC') or die;
 use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\Factory;
 use Joomla\Database\ParameterType;
+use Joomla\Database\DatabaseInterface;
 
 /**
  * This controller is used in the process of setting up each program by assigning a given registrant

@@ -4,6 +4,7 @@ namespace FP4P\Component\JSports\Administrator\Services;
 use FP4P\Component\JSports\Administrator\Table\RegistrationsTable;
 use Joomla\Database\ParameterType;
 use Joomla\CMS\Factory;
+use Joomla\Database\DatabaseInterface;
 /**
  * 
  * @author cs155

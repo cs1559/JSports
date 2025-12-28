@@ -16,7 +16,7 @@ use Joomla\CMS\Router\Route;
 use Joomla\Database\ParameterType;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Component\ComponentHelper;
-
+use Joomla\Database\DatabaseInterface;
 
 /**
  * The Html class is a helper class that returns various HTML elements. 
