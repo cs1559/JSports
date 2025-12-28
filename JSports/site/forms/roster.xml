@@ -19,7 +19,7 @@
 			label="COM_JSPORTS_LASTNAME" size="40" required="true" />
 
 		<field name="playernumber" type="text"
-			label="COM_JSPORTS_PLAYERNUMBER" size="2" required="true" />
+			label="COM_JSPORTS_PLAYERNUMBER" size="2" maxlength="2" required="true" />
 			
 		<field name="substitute" type="radio"
 			label="COM_JSPORTS_SUBSTITUTE" class="btn-group btn-group-yesno" default="0"
