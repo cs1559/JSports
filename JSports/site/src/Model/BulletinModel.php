@@ -44,8 +44,8 @@ class BulletinModel extends FormModel
         $bulletin = $bsvc->getBulletinsTable();
         
         $app   = Factory::getApplication();
-        $user   = $app->getIdentity();
         $input = $app->input;
+        $user   = $app->getIdentity();
         
         // Posted form data
         $requestData   = $input->post->get('jform', [], 'array');
@@ -53,6 +53,7 @@ class BulletinModel extends FormModel
         
         // File upload array (jform[afile])
         $files = $input->files->get('jform', [], 'array');
+        
         
         $bulletin->bind($data);
         $bulletin->check();
@@ -120,15 +121,18 @@ class BulletinModel extends FormModel
     {
         $input = Factory::getApplication()->input;
         $id     = $input->getInt("id");
+        $teamid     = $input->getInt("teamid");
         
         $svc = new BulletinService();
         $item = $svc->getItem($id);
         
-        
+        $tsvc = new TeamService();
         if ((int) $item->teamid > 0) {
-            $tsvc = new TeamService();
             $pk = (int) $item->teamid;
             $this->team = $tsvc->getItem($pk);
+        } else {
+            $this->team = $tsvc->getItem($teamid);
+            $item->teamid = $teamid;
         }
 
         $item->hasAttachment = false;
