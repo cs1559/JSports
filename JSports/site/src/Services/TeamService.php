@@ -21,7 +21,7 @@ use FP4P\Component\JSports\Administrator\Table\TeamsTable;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Database\ParameterType;
 use Joomla\CMS\Factory;
-use FP4P\Component\JSports\Site\Services\DivisionService;
+// use FP4P\Component\JSports\Site\Services\DivisionService;
 
 class TeamService
 {
@@ -37,7 +37,7 @@ class TeamService
      * This function will return an individual row based on the Team ID.
      *
      * @param number $id
-     * @return FP4P\Component\JSports\Administrator\Table\TeamsTable|NULL
+     * @return TeamsTable|NULL
      */
     public static function getItem($id = 0)
     {
