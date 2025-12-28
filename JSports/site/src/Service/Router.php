@@ -120,6 +120,14 @@ class Router extends RouterView
         $openings = new RouterViewConfiguration('openings');
         $openings->setKey('id');
         $this->registerView($openings);
+
+        $bulletins = new RouterViewConfiguration('bulletins');
+        $bulletins->setKey('id');
+        $this->registerView($bulletins);
+
+        $bulletin = new RouterViewConfiguration('bulletin');
+        $bulletin->setKey('id');
+        $this->registerView($bulletin);
         
         parent::__construct($app, $menu);
 
