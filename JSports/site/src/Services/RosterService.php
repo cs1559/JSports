@@ -13,9 +13,7 @@
 namespace FP4P\Component\JSports\Site\Services;
 
 use FP4P\Component\JSports\Administrator\Table\RostersTable;
-use FP4P\Component\JSports\Site\Services\ProgramsService;
 use Joomla\Database\DatabaseInterface;
-use Joomla\Database\ParameterType;
 use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Objects\Application as Myapp;
 
@@ -88,8 +86,8 @@ class RosterService
      * Function to retrieve STAFF members from the roster.  this function passes a
      * hard coded value of 'S' to filter the roster list.
      * 
-     * @param int $teamid
-     * @param int $programid
+     * @param number $teamid
+     * @param number $programid
      * @return array
      */
     public static function getRosterStaff($teamid, $programid) {
@@ -102,8 +100,8 @@ class RosterService
      * parameters is a boolean that indicates of the return array should include 
      * substitute players on the roster.
      * 
-     * @param int $teamid
-     * @param int $programid
+     * @param number $teamid
+     * @param number $programid
      * @param boolean $includesubs
      * @return array
      */
@@ -116,11 +114,11 @@ class RosterService
      * This is a private function used to retrieve roster items filtered based on the input
      * parameters.
      * 
-     * @param int $teamid
-     * @param int $programid
+     * @param number $teamid
+     * @param number $programid
      * @param String $classification
      * @param boolean $includesubs
-     * @return unknown
+     * @return array
      */
     private static function getRosterDataByType($teamid, $programid, $classification, $includesubs = true) {
 //         $db = Factory::getDbo();
@@ -159,8 +157,8 @@ class RosterService
      * This is a roster function that checks to see if the program/season requires
      * roster limits and compares current size to max roster size and returns a boolean.
      * 
-     * @param unknown $teamid
-     * @param unknown $programid
+     * @param number $teamid
+     * @param number $programid
      * @return boolean
      */
     public static function canAddPlayers($teamid, $programid) {
