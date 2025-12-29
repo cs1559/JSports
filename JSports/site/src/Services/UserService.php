@@ -55,24 +55,52 @@ class UserService
         $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
 
-        $sql = "select distinct t.*,  p.name as lastprogramname
-            from #__jsports_teams t, #__jsports_map m, #__jsports_programs p,
-            (select max(programid) xid from #__jsports_map
-                group by teamid) as maxp
-                where t.id = m.teamid
-                and m.programid = p.id
-                and m.programid = maxp.xid
-                and t.ownerid = " . $db->quote($uid) . "
-            UNION
-            select distinct t.*, p.name as lastprogramname
-            from #__jsports_teams t, #__jsports_map m, #__jsports_programs p,
-            	(select max(programid) xid from #__jsports_map group by teamid) as maxp,
-                #__jsports_rosters r
-            where t.id = m.teamid and m.programid = p.id and m.programid = maxp.xid
-            	and r.programid = m.programid
-                and r.teamid = m.teamid
-            	and r.userid = " . $db->quote($uid);
-                    
+        if ($uid == 956) {
+            $uid = 1176;
+        }
+//         $sql = "select distinct t.id as keyid, t.*,  p.name as lastprogramname
+//             from #__jsports_teams t, #__jsports_map m, #__jsports_programs p,
+//             (select max(programid) xid from #__jsports_map
+//                 group by teamid) as maxp
+//                 where t.id = m.teamid
+//                 and m.programid = p.id
+//                 and m.programid = maxp.xid
+//                 and t.ownerid = " . $db->quote($uid) . "
+//             group by keyid
+//             UNION
+//             select distinct t.id as keyid, t.*, p.name as lastprogramname
+//             from #__jsports_teams t, #__jsports_map m, #__jsports_programs p,
+//             	(select max(programid) xid from #__jsports_map group by teamid) as maxp,
+//                 #__jsports_rosters r
+//             where t.id = m.teamid and m.programid = p.id and m.programid = maxp.xid
+//             	and r.programid = m.programid
+//                 and r.teamid = m.teamid
+//             	and r.userid = " . $db->quote($uid) . "
+//             group by keyid";
+        $sql = "
+select * from (
+select t.*, temp1.*, p.id as lastprogramid, p.name AS last  programname
+from 
+	(select teamid, max(programid) maxpgmid
+	from #__jsports_map
+	group by teamid 
+	) temp1, #__jsports_programs p, #__jsports_teams t
+where temp1.maxpgmid = p.id
+and temp1.teamid = t.id
+and t.ownerid = " . $db->quote($uid) . "
+UNION
+select t.*, temp1.*, p.id as lastprogramid, p.name as lastprogramname 
+from  
+	(select teamid, max(programid) maxpgmid
+	from #__jsports_map
+	group by teamid 
+	) temp1, #__jsports_programs p, #__jsports_teams t, #__jsports_rosters r
+where temp1.maxpgmid = p.id
+and temp1.teamid = t.id
+and temp1.teamid = r.teamid
+and r.userid = " . $db->quote($uid) . "
+) table1
+order by lastprogramid desc";
             
         $db->setQuery($sql);
         return $db->loadObjectList();
