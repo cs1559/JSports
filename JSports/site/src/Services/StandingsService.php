@@ -67,6 +67,13 @@ class StandingsService
         return $db->loadAssocList();
     }
 
+    /**
+     * 
+     * @param int $teamid
+     * @param int $programid
+     * @param int $divisionid
+     * @return array
+     */
     public static function getTeamList($teamid, $programid, $divisionid = null)
     {
         $db = Factory::getDbo();
