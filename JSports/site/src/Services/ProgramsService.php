@@ -14,7 +14,6 @@ namespace FP4P\Component\JSports\Site\Services;
 
 use FP4P\Component\JSports\Administrator\Table\ProgramsTable;
 use Joomla\Database\DatabaseInterface;
-use Joomla\Database\ParameterType;
 use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Services\SecurityService;
 
@@ -46,7 +45,7 @@ class ProgramsService
      * This function will return an array of objects that represent a list of programs that have not
      * been completed.
      *
-     * @return unknown
+     * @return array
      */
     public static function getNonCompletedPrograms($activeonly = false) {
         $db = Factory::getContainer()->get(DatabaseInterface::class);
@@ -73,7 +72,7 @@ class ProgramsService
      * This function will return a default program.  The default program will be the most recent
      * non-completed program.
      *
-     * @return unknown
+     * @return array
      */
     public static function getDefaultProgram() {
         
@@ -126,8 +125,8 @@ class ProgramsService
      * This function will return a list of groups for a given program.  this is based on the groupings code
      * set at the Program level.
      * 
-     * @param unknown $programid
-     * @return unknown
+     * @param number $programid
+     * @return array
      */
     public static function getProgramGroups($programid) {
         
@@ -157,8 +156,6 @@ class ProgramsService
         $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
         
-        $returncode = 0;
-        
         // Check authorization to close out program.
          if (!SecurityService::isAdmin()) {
              Factory::getApplication()->enqueueMessage("User is NOT authorized", 'warning');
@@ -181,6 +178,7 @@ class ProgramsService
         $query->setQuery($sql);
         $db->setQuery($query);
         $result = $db->execute();
+        // @TODO  Need to handle result variable in case of execution error.
         
         $query = $db->getQuery(true);
         $sql = "insert into " . $db->quoteName("#__jsports_past_standings")
@@ -190,7 +188,8 @@ class ProgramsService
         $query->setQuery($sql);
         $db->setQuery($query);
         $result = $db->execute();
-
+        // @TODO  Need to handle result variable in case of execution error.
+        
         $query = $db->getQuery(true);
         $sql = "delete from #__jsports_recordhistory
                     where programid = " . $db->quote($programid);
@@ -198,6 +197,7 @@ class ProgramsService
         $query->setQuery($sql);
         $db->setQuery($query);
         $result = $db->execute();
+        // @TODO  Need to handle result variable in case of execution error.
         
 //         // Create new Record History record
 //         /*
@@ -217,7 +217,7 @@ class ProgramsService
         $query->setQuery($sql);
         $db->setQuery($query);
         $result = $db->execute();
-        
+        // @TODO  Need to handle result variable in case of execution error.
         
 //         // UPDATE THE PROGRAM RECORD
 //         // Change program status to CLOSED
@@ -259,10 +259,15 @@ class ProgramsService
     
     
     
-    
+    /**
+     * this function is incomplete.
+     * @TODO  Need to finish this function.
+     * @param number $programid
+     */
     
     public static function rollbackProgram($programid) {
         
+        return false;
         // Check authorization to close out program.
         //         if (!SecurityService::isAdmin()) {
         //             throw new \Exception('Not Authorized');
