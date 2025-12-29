@@ -49,6 +49,9 @@ class GameController extends FormController
      */
     public function delete() {
 
+        // Check for request forgeries.
+        $this->checkToken();
+        
         $logger = Myapp::getLogger();
         $app = Factory::getApplication();
         
@@ -118,6 +121,9 @@ class GameController extends FormController
      * @return boolean
      */
     public function reset() {
+        
+        // Check for request forgeries.
+        $this->checkToken();
         
         $logger = Myapp::getLogger();
         $app = Factory::getApplication();
