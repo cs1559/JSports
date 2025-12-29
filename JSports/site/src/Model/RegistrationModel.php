@@ -17,9 +17,10 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\MVC\Model\FormModel;
 use FP4P\Component\JSports\Site\Objects\Application;
-use Joomla\Database\ParameterType;
 use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Services\RegistrationService;
+use FP4P\Component\JSports\Administrator\Table\RegistrationsTable;
+use Joomla\CMS\Form\Form;
 
 /**
  * This model supports methods required to enable users to register for a program from the front-end side of the JSports component.
@@ -41,7 +42,7 @@ class RegistrationModel extends FormModel
     /**
      * This function will retrieve a registration record from the database.
      *
-     * @return RegistrationTable
+     * @return RegistrationsTable
      */
     public function getData(){
         $input = Factory::getApplication()->input;
@@ -58,7 +59,7 @@ class RegistrationModel extends FormModel
     /**
      * This function will retrieve a registration record from the database.
      *
-     * @return RegistrationTable
+     * @return RegistrationsTable
      */
    
     public function getItem(){
@@ -78,7 +79,7 @@ class RegistrationModel extends FormModel
      * @param array $data
      * @param boolean $loadData
      * @throws \Exception
-     * @return unknown
+     * @return Form
      */
     public function getForm($data = array(), $loadData = true)
     {
@@ -106,7 +107,7 @@ class RegistrationModel extends FormModel
     
     /**
      * This function will load data into the form associated with the model.
-     * @return unknown
+     * @return array<string, mixed>
      */
     protected function loadFormData()
     {
@@ -131,12 +132,12 @@ class RegistrationModel extends FormModel
     /**
      * This function will save/store the data captured on the Registration EDIT form and save it to the database.
      *
-     * @param unknown $data
-     * @return unknown
+     * @param array<string, mixed> $data
+     * @return boolean
      */
     public function save($data) {
         
-        $user = Factory::getUser();
+//         $user = Factory::getUser();
         $app = Application::getInstance();
         
         
