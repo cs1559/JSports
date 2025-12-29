@@ -15,6 +15,7 @@ namespace FP4P\Component\JSports\Site\Services;
 use Joomla\Database\ParameterType;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Mail\Mail;
+use Joomla\CMS\Mail\Exception\MailDisabledException;
 use Joomla\CMS\Component\ComponentHelper;
 use FP4P\Component\JSports\Site\Objects\Application as Myapp;
 
@@ -39,7 +40,6 @@ class MailService
      * @since   1.7.0
      *
      * @throws  MailDisabledException  if the mail function is disabled
-     * @throws  phpmailerException     if exception throwing is enabled
      */
      public function sendMail(
         $recipient,
