@@ -16,7 +16,6 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Database\ParameterType;
-use Joomla\CMS\Factory;
 
 /**
  * Methods supporting a list of mywalks records.
@@ -60,7 +59,7 @@ class VenuesModel extends ListModel
 	protected function populateState($ordering = 'a.id', $direction = 'asc')
 	{
 	    
-	    $app = Factory::getApplication();
+// 	    $app = Factory::getApplication();
 	    
 		$search = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
 		$this->setState('filter.search', $search);
@@ -139,12 +138,12 @@ class VenuesModel extends ListModel
 	    
 	    
 	    // Filter by search in date.
-	    $city = $this->getState('filter.city');
-	    if (!empty($city)) {
-	        $search = '%' . trim($city) . '%';
-	        $query->where($db->quoteName('a.city') . ' like :city');
-	        $query->bind(':city', $status, ParameterType::STRING);
-	    }
+// 	    $city = $this->getState('filter.city');
+// 	    if (!empty($city)) {
+// 	        $search = '%' . trim($city) . '%';
+// 	        $query->where($db->quoteName('a.city') . ' like :city');
+// 	        $query->bind(':city', $status, ParameterType::STRING);
+// 	    }
 
 	    // Filter by search in date.
 	    $search = $this->getState('filter.search');
@@ -160,10 +159,10 @@ class VenuesModel extends ListModel
 	    $orderCol  = $this->state->get('list.ordering', 'a.id');
 	    $orderDirn = $this->state->get('list.direction', 'ASC');
 	    
-	    $ordering = [$db->quoteName('a.name') . ' ' . $db->escape($orderDirn), ];
+// 	    $ordering = [$db->quoteName('a.name') . ' ' . $db->escape($orderDirn), ];
 	    
-	    
-	    $query->order($ordering);
+	    $query->order($db->escape($orderCol . ' ' . $orderDirn));
+// 	    $query->order($ordering);
 	    return $query;
 	}
 	
