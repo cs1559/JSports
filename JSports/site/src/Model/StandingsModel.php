@@ -34,9 +34,9 @@ class StandingsModel extends BaseModel
     protected $divisions;
     
     /**
-     * This function will retrieve a list of teams assocaited with the user.
+     * This function will return the standings for a given program.
      *
-     * @return unknown
+     * @return array
      */
     public function getProgramStandings(){
   
