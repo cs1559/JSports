@@ -15,6 +15,7 @@ namespace FP4P\Component\JSports\Site\View\Myteams;
 defined('_JEXEC') or die;
 
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
+use Joomla\CMS\Component\ComponentHelper;
 
 /**
  * HTML Dashboard View
@@ -26,6 +27,8 @@ class HtmlView extends BaseHtmlView
 
     protected $item;
     protected $teams;
+    protected $defaultlogo;
+    protected $logodir;
     
     /**
      * Execute and display a template script.
@@ -37,8 +40,12 @@ class HtmlView extends BaseHtmlView
     public function display($tpl = null)
     {
        
+        $params = ComponentHelper::getParams('com_jsports');
+        $this->logodir = $params->get('logodir');
+        
         $this->teams = $this->get('Teams');
-                       
+        $this->defaultlogo = '/media/com_jsports/images/swibl-square-logo.png';
+        
         return parent::display($tpl);
     }
 }

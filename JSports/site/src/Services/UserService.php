@@ -79,7 +79,7 @@ class UserService
 //             group by keyid";
         $sql = "
 select * from (
-select t.*, temp1.*, p.id as lastprogramid, p.name AS last  programname
+select t.*, temp1.*, p.id as lastprogramid, p.name AS lastprogramname
 from 
 	(select teamid, max(programid) maxpgmid
 	from #__jsports_map

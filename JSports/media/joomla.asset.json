@@ -16,6 +16,10 @@
 			"type" : "style",
 			"uri" : "com_jsports/registration.css"
 		}, {
+			"name" : "com_jsports.myteams.style",
+			"type" : "style",
+			"uri" : "com_jsports/myteams.css"
+		}, {
 			"name" : "com_jsports.standings.style",
 			"type" : "style",
 			"uri" : "com_jsports/standings.css"
@@ -103,5 +107,11 @@
 			}
 		}
 	],
-	"description" : "JSports Assets"
+	"description" : "JSports Assets",
+	"authors" : [{
+			"name" : "Chris Strieter",
+			"homepage" : "http://swibl.org",
+			"email" : "chris@swibl.org"
+		}
+	]
 }
