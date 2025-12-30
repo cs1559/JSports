@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <buildpath>
-	<buildpathentry kind="con" path="org.eclipse.php.core.LANGUAGE"/>
 	<buildpathentry kind="src" path="vendor/composer">
 		<attributes>
 			<attribute name="composer" value="vendor"/>
 		</attributes>
 	</buildpathentry>
+	<buildpathentry kind="con" path="org.eclipse.php.core.LANGUAGE"/>
+	<buildpathentry kind="src" path="site/src/Objects"/>
+	<buildpathentry external="true" kind="lib" path="C:/xampp/htdocs/j4/administrator"/>
+	<buildpathentry kind="src" path="site/src/Model"/>
+	<buildpathentry kind="src" path="site/src/Controller"/>
+	<buildpathentry external="true" kind="lib" path="C:/xampp/htdocs/j4/components"/>
+	<buildpathentry kind="src" path="site/src/Services"/>
+	<buildpathentry external="true" kind="lib" path="C:/xampp/htdocs/j4/libraries"/>
+	<buildpathentry kind="src" path="site/src/View"/>
+	<buildpathentry external="true" kind="lib" path="C:/xampp/htdocs/j4/plugins"/>
+	<buildpathentry kind="src" path="site/src/Service"/>
 </buildpath>

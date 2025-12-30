@@ -1,3 +1,5 @@
 /vendor/
 /changelog.md
 /docs/
+/composer.phar
+/composer.json

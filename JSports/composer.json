@@ -4,5 +4,11 @@
 		"psr-4" : {
 			"jsports\\common\\" : "common"
 		}
+	},
+	"autoload-dev" : {
+		"psr-4" : {
+			"FP4P\\Component\\JSports\\Site" : "site/src",
+			"FP4P\\Component\\JSports\\Administrator" : "admin/src"
+		}
 	}
 }

@@ -3,6 +3,7 @@
 	<name>com_jsports</name>
 	<comment></comment>
 	<projects>
+		<project>joomla-core</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
