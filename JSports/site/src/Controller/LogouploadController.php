@@ -54,6 +54,10 @@ class LogouploadController extends BaseController
      */
     public function save()
     {
+        
+        // Check for request forgeries.
+        $this->checkToken();
+        
         $params = ComponentHelper::getParams('com_jsports');
         $prefix = $params->get("logodir_prefix");
     
