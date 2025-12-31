@@ -45,6 +45,7 @@ $wa->useStyle('com_jsports.game.style');
 		<?php echo $this->form->renderField('teamid'); ?>
 		<?php echo $this->form->renderField('id'); ?>
 		
+		<?php if ($this->attachmentsenabled) { ?>
 		<div class="control-group">
 			<div class="control-label">
 				<?php echo $this->form->getLabel('attachment'); ?>
@@ -59,7 +60,7 @@ $wa->useStyle('com_jsports.game.style');
             </div>
 		</div>
 		<?php echo $this->form->renderField('afile'); ?>
-		
+		<?php } // end of if attachments enabled ?>
 		
 	<input type="hidden" name="task" value="">
 
