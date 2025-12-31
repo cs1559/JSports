@@ -13,8 +13,6 @@
 		<field name="bulletintype" type="list" required="true"
 			label="COM_JSPORTS_BULLETIN_TYPE">
 			<option selected="selected" value="">- Select Type -</option>
-			<option value="G">General</option>
-			<option value="T">Tournament</option>
 			<option value="Y">Tryout</option>
 		</field>
 		
