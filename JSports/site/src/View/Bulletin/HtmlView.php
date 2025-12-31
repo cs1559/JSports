@@ -18,6 +18,7 @@ defined('_JEXEC') or die;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Component\ComponentHelper;
 
 /**
  * HTML Registration View
@@ -30,8 +31,7 @@ class HtmlView extends BaseHtmlView
     
     protected $item;
     
-    protected $agreementurl = "";
-   
+    protected $attachmentsenabled = false;
     protected $options = null;
     
     /**
@@ -44,6 +44,9 @@ class HtmlView extends BaseHtmlView
     public function display($tpl = null)
     {
 //         $app = Factory::getApplication();
+        $params = ComponentHelper::getParams('com_jsports');
+        $this->attachmentsenabled = $params->get('bulletinattachments');
+        
         $this->data       = $this->get('Data');
         $this->state      = $this->get('State');
         $this->item       = $this->get('Item');
@@ -54,6 +57,7 @@ class HtmlView extends BaseHtmlView
         if ($programid) {
             $isNew = true;
         }
+        
         
         $this->form        = $this->getModel()->getForm($this->item,true);
         
