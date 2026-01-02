@@ -13,6 +13,7 @@ namespace FP4P\Component\JSports\Site\Objects\Logger;
 
 use FP4P\Component\JSports\Site\Objects\Logger\Logger;
 use Joomla\CMS\Factory;
+use FP4P\Component\JSports\Site\Services\UserService;
 
 class DatabaseLogger extends Logger 
 {
@@ -46,7 +47,8 @@ class DatabaseLogger extends Logger
     {
         
         $db = Factory::getDbo();
-        $user = Factory::getUser();
+//         $user = Factory::getUser();
+        $user = UserService::getUser();
         
         $query = $db->getQuery(true);
                 
