@@ -17,6 +17,8 @@ defined('_JEXEC') or die;
 use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Services\ProgramsService;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Language\Text;
 
 
 class CloseprogramController extends AdminController
@@ -30,24 +32,28 @@ class CloseprogramController extends AdminController
     }
     
     public function cancel() {
-        $this->setRedirect('index.php?option=com_jsports&view=programs');
+        $this->setRedirect(Route::_('index.php?option=com_jsports&view=programs', false));
+        return false;
     }
     
     public function process() {
 
-        $input = Factory::getApplication()->input;
-        $programid     = $input->getInt("programid");
+        $this->checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+        
+//         $input = Factory::getApplication()->input;
+        $app = Factory::getApplication();
+        $programid     = $this->input->getInt("programid");
         
           //  $programid = 33;
             
             $result = ProgramsService::closeProgram($programid);
              
             if ($result) {
-                Factory::getApplication()->enqueueMessage("Program closed", 'message');
+                $app->enqueueMessage("Program closed", 'message');
             } else {
-                Factory::getApplication()->enqueueMessage("An issue occurred when closing program", 'warning');
+                $app->enqueueMessage("An issue occurred when closing program", 'warning');
             }
-            $this->setRedirect('index.php?option=com_jsports&view=programs');
+            $this->setRedirect(Route::_('index.php?option=com_jsports&view=programs', false));
     }
     
     
