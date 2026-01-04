@@ -28,18 +28,6 @@ class LeaguesController extends AdminController
 {
     protected $default_view = 'leagues';
     
-    public function display($cachable = false, $urlparams = array())
-    {
-        
-        return parent::display($cachable, $urlparams);
-    }
-
-    
-    public function publish() {
-        $model = $this->getModel('League');
-        
-        parent::publish();
-    }
     /**
      * Proxy for getModel.
      *
