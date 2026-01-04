@@ -26,11 +26,11 @@ class GamesController extends AdminController
         return parent::display($cachable, $urlparams);
     }
 
-    public function publish() {
-        $model = $this->getModel('Game');
+//     public function publish() {
+//         $model = $this->getModel('Game');
         
-        parent::publish();
-    }
+//         parent::publish();
+//     }
     
     public function getModel($name = 'Game', $prefix = 'Administrator', $config = ['ignore_request' => true])
     {
