@@ -30,10 +30,5 @@ use Joomla\CMS\MVC\Controller\FormController;
  */
 class LeagueController extends FormController
 {
-    public function save($key = null, $urlVar = null) {
-        
-        parent::save($key, $urlVar);
-        
-    }
         
 }
