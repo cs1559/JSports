@@ -60,7 +60,7 @@ class DivisionModel extends AdminModel
         // Check for existing article.
         if (!empty($record->id))
         {
-            return $this->getCurrentUser()->authorise('core.edit.state', 'com_jsports.divisions.' . (int) $record->id);
+            return $this->getCurrentUser()->authorise('core.edit.state', 'com_jsports.division.' . (int) $record->id);
         }
         
         // Default to component settings if neither article nor category known.
@@ -104,6 +104,7 @@ class DivisionModel extends AdminModel
     public function getForm($data = array(), $loadData = true)
     {
         // Get the form.
+        
         $form = $this->loadForm('com_jsports.division', 'division', array('control' => 'jform', 'load_data' => $loadData));
         
         if (empty($form))
@@ -124,18 +125,15 @@ class DivisionModel extends AdminModel
     {
         // Check the session for previously entered form data.
         $app = Factory::getApplication();
-        $data = $app->getUserState('com_jsports.edit.division.data', array());
+        $data = $app->getUserState('com_jsports.edit.division.data', []);
         
         if (empty($data))
         {
-            $data = $this->getItem();
-            
-            // Pre-select some filters (Status, Category, Language, Access) in edit form if those have been selected in Article Manager: Articles
+            $data = $this->getItem();         
         }
         
-        $this->preprocessData('com_jsports.program', $data);
+        $this->preprocessData('com_jsports.division', $data);
         
         return $data;
     }
 }
-
