@@ -19,7 +19,7 @@ use Joomla\CMS\MVC\Controller\AdminController;
 
 class DivisionsController extends AdminController
 {
-    protected $default_view = 'Divisions';
+    protected $default_view = 'divisions';
     
     public function display($cachable = false, $urlparams = array())
     {
@@ -28,11 +28,11 @@ class DivisionsController extends AdminController
     }
     
     
-    public function publish() {
-        $model = $this->getModel('Division');
+//     public function publish() {
+//         $model = $this->getModel('Division');
+//         parent::publish();
+//     }
 
-        parent::publish();
-    }
     /**
      * Proxy for getModel.
      *
