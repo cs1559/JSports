@@ -25,15 +25,16 @@ class CloseprogramController extends AdminController
 {
     protected $default_view = 'closeprogram';
     
-    public function display($cachable = false, $urlparams = array())
-    {
+//     public function display($cachable = false, $urlparams = array())
+//     {
         
-        return parent::display($cachable, $urlparams);
-    }
+//         return parent::display($cachable, $urlparams);
+//     }
     
-    public function cancel() {
+    public function cancel($key = null) {
+        parent::cancel($key);
         $this->setRedirect(Route::_('index.php?option=com_jsports&view=programs', false));
-        return false;
+        return true;
     }
     
     public function process() {
@@ -43,17 +44,16 @@ class CloseprogramController extends AdminController
 //         $input = Factory::getApplication()->input;
         $app = Factory::getApplication();
         $programid     = $this->input->getInt("programid");
-        
-          //  $programid = 33;
             
-            $result = ProgramsService::closeProgram($programid);
+        $result = ProgramsService::closeProgram($programid);
              
-            if ($result) {
-                $app->enqueueMessage("Program closed", 'message');
-            } else {
-                $app->enqueueMessage("An issue occurred when closing program", 'warning');
-            }
-            $this->setRedirect(Route::_('index.php?option=com_jsports&view=programs', false));
+        if ($result) {
+            $app->enqueueMessage("Program closed", 'message');
+        } else {
+            $app->enqueueMessage("An issue occurred when closing program", 'warning');
+        }
+        $this->setRedirect(Route::_('index.php?option=com_jsports&view=programs', false));
+        return true;
     }
     
     
