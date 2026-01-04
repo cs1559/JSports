@@ -24,6 +24,7 @@ use Joomla\CMS\Application\SiteApplication;
 use FP4P\Component\JSports\Site\Objects\Application as Myapp;
 use FP4P\Component\JSports\Administrator\Helpers\JSHelper;
 use Joomla\CMS\Form\Form;
+use FP4P\Component\JSports\Site\Services\UserService;
 
 /**
  * GameModel - Methods/functions to manage games within the component.
@@ -162,7 +163,8 @@ class GameModel extends FormModel
         $logger = Myapp::getLogger();
         $isNew = false;
         
-        $user = Factory::getUser();
+//         $user = Factory::getUser();
+        $user = UserService::getUser();
         
         $table = GameService::getGamesTable();
         $table->bind($data);
