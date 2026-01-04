@@ -76,7 +76,8 @@ class SecurityService
         }
         
         // Get current user
-        $user = Factory::getUser();
+//         $user = Factory::getUser();
+        $user = UserService::getUser();
         
         // If the user is a GUEST, return FALSE
         if ($user->guest) {
@@ -135,7 +136,8 @@ class SecurityService
         }
 
         if (is_null($ownerid)) {
-            $user = Factory::getUser();
+            $user = UserService::getUser();
+//             $user = Factory::getUser();
             $ownerid = $user->id;
         }
         
@@ -177,7 +179,8 @@ class SecurityService
         }
         
         if (is_null($ownerid)) {
-            $user = Factory::getUser();
+            $user = UserService::getUser();
+//             $user = Factory::getUser();
             $ownerid = $user->id;
         }
         
@@ -209,7 +212,8 @@ class SecurityService
         $canEdit = true;
         
         // Get current user
-        $user = Factory::getUser();
+//         $user = Factory::getUser();
+        $user = UserService::getUser();
         
         // If the user is a GUEST, return FALSE
         if ($user->guest) {
@@ -267,7 +271,8 @@ class SecurityService
      */
     public static function isAdmin(){
         // Get current user
-        $user = Factory::getUser();
+//         $user = Factory::getUser();
+        $user = UserService::getUser();
         
         // Chekcs to  see if the user is in an ADMINISTRATOR ROLE.
         if ($user->authorise('core.jsports.admin','com_jsports')) {
@@ -286,7 +291,8 @@ class SecurityService
     
     public static function isCoach() {
         
-        $user = Factory::getUser();
+//         $user = Factory::getUser();
+        $user = UserService::getUser();
         
         // If the current user a guest, return false
         if ($user->guest) {

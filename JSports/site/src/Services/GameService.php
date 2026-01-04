@@ -101,7 +101,8 @@ class GameService
         $params = ComponentHelper::getParams('com_jsports');
         $resetgamescore = $params->get('resetgamescore');
         
-        $user = Factory::getUser();
+//         $user = Factory::getUser();
+        $user = UserService::getUser();
         $app = Application::getInstance();
         
         $db = Factory::getDbo();
@@ -149,7 +150,8 @@ class GameService
      */
     public static function postScore($id, $hometeamscore, $awayteamscore) {
         
-        $user = Factory::getUser();
+//         $user = Factory::getUser();
+        $user = UserService::getUser();
         $app = Application::getInstance();
         
         $db = Factory::getDbo();

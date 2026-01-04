@@ -44,7 +44,8 @@ class UserService
     public static function getUserTeams($uid = null) {
         
         if (is_null($uid)) {
-            $user = Factory::getUser();
+//             $user = Factory::getUser();
+            $user = self::getUser();
             $uid = $user->id;
             if ($user->guest) {
                 return array();
@@ -214,10 +215,11 @@ and r.userid = 640;
     public static function getAssignedAgeGroups($uid = null) {
         
         if (is_null($uid)) {
-            $user = Factory::getUser();
+//             $user = Factory::getUser();
+            $user = self::getUser();
             $uid = $user->id;
             if ($user->guest) {
-                return array();
+                return [];
               
             }
         }
@@ -240,7 +242,7 @@ and r.userid = 640;
         );
         $query->where($conditions);
         
-        $query2->select($db->quoteName(array('d.agegroup')));
+        $query2->select($db->quoteName(array('d.aFgegroup')));
         $query2->from($db->quoteName('#__jsports_rosters') . ' as r, '.
             $db->quoteName('#__jsports_map') . ' as m, '.
             $db->quoteName('#__jsports_divisions') . ' as d '

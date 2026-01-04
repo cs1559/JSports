@@ -22,6 +22,7 @@ use FP4P\Component\JSports\Site\Services\TeamService;
 use Joomla\CMS\Application\SiteApplication;
 use FP4P\Component\JSports\Site\Objects\Application as Myapp;
 use Joomla\CMS\Form\Form;
+use FP4P\Component\JSports\Site\Services\UserService;
 
 /**
  * GameModel - Methods/functions to manage games within the component.
@@ -153,7 +154,8 @@ class PostscoreModel extends FormModel
         
         $logger = Myapp::getLogger();
         
-        $user = Factory::getUser();
+//         $user = Factory::getUser();
+        $user = UserService::getUser();
 
         $id = $data['id'];
         $hscore = $data['hometeamscore'];
