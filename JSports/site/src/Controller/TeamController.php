@@ -25,6 +25,7 @@ use FP4P\Component\JSports\Site\Services\TeamService;
 use FP4P\Component\JSports\Site\Services\GameService;
 use FP4P\Component\JSports\Administrator\Helpers\JSHelper;
 use FP4P\Component\JSports\Site\Services\LogService;
+use FP4P\Component\JSports\Site\Services\UserService;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
@@ -80,7 +81,8 @@ class TeamController extends BaseController
         $teamid = $requestData['id'];
         
         /* Code to prevent further action if user is NOT logged in */
-        $user = Factory::getUser();
+//         $user = Factory::getUser();
+        $user = UserService::getUser();
         // Check if the user is logged in
         if ($user->guest) {
             $app->enqueueMessage(Text::sprintf('COM_JSPORTS_INVALID_USERSESSION'), 'error');
