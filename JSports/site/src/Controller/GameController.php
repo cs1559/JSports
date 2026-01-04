@@ -23,6 +23,7 @@ use FP4P\Component\JSports\Site\Services\GameService;
 use Joomla\CMS\Component\ComponentHelper;
 use FP4P\Component\JSports\Site\Objects\Application as Myapp;
 use FP4P\Component\JSports\Site\Services\BulletinService;
+use FP4P\Component\JSports\Site\Services\UserService;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
@@ -62,7 +63,8 @@ class GameController extends FormController
         $lasturl = $_SERVER['HTTP_REFERER'];
         
         /* Code to prevent further action if user is NOT logged in */
-        $user = Factory::getUser();
+//         $user = Factory::getUser();
+        $user = UserService::getUser();
         // Check if the user is logged in
         if ($user->guest) {
             $app->enqueueMessage(Text::sprintf('COM_JSPORTS_INVALID_USERSESSION'), 'error');
@@ -133,7 +135,8 @@ class GameController extends FormController
         $teamid     = $input->getInt("teamid");
         
         /* Code to prevent further action if user is NOT logged in */
-        $user = Factory::getUser();
+//         $user = Factory::getUser();
+        $user = UserService::getUser();
         // Check if the user is logged in
         if ($user->guest) {
             $app->enqueueMessage(Text::sprintf('COM_JSPORTS_INVALID_USERSESSION'), 'error');
@@ -205,7 +208,8 @@ class GameController extends FormController
         $contextid = $requestData['contextid'];
         
         /* Code to prevent further action if user is NOT logged in */
-        $user = Factory::getUser();
+//         $user = Factory::getUser();
+        $user = UserService::getUser();
         // Check if the user is logged in
         if ($user->guest) {
             $app->enqueueMessage(Text::sprintf('COM_JSPORTS_INVALID_USERSESSION'), 'error');
