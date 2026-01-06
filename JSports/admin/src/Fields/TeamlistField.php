@@ -97,7 +97,7 @@ class TeamlistField extends ListField
 
        		
        		// get divisions within age group.
-       		$divisions = DivisionService::getDivisionList($this->programid, $division->agegroup);
+       		$divisions = DivisionService::getDivisionList($this->programid, $division->agegroup, $divisionid);
        		
 //        		print_r($divisions);
 //        		exit;
