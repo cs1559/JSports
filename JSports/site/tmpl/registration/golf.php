@@ -15,7 +15,8 @@ use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Factory;
 
-$document = Factory::getDocument();
+// $document = Factory::getDocument();
+$document = Factory::getApplication()->getDocument();
 $document->addStyleSheet(JUri::base() . 'components\com_jsports\assets\css\registration.css');
 HTMLHelper::_('bootstrap.tooltip', '.hasTooltip');
 HTMLHelper::_('behavior.formvalidator');

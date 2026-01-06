@@ -186,7 +186,7 @@ class Html
             where m.teamid = a.id
             and m.divisionid = d.id
             and m.divisionid in (
-                select divisionid from xkrji_jsports_map as m, xkrji_jsports_divisions as d
+                select divisionid from #__jsports_map as m, #__jsports_divisions as d
                 where m.divisionid = d.id
                 and m.teamid = " . $db->quote($teamid) . " and m.programid = " . $db->quote($programid) . "
                 )";

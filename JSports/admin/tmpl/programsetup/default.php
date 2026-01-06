@@ -17,6 +17,7 @@ use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Administrator\Helpers\Html;
+use FP4P\Component\JSports\Site\Services\UserService;
 
 $listOrder = $this->escape($this->state->get('list.ordering'));
 $listDirn  = $this->escape($this->state->get('list.direction'));
@@ -24,7 +25,8 @@ $listDirn  = $this->escape($this->state->get('list.direction'));
 $editIcon = '<span class="fa fa-pen-square me-2" aria-hidden="true"></span>';
 
 $clientId  = (int) $this->state->get('client_id', 0);
-$user      = Factory::getUser();
+// $user      = Factory::getUser();
+$user = UserService::getUser();
 
 ?>
 <form action="<?php echo Route::_('index.php?option=com_jsports&view=programsetup'); ?>" method="post" name="adminForm" id="adminForm">

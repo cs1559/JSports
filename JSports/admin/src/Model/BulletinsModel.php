@@ -44,7 +44,7 @@ class BulletinsModel extends ListModel
 			$config['filter_fields'] = array(
 				'bulletintype', 'a.bulletintype',
 				'title', 'a.title',
-			    'owernid', 'a.ownerid',
+			    'ownerid', 'a.ownerid',
 			    'published', 'a.published',
 			);
 		}
@@ -71,9 +71,9 @@ class BulletinsModel extends ListModel
 	    
 	    $bulletintype = $app->input->get('bulletintype', 'E');
 	    if (empty($bulletintype)) {
-	        $bulletintype = $app->getUserState('com_jsports.bulletintype');
+	        $bulletintype = (string) $app->getUserState('com_jsports.bulletintype');
 	    }
-	    $this->setState('bulletintype', $bulletintype);
+	    $this->setState('filter.bulletintype', $bulletintype);
 	    $app->setUserState('com_jsports.bulletintype', $bulletintype);
 	    
 		$search = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
@@ -167,7 +167,8 @@ class BulletinsModel extends ListModel
 	    $orderCol  = $this->state->get('list.ordering', 'a.id');
 	    $orderDirn = $this->state->get('list.direction', 'ASC');
 	    
-	    $ordering = [$db->quoteName('a.createdate') . ' ' . $db->escape($orderDirn), ];
+// 	    $ordering = [$db->quoteName('a.createdate') . ' ' . $db->escape($orderDirn), ];
+	    $ordering = [$db->quoteName($orderCol) . ' ' . $db->escape($orderDirn), ];
 	    	    
 	    $query->order($ordering);
 	    

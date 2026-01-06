@@ -5,3 +5,9 @@
 2.  General code cleanup.  This includes elimination of unnecessary USE statements and joomla code that is being deprecated in Release 6.  An example is the getDbo function.  Also as part of the code cleanup, we are removing references to /JObject and JPagination in the comments (@var reference).
 3.  Fixed redirect issue for game reset.  It defaulted to redirect to the home teams page vs. from the page the redirect was initiated from.
 4.  Updated the MyTeams view (incl. UserService SQL to retrieve teams list.)
+
+##Release 1.2
+1.  Changed all calls of Factory::getUser to the UserService::getUser function (wrapper).  This change was to code on both the admin and site side of the component.
+2.  Changed Factory::getDocument to Factory::getApplication()->getDocument();
+3.  Removed admin/services/LeagueService class.
+4.  Cleaned up several modules to eliminate unnecessary code.

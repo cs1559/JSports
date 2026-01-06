@@ -8,7 +8,19 @@
  * 
  */
 
+function isCli(): bool
+{
+    return PHP_SAPI === 'cli';
+}
+
+function usage(): string
+{
+    return "Usage:\n"
+        . "  php updatestandings.php --salt=YOUR_SALT [--site=https://swibl.org]\n";
+}
+
 parse_str(implode('&', array_slice($argv, 1)), $_GET);
+
 $salt = $_GET['salt'];
 $resultstring='';
 

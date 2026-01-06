@@ -25,7 +25,8 @@ HTMLHelper::_('behavior.formvalidator');
 HTMLHelper::_('behavior.keepalive');
 
 // Set Page Title and load specific stylesheet
-$document = Factory::getDocument();
+// $document = Factory::getDocument();
+$document = Factory::getApplication()->getDocument();
 
 // Load Web Asset Manager
 $wa = $this->document->getWebAssetManager();

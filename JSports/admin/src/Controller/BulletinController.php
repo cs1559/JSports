@@ -32,8 +32,12 @@ use Joomla\CMS\Router\Route;
 class BulletinController extends FormController
 {
     
-    
-   
+    /**
+     * This function will SAVE a bulletin record.  If needed, it will also support attachment handling.
+     *  
+     * {@inheritDoc}
+     * @see \Joomla\CMS\MVC\Controller\FormController::save()
+     */ 
     public function save($key = null, $urlVar = null)
     {
             $app   = Factory::getApplication();
@@ -84,7 +88,12 @@ class BulletinController extends FormController
             return true;
     }
     
-   
+   /**
+    * This function will delete an attachemnt associated with a bulletin.
+    * 
+    * @param unknown $key
+    * @param unknown $urlVar
+    */
     public function deleteAttachment($key = null, $urlVar = null) {
         
         $jinput = Factory::getApplication()->input;

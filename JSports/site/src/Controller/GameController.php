@@ -50,8 +50,14 @@ class GameController extends FormController
      */
     public function delete() {
 
-        // Check for request forgeries.
-        $this->checkToken();
+        $method = strtoupper($this->input->getMethod());
+        
+        if ($method === 'GET') {
+            $this->checkToken('get');
+        } else {
+            // Check for request forgeries.
+            $this->checkToken();
+        }
         
         $logger = Myapp::getLogger();
         $app = Factory::getApplication();
@@ -124,8 +130,13 @@ class GameController extends FormController
      */
     public function reset() {
         
-        // Check for request forgeries.
-        $this->checkToken();
+        if ($method === 'GET') {
+            $this->checkToken('get');
+        } else {
+            // Check for request forgeries.
+            $this->checkToken();
+        }
+        
         
         $logger = Myapp::getLogger();
         $app = Factory::getApplication();
@@ -312,9 +323,14 @@ class GameController extends FormController
      */
     public function cancel($key = null)
     {
-        // Check for request forgeries.
-        $this->checkToken();
-
+        if ($method === 'GET') {
+            $this->checkToken('get');
+        } else {
+            // Check for request forgeries.
+            $this->checkToken();
+        }
+        
+        
         $app    = $this->app;
         // Get the team id.
         $requestData = $app->getInput()->post->get('jform', [], 'array');

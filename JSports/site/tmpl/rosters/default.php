@@ -28,10 +28,11 @@ use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Administrator\Helpers\JSHelper;
 
 $clientId  = (int) $this->state->get('client_id', 0);
-$user      = Factory::getUser();
+// $user      = Factory::getUser();
 
 // Set Page Title and load specific stylesheet
-$document = Factory::getDocument();
+// $document = Factory::getDocument();
+$document = Factory::getApplication()->getDocument();
 
 // Load Web Asset Manager
 $wa = $this->document->getWebAssetManager();

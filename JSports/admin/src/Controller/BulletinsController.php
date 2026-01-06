@@ -21,20 +21,20 @@ class BulletinsController extends AdminController
 {
     protected $default_view = 'bulletins';
     
-    public function display($cachable = false, $urlparams = array())
-    {
-        return parent::display($cachable, $urlparams);
-    }
+//     public function display($cachable = false, $urlparams = array())
+//     {
+//         return parent::display($cachable, $urlparams);
+//     }
     
-    public function getModel($name = 'Bulletin', $prefix = 'Administrator', $config = ['ignore_request' => true])
+    public function getModel($name = 'Bulletin', $prefix = '', $config = ['ignore_request' => true])
     {
         return parent::getModel($name, $prefix, $config);
     }
 
-    public function publish() {
-        $model = $this->getModel('Bulletin');        
-        parent::publish();
-    }
+//     public function publish() {
+//         $model = $this->getModel('Bulletin');        
+//         parent::publish();
+//     }
     
 }
 

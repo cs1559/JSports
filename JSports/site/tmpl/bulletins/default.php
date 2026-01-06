@@ -19,14 +19,18 @@ use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Services\SecurityService;
+use FP4P\Component\JSports\Site\Services\UserService;
 use FP4P\Component\JSports\Site\Services\GameService;
 use FP4P\Component\JSports\Administrator\Helpers\JSHelper;
 
 $clientId  = (int) $this->state->get('client_id', 0);
-$user      = Factory::getUser();
+// $user      = Factory::getUser();
+$user = UserService::getUser();
+
 
 // Set Page Title and load specific stylesheet
-$document = Factory::getDocument();
+// $document = Factory::getDocument();
+$document = Factory::getApplication()->getDocument();
 
 // Load Web Asset Manager
 $wa = $this->document->getWebAssetManager();
