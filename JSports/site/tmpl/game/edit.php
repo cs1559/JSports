@@ -65,5 +65,5 @@ $wa->useStyle('com_jsports.game.style');
     </div>
 </div>
 	
-	
+<?php echo HTMLHelper::_('form.token'); ?>	
 </form>
