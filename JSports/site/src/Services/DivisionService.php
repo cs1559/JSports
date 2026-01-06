@@ -52,7 +52,7 @@ class DivisionService
      * @param int $programid
      * @return array
      */
-    public static function getDivisionList($programid, $group = null) {
+    public static function getDivisionList($programid, $group = null, $exclude = null) {
         
         $db = Factory::getDbo();
         $query = $db->getQuery(true);
@@ -70,6 +70,9 @@ class DivisionService
                $db->quoteName('p.programid') . ' = ' . $programid,
                 $db->quoteName('p.agegroup') . ' = ' . $group
             );
+        }
+        if (!is_null($exclude)) {
+            $conditions[] = $db->quoteName('p.id') . ' <> ' . $exclude;
         }
         $query->where($conditions);
         $query->order("ordering asc");
