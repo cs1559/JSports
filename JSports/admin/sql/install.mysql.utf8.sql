@@ -283,7 +283,7 @@ CREATE TABLE `#__jsports_teams` (
 	 `contactemail` varchar(100) DEFAULT NULL,
 	 `contactphone` varchar(12) DEFAULT NULL,
 	 `ownerid` int(11) DEFAULT 0,
-	 `hits` int(11) DEFAULT NULL,
+	 `hits` int(11) DEFAULT 0,
 	 `dateupdated` timestamp NULL DEFAULT NULL,
 	 `updatedby` varchar(30) DEFAULT NULL,
 	 `properties` text DEFAULT NULL,
