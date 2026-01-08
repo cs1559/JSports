@@ -15,13 +15,12 @@ namespace FP4P\Component\JSports\Site\Services;
 /**
  * DivisionService - This is a service class that exposes certain functions that
  * various components within the applicaiton that can call statically.
- * 
- * REVISION HISTORY:
- * 2025-01-16  Cleaned up code and added inline comments.
  */
 
 use FP4P\Component\JSports\Administrator\Table\DivisionsTable;
 use Joomla\CMS\Factory;
+use Joomla\Database\DatabaseInterface;
+use Joomla\Database\ParameterType;
 
 class DivisionService
 {
@@ -34,7 +33,7 @@ class DivisionService
      */
     public static function getItem($id = 0) {
         
-        $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $divisions = new DivisionsTable($db);
                 
         $row = $divisions->load($id);
@@ -49,12 +48,14 @@ class DivisionService
     /**
      * This function will return a list of 'published' divisions within a specific program.
      *
-     * @param int $programid
-     * @return array
+     * @param number $programid
+     * @param number $group     - Age group
+     * @param number $exclude   - Division ID to exclude
+     * @return array<int, array<string, mixed>> | null
      */
     public static function getDivisionList($programid, $group = null, $exclude = null) {
         
-        $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
         
         $query->select('p.*');
@@ -62,20 +63,25 @@ class DivisionService
         if (is_null($group)) {
             $conditions = array(
                 $db->quoteName('p.published') . ' in (1) ',
-                $db->quoteName('p.programid') . ' = ' . $programid,
+                $db->quoteName('p.programid') . ' = :programid' 
             );
         } else {
             $conditions = array(
                 $db->quoteName('p.published') . ' in (1) ',
-               $db->quoteName('p.programid') . ' = ' . $programid,
-                $db->quoteName('p.agegroup') . ' = ' . $group
+               $db->quoteName('p.programid') . ' = :programid ', 
+                $db->quoteName('p.agegroup') . ' = :group'
             );
         }
         if (!is_null($exclude)) {
-            $conditions[] = $db->quoteName('p.id') . ' <> ' . $exclude;
+            $conditions[] = $db->quoteName('p.id') . ' <> :excludeid' ;
         }
         $query->where($conditions);
         $query->order("ordering asc");
+        $query->bind(':group',$group, ParameterType::INTEGER);
+        $query->bind(':programid',$programid, ParameterType::INTEGER);
+        if (!is_null($exclude)) {
+            $query->bind(':excludeid',$exclude, ParameterType::INTEGER);
+        }
         $db->setQuery($query);
         return $db->loadAssocList();
     }
