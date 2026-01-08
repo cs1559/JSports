@@ -19,11 +19,6 @@ namespace FP4P\Component\JSports\Site\Services;
  *
  */
 
-/**
- * REVISION HISTORY:
- * 2025-01-16  Cleaned up code and added inline comments.
- */
-
 use FP4P\Component\JSports\Administrator\Table\DivisionsTable;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Database\ParameterType;
@@ -70,7 +65,7 @@ class LogService
 //         }
    
         
-        $logger = MyApp::getLogger();
+        $logger = Myapp::getLogger();
         $logger->data($msg);
     }
     
@@ -79,8 +74,8 @@ class LogService
      * This function will purge log records from the database and return the number of rows
      * affected.
      * 
-     * @param int $logdays
-     * @return int
+     * @param number $logdays
+     * @return number
      */
     public static function purge($logdays = 200) {
         
@@ -89,12 +84,12 @@ class LogService
         
         $query = $db->getQuery(true);
         
-        $sql = "delete from " . $db->quoteName("#__jsports_action_logs")
-        . " where logdate < (curdate() - interval " . $logdays . " day)";
+        $query->delete($db->quoteName('#__jsports_action_logs'))
+            ->where('logdate < (NOW() - INTERVAL :logdays DAY)')
+            ->bind(':logdays', $logdays, ParameterType::INTEGER);
         
-        $query->setQuery($sql);
         $db->setQuery($query);
-        $result = $db->execute();
+        $db->execute();
         
         $rows = $db->getAffectedRows();
         
