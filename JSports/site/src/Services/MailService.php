@@ -12,15 +12,30 @@
 
 namespace FP4P\Component\JSports\Site\Services;
 
-use Joomla\Database\ParameterType;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Mail\Mail;
 use Joomla\CMS\Mail\Exception\MailDisabledException;
 use Joomla\CMS\Component\ComponentHelper;
 use FP4P\Component\JSports\Site\Objects\Application as Myapp;
+use Joomla\CMS\Mail\MailerFactoryInterface;
+use Joomla\CMS\Mail\MailerInterface;
 
 class MailService
 {
+    
+    protected $mailer;
+    
+    public function __construct(MailerInterface $mailer = null) {
+        
+        if (is_null($mailer)) {
+//             $this->mailer = Factory::getMailer();
+            $this->mailer = Factory::getContainer()
+                ->get(MailerFactoryInterface::class)
+                ->createMailer();
+        } else {
+            $this->mailer = $mailer;
+        }
+        
+    }
     
     /**
      * Function to send an email
@@ -42,12 +57,12 @@ class MailService
      * @throws  MailDisabledException  if the mail function is disabled
      */
      public function sendMail(
-        $recipient,
-        $subject,
+        string|array $recipient,
+        string $subject,
         $body,
         $mode = false,
-        $cc = null,
-        $bcc = null,
+        string|array $cc = null,
+        string|array $bcc = null,
         $attachment = null,
         $replyTo = null,
         $replyToName = null
@@ -58,29 +73,71 @@ class MailService
             $fromemail = $params->get('fromemail');
             $fromname = $params->get('fromname');
             
-//             $fromemail = 'info@swibl.org';
-//             $fromname = 'SWIBL';
             if (strlen($fromemail) <= 1) {
                 return false;
             }
-         
-            $mailer = Factory::getMailer();
+            $this->mailer->setSender($fromemail,$fromname);
             
-            // from, from name
-            $sender = array($fromemail,$fromname);
-            $mailer->setSender($sender);
-            
-            //$recipient = array( 'cs1559@sbcglobal.net' );
-            $mailer->addRecipient($recipient);
+            // ADD RECIPIENT(S)
+            if (is_string($recipient)) {
+                $this->mailer->addRecipient($recipient,'');
+            } else {
+                if (is_array($recipient)) {
+                    foreach ($recipient as $r) {
+                        if (is_string($r)) {
+                            $this->mailer->addRecipient($r,'');
+                            continue;
+                        }
+                        if (is_array($r)) {
+                            $email = (string) ($r['email'] ?? ($r[0] ?? ''));
+                            $rname = (string) ($r['name']  ?? ($r[1] ?? ''));
+                            if ($email === '') {
+                                throw new \InvalidArgumentException('Recipient email is required.');
+                            }
+                            $this->mailer->addRecipient($email, $rname);
+                            continue;
+                        }
+                        throw new \InvalidArgumentException('Invalid recipient format.');
+                    }
+                }
+            }
                        
-            $mailer->setSubject($subject);
+            $this->mailer->setSubject($subject);
                 
-            $mailer->isHtml(true);
-            $mailer->Encoding = 'base64';
-            $mailer->setBody($body);
-            $mailer->addCC($cc);
+            if (method_exists($this->mailer, 'isHtml')) {
+                $this->mailer->isHtml(true);
+            }
+            
+            $this->mailer->Encoding = 'base64';
+            $this->mailer->setBody($body);
+            
+            // ADD CARBON COPIED RECIPIENT(S)
+            if (is_string($cc)) {
+                $this->mailer->addCC($cc,'');
+            } else {
+                if (is_array($cc)) {
+                    foreach ($cc as $r) {
+                        if (is_string($r)) {
+                            $this->mailer->addCC($r,'');
+                            continue;
+                        }
+                        if (is_array($r)) {
+                            $email = (string) ($r['email'] ?? ($r[0] ?? ''));
+                            $rname = (string) ($r['name']  ?? ($r[1] ?? ''));
+                            if ($email === '') {
+                                throw new \InvalidArgumentException('Recipient email is required.');
+                            }
+                            $this->mailer->addCC($email, $rname);
+                            continue;
+                        }
+                        throw new \InvalidArgumentException('Invalid recipient format.');
+                    }
+                }
+            }
+            
+//             $this->mailer->addCC($cc);
             try {
-                $send = $mailer->Send();
+                $send = $this->mailer->Send();
                 if ( $send !== true ) {
                     return false;
                 } else {
@@ -93,5 +150,8 @@ class MailService
             }
     }
     
+    public function getMailer() {
+        return $this->mailer;
+    }
 }
 
