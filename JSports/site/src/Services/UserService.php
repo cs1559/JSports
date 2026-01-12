@@ -12,7 +12,6 @@
 
 namespace FP4P\Component\JSports\Site\Services;
 
-use FP4P\Component\JSports\Administrator\Table\GamesTable;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Database\ParameterType;
 use Joomla\CMS\Factory;
@@ -20,6 +19,42 @@ use Joomla\CMS\User\User;
 
 class UserService
 {
+    
+    protected $user;
+    
+    public function __construct(User $user = null) {
+        
+        if (is_null($user)) {
+            //             $this->mailer = Factory::getMailer();
+            $this->user = Factory::getApplication()->getIdentity();
+        } else {
+            $this->user = $user;
+        }
+        
+    }
+    
+    /**
+     * This is an internal helper function to resolve the user id.
+     * 
+     * @param int|User|null $user
+     * @return int|null
+     */
+    private static function resolveUserid(int|User|null $user) {
+        // No arg passed: use current identity
+        if ($user === null) {
+            $identity = self::getUser();
+            return $identity->guest ? null : (int) $identity->id;
+        }
+        
+        // User object
+        if ($user instanceof User) {
+            return $user->guest ? null : (int) $user->id;
+        }
+        
+        // int user id (0 means guest)
+        return $user > 0 ? $user : null;
+    }
+    
     /**
      * This is a helper function that returns the current user object from Joomla.
      *
@@ -41,18 +76,13 @@ class UserService
      * @param int $uid
      * @return array|null
      */
-    public static function getUserTeams($uid = null) {
+    public static function getUserTeams(int|User|null $user  = null) : array {
         
-        if (is_null($uid)) {
-//             $user = Factory::getUser();
-            $user = self::getUser();
-            $uid = $user->id;
-            if ($user->guest) {
-                return array();
-                
-            }
+        $uid = self::resolveUserid($user);
+        if ($uid === null) {
+            return [];
         }
-//         $db = Factory::getDbo();
+        
         $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
 
@@ -88,7 +118,7 @@ from
 	) temp1, #__jsports_programs p, #__jsports_teams t
 where temp1.maxpgmid = p.id
 and temp1.teamid = t.id
-and t.ownerid = " . $db->quote($uid) . "
+and t.ownerid = :uid1 
 UNION
 select t.*, temp1.*, p.id as lastprogramid, p.name as lastprogramname 
 from  
@@ -99,14 +129,18 @@ from
 where temp1.maxpgmid = p.id
 and temp1.teamid = t.id
 and temp1.teamid = r.teamid
-and r.userid = " . $db->quote($uid) . "
+and r.userid = :uid2
 ) table1
 order by lastprogramid desc";
             
-        $db->setQuery($sql);
-        return $db->loadObjectList();
+        $query->setQuery($sql)
+            ->bind(':uid1', $uid, ParameterType::INTEGER)
+            ->bind(':uid2', $uid, ParameterType::INTEGER);
         
-    
+        $db->setQuery($query);
+       
+        return $db->loadObjectList() ?: [];
+ 
     }
     
     /**
@@ -115,14 +149,15 @@ order by lastprogramid desc";
      * @param int $uid
      * @return array|NULL[]
      */
-    public static function getUserTeamIds($uid = null) {
+    public static function getUserTeamIds(int|User|null $user = null) : array {
+
+        $uid = self::resolveUserid($user);
         
-        if (is_null($uid)) {
+        if (is_null($uid) || $uid == 0) {
             $user = Factory::getApplication()->getIdentity();
             $uid = $user->id;
             if ($user->guest) {
                 return array();
-                
             }
         }
         $retArray = array();
@@ -141,9 +176,15 @@ order by lastprogramid desc";
      * @param int $teamid
      * @param int $programid
      * @param int $uid
-     * @return number
+     * @return bool
      */
-    public static function isTeamAdmin($teamid, $programid, $uid) {
+    public static function isTeamAdmin(int $teamid, int $programid, int|User|null $user) : bool {
+        
+        
+        $uid = self::resolveUserid($user);
+        if ($uid === null) {
+            return (bool) 0;
+        }
         
 //         $db    = Factory::getDbo();
         $db = Factory::getContainer()->get(DatabaseInterface::class);
@@ -153,28 +194,36 @@ order by lastprogramid desc";
         $query->select($db->quoteName(array('id')));
         $query->from($db->quoteName('#__jsports_teams'));
         $conditions = array(
-            $db->quoteName('ownerid') . ' = ' . $db->quote($uid),
-            $db->quoteName('id') . ' = ' . $db->quote($teamid),
+            $db->quoteName('ownerid') . ' = :ownerid',
+            $db->quoteName('id') . ' = :teamid' ,
         );
         $query->where($conditions);
-        
         $query2->select($db->quoteName(array('userid')));
         $query2->from($db->quoteName('#__jsports_rosters'));
         $conditions2 = array(
-            $db->quoteName('userid') . ' = ' . $db->quote($uid),
-            $db->quoteName('teamid') . ' = ' . $db->quote($teamid),
-            $db->quoteName('programid') . ' = ' . $db->quote($programid),
-            $db->quoteName('staffadmin') . ' = ' . $db->quote('1'),         
+            $db->quoteName('userid') . ' = :userid',
+            $db->quoteName('teamid') . ' = :teamid2',
+            $db->quoteName('programid') . ' = :programid',
+            $db->quoteName('staffadmin') . ' = 1' ,     
         );
         $query2->where($conditions2);
+
+        //$query2->bind(':staffadmin', 1, ParameterType::INTEGER);
         
         $query->union($query2);
+
+        $query->bind(':ownerid', $uid, ParameterType::INTEGER);
+        $query->bind(':teamid', $teamid, ParameterType::INTEGER);
+        $query->bind(':userid', $uid, ParameterType::INTEGER);
+        $query->bind(':teamid2', $teamid, ParameterType::INTEGER);
+        $query->bind(':programid', $programid, ParameterType::INTEGER);
         
+ 
         $db->setQuery($query);
         
         $rows = $db->loadObjectList();
         
-        return count($rows);
+        return (bool) count($rows);
     }
     
     
@@ -184,27 +233,19 @@ order by lastprogramid desc";
      *
      * @return boolean
      */
-    public static function isGuest() {
-        $user = Factory::getApplication()->getIdentity();
-        return $user->guest;
+    public static function isGuest(User $user = null) : bool {
+        if (is_null($user)) {
+            $user = Factory::getApplication()->getIdentity();
+            // Added this to support unit testing.  If no user is found, then assume they are a guest regardless because
+            // they cannot be verified.
+            if (is_null($user)) {
+                return (bool) 1;
+            }
+            return (bool) $user->guest;
+        }
+        return (bool) $user->guest;
     }
     
-    /**
-     *
-     * SELECT d.agegroup
-FROM xkrji_jsports_teams t, xkrji_jsports_map m, xkrji_jsports_divisions d
-where t.id = m.teamid
-and m.divisionid = d.id
-and t.ownerid = 640
-UNION
-SELECT d.agegroup
-FROM xkrji_jsports_rosters r, xkrji_jsports_map m, xkrji_jsports_divisions d
-where r.teamid = m.teamid
-and m.divisionid = d.id
-and r.userid = 640;
-
-     */
-
     /**
      * the getAssignedAgeGroups will return an array of age groups a given user has been assigned too either based
      * on the owner id of the team or as a result of a user id being assigned at the ROSTER level.
@@ -212,7 +253,7 @@ and r.userid = 640;
      * @param int $uid
      * @return array
      */
-    public static function getAssignedAgeGroups($uid = null) {
+    public static function getAssignedAgeGroups($uid = null) : array {
         
         if (is_null($uid)) {
 //             $user = Factory::getUser();
@@ -224,7 +265,6 @@ and r.userid = 640;
             }
         }
         
-//         $db    = Factory::getDbo();
         $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
         $query2 = $db->getQuery(true);
@@ -238,11 +278,11 @@ and r.userid = 640;
         $conditions = array(
             $db->quoteName('t.id') . ' = ' . $db->quoteName('m.teamid'),
             $db->quoteName('m.divisionid') . ' = ' . $db->quoteName('d.id'),
-            $db->quoteName('ownerid') . ' = ' . $db->quote($uid),
+            $db->quoteName('ownerid') . ' = :uid1',
         );
         $query->where($conditions);
         
-        $query2->select($db->quoteName(array('d.aFgegroup')));
+        $query2->select($db->quoteName(array('d.agegroup')));
         $query2->from($db->quoteName('#__jsports_rosters') . ' as r, '.
             $db->quoteName('#__jsports_map') . ' as m, '.
             $db->quoteName('#__jsports_divisions') . ' as d '
@@ -250,14 +290,15 @@ and r.userid = 640;
         $conditions2 = array(
             $db->quoteName('r.teamid') . ' = ' . $db->quoteName('m.teamid'),
             $db->quoteName('m.divisionid') . ' = ' . $db->quoteName('d.id'),
-            $db->quoteName('r.userid') . ' = ' . $db->quote($uid),
+            $db->quoteName('r.userid') . ' = :uid2',
         );
         $query2->where($conditions2);
         $query->union($query2);
         
+        $query->bind(':uid1', $uid, ParameterType::INTEGER);
+        $query->bind(':uid2', $uid, ParameterType::INTEGER);
         
         $db->setQuery($query);
-        
         return $db->loadObjectList();
         
     }
