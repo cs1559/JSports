@@ -19,7 +19,6 @@ namespace FP4P\Component\JSports\Site\Services;
  *
  */
 
-use FP4P\Component\JSports\Administrator\Table\DivisionsTable;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Database\ParameterType;
 use Joomla\CMS\Factory;
@@ -28,32 +27,33 @@ use FP4P\Component\JSports\Site\Objects\Application as Myapp;
 class LogService
 {
     
-    public static function error($msg) {
+    public static function error(string $msg) : void
+    {
         $logger = Myapp::getLogger();
         $logger->error($msg);
     }
    
-    public static function info($msg) {
+    public static function info(string $msg) : void {
         $logger = Myapp::getLogger();
         $logger->info($msg);
     }
 
-    public static function warning($msg) {
+    public static function warning(string $msg) : void {
         $logger = Myapp::getLogger();
         $logger->warning($msg);
     }
     
-    public static function debug($msg) {
+    public static function debug(string $msg) : void {
         $logger = Myapp::getLogger();
         $logger->debug($msg);
     }
     
-    public static function critical($msg) {
+    public static function critical(string $msg) : void {
         $logger = Myapp::getLogger();
         $logger->critical($msg);
     }
    
-    public static function writeArray(array $data, $context = '') {
+    public static function writeArray(array $data, $context = '') : void {
         
         $msg = " [" . $context . "] " . json_encode($data);
 //         if (json_validate($data)) {
@@ -77,7 +77,7 @@ class LogService
      * @param number $logdays
      * @return number
      */
-    public static function purge($logdays = 200) {
+    public static function purge(int $logdays = 200) : int {
         
         //$db    = Factory::getDbo();
         $db = Factory::getContainer()->get(DatabaseInterface::class);
@@ -91,9 +91,8 @@ class LogService
         $db->setQuery($query);
         $db->execute();
         
-        $rows = $db->getAffectedRows();
+        return (int) $db->getAffectedRows();
         
-        return $rows;
     }
 }
 
