@@ -8,7 +8,11 @@
 	"autoload-dev" : {
 		"psr-4" : {
 			"FP4P\\Component\\JSports\\Site" : "site/src",
-			"FP4P\\Component\\JSports\\Administrator" : "admin/src"
+			"FP4P\\Component\\JSports\\Administrator" : "admin/src",
+			"PHPUnit" : "vendor/phpunit/phpunit/src"
 		}
+	},
+	"require" : {
+		"phpunit/phpunit" : "11.5.46"
 	}
 }
