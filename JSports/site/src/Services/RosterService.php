@@ -14,17 +14,21 @@ namespace FP4P\Component\JSports\Site\Services;
 
 use FP4P\Component\JSports\Administrator\Table\RostersTable;
 use Joomla\Database\DatabaseInterface;
+use Joomla\Database\ParameterType;
 use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Objects\Application as Myapp;
 
 class RosterService
 {
     
-    public static function getRostersTable() {
-//         $db = Factory::getDbo();
+    /**
+     * Function just to return the correct ROSTERS database table.
+     * 
+     * @return RostersTable
+     */
+    public static function getRostersTable() : RostersTable {
         $db = Factory::getContainer()->get(DatabaseInterface::class);
         return new RostersTable($db);
-       
     }
     
     
@@ -34,7 +38,7 @@ class RosterService
      * @param number $id
      * @return \FP4P\Component\JSports\Administrator\Table\RostersTable
      */
-    public function getItem($id = 0) {
+    public function getItem(int $id = 0) : ?RostersTable {
         
 //         $db = Factory::getDbo();
         $db = Factory::getContainer()->get(DatabaseInterface::class);
@@ -53,32 +57,45 @@ class RosterService
      * This function will DELETE a specific row within the ROSTERS table.
      *
      * @param number $id  Item ID
+     * @return bool
      */
-    public static function delete($id = 0) {
+    public static function delete(int $id = 0) : bool {
         
         $logger = Myapp::getLogger();
         
+        if ($id === 0) {
+            $logger->error('Roster Record ID ' . $id . ' is required ');
+            return false;
+        }
         $svc = new RosterService();
         $item = $svc->getItem($id);
+        if ($item === null) {
+            $logger->error("Roster record not found (id=$id)");
+            return false;
+        }
         
-//         $db = Factory::getDbo();
         $db = Factory::getContainer()->get(DatabaseInterface::class);
         
         $query = $db->getQuery(true);
         
         $conditions = array(
-            $db->quoteName('id') . '=' .$db->quote($id));
-        
+            $db->quoteName('id') . ' = :id' //.$db->quote($id));
+        );
         $query->delete($db->quoteName('#__jsports_rosters'));
         $query->where($conditions);
+        $query->bind(':id', $id, ParameterType::INTEGER);
         
         $db->setQuery($query);
         
-        $rc = $db->execute();
-        $logger->info('Deleting roster item - ' . $item->firstname . ' ' . $item->lastname);
-        
-        return $rc;
-        
+        try {
+            $db->execute();
+            $logger->info('Deleting roster item - ' . $item->firstname . ' ' . $item->lastname);
+            return true;
+        } catch (\Throwable $e) {
+            $logger->error('Roster delete failed - Record ID ' . $id . ' - ' . $e->getMessage());
+            return false;
+        }
+
     }
       
     
@@ -118,9 +135,9 @@ class RosterService
      * @param number $programid
      * @param String $classification
      * @param boolean $includesubs
-     * @return array
+     * @return array<object>
      */
-    private static function getRosterDataByType($teamid, $programid, $classification, $includesubs = true) {
+    private static function getRosterDataByType($teamid, $programid, $classification, $includesubs = true) : array {
 //         $db = Factory::getDbo();
         $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
@@ -131,25 +148,36 @@ class RosterService
         /* If the results should filter out substitute players */
         if ($includesubs) {      
             $conditions = array(
-                $db->quoteName('p.classification') . ' = ' . $db->quote($classification),
-                $db->quoteName('p.teamid') . ' = ' . $db->quote($teamid),
-                $db->quoteName('p.programid') . ' = ' . $db->quote($programid)
+                $db->quoteName('p.classification') . ' = :classification',
+                $db->quoteName('p.teamid') . ' = :teamid', 
+                $db->quoteName('p.programid') . ' = :programid'
             );
         } else {
             $conditions = array(
-                $db->quoteName('p.classification') . ' = ' . $db->quote($classification),
-                $db->quoteName('p.teamid') . ' = ' . $db->quote($teamid),
-                $db->quoteName('p.programid') . ' = ' . $db->quote($programid),
+                $db->quoteName('p.classification') . ' = :classification',
+                $db->quoteName('p.teamid') . ' = :teamid',
+                $db->quoteName('p.programid') . ' = :programid',
                 $db->quoteName('p.substitute') . ' = 0'
             );
         }
         $query->where($conditions);
+        $query->bind(':teamid', $teamid, ParameterType::INTEGER);
+        $query->bind(':programid', $programid, ParameterType::INTEGER);
+        $query->bind(':classification', $classification, ParameterType::STRING);
+        
         $db->setQuery($query);
         return $db->loadObjectList();
         
     }
-    
-    public static function getPlayerCount($teamid, $programid, $includesubs = true) {
+    /**
+     * This function returns the total player count for a teams roster for a given program/season.
+     * 
+     * @param number $teamid
+     * @param number $programid
+     * @param boolean $includesubs
+     * @return int
+     */
+    public static function getPlayerCount($teamid, $programid, $includesubs = true) : int {
         return count(RosterService::getRosterPlayers($teamid, $programid, $includesubs));
     }
     
@@ -161,7 +189,7 @@ class RosterService
      * @param number $programid
      * @return boolean
      */
-    public static function canAddPlayers($teamid, $programid) {
+    public static function canAddPlayers($teamid, $programid) : bool {
         $program = ProgramsService::getItem($programid);
         
         $currentplayers = RosterService::getPlayerCount($teamid, $programid, $program->includesubstitutes);
