@@ -22,12 +22,12 @@ namespace FP4P\Component\JSports\Site\Services;
 
 use FP4P\Component\JSports\Administrator\Table\GamesTable;
 use FP4P\Component\JSports\Site\Objects\Application;
+use FP4P\Component\JSports\Site\Services\LogService;
+use FP4P\Component\JSports\Site\Objects\Scoring\ScoringEngine;
+use Joomla\CMS\Factory;
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Database\ParameterType;
-use Joomla\CMS\Factory;
-use FP4P\Component\JSports\Site\Objects\Scoring\ScoringEngine;
-use FP4P\Component\JSports\Site\Services\LogService;
-use Joomla\CMS\Component\ComponentHelper;
 
 class GameService
 {
@@ -37,8 +37,8 @@ class GameService
      * 
      * @return \FP4P\Component\JSports\Administrator\Table\GamesTable
      */
-    public static function getGamesTable() {
-        $db = Factory::getDbo();
+    public static function getGamesTable() : GamesTable {
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         return new GamesTable($db);
     }
     
@@ -49,12 +49,10 @@ class GameService
      * @param number $id
      * @return \FP4P\Component\JSports\Administrator\Table\GamesTable
      */
-    public static function getItem($id = 0) {
+    public static function getItem(int $id = 0) : ?GamesTable {
         
-        $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $table = new GamesTable($db);
-        
-        $item = null;
         
         $row = $table->load($id);
          
@@ -69,25 +67,41 @@ class GameService
      * This function will DELETE a specific row within the GAMES table.
      *
      * @param number $id  Item ID
+     * @return bool
      */
-    public static function delete($id = 0) {
+    public static function delete(int $id = 0) : bool {
+               
+        if ($id === 0) {
+            LogService::error('Game Record ID ' . $id . ' is required - delete attempted');
+            return false;
+        }
         
         // @TODO - add rule for when a DELETE operation CANNOT be executed.
         $app = Application::getInstance();
         
-        $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $table = new GamesTable($db);
-        $row = $table->load($id);
-        
-        $rc = $table->delete();
-        
-        if ($rc) {
-         //   LogService::info("Game " . $id . " - game [ " . $table->name . "] deleted ");
-            $app->triggerEvent('onAfterGameDelete', ['data' => $table, 'returnCode'=> $rc]);
-        } else {
-           // LogService::error("Error deleting game " . $id . " - game [ " . $table->name . "] ");
+        if (!$table->load($id)) {
+            LogService::error("Game {$id} not found - delete attempted");
+            return false;
         }
-        return $rc;
+        
+        try {
+            $rc = $table->delete($id);
+            
+            if ($rc) {
+               LogService::info("Game " . $id . " - game [ " . $table->name . "] deleted ");
+                $app->triggerEvent('onAfterGameDelete', ['data' => $table, 'returnCode'=> $rc]);
+                return true;
+            } else {
+               LogService::error("Error deleting game " . $id . " - game [ " . $table->name . "] ");
+               return false;
+            }
+        } catch (\Throwable $e) {
+            LogService::error("Exception deleting game (" . $id . ") - " . $e->getMessage());
+            return false;
+        }
+//         return $rc;
     }
 
     
@@ -95,20 +109,23 @@ class GameService
      * This function will RESET the game status
      *
      * @param number $id  Item ID
+     * @return bool
      */
-    public static function reset($id = 0) {
+    public static function reset(int $id = 0) : bool {
         
         $params = ComponentHelper::getParams('com_jsports');
         $resetgamescore = $params->get('resetgamescore');
         
-//         $user = Factory::getUser();
         $user = UserService::getUser();
         $app = Application::getInstance();
         
-        $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $table = new GamesTable($db);
-        $row = $table->load($id);
-        
+//         $row = $table->load($id);
+        if (!$table->load($id)) {
+            LogService::error("GameService::reset - Game {$id} not found");
+            return false;
+        }
         $status = 'S';
         
         // Change the status of the game and identify who actually posted the score.
@@ -148,15 +165,18 @@ class GameService
      * @param int $awayteamscore        // Away Team Score
      * @return boolean
      */
-    public static function postScore($id, $hometeamscore, $awayteamscore) {
+    public static function postScore(int $id, int $hometeamscore, int $awayteamscore) : bool {
         
-//         $user = Factory::getUser();
         $user = UserService::getUser();
         $app = Application::getInstance();
         
-        $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $table = new GamesTable($db);
-        $row = $table->load($id);
+//         $row = $table->load($id);
+        if (!$table->load($id)) {
+            LogService::error("GameService::postScore - Game " . $id . " not found");
+            return false;
+        }
                
         $datetime = date_create()->format('Y-m-d H:i:s');
 
@@ -174,8 +194,8 @@ class GameService
     	try {
     	    ScoringEngine::scoreGame($table);
     	    
-    	} catch (\Exception $e) {
-    	    echo "GameService::postScore <br/>";
+    	} catch (\Throwable $e) {
+    	    LogService::error("GameService::postScore Error - " . $e->getMessage());
     	    return false;
     	}
     	
@@ -194,11 +214,12 @@ class GameService
      * @param object $item
      * @return string
      */
-    public static function getWinLoss($teamid, $item) {
+    public static function getWinLoss($teamid, $item) : string {
         $result = "-";
-        $_teamid = $teamid;
+//         $_teamid = $teamid;
                 
-        if ($item->gamestatus == 'C') {
+//         if ($item->gamestatus == 'C') {
+        if ($item->gamestatus === 'C') {
             if ($teamid == $item->hometeamid) {
                 if ($item->hometeamscore > $item->awayteamscore) {
                     $result = "W";
@@ -226,10 +247,10 @@ class GameService
      *
      * @param int $programid
      * @param int $limit
-     * @return array
+     * @return array<int, object>
      */
-    public static function getUpcomingGames($programid = null, $limit = 25) {
-       // $db = Factory::getDbo();
+    public static function getUpcomingGames(int $programid, int $limit = 25) : array {
+
         $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
         
@@ -240,16 +261,15 @@ class GameService
         $conditions = array(
             $db->quoteName('g.divisionid') . ' = ' . $db->quoteName('d.id'),
             $db->quoteName('g.gamestatus') . ' = "S"',
-            $db->quoteName('g.programid') . ' = ' . $db->quote($programid),
+            $db->quoteName('g.programid') . ' = :programid',
             $db->quoteName('g.gamedate') . ' >= CURRENT_DATE',
         );
         $query->where($conditions);
         $query->setLimit($limit);
         $query->order('g.gamedate asc');
+        $query->bind(':programid', $programid, ParameterType::INTEGER);
         $db->setQuery($query);
         return $db->loadObjectList();
-       
-        
     }
     
     
@@ -257,11 +277,11 @@ class GameService
      * This function will return a list of most recent games.
      * 
      * @param int $programid
-     * @return array Objects
+     * @return array<int, object>
      */
-    public static function getRecentGames($programid = null, $limit = 15) {
+    public static function getRecentGames(int $programid, int $limit = 15) : array  {
                 
-        $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
         
         $query->select('g.*, d.name as divisionname');
@@ -272,11 +292,12 @@ class GameService
             $db->quoteName('g.divisionid') . ' = ' . $db->quoteName('d.id'),
             $db->quoteName('g.gamestatus') . ' = "C"',
             $db->quoteName('g.gamedate') . ' <= now()',
-            $db->quoteName('g.programid') . ' = ' . $db->quote($programid),
+            $db->quoteName('g.programid') . ' = :programid',
         );
         $query->where($conditions);
         $query->setLimit($limit);
         $query->order('g.gamedate desc');
+        $query->bind(':programid', $programid, ParameterType::INTEGER);
         $db->setQuery($query);
         return $db->loadObjectList();
        
@@ -287,19 +308,21 @@ class GameService
      *
      * @param int $teamid
      * @param int $programid
-     * @return array
+     * @return array<int, object>
      */
-    public static function getTeamSchedule($teamid, $programid) {
+    public static function getTeamSchedule(int $teamid, int $programid) : array {
         // Create a new query object.
-        $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
         
         $query->select("a.*");
-        $query->from($db->quoteName('#__jsports_games') . ' AS a')
-        ->where($db->quoteName('a.programid') . ' = ' . $db->quote($programid))
-        ->where(" (" . $db->quoteName('a.teamid') . ' = ' . $db->quote($teamid)
-            . " or " . $db->quoteName('a.opponentid') . ' = ' . $db->quote($teamid) . ")")
-        ->order("gamedate asc, gametime asc");
+        $query->from($db->quoteName('#__jsports_games') . ' AS a');
+        $query->where($db->quoteName('a.programid') . ' = :programid '); 
+        $query->where(' (' . $db->quoteName('a.teamid') . ' = :teamid or ' . $db->quoteName('a.opponentid') . ' = :opponentid ) ' );
+        $query->order("gamedate asc, gametime asc");
+        $query->bind(':programid',$programid, ParameterType::INTEGER);
+        $query->bind(':teamid',$teamid, ParameterType::INTEGER);
+        $query->bind(':opponentid',$teamid, ParameterType::INTEGER);
         $db->setQuery($query);
         return $db->loadObjectList();
             
