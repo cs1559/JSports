@@ -31,7 +31,7 @@ class DivisionService
      * @param number $id
      * @return \FP4P\Component\JSports\Administrator\Table\DivisionsTable|NULL
      */
-    public static function getItem($id = 0) {
+    public static function getItem(int $id = 0) : ?DivisionsTable {
         
         $db = Factory::getContainer()->get(DatabaseInterface::class);
         $divisions = new DivisionsTable($db);
@@ -41,7 +41,6 @@ class DivisionService
         if ($row) {
             return $divisions;
         }
-               
         return null;
     }
         
@@ -53,7 +52,7 @@ class DivisionService
      * @param number $exclude   - Division ID to exclude
      * @return array<int, array<string, mixed>> | null
      */
-    public static function getDivisionList($programid, $group = null, $exclude = null) {
+    public static function getDivisionList($programid, $group = null, $exclude = null) : array {
         
         $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
