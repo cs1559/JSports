@@ -55,15 +55,12 @@ class BulletinController extends BaseController
         
         $app    = $this->app;
         $input = $app->input;
-
         $user   = $this->app->getIdentity();
-        $userId = (int) $user->get('id');
 
         // Posted form data
         $requestData   = $input->post->get('jform', [], 'array');
-        $teamid = $requestData['teamid'];
- //       $bulletinTitle = $requestData['title'] ?? '';
-        
+        $teamid = (int) ($requestData['teamid'] ?? 0);
+ 
         //check user session
         if ($user->guest) {
             $app->enqueueMessage(Text::_('COM_JSPORTS_INVALID_USERSESSION'), 'error');
@@ -71,17 +68,16 @@ class BulletinController extends BaseController
             return false;
         }
         
+        // 4. Persistence
         $model  = $this->getModel('Bulletin', 'Site');
+        $result = $model->save($requestData);
 
         // File upload array (jform[afile])
-        $files = $input->files->get('jform', [], 'array');
+//         $files = $input->files->get('jform', [], 'array');
         
         // Determine if "new" based on incoming id (before save)
         $incomingId = (int) ($requestData['id'] ?? $input->getInt('id'));
-        $isNew = $incomingId === 0;
-        
-//        $model = $this->getModel();
-        $result = $model->save($requestData);
+//         $isNew = $incomingId === 0;
         
         if (!$result) {
             $msg = "An error occurred saving the bulletin.";
@@ -90,7 +86,7 @@ class BulletinController extends BaseController
             }
             LogService::error($msg);
             $app->enqueueMessage($msg, "error");
-            $this->setRedirect('index.php?option=com_jsports&view=bulletins&teamid=' . $teamid);
+            $this->setRedirect(Route::_('index.php?option=com_jsports&view=bulletins&teamid=' . $teamid,false));
             return false;
         } else {
             $msg = "Bulletin has been saved.";
@@ -98,21 +94,19 @@ class BulletinController extends BaseController
                 $msg = $msg . " File upload failed - check logs.";
                 $app->enqueueMessage($msg, "warning");
                 LogService::error($msg);
-                $this->setRedirect('index.php?option=com_jsports&view=bulletins&teamid=' . $teamid);
+                $this->setRedirect(Route::_('index.php?option=com_jsports&view=bulletins&teamid=' . $teamid, false));
                 return false;
             } else {
                 $app->enqueueMessage($msg, "message");
                 LogService::info($msg);
-                $this->setRedirect('index.php?option=com_jsports&view=bulletins&teamid=' . $teamid);
+                $this->setRedirect(Route::_('index.php?option=com_jsports&view=bulletins&teamid=' . $teamid,false));
                 return true;
             }
-            LogService::info($msg);
-            
+           
         }
         
         return true;
         
-        // ================================
     }
     
     public function delete() {
@@ -168,10 +162,11 @@ class BulletinController extends BaseController
         if (BulletinService::deleteAttachmentFolder($bulletinid)) {
             Factory::getApplication()->enqueueMessage("Attachment has been deleted", 'message');
             LogService::info("Attachment folder for Bulletin ID " . $bulletinid . " has been deleted");
-            $this->setRedirect('index.php?option=com_jsports&view=bulletin&layout=edit&id=' . $bulletinid);
+            $this->setRedirect(Route::_('index.php?option=com_jsports&view=bulletin&layout=edit&id=' . $bulletinid, false));
         } else {
             LogService::error("Something happened when trying to remove folder for Bulletin ID " . $bulletinid . " ");
             Factory::getApplication()->enqueueMessage("Something happened when attempting to remove the attachment folder", 'warning');
+
         }
         
     }
