@@ -51,6 +51,8 @@ class RosterController extends FormController
     
     public function delete() {
         
+        $this->checkToken($this->input->getMethod() == 'GET' ? 'get' : 'post');
+        
         $app = Factory::getApplication();
         
         $redirecturl = "";
@@ -70,9 +72,6 @@ class RosterController extends FormController
         if ($id == 0) {
             $this->setMessage("Invalid ID value provied - Roster DELETE failed",'error');
             $this->setRedirect(Route::_('index.php?option=com_jsports&view=dashboard', false));
-//             $this->setMessage(Text::_('COM_JSPORTS_ROSTER_SAVE_SUCCESS'));
-//             $this->setRedirect(Route::_($redirect, false));
-            
             return false;
         }
         
@@ -84,7 +83,7 @@ class RosterController extends FormController
         
         try {
             $result = RosterService::delete($id);
-            $this->setMessage("Roster ITEM was successfully deleted",'info');
+            $this->setMessage("Roster ITEM was successfully deleted",'success');
             $redirectURL = 'index.php?option=com_jsports&view=rosters&teamid=' . $item->teamid;
             
         } catch (\Exception $e) {
@@ -110,14 +109,14 @@ class RosterController extends FormController
     {
                 
         // Check for request forgeries.
-        $this->checkToken();
+//         $this->checkToken();
+        $this->checkToken($this->input->getMethod() == 'GET' ? 'get' : 'post');
 
         
         $app    = $this->app;
         
         $model  = $this->getModel('Roster', 'Site');
         $user   = $this->app->getIdentity();
-        
         
         // Get the user data.
         $requestData = $app->getInput()->post->get('jform', [], 'array');
@@ -241,8 +240,8 @@ class RosterController extends FormController
     public function cancel($key = null)
     {
         // Check for request forgeries.
-        $this->checkToken();
-
+        $this->checkToken($this->input->getMethod() == 'GET' ? 'get' : 'post');
+        
         $app    = $this->app;
         // Get the user data.
         $requestData = $app->getInput()->post->get('jform', [], 'array'); 
@@ -252,6 +251,7 @@ class RosterController extends FormController
         $this->app->setUserState('com_jsports.edit.team.data', null);
         
         // Redirect to user profile.
+        $this->setMessage(Text::sprintf('COM_JSPORTS_OPERATION_CANCELLED'), 'success');
         $this->setRedirect(Route::_('index.php?option=com_jsports&view=rosters&teamid=' . $teamid, false));
     }
 }
