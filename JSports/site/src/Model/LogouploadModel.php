@@ -46,10 +46,10 @@ class LogouploadModel extends FormModel
     public function getItem(){
         
         $input = Factory::getApplication()->input;
-        $id     = $input->getInt("id");
+        $teamid     = $input->getInt("teamid");
         
         $svc = new TeamService();
-        return $svc->getItem($id);
+        return $svc->getItem($teamid);
 
 
     }
@@ -69,7 +69,7 @@ class LogouploadModel extends FormModel
                 'control' => 'jform',	// the name of the array for the POST parameters
                 'load_data' => $loadData	// will be TRUE
             )
-            );
+        );
                 
         if (empty($form))
         {
@@ -83,11 +83,11 @@ class LogouploadModel extends FormModel
     protected function loadFormData()
     {
         
+        
         // Check the session for previously entered form data.
         $data = Factory::getApplication()->getUserState(
             'com_jsports_form.logoupload.data',	// a unique name to identify the data in the session
-//             array("name" => "Coach Name")
-                array($this->data)	// prefill data if no data found in session
+                    	// prefill data if no data found in session
             );
         
         if (empty($data)) {
