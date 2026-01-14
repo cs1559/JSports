@@ -78,7 +78,7 @@ class TeamController extends BaseController
         // Get the user data.
         $requestData = $app->getInput()->post->get('jform', [], 'array');
         
-        $teamid = $requestData['id'];
+        $teamid = (int) ($requestData['teamid'] ?? $requestData['id'] ?? 0);
         
         /* Code to prevent further action if user is NOT logged in */
 //         $user = Factory::getUser();
@@ -214,12 +214,13 @@ class TeamController extends BaseController
         $app    = $this->app;
         // Get the user data.
         $requestData = $app->getInput()->post->get('jform', [], 'array');
-        $teamid = $requestData['id'];
+        $teamid = (int) ($requestData['teamid'] ?? $requestData['id'] ?? 0);
         
         // Flush the data from the session.
         $this->app->setUserState('com_jsports.edit.team.data', null);
         
         // Redirect to user profile.
+        $this->setMessage(Text::_('COM_JSPORTS_OPERATION_CANCELLED'), 'success');
         $this->setRedirect(Route::_('index.php?option=com_jsports&view=team&id=' . $teamid, false));
     }
     
