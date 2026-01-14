@@ -74,7 +74,7 @@ class DatabaseLogger extends Logger
          * NOTE:  the save functions need to be "tightened" up to check for an authenticate session before allowing a save to 
          * be performed.
          */
-        die  ("Databaselogger: die");
+//         die  ("Databaselogger: die");
         if (!$user->id) {
             $userid = 0;
             $name = "Unknown";
