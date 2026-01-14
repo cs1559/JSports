@@ -100,7 +100,7 @@ class Html
         $menuOptions["Manage Roster"] = Route::_('index.php?option=com_jsports&view=rosters&teamid=' . $id);
         $menuOptions["Manage Schedule"] = Route::_('index.php?option=com_jsports&view=schedules&teamid=' . $id);
         $menuOptions["Post Score(s)"] = Route::_('index.php?option=com_jsports&view=postscores&teamid=' . $id);
-        $menuOptions["Upload Logo"] = Route::_('index.php?option=com_jsports&view=logoupload&id=' . $id);
+        $menuOptions["Upload Logo"] = Route::_('index.php?option=com_jsports&view=logoupload&teamid=' . $id);
         
         $enablebulletins = $params->get('enablebulletins');
         if ($enablebulletins) {
