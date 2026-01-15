@@ -48,7 +48,7 @@ class HtmlView extends BaseHtmlView
         $params = ComponentHelper::getParams('com_jsports');
         $this->attachmentsenabled = (bool) $params->get('bulletinattachments');
         
-        /** @var \FP4P\Component\JSports\Administrator\Model\BulletinModel $model */
+        /** @var \FP4P\Component\JSports\Site\Model\BulletinModel $model */
         $model = $this->getModel('Bulletin');
 
         $this->state = $model->getState();
