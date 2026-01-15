@@ -92,7 +92,10 @@ class GameModel extends FormModel
     public function getItem($pk = null){
         
         $input = Factory::getApplication()->input;
-        $id = $pk ?? $input->getInt('id');
+        $data   = $input->post->get('jform', [], 'array');
+        
+//         $id = $pk ?? $input->getInt('id');
+        $id = $pk ?? (int) ($data['id'] ?? $input->getInt('id'));
         $this->contextid = $input->getInt("contextid");
         
         $svc = new GameService();
@@ -103,8 +106,9 @@ class GameModel extends FormModel
         }
         
         if ($id == 0) {
-            $this->teamid = $input->getInt('teamid');
-            $this->programid = $input->getInt('programid');
+            $this->teamid = (int) ($data['teamid'] ?? $input->getInt('teamid'));
+//             $this->teamid = (int) ($data['teamid'] ?? 0);
+            $this->programid = (int) ($data['programid'] ?? $input->getInt('programid'));
             $this->divisionid = TeamService::getTeamDivisionId($this->teamid, $this->programid);
         }
         

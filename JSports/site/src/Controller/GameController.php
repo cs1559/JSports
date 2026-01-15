@@ -107,10 +107,10 @@ class GameController extends FormController
             $result = GameService::delete($id);
             if ($result) {
                 $logger->info('Game ID: ' . $id. ' has been DELETED  ' . $item->gamedate . ' ' . $item->name . ' STATUS=' . $item->gamestatus);
-                $this->setMessage(Text::_('COM_JSPORTS_GAME_SUCCESSFULLY_DELETED'),'info');
+                $this->setMessage(Text::_('COM_JSPORTS_GAME_SUCCESSFULLY_DELETED'),'success');
             } else {
                 $logger->error('Game ID: ' . $id. ' has NOT been deleted' );
-                $this->setMessage(Text::_('COM_JSPORTS_GAME_NOT_DELETED'),'info');
+                $this->setMessage(Text::_('COM_JSPORTS_GAME_NOT_DELETED'),'error');
             }
             $redirectURL = $rUrl;
             
@@ -124,6 +124,9 @@ class GameController extends FormController
             $app->enqueueMessage($errors[0],'error');
             $redirectURL = 'index.php?option=com_jsports&view=schedules&teamid=' .
                 (int) $teamid . '&programid=' . (int) $item->programid;
+            $logger->error('Game ID: ' . $id. ' has NOT been deleted' );
+            $this->setMessage(Text::_('COM_JSPORTS_GAME_NOT_DELETED'),'error');
+                
             $this->setRedirect(Route::_($redirectURL, false));
                 return false;
         }
@@ -401,6 +404,7 @@ class GameController extends FormController
         $this->app->setUserState('com_jsports.edit.game.data', null);
         
         // Redirect to team schedule.
+        $this->setMessage(Text::_('COM_JSPORTS_OPERATION_CANCELLED'),'success');
         $this->setRedirect(Route::_('index.php?option=com_jsports&view=schedules&teamid=' . $teamid, false));
 //         $this->setRedirect(Route::_('index.php?option=com_jsports&view=schedules&teamid=' . $contextid, false));
     }
