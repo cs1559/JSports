@@ -21,11 +21,11 @@ use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Factory;
 
-$listOrder = $this->escape($this->state->get('list.ordering'));
-$listDirn  = $this->escape($this->state->get('list.direction'));
-$editIcon = '<span class="fa fa-pen-square me-2" aria-hidden="true"></span>';
+// $listOrder = $this->escape($this->state->get('list.ordering'));
+// $listDirn  = $this->escape($this->state->get('list.direction'));
+// $editIcon = '<span class="fa fa-pen-square me-2" aria-hidden="true"></span>';
 
-$clientId  = (int) $this->state->get('client_id', 0);
+// $clientId  = (int) $this->state->get('client_id', 0);
 
 // Load Web Asset Manager
 $wa = $this->document->getWebAssetManager();
@@ -52,9 +52,7 @@ $wa->useStyle('com_jsports.teamlist.style');
 			<thead>
 				<tr>
 					<th scope="col" class="w-20">
-						<?php echo HTMLHelper::_('searchtools.sort', 'COM_JSPORTS_NAME', 'a.name', $listDirn, $listOrder) . '<br/>'; 
-						
-						?>
+						<?php echo Text::_('COM_JSPORTS_NAME'); ?>
 					</th>
 					<th scope="col" class="w-20">
 						<?php echo Text::_('COM_JSPORTS_CONTACTNAME'); ?>
