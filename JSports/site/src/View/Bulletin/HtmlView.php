@@ -5,13 +5,11 @@
  * @version     1.0.0
  * @package     JSports.Site
  * @subpackage  com_jsports
- * @copyright   Copyright (C) 2023-2024 Chris Strieter
+ * @copyright   Copyright (C) 2023-2026 Chris Strieter
  * @license     GNU/GPLv2, see http://www.gnu.org/licenses/gpl-2.0.html
  *
  */
 namespace FP4P\Component\JSports\Site\View\Bulletin;
-
-
 
 defined('_JEXEC') or die;
 
@@ -21,16 +19,19 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Component\ComponentHelper;
 
 /**
- * HTML Registration View
+ * HTML Bulletin View
+ * 
+ * - 01/15/2026 - Refactored to change $this->get to $model->getxxx to commply with future Joomla releases.
  *
  * @since  1.5
  */
 class HtmlView extends BaseHtmlView
 {
     protected $program;
-    
     protected $item;
-    
+    protected $form;
+    protected $team;
+    protected $state;
     protected $attachmentsenabled = false;
     protected $options = null;
     
@@ -45,28 +46,29 @@ class HtmlView extends BaseHtmlView
     {
 //         $app = Factory::getApplication();
         $params = ComponentHelper::getParams('com_jsports');
-        $this->attachmentsenabled = $params->get('bulletinattachments');
+        $this->attachmentsenabled = (bool) $params->get('bulletinattachments');
         
-        $this->data       = $this->get('Data');
-        $this->state      = $this->get('State');
-        $this->item       = $this->get('Item');
-        $this->team       = $this->getModel()->team;
+        /** @var \FP4P\Component\JSports\Administrator\Model\BulletinModel $model */
+        $model = $this->getModel('Bulletin');
 
-        $isNew = false;
-        $programid = Factory::getApplication()->getUserState('com_jsports.edit.bulletin.programid',0);
-        if ($programid) {
-            $isNew = true;
-        }
-        
-        
-        $this->form        = $this->getModel()->getForm($this->item,true);
-        
-        if ($isNew) {
-            $this->item->programid = $programid;
-        }
+        $this->state = $model->getState();
+        $this->item  = $model->getItem();
+        $this->form  = $model->getForm($this->item,true);      
+        $this->team  = $model->getTeam(); 
+
+//         $isNew = false;
+//         $programid = Factory::getApplication()->getUserState('com_jsports.edit.bulletin.programid',0);
+//         if ($programid) {
+//             $isNew = true;
+//         }
+                  
+//         if ($isNew) {
+//             $this->item->programid = $programid;
+//         }
                 
          // Check for errors.
-        if (count($errors = $this->get('Errors')))
+        $errors = $model->getErrors();
+        if (!empty($errors)) 
         {
             throw new GenericDataException(implode("\n", $errors), 500);
         }
@@ -74,4 +76,3 @@ class HtmlView extends BaseHtmlView
         return parent::display($tpl);
     }
 }
-

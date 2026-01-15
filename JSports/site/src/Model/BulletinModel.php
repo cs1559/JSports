@@ -26,6 +26,7 @@ use FP4P\Component\JSports\Site\Services\BulletinService;
 use FP4P\Component\JSports\Site\Services\LogService;
 use FP4P\Component\JSports\Site\Services\TeamService;
 use FP4P\Component\JSports\Administrator\Helpers\JSHelper;
+use FP4P\Component\JSports\Administrator\Table\TeamsTable;
 
 /**
  * This model supports methods required to enable users to register for a program from the front-end side of the JSports component.
@@ -38,6 +39,9 @@ class BulletinModel extends FormModel
     public $uploadError = false;
     public $team = null;
     
+    public function getTeam() : ?TeamsTable {
+        return $this->team;
+    }
     public function save($data) {
     
         $bsvc = new BulletinService();
