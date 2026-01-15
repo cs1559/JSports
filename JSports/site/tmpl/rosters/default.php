@@ -26,6 +26,7 @@ use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Administrator\Helpers\JSHelper;
+use Joomla\CMS\Session\Session;
 
 $clientId  = (int) $this->state->get('client_id', 0);
 // $user      = Factory::getUser();
@@ -42,6 +43,9 @@ $wa->useStyle('com_jsports.jsports.style');
 $wa->useStyle('com_jsports.teamprofile.style');
 
 $document->setTitle(Text::_('COM_JSPORTS_TEAMROSTER_PAGE_TITLE'));
+
+$token = Session::getFormToken();
+
 
 if ($this->program->rosterslocked) {
     
@@ -173,7 +177,7 @@ if (!$this->canAddPlayers) {
 						} 
 					    ?>
 						<a class="btn btn-primary btn-sm" href="<?php echo Route::_('index.php?option=com_jsports&view=roster&layout=' . $layout . '&id=' . $item->id); ?>">Edit</a>
-						<a class="btn btn-danger btn-sm" onClick="return confirm('Are you sure?');" href="<?php echo Route::_('index.php?option=com_jsports&task=roster.delete&id=' . $item->id); ?>">Delete</a>
+						<a class="btn btn-danger btn-sm" onClick="return confirm('Are you sure?');" href="<?php echo Route::_('index.php?option=com_jsports&task=roster.delete&id=' . $item->id . '&' . $token . '=1'); ?>">Delete</a>
 					</td>				
 				<?php } ?>	
 					
