@@ -456,9 +456,9 @@ select distinct email from (
             ->innerJoin($db->quoteName('#__jsports_programs', 'p') . ' ON p.id = m.programid')
             ->where('m.teamid = :teamid')
             ->where('m.published = 1')
-            ->where('p.status = :status')
-            ->bind(':teamid', $teamid, ParameterType::INTEGER)
-            ->bind(':status', 'A', ParameterType::STRING);
+            ->where('p.status = "A"')
+            ->bind(':teamid', $teamid, ParameterType::INTEGER);
+//             ->bind(':status', "A", ParameterType::STRING);
             
             $db->setQuery($query, 0, 1);
             
