@@ -29,6 +29,9 @@ use FP4P\Component\JSports\Site\Services\RegistrationService;
 class RegisterModel extends FormModel
 {
         
+    public function getItem(){
+        return null;
+    }
     public function getForm($data = array(), $loadData = true)
     {
         $form = $this->loadForm(
