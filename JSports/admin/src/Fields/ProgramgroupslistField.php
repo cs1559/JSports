@@ -15,7 +15,7 @@ defined('JPATH_PLATFORM') or die;
     
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\FormField;
-use Joomla\CMS\Form\FormFieldList;
+// use Joomla\CMS\Form\FormFieldList;
 use Joomla\CMS\Form\Formhelper;
 use Joomla\CMS\Form\Field\ListField;
 use Joomla\CMS\HTML\HTMLHelper;
