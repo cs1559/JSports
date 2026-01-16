@@ -181,7 +181,7 @@ class GameController extends FormController
             $result = GameService::reset($id);
             if ($result) {
                 $logger->info('Game ID: ' . $id . ' status has been reset');
-                $this->setMessage(Text::_('COM_JSPORTS_GAME_RESET_SUCCESSFUL'),'info');
+                $this->setMessage(Text::_('COM_JSPORTS_GAME_RESET_SUCCESSFUL'),'success');
             } else {
                 $this->setMessage("Game status was NOT reset",'info');
             }
