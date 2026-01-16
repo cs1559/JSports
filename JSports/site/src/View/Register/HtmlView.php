@@ -42,7 +42,7 @@ class HtmlView extends BaseHtmlView
         /** @var \FP4P\Component\JSports\Site\Model\RegisterModel $model */
         $model = $this->getModel();
         
-        $this->data       = $model->getData();               
+        $this->data       = $model->getItem();            
         $this->form       = $model->getForm($this->data,true);
         
         // Check authorizations
