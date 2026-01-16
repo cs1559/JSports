@@ -5,7 +5,7 @@
  * @version     1.0.0
  * @package     JSports.Site
  * @subpackage  com_jsports
- * @copyright   Copyright (C) 2023-2024 Chris Strieter
+ * @copyright   Copyright (C) 2023-2026 Chris Strieter
  * @license     GNU/GPLv2, see http://www.gnu.org/licenses/gpl-2.0.html
  *
  */
@@ -26,7 +26,14 @@ use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Pagination\Pagination;
+use FP4P\Component\JSports\Site\Model\OpeningsModel;
 
+/**
+ * HTML View for roster openings report
+ * 
+ * @author Chris Strieter
+ *
+ */
 class HtmlView extends BaseHtmlView
 {
     public $form;
@@ -39,63 +46,22 @@ class HtmlView extends BaseHtmlView
     protected $items;
     
     /**
-     * The pagination object
-     *
-     * @var  Pagination
-     */
-    protected $pagination;
-    
-    /**
      * The model state
      */
     protected $state;
-    
-    /**
-     * Form object for search filters
-     *
-     * @var  Form
-     */
-    public $filterForm;
-    
-    /**
-     * The active search filters
-     *
-     * @var  array
-     */
-    public $activeFilters;
-    
-    public $showData;
-    public $isProgramPending;
-    
+           
     public function display($tpl = null)
     {
+        /** @var OpeningsModel $model */
+        $model = $this->getModel();
         
-        $this->items         = $this->get('Items');
-        $this->pagination    = $this->get('Pagination');
-        $this->state         = $this->get('State');
-        $this->filterForm    = $this->get('FilterForm');
-        $this->activeFilters = $this->get('ActiveFilters');
-        $this->isProgramPending = false;
+        $this->items         = $model->getItems();
+        $this->pagination    = $model->getPagination();  
+        $this->state         = $model->getState();
         
-        /* removed 12/6/2024 - this caused pagination issues */
-        //$this->pagination->limit = 30;
-        
-        $programid = $this->state['filter.programid'];
-        $this->program = ProgramsService::getItem($programid);
-        
-//         $this->showData = false;
-//         if ($this->program->status == "P") {
-//             $this->isProgramPending = true;
-//             if (SecurityService::isAdmin()) {
-//                 $this->showData = true;
-//             }
-//             $this->showData = false;
-//         } else {
-//             $this->showData = true;
-//         }
-        
-        // Check for errors.       
-        if (count($errors = $this->get('Errors')))
+        // Check for errors.
+        $errors = $model->getErrors();
+        if (!empty($errors))
         {
             throw new GenericDataException(implode("\n", $errors), 500);
         }
@@ -104,6 +70,5 @@ class HtmlView extends BaseHtmlView
         
     }
     
-   
 }
 
