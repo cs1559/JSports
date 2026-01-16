@@ -40,17 +40,25 @@ class HtmlView extends BaseHtmlView
     public function display($tpl = null)
     {
         $app = Factory::getApplication();
-        $this->data       = $this->get('Data');
-        $this->state      = $this->get('State');
-        $this->item       = $this->get('Item');
+        
+        /** @var \FP4P\Component\JSports\Administrator\Model\RegistrationModel $model */
+        $model = $this->getModel();
+        
+        $this->state      = $model->getState();
+        $this->item       = $model->getItem();
 
         $isNew = false;
+        
+        // This user state element is set via the controller.
         $programid = Factory::getApplication()->getUserState('com_jsports.edit.registration.programid',0);
+        $registrationid = Factory::getApplication()->getUserState('com_jsports.edit.registration.registrationid',0);
+        $agreementurl = Factory::getApplication()->getUserState('com_jsports.edit.registration.agreementurl','');
+        
         if ($programid) {
             $isNew = true;
         }
         
-        $this->form        = $this->getModel()->getForm($this->item,true);
+        $this->form        = $model->getForm($this->item,true);
         
         if ($isNew) {
             $this->item->programid = $programid;
@@ -60,8 +68,6 @@ class HtmlView extends BaseHtmlView
         if (!is_null($this->program->registrationoptions)) {
             $this->options = json_decode($this->program->registrationoptions);
         } 
-        
-        $this->agreementurl = $app->getUserState('com_jsports.edit.registration.agreementurl', '');
      
         // Cleanout the agreement url state
         $app->setUserState('com_jsports.edit.registration.agreementurl','');
@@ -70,7 +76,7 @@ class HtmlView extends BaseHtmlView
         
          // Check for errors.
 //         if (count($errors = $this->get('Errors')))
-        if (count($errors = $this->getErrors()))
+        if (count($errors = $model->getErrors()))
         {
             throw new GenericDataException(implode("\n", $errors), 500);
         }
