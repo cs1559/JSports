@@ -5,7 +5,7 @@
  * @version     1.0.0
  * @package     JSports.Site
  * @subpackage  com_jsports
- * @copyright   Copyright (C) 2023-2024 Chris Strieter
+ * @copyright   Copyright (C) 2023-2026 Chris Strieter
  * @license     GNU/GPLv2, see http://www.gnu.org/licenses/gpl-2.0.html
  *
  */
@@ -16,11 +16,23 @@ defined('_JEXEC') or die;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\View\GenericDataException;
+use FP4P\Component\JSports\Administrator\Table\GamesTable;
 
+/**
+ * PostScore HTML View - used by clients to post game scores
+ * 
+ * @author Chris Strieter
+ *
+ */
 class HtmlView extends BaseHtmlView
 {
     public $form;
-    protected $items;    
+    
+    /**
+     * Game Record
+     * @var GamesTable $item
+     */
+    protected $item;    
     protected $team;
     protected $canEdit = false;
     protected $redirectteam = 0;
@@ -31,22 +43,24 @@ class HtmlView extends BaseHtmlView
         $input = Factory::getApplication()->input;
         $itemid = $input->get('id',0);
         
-        $this->item         = $this->get('Item');
-        $this->state         = $this->get('State');
+        /** @var \FP4P\Component\JSports\Site\Model\PostscoreModel $model */
+        $model = $this->getModel();
+        
+        $this->item         = $model->getItem();
+        $this->state        = $model->getState();
+        $this->form         = $model->getForm($this->item,true);
         
         $redirectteam = $input->get('teamid');
         
-        $this->form = $this->getModel()->getForm($this->item,true);
+       
         $this->form->bind($this->item);
         $this->form->setValue('redirectteamid',null,$redirectteam);
         
-        // NOTE:  Need to research to see if there is a better way of getting the model data into the template
-        $mod = $this->getModel();
               
-        $this->team = $mod->team;
-        $this->program = $mod->program;
-        $this->teamid = $mod->teamid;
-        $this->programid = $mod->programid;
+        $this->team = $model->team;
+        $this->program = $model->program;
+        $this->teamid = $model->teamid;
+        $this->programid = $model->programid;
         $this->redirectteamid = $redirectteam;
 
 
