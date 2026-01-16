@@ -5,7 +5,7 @@
  * @version     1.0.0
  * @package     JSports.Site
  * @subpackage  com_jsports
- * @copyright   Copyright (C) 2023-2024 Chris Strieter
+ * @copyright   Copyright (C) 2023-2026 Chris Strieter
  * @license     GNU/GPLv2, see http://www.gnu.org/licenses/gpl-2.0.html
  *
  */
@@ -19,7 +19,15 @@ use FP4P\Component\JSports\Site\Services\SecurityService;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\Form\Form;
 use Joomla\CMS\Pagination\Pagination;
+use FP4P\Component\JSports\Administrator\Table\TeamsTable;
+use FP4P\Component\JSports\Administrator\Table\ProgramsTable;
 
+/**
+ * PostScores HTML View - used by clients to see a list of games they can post a score of.
+ * 
+ * @author Chris Strieter
+ *
+ */
 class HtmlView extends BaseHtmlView
 {
     public $form;
@@ -31,58 +39,33 @@ class HtmlView extends BaseHtmlView
      */
     protected $items;
     
+    /**
+     * @var TeamsTable
+     */
     protected $team;
+    /**
+     * @deprecated
+     * @var int
+     */
     protected $teamlastyearplayed;
+    
+    /**
+     * @var ProgramsTable
+     */
     protected $program;
     protected $canEdit = false;
       
-    /**
-     * The pagination object
-     *
-     * @var  Pagination
-     */
-    protected $pagination;
-    
-
     protected $state;
-    
-    /**
-     * Form object for search filters
-     *
-     * @var  Form
-     */
-    public $filterForm;
-    
-    /**
-     * The active search filters
-     *
-     * @var  array
-     */
-    public $activeFilters;
-    
-      
+          
     public function display($tpl = null)
     {
+        /** @var \FP4P\Component\JSports\Site\Model\PostscoresModel */
+        $model = $this->getModel();
         
-        $this->items         = $this->get('Items');
-        $this->pagination    = $this->get('Pagination');
-        $this->state         = $this->get('State');
-        $this->filterForm    = $this->get('FilterForm');
-        $this->activeFilters = $this->get('ActiveFilters');
-               
-        // NOTE:  Need to research to see if there is a better way of getting the model data into the template
-        $mod = $this->getModel();
-        $this->team = $mod->team;
-        $this->teamlastyearplayed = $mod->teamlastyearplayed;
-        $this->program = $mod->program;
-        
-//         $error = $mod->getError();
-                
-//         $context = array(
-//             'teamid' => $this->team->id,
-//             'programid' => $this->program->id
-//         );
-        $this->canEdit = SecurityService::canEditTeamSchedule($this->team->id,$this->program->id);
+        $this->items        = $model->getItems();
+        $this->team         = $model->getTeam();
+        $this->program      = $model->getProgram();
+        $this->canEdit      = SecurityService::canEditTeamSchedule($this->team->id,$this->program->id);
         //$this->canEdit = SecurityService::canEditTeamSchedule($context);
 
         if ($this->program->registrationonly) {
@@ -96,7 +79,7 @@ class HtmlView extends BaseHtmlView
         }
         
         // Check for errors.
-        if (count($errors = $this->get('Errors')))
+        if (count($errors = $model->getErrors()))
         {
             throw new GenericDataException(implode("\n", $errors), 500);
         }
