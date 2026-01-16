@@ -5,7 +5,7 @@
  * @version     0.0.1
  * @package     JSports.Site
  * @subpackage  com_jsports
- * @copyright   Copyright (C) 2023-2024 Chris Strieter
+ * @copyright   Copyright (C) 2023-2026 Chris Strieter
  * @license     GNU/GPLv2, see http://www.gnu.org/licenses/gpl-2.0.html
  *
  */
@@ -21,17 +21,39 @@ use FP4P\Component\JSports\Site\Services\ProgramsService;
 use FP4P\Component\JSports\Site\Services\GameService;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Form\Form;
+use FP4P\Component\JSports\Administrator\Table\ProgramsTable;
+use FP4P\Component\JSports\Administrator\Table\TeamsTable;
 
 /**
- * Methods supporting a list of LEAGUE records.
+ * Post Scores Model - generates a list of games that are eligible for posting of a score.
  *
  * @since  1.0.0
  */
 class PostscoresModel extends ListModel
 {
+    /**
+     * Team record
+     * @var TeamsTable
+     */
     protected $team;
+    
+    /**
+     * Last Year Played
+     * @deprecated
+     * @var int
+     */
     protected $teamlastyearplayed;
+    
+    /**
+     * Program Id
+     * @var int
+     */
     protected $programid;
+    
+    /** 
+     * Program record
+     * @var ProgramsTable
+     */
     protected $program;
     
 	/**
@@ -49,32 +71,9 @@ class PostscoresModel extends ListModel
 			$config['filter_fields'] = array(
 			);
 		}
-
 		parent::__construct($config);
 	}
 
-
-	/**
-	 * Method to get a store id based on model configuration state.
-	 *
-	 * This is necessary because the model is used by the component and
-	 * different modules that might need different sets of data or different
-	 * ordering requirements.
-	 *
-	 * @param   string  $id  A prefix for the store id.
-	 *
-	 * @return  string  A store id.
-	 *
-	 * @since   1.0.0
-	 */
-	protected function getStoreId($id = '')
-	{
-		// Compile the store id.
-// 		$id .= ':' . $this->team->id;
-// 		$id .= ':' . $this->program->id;
-
-		return parent::getStoreId($id);
-	}
 
 	/**
 	 * Build an SQL query to load the list data.
@@ -106,8 +105,7 @@ class PostscoresModel extends ListModel
 	    } else {
 	        $this->programid = $programid;
 	    }
-	
-	    
+		    
 	    $psvc = new ProgramsService();
 	    $this->program = $psvc->getItem($this->programid);
 	    
@@ -117,42 +115,43 @@ class PostscoresModel extends ListModel
 	    
         $query->select("a.*");
 	    $query->from($db->quoteName('#__jsports_games') . ' AS a')
- 	       ->where($db->quoteName('a.programid') . ' = ' . $db->quote($this->programid))
+ 	       ->where($db->quoteName('a.programid') . ' = :programid ' )
  	       ->where($db->quoteName('a.gamestatus') . ' = ' . $db->quote('S'))
-           	->where("(" . $db->quoteName('a.opponentid') . ' = ' . $db->quote($teamid) . ' or '
-                . $db->quoteName('a.teamid') . ' = ' . $db->quote($teamid) .")")
+           	->where("(" . $db->quoteName('a.opponentid') . ' = :opponentid or  ' 
+                . $db->quoteName('a.teamid') . ' = :teamid)' )
            ->order("gamedate asc");
 	    
-//            $query->select("a.*, concat(a.awayteamname,\" @ \",a.hometeamname) as name");
-//            $query->from($db->quoteName('#__jsports_games') . ' AS a')
-//            ->where($db->quoteName('a.programid') . ' = ' . $db->quote($this->programid))
-//            ->where($db->quoteName('a.awayteamid') . ' = ' . $db->quote($teamid))
-//            ->orWhere($db->quoteName('a.hometeamid') . ' = ' . $db->quote($teamid))
-//            ->order("gamedate asc");
+        $query->bind(':programid', $this->programid, ParameterType::INTEGER);
+        $query->bind(':opponentid', $teamid, ParameterType::INTEGER);
+        $query->bind(':teamid', $teamid, ParameterType::INTEGER);
            
 	    return $query;
 	}
 	
 
-	/**
-	 * Method to get a list of GAME RECORDS.
-	 * Overridden to add a check for access levels.
-	 *
-	 * @return  mixed  An array of data items on success, false on failure.
-	 *
-	 * @since   1.0.0
-	 */
-	public function getItems()
-	{
-		return parent::getItems();
-
-	
+	public function getTeam() : TeamsTable {
+	    return $this->team;
 	}
 	
+	public function getProgram() : ProgramsTable {
+	    return $this->program;
+	}
 	
+// 	/**
+// 	 * Method to get a list of GAME RECORDS.
+// 	 * Overridden to add a check for access levels.
+// 	 *
+// 	 * @return  mixed  An array of data items on success, false on failure.
+// 	 *
+// 	 * @since   1.0.0
+// 	 */
+// 	public function getItems()
+// 	{
+// 		return parent::getItems();
+
 	
-	
-	
+// 	}
+		
 	/**
 	 * This function is an override function of the FormModel validate function.
 	 *
@@ -177,5 +176,4 @@ class PostscoresModel extends ListModel
 	    }
         return $data;
 	}
-	
 }
