@@ -22,9 +22,8 @@ use FP4P\Component\JSports\Site\Services\ProgramsService;
 use FP4P\Component\JSports\Site\Services\DivisionService;
 
 /**
+ *  The StandingsModel class is used to retrieve the standings informaiton for a particular program.
  *
- *
- * @since  1.6
  */
 class StandingsModel extends BaseModel
 {
@@ -33,6 +32,16 @@ class StandingsModel extends BaseModel
     protected $program;
     protected $divisions;
     
+    protected function populateState($ordering = null, $direction = null)
+    {
+        parent::populateState($ordering, $direction);
+        
+        $app = Factory::getApplication();
+        $input = $app->input;
+        
+        $this->setState('standings.programid', $input->getInt('programid'));
+    }
+    
     /**
      * This function will return the standings for a given program.
      *
@@ -40,8 +49,10 @@ class StandingsModel extends BaseModel
      */
     public function getProgramStandings(){
   
-        $input = Factory::getApplication()->input;
-        $programid = (int) $input->get('programid');
+        $programid ??= (int) $this->getState('standings.programid', 0);
+        
+//         $input = Factory::getApplication()->input;
+//         $programid = (int) $input->get('programid');
         
         if ($programid < 1) {
             $program = ProgramsService::getDefaultProgram();
@@ -63,8 +74,8 @@ class StandingsModel extends BaseModel
         return $this->program;
     }
     
-    public function getDivisions() {
-        return $this->divisions;
+    public function getDivisions() : array {
+        return $this->divisions ?? [];
     }
     
     
