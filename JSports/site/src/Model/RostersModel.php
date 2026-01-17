@@ -10,10 +10,6 @@
  *
  */
 
-/**
- * CHANGELOG:
- * 2024-03-07  Changed the sort order to classificaiton desc, last name asc
- */
 namespace FP4P\Component\JSports\Site\Model;
 
 defined('_JEXEC') or die;
@@ -23,81 +19,58 @@ use Joomla\Database\ParameterType;
 use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Services\TeamService;
 use FP4P\Component\JSports\Site\Services\ProgramsService;
+use FP4P\Component\JSports\Administrator\Table\TeamsTable;
+use FP4P\Component\JSports\Administrator\Table\ProgramsTable;
 
 /**
- * Methods supporting a list of LEAGUE records.
+ * Methods supporting a list of ROSTER records.
  *
  * @since  1.0.0
  */
 class RostersModel extends ListModel
 {
+    /**
+     * @var TeamsTable $team 
+     */
     protected $team;
     protected $teamlastyearplayed;
+    
+    /**
+     * @var int $teamlastprogramid - last known programid that team participated in.
+     */
     protected $teamlastprogramid;
+    
+    /**
+     * 
+     * @var ProgramsTable $program - last known program that team participated in.
+     */
     protected $program;
     
-	/**
-	 * Constructor.
-	 *
-	 * @param   array  $config  An optional associative array of configuration settings.
-	 *
-	 * @since   1.0.0
-	 * @see     \Joomla\CMS\MVC\Controller\BaseController
-	 */
-	public function __construct($config = array())
+    protected function populateState($ordering = null, $direction = null)
 	{
-		if (empty($config['filter_fields']))
-		{
-			$config['filter_fields'] = array(
-				'programid', 'a.programid',
-				'teamid', 'a.teamid',
-			    'classification', 'a.classification',
-			    'lastname', 'a.lastname',
-			);
-		}
-
-		parent::__construct($config);
+	    parent::populateState($ordering, $direction);
+	    
+	    $app = Factory::getApplication();
+	    $input = $app->input;
+	    
+// 	    $this->setState('rosters.id', $input->getInt('id'));
+	    $this->setState('rosters.teamid', $input->getInt('teamid'));
+	    $this->setState('rosters.programid', $input->getInt('programid'));
 	}
-
-
-	/**
-	 * Method to get a store id based on model configuration state.
-	 *
-	 * This is necessary because the model is used by the component and
-	 * different modules that might need different sets of data or different
-	 * ordering requirements.
-	 *
-	 * @param   string  $id  A prefix for the store id.
-	 *
-	 * @return  string  A store id.
-	 *
-	 * @since   1.0.0
-	 */
-	protected function getStoreId($id = '')
-	{
-		// Compile the store id.
-		$id .= ':' . $this->getState('filter.search');
-		$id .= ':' . $this->getState('filter.programid');
-		$id .= ':' . $this->getState('filter.teamid');
-		$id .= ':' . $this->getState('filter.classification');
-		$id .= ':' . $this->getState('filter.lastname');
-
-		return parent::getStoreId($id);
-	}
-
+	
 	/**
 	 * Build an SQL query to load the list data.
 	 *
 	 * @return  \Joomla\Database\DatabaseQuery
 	 *
 	 * @since   1.0.0
-	 */
-	
+	 */	
 	protected function getListQuery()
 	{
 	    
 	    $input = Factory::getApplication()->input;
-	    $id     = $input->getInt("teamid");
+// 	    $id     = $input->getInt("teamid");
+	    $id ??= (int) $this->getState('rosters.teamid', 0);
 	    
 	    $svc = new TeamService();
 	    $this->team = $svc->getItem($id);
@@ -140,71 +113,16 @@ class RostersModel extends ListModel
 	        $db->quoteName('a.teamid') . ' = ' . $db->quoteName('b.id'),   // Join to the TEAMS table
 	    );	    
 	    $query->where($conditions);
-	    
-
-        // Filter by PROGRAMID
-        $programid = (string) $this->getState('filter.programid');
-        if (is_numeric($programid))
-        {
-            $query->where($db->quoteName('a.programid') . ' = :programid');
-            $query->bind(':programid', $programid, ParameterType::INTEGER);
-        }
-
-        // Filter by TEAMID
-        $teamid = (string) $this->getState('filter.teamid');
-        
-       
-        if (is_numeric($teamid))
-        {
-            $query->where($db->quoteName('a.teamid') . ' = :teamid');
-            $query->bind(':teamid', $teamid, ParameterType::INTEGER);
-        }
-        
-        // Filter by CLASSIFICATION
-        $classification = (string) $this->getState('filter.classification');
-        if (is_numeric($classification))
-        {
-            $query->where($db->quoteName('a.classification') . ' = :classification');
-            $query->bind(':classification', $classification, ParameterType::STRING);
-        }
-        
-        
-	    // Filter by search in name
-	    $search = $this->getState('filter.search');
-	    
-	    if (!empty($search))
-	    {
-	        $search = '%' . trim($search) . '%';
-	        $query->where($db->quoteName('a.lastname') . ' LIKE :search')
-	        ->bind(':search', $search, ParameterType::STRING);
-	    }
-	    
-	    
-	    // Add the list ordering clause.
-	    $orderCol  = $this->state->get('list.ordering', 'a.id');
-	    $orderDirn = $this->state->get('list.direction', 'ASC');
-	    
-	    $ordering = [$db->quoteName('a.lastname') . ' ' . $db->escape($orderDirn), ];
-	    	    
 	    $query->order("a.classification desc, a.lastname asc");
 	    return $query;
 	}
 	
-
-	/**
-	 * Method to get a list of ROSTER RECORDS.
-	 * Overridden to add a check for access levels.
-	 *
-	 * @return  mixed  An array of data items on success, false on failure.
-	 *
-	 * @since   1.0.0
-	 */
-	public function getItems()
-	{
-		return parent::getItems();
-
+	public function getTeam() : TeamsTable {
+	    return $this->team;
 	}
 	
+	public function getProgram() : ProgramsTable {
+	    return $this->program;
+	}
 		
-	
 }
