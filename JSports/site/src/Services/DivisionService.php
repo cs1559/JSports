@@ -76,7 +76,7 @@ class DivisionService
         }
         $query->where($conditions);
         $query->order("ordering asc");
-        if (!is_nul($group)) {
+        if (!is_null($group)) {
             $query->bind(':group',$group, ParameterType::INTEGER);
         }
         $query->bind(':programid',$programid, ParameterType::INTEGER);
