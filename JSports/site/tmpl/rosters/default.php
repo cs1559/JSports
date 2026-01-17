@@ -189,7 +189,7 @@ if (!$this->canAddPlayers) {
 		<div>NOTE:  An '*' by the last name denotes a SUBSTITUTE player</div>
 
 		<?php // load the pagination. ?>
-		<?php echo $this->pagination->getListFooter(); ?>
+		<?php //echo $this->pagination->getListFooter(); ?>
 		</div>
 	<?php endif; ?>
 	<input type="hidden" name="task" value="">
