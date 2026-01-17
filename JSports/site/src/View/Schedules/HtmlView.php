@@ -5,7 +5,7 @@
  * @version     1.0.0
  * @package     JSports.Site
  * @subpackage  com_jsports
- * @copyright   Copyright (C) 2023-2024 Chris Strieter
+ * @copyright   Copyright (C) 2023-2026 Chris Strieter
  * @license     GNU/GPLv2, see http://www.gnu.org/licenses/gpl-2.0.html
  *
  */
@@ -15,20 +15,17 @@ namespace FP4P\Component\JSports\Site\View\Schedules;
 defined('_JEXEC') or die;
 
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
-use Joomla\CMS\Toolbar\Toolbar;
-use Joomla\CMS\Toolbar\ToolbarHelper;
-use Joomla\CMS\Language\Text;
 use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Services\SecurityService;
 use FP4P\Component\JSports\Site\Services\TeamService;
 use FP4P\Component\JSports\Site\Services\DivisionService;
-
-use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\Pagination\Pagination;
+// use Joomla\CMS\Pagination\Pagination;
 use Joomla\CMS\Form\Form;
 use FP4P\Component\JSports\Administrator\Table\TeamsTable;
-
+use FP4P\Component\JSports\Site\Model\SchedulesModel;
+use FP4P\Component\JSports\Administrator\Table\ProgramsTable;
 
 class HtmlView extends BaseHtmlView
 {
@@ -48,6 +45,11 @@ class HtmlView extends BaseHtmlView
     protected $team;
     
     protected $teamlastyearplayed;
+    
+    /**
+     * 
+     * @var ProgramsTable 
+     */
     protected $program;
     
     /**
@@ -69,68 +71,64 @@ class HtmlView extends BaseHtmlView
      * @var  object
      */
     protected $state;
-    
-    /**
-     * Form object for search filters
-     *
-     * @var  Form
-     */
-    public $filterForm;
-    
-    /**
-     * The active search filters
-     *
-     * @var  array
-     */
-    public $activeFilters;
-    
+       
       
     public function display($tpl = null)
     {
+        /** @var SchedulesModel $model */
+        $model = $this->getModel();
         
-        $this->items         = $this->get('Items');
-        $this->pagination    = $this->get('Pagination');
-        $this->state         = $this->get('State');
-        $this->filterForm    = $this->get('FilterForm');
-        $this->activeFilters = $this->get('ActiveFilters');
+        try {
+            $this->items                = $model->getItems();
+            $this->state                = $model->getState();
+            $this->pagination           = $model->getPagination();
+    
+            $this->team                 = $model->getTeam();
+            $this->teamlastyearplayed   = $model->teamlastyearplayed;
+            $this->program              = $model->getProgram();
+                           
+            $this->canEdit = SecurityService::canEditTeamSchedule($this->team->id,$this->program->id);
+            $divisionid = TeamService::getTeamDivisionId($this->team->id, $this->program->id);
+            $division = DivisionService::getItem($divisionid);
+            
+            /* Updated 12-2-2024 */
+            // Consolidate unavailable rules
+            $isUnavailable =
+            !empty($this->program->registrationonly)
+            || in_array(($this->program->status ?? ''), ['C', 'P'], true)
+            || (empty($this->program->setupfinal) && !SecurityService::isAdmin());
+            
+            if ($isUnavailable) {
+                $this->setLayout('unavailable');
+            }
+            
+//             if ($this->program->registrationonly) {
+//                 $this->setLayout("unavailable");
+//             }
+//             if ($this->program->status == 'C') {
+//                 $this->setLayout("unavailable");
+//             }
+//             if ($this->program->status == 'P') {
+//                 $this->setLayout("unavailable");
+//             }
+//             if (!$this->program->setupfinal && !SecurityService::isAdmin())  {
+//                 $this->setLayout("unavailable");
+//             }
+//             if ($division->leaguemanaged && !SecurityService::isAdmin())  {
+//                 $this->setLayout("leaguemanaged");
+//             }
+            
+            // Check for errors.
+            if (count($errors = $model->getErrors()))
+            {
+                throw new GenericDataException(implode("\n", $errors), 500);
+            }
+                    
+            return parent::display($tpl);
         
-        // NOTE:  Need to research to see if there is a better way of getting the model data into the template
-        $mod = $this->getModel();
-        $this->team = $mod->team;
-        $this->teamlastyearplayed = $mod->teamlastyearplayed;
-        $this->program = $mod->program;
-                       
-        $this->canEdit = SecurityService::canEditTeamSchedule($this->team->id,$this->program->id);
-
-        $divisionid = TeamService::getTeamDivisionId($this->team->id, $this->program->id);
-        $division = DivisionService::getItem($divisionid);
-        
-        /* Updated 12-2-2024 */
-        if ($this->program->registrationonly) {
-            $this->setLayout("unavailable");
+        } catch (\Throwable $e) {
+            throw new GenericDataException($e->getMessage(), 500, $e);
         }
-        if ($this->program->status == 'C') {
-            $this->setLayout("unavailable");
-        }
-        if ($this->program->status == 'P') {
-            $this->setLayout("unavailable");
-        }
-        if (!$this->program->setupfinal && !SecurityService::isAdmin())  {
-            $this->setLayout("unavailable");
-        }
-        if ($division->leaguemanaged && !SecurityService::isAdmin())  {
-            $this->setLayout("leaguemanaged");
-        }
-        
-        
-        // Check for errors.
-        if (count($errors = $this->get('Errors')))
-        {
-            throw new GenericDataException(implode("\n", $errors), 500);
-        }
-                
-        return parent::display($tpl);
-        
     }
        
 }
