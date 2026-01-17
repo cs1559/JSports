@@ -15,23 +15,18 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\MVC\Model\FormModel;
 
-use Joomla\Database\ParameterType;
 use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Services\RosterService;
 use FP4P\Component\JSports\Site\Objects\Application as Myapp;
+use FP4P\Component\JSports\Administrator\Table\RostersTable;
 
 /**
- * Methods supporting a list of mywalks records.
+ * Roster Model exposes functions to manage the Roster
  *
- * @since  1.6
  */
 class RosterModel extends FormModel
 {
     
-    /**
-     * @var     object  The user profile data.
-     * @since   1.6
-     */
     protected $data;
     
     protected $programs;
@@ -39,30 +34,36 @@ class RosterModel extends FormModel
     
     protected $form = 'roster';
        
+    protected function populateState()
+    {
+        parent::populateState();
+        
+        $app = Factory::getApplication();
+        $input = $app->input;
+        
+        $this->setState('roster.id', $input->getInt('id'));
+        $this->setState('roster.teamid', $input->getInt('teamid'));
+        $this->setState('roster.programid', $input->getInt('programid'));
+    }
     
-    public function getItem(){
+    public function getItem(?int $id = null): ?RostersTable {
 
+        $id ??= (int) $this->getState('roster.id', 0);
+        $item = (new RosterService())->getItem($id);
         
-        $input = Factory::getApplication()->input;
-        $id     = $input->getInt("id");
-        
-        $svc = new RosterService();
-        $item = $svc->getItem($id);
-        
-        if ($id == 0) {
-            $item->teamid = $input->get('teamid',0);
-            $item->programid = $input->get('programid',0);
+        if ($id === 0 && $item) {
+            $input = Factory::getApplication()->input;
+            $item->teamid    = $input->getInt('teamid', 0);
+            $item->programid = $input->getInt('programid', 0);
         }
-
+        
         return $item;
-
+        
     }
         
     
     public function getForm($data = array(), $loadData = true)
     {
-        
-//         $form = $this->loadForm('com_jsports.roster', 'roster', ['control' => 'jform', 'load_data' => true]);
         
         $form = $this->loadForm(
             'com_jsports_form.roster.data', // just a unique name to identify the form
@@ -72,32 +73,28 @@ class RosterModel extends FormModel
                 'load_data' => $loadData	// will be TRUE
             )
             );
-                
-        if (empty($form))
-        {
-            $errors = $this->getErrors();
-            throw new \Exception(implode("\n", $errors), 500);
-        }
        
+        // Removed previous code and throw runtime exception as the getErrors function is being removed.s      
+        if (!$form) {
+            throw new \RuntimeException('Unable to load roster form.');
+        }
+
         return $form;
     }
     
     protected function loadFormData()
     {
         
-        // Check the session for previously entered form data.
-        $data = Factory::getApplication()->getUserState(
-            'com_jsports_form.roster.data',	// a unique name to identify the data in the session
-                array($this->data)	// prefill data if no data found in session
-            );
+        $app = Factory::getApplication();
+        
+        $data = $app->getUserState('com_jsports_form.roster.data', null);
         
         if (empty($data)) {
             $data = $this->getItem();
         }
         
         $this->preprocessData('jsports.roster', $data);
-        
-        
+                
         return $data;
     }
     
@@ -110,36 +107,27 @@ class RosterModel extends FormModel
      */
     public function save($data) {
         
-        $logger = Myapp::getLogger();
-        $roster = RosterService::getRostersTable();
-    
-    	$roster->bind($data);
-    	$roster->check();
-    
+            $logger = Myapp::getLogger();
+            $table  = RosterService::getRostersTable();
             
-            //@TODO Need to add code to catch any error that may exist.
-    	if ($roster->save($data)) {
-    	    if ($roster->staffadmin) {
-    	        $adminFlag = 'Yes';
-    	    } else {
-    	        $adminFlag = 'No';
-    	    }
-    	    $logger->info('Saving roster item id - ' . $roster->id . ' Name: '. $roster->firstname . ' ' . 
-    	           $roster->lastname . ' ADMIN='. $adminFlag . ' TYPE=' . $roster->classification);
-    		return true;
-    	} else {
-    	    $errors = $roster->getErrors();
-    	    $this->setError($errors[0]);
-    		$app = Factory::getApplication();
-    		$app->enqueueMessage($errors[0],'error');
-    		return false;
-    	}
-    
-        	return true;
+            try {
+                if (!$table->save($data)) {
+                    throw new \RuntimeException(implode("\n", $table->getErrors() ?? []));
+                }
+                
+                $logger->info(
+                    'Saving roster item id - ' . $table->id .
+                    ' Name: ' . $table->firstname . ' ' . $table->lastname .
+                    ' ADMIN=' . ($table->staffadmin ? 'Yes' : 'No') .
+                    ' TYPE=' . $table->classification
+                    );
+                
+                return true;
+            } catch (\Throwable $e) {
+                Factory::getApplication()->enqueueMessage($e->getMessage(), 'error');
+                return false;
+            }
+        
     }
-    
-    
-
-    
     
 }
