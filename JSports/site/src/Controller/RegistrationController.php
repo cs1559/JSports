@@ -5,13 +5,14 @@
  * @version     1.0.0
  * @package     JSports.Site
  * @subpackage  com_jsports
- * @copyright   Copyright (C) 2023-2024 Chris Strieter
+ * @copyright   Copyright (C) 2023-2026 Chris Strieter
  * @license     GNU/GPLv2, see http://www.gnu.org/licenses/gpl-2.0.html
  *
  */
 
 namespace FP4P\Component\JSports\Site\Controller;
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Router\Route;
@@ -39,11 +40,8 @@ class RegistrationController extends BaseController
     
     
     /**
-     * Method to check out a user for editing and redirect to the edit form.
+     * Edit the Registration Data.  NOTE:  Currently, registration only supports NEW registrations on the frontend.
      *
-     * @return  boolean
-     *
-     * @since   1.6
      */
     public function edit($key = null, $urlVar = 'id')
     {
@@ -56,9 +54,10 @@ class RegistrationController extends BaseController
         $itemid = $params->get('itemid');
         
         $formdata = new Input($this->input->get('jform','','array'));
-        
+          
         // Locate the program ID from the form from the calling page.
         $programid = $formdata->get('programid');
+       
         $svc = new ProgramsService();
         $program = $svc->getItem($programid);
         $options = json_decode($program->registrationoptions);
@@ -66,6 +65,9 @@ class RegistrationController extends BaseController
         // $layout = $program->registrationtemplate;
         $layout = $options->registrationtemplate;
         
+        /**
+         * If the program does not have a specific regisration template defined, then use the default
+         */
         if (strlen($layout) < 1) {
             $layout = 'default';
         }
@@ -78,7 +80,6 @@ class RegistrationController extends BaseController
         // Set the registration id to edit in the session.
         $app->setUserState('com_jsports.edit.registration.id', $registrationId);
         $app->setUserState('com_jsports.edit.registration.programid', $programid);
-        //$app->setUserState('com_jsports.edit.registration.agreementurl', $program->agreementurl);
         $app->setUserState('com_jsports.edit.registration.agreementurl', $options->agreementurl);
         
         // Redirect to the default screen.
@@ -103,9 +104,8 @@ class RegistrationController extends BaseController
         $japp = Application::getInstance();
         
         // Check for request forgeries.
-        //         $this->checkToken();
-        
-        
+        $this->checkToken();
+           
         $app    = $this->app;
         
         $model  = $this->getModel('Registration', 'Site');
@@ -199,29 +199,26 @@ class RegistrationController extends BaseController
     }
     
     /**
-     * Method to cancel an edit.
+     * Method to cancel an registration.  This will redirect user to 1st registration page..
      *
      * @return  void
-     *
-     * @since   4.0.0
      */
     public function cancel()
     {
         // Check for request forgeries.
         $this->checkToken();
         
-        // Flush the data from the session.
-        $this->app->setUserState('com_users.edit.profile', null);
+        $app = $this->app ?? Factory::getApplication();
         
-        // Redirect to user profile.
-        $this->setRedirect(Route::_('index.php?option=com_users&view=profile', false));
-    }
-    
-    public function complete() {
-        echo "Registration complete";
-        exit;
-    }
-    
-    
+        // Flush the data from the session.
+        $app->setUserState('com_jsports.edit.registrations', null);
+        $app->setUserState('com_jsports.edit.registration.data', null);
+        $app->setUserState('com_jsports.edit.registration.programid', null);
+        
+        // Redirect to register view.
+        $this->setMessage(Text::_('COM_JSPORTS_OPERATION_CANCELLED'),'success');
+        $this->setRedirect('index.php?option=com_jsports&view=register');
+        return;
+    }    
     
 }
