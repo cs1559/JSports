@@ -26,43 +26,115 @@ use FP4P\Component\JSports\Site\Services\StandingsService;
 use FP4P\Component\JSports\Site\Services\SecurityService;
 
 use FP4P\Component\JSports\Site\Services\UserService;
+use FP4P\Component\JSports\Administrator\Table\ProgramsTable;
+use FP4P\Component\JSports\Administrator\Table\TeamsTable;
 
 /**
- * Methods supporting a list of mywalks records.
+ * TeamModel is the model for maintaining team information on the front end of the site.
  *
  * @since  1.6
  */
 class TeamModel extends FormModel
 {
     
+    protected $data;    
     /**
-     * @var     object  The user profile data.
-     * @since   1.6
+     * @deprecated
+     * @var int
      */
-    protected $data;
-    
     protected $programs;
+    /**
+     * An array of objects that contain information about the team's record history
+     * @var array<object> 
+     */
     protected $recordhistory;
+    
+    /**
+     * ID (key) of the most recent program.
+     * @var int
+     */
     protected $recentprogramid;
+    
+    /**
+     * Represents the most recent program the particular team participated in.
+     * @var ProgramsTable
+     */
     protected $recentprogram;
+    
+    /**
+     * @var array<object> 
+     */
     protected $rosterstaff;
+    
+    /**
+     * @var array<object>
+     */
     protected $rosterplayers;
+    /**
+     * This variable is a list of games for the most recent season
+     * @var array<object>
+     */
     protected $games;
+    
+    /**
+     * This is an associative array of the current team's divisional standings.
+     * @var array<int, array<string, mixed>>
+     */
     protected $standings;
+    /**
+     * @var boolean
+     */
     protected $canSeeRoster = false;
+    /**
+     * @var boolean
+     */
     protected $canEditTournamentFlag = false;
+    /**
+     * @var boolean
+     */
     protected $canEditAttributes = false;
     
     protected $form = 'team';
     
-    
+    /**
+     * @return \FP4P\Component\JSports\Administrator\Table\ProgramsTable
+     */
+    public function getRecentprogram()
+    {
+        return $this->recentprogram;
+    }
+
+    /**
+     * @return array<object>
+     */
+    public function getRosterstaff()
+    {
+        return $this->rosterstaff;
+    }
+
+    /**
+     * @return array<object>
+     */
+    public function getRosterplayers()
+    {
+        return $this->rosterplayers;
+    }
+
+    /**
+     * The getData function retrieves/returns a TEAM record but also populates the model with additional 
+     * data for other sections within the team profile.
+     * 
+     * @return \FP4P\Component\JSports\Administrator\Table\TeamsTable
+     */
     public function getData(){
         $input = Factory::getApplication()->input;
+        $data   = $input->post->get('jform', [], 'array');
+        $teamid = (int) ($data['teamid'] ?? 0);
+        
         $id     = $input->getInt("id");
         
         $svc = new TeamService();
         $item = $svc->getItem($id);
-        
         
         $this->recordhistory  = $this->getTeamStatsByProgram($id);
         $result = $svc->getMostRecentProgram($id);
@@ -105,11 +177,12 @@ class TeamModel extends FormModel
             $this->rosterplayers = null;
         }
 
-	if ($this->recentprogram->status == "C"){
-		$flag = true;
-	} else  {
-		$flag = false;
-	}
+        // @var bool $flag - This flag indicates if the recent program is current or past.
+    	if ($this->recentprogram->status == "C"){
+    		$flag = true;
+    	} else  {
+    		$flag = false;
+    	}
 
         $this->standings = StandingsService::getProgramStandings(
             $this->recentprogram->id, $flag, $divisionid);
@@ -121,15 +194,17 @@ class TeamModel extends FormModel
     }
     
     
-    public function getItem(){
+    /**
+     * Return a Team record
+     * @return TeamsTable|NULL
+     */
+    public function getItem() : ?TeamsTable {
 
-        
         $input = Factory::getApplication()->input;
         $id     = $input->getInt("id");
         
         $svc = new TeamService();
         return $svc->getItem($id);
-
         
     }
         
@@ -171,7 +246,6 @@ class TeamModel extends FormModel
         }
         
         $this->preprocessData('jsports.team', $data);
-        
         
         return $data;
     }
