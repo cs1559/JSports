@@ -51,7 +51,8 @@ class BulletinController extends BaseController
     public function save()
     {
         // Check for request forgeries.
-        $this->checkToken('post');
+        $this->checkToken($this->input->getMethod() == 'GET' ? 'get' : 'post');
+//         $this->checkToken('post');
         
         $app    = $this->app;
         $input = $app->input;
@@ -64,7 +65,7 @@ class BulletinController extends BaseController
         //check user session
         if ($user->guest) {
             $app->enqueueMessage(Text::_('COM_JSPORTS_INVALID_USERSESSION'), 'error');
-            $this->setRedirect(Route::_('index.php?option=com_jsports&view=team&id=' . $teamid, false));
+            $this->setRedirect(Route::_('index.php?option=com_jsports&view=bulletins&teamid=' . $teamid, false));
             return false;
         }
         
@@ -111,7 +112,7 @@ class BulletinController extends BaseController
     
     public function delete() {
         
-        $this->checkToken('get'); // or 'post' if your delete is a POST
+        $this->checkToken($this->input->getMethod() == 'GET' ? 'get' : 'post');
         
         $app   = $this->app;
         $input = $app->input;
@@ -151,7 +152,16 @@ class BulletinController extends BaseController
     public function deleteAttachment($key = null, $urlVar = null) {
 
         // Check for request forgeries.
-        $this->checkToken();
+        $this->checkToken($this->input->getMethod() == 'GET' ? 'get' : 'post');
+
+        $app   = $this->app;
+        $user = $app->getIdentity();
+        //check user session
+        if ($user->guest) {
+            $app->enqueueMessage(Text::_('COM_JSPORTS_INVALID_USERSESSION'), 'error');
+            $this->setRedirect(Route::_('index.php?option=com_jsports&view=team&id=' . $teamid, false));
+            return false;
+        }
         
         $jinput = Factory::getApplication()->input;
         $files  = $jinput->files->get('jform', [], 'array');
@@ -176,12 +186,11 @@ class BulletinController extends BaseController
      *
      * @return  void
      *
-     * @since   4.0.0
      */
     public function cancel()
     {
         // Check for request forgeries.
-        $this->checkToken();
+        $this->checkToken($this->input->getMethod() == 'GET' ? 'get' : 'post');
         $app    = $this->app;
         // Get the team id.
         $requestData = $app->getInput()->post->get('jform', [], 'array');
