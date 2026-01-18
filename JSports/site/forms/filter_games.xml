@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+
+	<fields name="filter">
+
+		<field name="programid" type="sql" 
+			label="Program"
+			query="SELECT id, name FROM #__jsports_programs where published in (1) and status='A' and registrationonly &lt;&gt; 1 order by name desc"
+			key_field="id"
+			value_field="name"
+			default="0" 
+			onchange="this.form.submit();"
+			header="- Select Program -"
+		/>
+	
+		<field name="divisionid" type="sql" 
+			label="Division"
+		    sql_select="a.*"
+		    sql_from="#__jsports_divisions as a"
+		    sql_order="a.ordering ASC"
+			key_field="id"
+			value_field="name" 
+			onchange="this.form.submit();"
+			sql_filter="programid"
+			sql_default_programid="9999999999"
+			header="- Select Division -"
+		/>
+
+        <field
+            name="teamid"
+            type="divisionalteamlist"
+            label="Team"
+            required="false"
+        	onchange="this.form.submit();"
+            programField="programid"
+            divisionField="divisionid"
+			addfieldprefix="FP4P\Component\JSports\Administrator\Fields"
+        />
+		
+		<field
+			name="viewtype"
+			type="list"
+			label="COM_JSPORTS_VIEWTYPE"
+			default="U"
+			onchange="this.form.submit();"
+			>
+			<option value="">COM_JSPORTS_SELECT_VIEWTYPE</option>
+ 			<option value="U">COM_JSPORTS_UPCOMING_GAMES</option>  
+	  		<option value="C">COM_JSPORTS_COMPLETED_GAMES</option> 
+		</field>
+		
+	</fields>
+
+	<fields name="list">
+
+		<field
+			name="fullordering"
+			type="list"
+			label="JGLOBAL_SORT_BY"
+			default="a.name ASC"
+			onchange="this.form.submit();"
+			>
+			<option value="">JGLOBAL_SORT_BY</option>
+ 			<option value="a.name ASC">COM_JSPORTS_NAME_ASC</option>  
+	  		<option value="a.name DESC">COM_JSPORTS_NAME_DESC</option>
+ 			<option value="c.name ASC">COM_JSPORTS_DIVISION_ASC</option>  
+	  		<option value="c.name DESC">COM_JSPORTS_DIVISION_DESC</option>  
+ 			<option value="a.city ASC">COM_JSPORTS_CITY_ASC</option>  
+	  		<option value="a.city DESC">COM_JSPORTS_CITY_DESC</option>  
+		</field>
+
+		<field
+			name="limit"
+			type="hidden"
+			label="JGLOBAL_LIST_LIMIT"
+			default="25"
+			onchange="this.form.submit();"
+		/>
+	</fields>
+</form>
