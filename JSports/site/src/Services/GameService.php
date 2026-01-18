@@ -272,6 +272,50 @@ class GameService
         return $db->loadObjectList();
     }
     
+    /**
+     * This function will retrieve a list of upcoming games that are still "scheduled" for a given division;
+     *
+     * @param int $programid
+     * @param int $limit
+     * @return array<int, object>
+     */
+    public static function getUpcomingGamesByDivision(int $programid, int $divisionid) : array {
+        
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $query = $db->getQuery(true);
+        $limit = 99999;
+        
+        $query->select('g.*, d.name as divisionname');
+        $query->from($db->quoteName('#__jsports_games') . ' AS g, ' .
+            $db->quoteName('#__jsports_divisions') . ' AS d');
+        
+        if ($divisionid > 0) {
+            $conditions = array(
+                $db->quoteName('g.divisionid') . ' = ' . $db->quoteName('d.id'),
+                $db->quoteName('g.gamestatus') . ' = "S"',
+                $db->quoteName('g.programid') . ' = :programid',
+                $db->quoteName('g.divisionid') . ' = :divisionid',
+                $db->quoteName('g.gamedate') . ' >= CURRENT_DATE',
+                 );
+        } else {
+            $conditions = array(
+                $db->quoteName('g.divisionid') . ' = ' . $db->quoteName('d.id'),
+                $db->quoteName('g.gamestatus') . ' = "S"',
+                $db->quoteName('g.programid') . ' = :programid',
+                $db->quoteName('g.gamedate') . ' >= CURRENT_DATE',
+            );
+        }
+        $query->where($conditions);
+        $query->setLimit($limit);
+        $query->order('g.gamedate asc');
+        $query->bind(':programid', $programid, ParameterType::INTEGER);
+        if ($divisionid > 0) {
+            $query->bind(':divisionid', $divisionid, ParameterType::INTEGER);
+        }
+        $db->setQuery($query);
+        return $db->loadObjectList();
+        
+    }
     
     /**
      * This function will return a list of most recent games.
