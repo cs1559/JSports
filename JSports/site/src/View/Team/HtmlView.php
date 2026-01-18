@@ -5,7 +5,7 @@
  * @version     1.0.0
  * @package     JSports.Site
  * @subpackage  com_jsports
- * @copyright   Copyright (C) 2023-2024 Chris Strieter
+ * @copyright   Copyright (C) 2023-2026 Chris Strieter
  * @license     GNU/GPLv2, see http://www.gnu.org/licenses/gpl-2.0.html
  *
  */
@@ -25,9 +25,8 @@ use FP4P\Component\JSports\Administrator\Table\TeamsTable;
 use FP4P\Component\JSports\Administrator\Table\ProgramsTable;
 
 /**
- * HTML Team View
+ * HTML Team Profile View
  *
- * @since  1.5
  */
 class HtmlView extends BaseHtmlView
 {
@@ -112,49 +111,46 @@ class HtmlView extends BaseHtmlView
      */
     public function display($tpl = null)
     {
-        // @TODO  This "getters" will need to be updated for Joomla 7
-        $this->data       = $this->get('Data');
-        $this->state      = $this->get('State');
-        $this->item       = $this->get('Item');
-       
-        $this->form = $this->getModel()->getForm($this->item,true);
+        /** @var \FP4P\Component\JSports\Site\Model\TeamsModel $model */  
+        $model = $this->getModel();
+        
+        $this->data                     = $model->getData();
+        $this->state                    = $model->getState();
+        $this->item                     = $model->getItem();
+        $this->standings                = $model->standings;
+        $this->programs                 = $model->programs;
+        $this->programstats             = $model->recordhistory;
+        $this->recentprogram            = $model->recentprogram;
+        $this->rosterstaff              = $model->rosterstaff;
+        $this->rosterplayers            = $model->rosterplayers;
+        $this->canSeeRoster             = $model->canSeeRoster;
+        $this->games                    = $model->games;
+        $this->canEditTournamentFlag    = $model->canEditTournamentFlag;
+        $this->canEditAttributes        = $model->canEditAttributes;
+        $this->programid                = $model->recentprogram->id;
+        $this->form                     = $this->getModel()->getForm($this->item,true);
+        $this->teamid                   = $this->data->id;
+        
         $this->form->bind($this->item);
-               
-//    $user = Factory::getUser();
-//         $user = Factory::getApplication()->getIdentity();
-
-        $mod = $this->getModel();
-
-        $this->teamid = $this->data->id;
-        $this->programid = $mod->recentprogram->id;
         
         $context = array('teamid' => $this->data->id,
             'ownerid' => $this->data->ownerid,
-            'programid' => $mod->recentprogram->id
+            'programid' => $model->recentprogram->id
         );
+        /** Check to see if the current user can EDIT the team profile */
         $this->canEdit = SecurityService::canEditTeam($context);
 
+        /** Increment the HIT counter ONLY if the user cannot EDIT the profile */
         if (!$this->canEdit) {
             TeamService::hit($this->data->id);
         }
         
         $this->active = TeamService::isActive($this->data->id);
-        $this->standings = $mod->standings;
         
         // Retrieve the directory for this teams logo
         $params = ComponentHelper::getParams('com_jsports');
         $logodir = $params->get('logodir');
         $this->attributesenabled = $params->get('enableattributes');
-        
-        $this->programs = $mod->programs;
-        $this->programstats = $mod->recordhistory;
-        $this->recentprogram = $mod->recentprogram;
-        $this->rosterstaff = $mod->rosterstaff;
-        $this->rosterplayers = $mod->rosterplayers;
-        $this->canSeeRoster = $mod->canSeeRoster;
-        $this->games = $mod->games;
-        $this->canEditTournamentFlag = $mod->canEditTournamentFlag;
-        $this->canEditAttributes = $mod->canEditAttributes;
         
         if (isset($this->standings[0])) {
             $this->divisionname = $this->standings[0]['divisionname'];
@@ -162,6 +158,7 @@ class HtmlView extends BaseHtmlView
             $this->divisionname = "Not Available";
         }
         
+        /** Get the PROFILE MENU if the current user can edit the profile */
         if ($this->canEdit) {
             $this->profilemenu = Html::getTeamProfileMenu($this->data->id, "");
         }
@@ -180,17 +177,20 @@ class HtmlView extends BaseHtmlView
             $this->teamlogo = $defaultlogo;
         }
 
-        
+        /** 
+         * If the user is NOT a coach do not show the teams contact information - unless the team explicitly set the 
+         * show contact info attribute on the profile.
+         */
         if (!SecurityService::isCoach() && !$this->data->showcontactinfo) {
             $this->data->contactphone = 'Unavailable';
             $this->data->contactemail = 'Unavailable';
         }
         
          // Check for errors.
-        if (count($errors = $this->get('Errors')))
+        if (count($errors = $model->getErrors()))
         {
             throw new GenericDataException(implode("\n", $errors), 500);
-        }
+        }    
         
         return parent::display($tpl);
     }
