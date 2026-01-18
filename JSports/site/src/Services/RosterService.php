@@ -105,7 +105,7 @@ class RosterService
      * 
      * @param number $teamid
      * @param number $programid
-     * @return array
+     * @return array<object>
      */
     public static function getRosterStaff($teamid, $programid) {
         return RosterService::getRosterDataByType($teamid, $programid, 'S');
