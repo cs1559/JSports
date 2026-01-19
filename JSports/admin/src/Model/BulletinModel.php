@@ -17,6 +17,7 @@ use FP4P\Component\JSports\Site\Services\BulletinService;
 use FP4P\Component\JSports\Site\Services\LogService;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Filesystem\File;
+use Joomla\Database\ParameterType;
 
 class BulletinModel extends AdminModel
 {
@@ -166,4 +167,54 @@ class BulletinModel extends AdminModel
 
         return $data;
     }
+
+        public function publish(&$pks, $value = 1): bool
+        {
+            $pks = array_map('intval', (array) $pks);
+            $pks = array_filter($pks);
+            
+            if (!$pks) {
+                return true; // nothing to do
+            }
+            
+            // First do Joomla’s standard publish workflow
+            $result = parent::publish($pks, (int) $value);
+            
+            if (!$result) {
+                return false;
+            }
+            
+            // Now update "approved" in addition to "published"
+            $db   = $this->getDatabase();
+            
+            // Choose your desired approved behavior:
+            // Option A: approved mirrors published (publish => approved=1, unpublish => approved=0)
+            $approvedValue = (int) $value;
+            
+            // Build update query
+            $query = $db->getQuery(true)
+            ->update($db->quoteName('#__jsports_bulletins'))
+            ->set($db->quoteName('approved') . ' = :approved')
+            ->whereIn($db->quoteName('id'), $pks);
+            
+            $query->bind(':approved', $approvedValue, ParameterType::INTEGER);
+            
+            // Optional: only set approval metadata when publishing
+//             if ((int) $value === 1) {
+//                 $query->set($db->quoteName('approved_by') . ' = :approvedBy')
+//                 ->set($db->quoteName('approved_date') . ' = :approvedDate');
+                
+//                 $query->bind(':approvedBy', (int) $user->id, ParameterType::INTEGER);
+//                 $query->bind(':approvedDate', $now, ParameterType::STRING);
+//             }
+            
+            $db->setQuery($query);
+            $db->execute();
+            
+            return true;
+        }
+    
+    
+
+
 }
