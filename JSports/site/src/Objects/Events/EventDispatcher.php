@@ -35,6 +35,9 @@ class EventDispatcher extends Observable
             
             $obs2 = new TeamObserver();
             $instance->attach($obs2);
+            
+            $obs3 = new BulletinObserver();
+            $instance->attach($obs3);
         }
         return $instance;
     }
