@@ -16,6 +16,7 @@
 			<option value="G">General</option>
 			<option value="T">Tournament</option>
 			<option value="Y">Tryout</option>
+			<option value="F">Fundraiser</option>	
 		</field>
 		
 		<field name="content" type="editor"
