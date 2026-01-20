@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+
+	<fields name="filter">
+
+		<field
+			name="search"
+			type="text"
+			label="Seach Title/Content"
+			description=""
+			hint=""
+		/>
+
+		<field name="bulletintype" type="list" required="false"
+			label="COM_JSPORTS_BULLETIN_TYPE" onchange="this.form.submit();">
+			<option selected="selected" value="">- Select Type -</option>
+			<option value="G">General</option>
+			<option value="T">Tournament</option>
+			<option value="Y">Tryout</option>
+			<option value="F">Fundraiser</option>	
+		</field>
+				
+	</fields>
+
+	<fields name="list">
+
+		<field
+			name="fullordering"
+			type="list"
+			label="JGLOBAL_SORT_BY"
+			default="a.name ASC"
+			onchange="this.form.submit();"
+			>
+			<option value="">JGLOBAL_SORT_BY</option>
+ 			<option value="a.name ASC">COM_JSPORTS_NAME_ASC</option>  
+
+		</field>
+
+		<field
+			name="limit"
+			type="hidden"
+			label="JGLOBAL_LIST_LIMIT"
+			default="25"
+			onchange="this.form.submit();"
+		/>
+	</fields>
+</form>
