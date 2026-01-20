@@ -58,6 +58,11 @@ class BulletinModel extends FormModel
         // File upload array (jform[afile])
         $files = $input->files->get('jform', [], 'array');
         
+        /** 
+         * Business rule - anytime a bulletin is SAVED, reset the approved value 
+         */
+        $data['approved'] = 0;
+        $data['published'] = 0;
         
         $bulletin->bind($data);
         $bulletin->check();
