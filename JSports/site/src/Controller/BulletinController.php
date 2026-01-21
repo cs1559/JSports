@@ -25,6 +25,7 @@ use FP4P\Component\JSports\Site\Services\ProgramsService;
 use FP4P\Component\JSports\Site\Services\LogService;
 use FP4P\Component\JSports\Administrator\Helpers\JSHelper;
 use Joomla\CMS\Component\ComponentHelper;
+use FP4P\Component\JSports\Site\Model\BulletinModel;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
@@ -54,6 +55,8 @@ class BulletinController extends BaseController
         $this->checkToken($this->input->getMethod() == 'GET' ? 'get' : 'post');
 //         $this->checkToken('post');
         
+        $jsapp = Myapp::getInstance();
+        
         $app    = $this->app;
         $input = $app->input;
         $user   = $this->app->getIdentity();
@@ -70,15 +73,24 @@ class BulletinController extends BaseController
         }
         
         // 4. Persistence
+        /* @var \FP4P\Component\JSports\Site\Model\BulletinModel $model */
         $model  = $this->getModel('Bulletin', 'Site');
         $result = $model->save($requestData);
+
+            $data = (object)[
+                'title' => $requestData['title'],
+                'content' => $requestData['content'],
+                'updatedby' => $requestData['updatedby'],
+            ];
+
+            $jsapp->triggerEvent('onAfterBulletinSave', ['data' => $data]);
 
         // File upload array (jform[afile])
 //         $files = $input->files->get('jform', [], 'array');
         
         // Determine if "new" based on incoming id (before save)
         $incomingId = (int) ($requestData['id'] ?? $input->getInt('id'));
-//         $isNew = $incomingId === 0;
+        $isNew = $incomingId === 0;
         
         if (!$result) {
             $msg = "An error occurred saving the bulletin.";
@@ -91,6 +103,8 @@ class BulletinController extends BaseController
             return false;
         } else {
             $msg = "Bulletin has been saved.";
+
+            
             if ($model->uploadError) {
                 $msg = $msg . " File upload failed - check logs.";
                 $app->enqueueMessage($msg, "warning");
