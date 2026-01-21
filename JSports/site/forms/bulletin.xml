@@ -72,7 +72,7 @@
 					
 		<field name="afile" 
 				type="file" label="COM_JSPORTS_FILEUPLOAD"
-				description="Choose an file (image or PDF) from your computer with maximum 100KB" 
+				description="Choose an file (image or PDF) from your computer with maximum 250KB" 
 				accept="image/*, application/pdf"
     			  enctype="multipart/form-data"
 			/>
