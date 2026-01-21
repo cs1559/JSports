@@ -265,6 +265,11 @@
 			label="COM_JSPORTS_ATTACHMENTPATH"
 			description="COM_JSPORTS_ATTACHMENTPATH_DESC">
 		</field>
+		
+		<field name="maxuploadsize" type="text" default="2"
+			label="COM_JSPORTS_ATTACHMENT_MAX_UPLOAD_SIZE"
+			description="COM_JSPORTS_ATTACHMENT_MAX_UPLOAD_SIZE_DESC">
+		</field>
 							
 	</fieldset>
 
