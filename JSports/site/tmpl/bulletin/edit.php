@@ -57,7 +57,7 @@ $token = Session::getFormToken();
             <?php if ($this->item->hasAttachment) { ?>
                 <a href="<?php echo $this->item->attachmentUrl;?>" target="_blank"><?php echo $this->item->attachment; ?></a>
 <a href="<?php echo Route::_('index.php?option=com_jsports&task=bulletin.deleteAttachment&id=' .
-    (int) $this->item->id . '&' . $token . '=1'); ?>"
+    (int) $this->item->id . '&' . $token . '=1&teamid=' . $this->item->teamid); ?>"
    class="text-danger"
    title="Remove Attachment"
    aria-label="Remove Attachment">
