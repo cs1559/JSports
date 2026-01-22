@@ -34,10 +34,10 @@ class BulletinController extends FormController
     
     /**
      * This function will SAVE a bulletin record.  If needed, it will also support attachment handling.
-     *  
+     *
      * {@inheritDoc}
      * @see \Joomla\CMS\MVC\Controller\FormController::save()
-     */ 
+     */
     public function save($key = null, $urlVar = null)
     {
             $app   = Factory::getApplication();
@@ -68,6 +68,7 @@ class BulletinController extends FormController
                 return false;
             } else {
                 $msg = "Bulletin has been saved.";
+                LogService::info($msg);
                 if ($model->uploadError) {
                     $msg = $msg . " File upload failed - check logs.";
                     $app->enqueueMessage($msg, "warning");
@@ -80,8 +81,6 @@ class BulletinController extends FormController
                     $this->setRedirect('index.php?option=com_jsports&view=bulletins');
                     return true;
                 }
-                LogService::info($msg);
-
             }
             // defaul
             $this->setRedirect('index.php?option=com_jsports&view=bulletins');
@@ -90,11 +89,9 @@ class BulletinController extends FormController
     
    /**
     * This function will delete an attachemnt associated with a bulletin.
-    * 
-    * @param unknown $key
-    * @param unknown $urlVar
+    *
     */
-    public function deleteAttachment($key = null, $urlVar = null) {
+    public function deleteAttachment() {
         
         $jinput = Factory::getApplication()->input;
         $files  = $jinput->files->get('jform', [], 'array');
@@ -109,6 +106,7 @@ class BulletinController extends FormController
         } else {
             LogService::error("Something happened when trying to remove folder for Bulletin ID " . $bulletinid . " ");
             Factory::getApplication()->enqueueMessage("Something happened when attempting to remove the attachment folder", 'warning');
+            $this->setRedirect('index.php?option=com_jsports&view=bulletin&layout=edit&id=' . $bulletinid);
         }
         
     }
