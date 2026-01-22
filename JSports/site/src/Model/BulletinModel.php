@@ -16,10 +16,9 @@ namespace FP4P\Component\JSports\Site\Model;
 defined('_JEXEC') or die;
 
 
-use Joomla\CMS\Filesystem\Folder;
+use Joomla\Filesystem\Folder;
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\MVC\Model\FormModel;
-use FP4P\Component\JSports\Site\Objects\Application;
-use Joomla\Database\ParameterType;
 use Joomla\Filesystem\File;
 use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Services\BulletinService;
@@ -58,8 +57,8 @@ class BulletinModel extends FormModel
         // File upload array (jform[afile])
         $files = $input->files->get('jform', [], 'array');
         
-        /** 
-         * Business rule - anytime a bulletin is SAVED, reset the approved value 
+        /**
+         * Business rule - anytime a bulletin is SAVED, reset the approved value
          */
         $data['approved'] = 0;
         $data['published'] = 0;
@@ -70,7 +69,6 @@ class BulletinModel extends FormModel
         $bulletin->updatedby = $user->username;
         
         $result = $bulletin->save($data);
-        
         if (!$result) {
             return false;
         }
@@ -82,10 +80,10 @@ class BulletinModel extends FormModel
             // Try reading from jform (often present post-save)
             $bulletinId = (int) ($requestData['id'] ?? 0);
         }
-        if ($bulletinId <= 0) {
-            // Try request id
-            $bulletinId = (int) $input->getInt('id');
-        }
+//         if ($bulletinId <= 0) {
+//             // Try request id
+//             $bulletinId = (int) $input->getInt('id');
+//         }
         
         // Log create
         $isNew = empty($data['id']) || (int) $data['id'] === 0;
@@ -108,10 +106,24 @@ class BulletinModel extends FormModel
             $src      = $afile['tmp_name'];
             $dest     = $filepath . $safeName;
             
+            $params = ComponentHelper::getParams('com_jsports');
+            $maxsize = $params->get('maxuploadsize');
+            $maxBytes = $maxsize * 1024;
+            
+            if (($afile['size'] ?? 0) > $maxBytes ) { // 10 MB example
+                $errmsg = "Bulletin {$bulletinId}: Attachment too large";
+                LogService::error($errmsg);
+                $this->setError($errmsg);
+                $this->uploadError = true;
+                return $result;
+            }
+            
             if (File::upload($src, $dest)) {
                 LogService::info("Bulletin " . $bulletinId . ": File " . $safeName . " has been uploaded");
                 if (!BulletinService::updateAttachmentFilename($bulletinId, $safeName)) {
-                    LogService::error("Bulletin " . $bulletinId . ": failed to update the filename to " . $safeName . " ");
+                    $errmsg = "Bulletin " . $bulletinId . ": failed to update the filename to " . $safeName . " ";
+                    LogService::error($errmsg);
+                    $this->setError($errmsg);
                     $this->uploadError = true;
                 } else {
                     LogService::info("Bulletin " . $bulletinId . ": Record filename has been updated to " . $safeName . " ");
@@ -128,17 +140,20 @@ class BulletinModel extends FormModel
     
     public function getItem($pk = null)
     {
-        $input = Factory::getApplication()->input;
-        $id     = $input->getInt("id");
+        $input      = Factory::getApplication()->input;
+        $id         = $input->getInt("id");
         $teamid     = $input->getInt("teamid");
         
         $svc = new BulletinService();
         $item = $svc->getItem($id);
         
+        if (!$item) {
+            return null; // or return false; consistent with your calling code
+        }
+        
         $tsvc = new TeamService();
         if ((int) $item->teamid > 0) {
-            $pk = (int) $item->teamid;
-            $this->team = $tsvc->getItem($pk);
+            $this->team = $tsvc->getItem($teamid);
         } else {
             $this->team = $tsvc->getItem($teamid);
             $item->teamid = $teamid;
@@ -155,7 +170,6 @@ class BulletinModel extends FormModel
                 $item->attachmentUrl = null;
             }
         }
-        
         return $item;
     }
     
@@ -176,10 +190,6 @@ class BulletinModel extends FormModel
             );
     }
     
-    protected function canEditState($record)
-    {
-        return parent::canEditState($record);
-    }
     
     /**
      * Joomla 4/5 namespaced table resolution.
