@@ -16,7 +16,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
-use Joomla\CMS\Input\Input; 
+use Joomla\CMS\Input\Input;
 use FP4P\Component\JSports\Site\Objects\Application;
 use FP4P\Component\JSports\Site\Objects\Application as Myapp;
 use Joomla\CMS\Factory;
@@ -39,7 +39,8 @@ use FP4P\Component\JSports\Site\Model\BulletinModel;
 class BulletinController extends BaseController
 {
     
-    
+    /* @var string $redirectTeams */
+    const REDIRECTBULLETINS_URL = "index.php?option=com_jsports&view=bulletins&teamid=";
     
     /**
      * Method to save a registration data.
@@ -53,7 +54,6 @@ class BulletinController extends BaseController
     {
         // Check for request forgeries.
         $this->checkToken($this->input->getMethod() == 'GET' ? 'get' : 'post');
-//         $this->checkToken('post');
         
         $jsapp = Myapp::getInstance();
         
@@ -68,7 +68,7 @@ class BulletinController extends BaseController
         //check user session
         if ($user->guest) {
             $app->enqueueMessage(Text::_('COM_JSPORTS_INVALID_USERSESSION'), 'error');
-            $this->setRedirect(Route::_('index.php?option=com_jsports&view=bulletins&teamid=' . $teamid, false));
+            $this->setRedirect(Route::_(self::REDIRECTBULLETINS_URL . $teamid, false));
             return false;
         }
         
@@ -89,8 +89,7 @@ class BulletinController extends BaseController
 //         $files = $input->files->get('jform', [], 'array');
         
         // Determine if "new" based on incoming id (before save)
-        $incomingId = (int) ($requestData['id'] ?? $input->getInt('id'));
-        $isNew = $incomingId === 0;
+//         $incomingId = (int) ($requestData['id'] ?? $input->getInt('id'));
         
         if (!$result) {
             $msg = "An error occurred saving the bulletin.";
@@ -99,22 +98,22 @@ class BulletinController extends BaseController
             }
             LogService::error($msg);
             $app->enqueueMessage($msg, "error");
-            $this->setRedirect(Route::_('index.php?option=com_jsports&view=bulletins&teamid=' . $teamid,false));
+            $app->enqueueMessage($model->getError(), 'error');
+            $this->setRedirect(Route::_(self::REDIRECTBULLETINS_URL . $teamid,false));
             return false;
         } else {
             $msg = "Bulletin has been saved.";
-
-            
             if ($model->uploadError) {
                 $msg = $msg . " File upload failed - check logs.";
                 $app->enqueueMessage($msg, "warning");
+                $app->enqueueMessage($model->getError(), 'error');
                 LogService::error($msg);
-                $this->setRedirect(Route::_('index.php?option=com_jsports&view=bulletins&teamid=' . $teamid, false));
+                $this->setRedirect(Route::_(self::REDIRECTBULLETINS_URL . $teamid, false));
                 return false;
             } else {
                 $app->enqueueMessage($msg, "message");
                 LogService::info($msg);
-                $this->setRedirect(Route::_('index.php?option=com_jsports&view=bulletins&teamid=' . $teamid,false));
+                $this->setRedirect(Route::_(self::REDIRECTBULLETINS_URL. $teamid,false));
                 return true;
             }
            
@@ -137,13 +136,13 @@ class BulletinController extends BaseController
         $user = $app->getIdentity();
         if ($user->guest) {
             $app->enqueueMessage(Text::_('COM_JSPORTS_INVALID_USERSESSION'), 'error');
-            $this->setRedirect(Route::_('index.php?option=com_jsports&view=bulletins&teamid=' . $teamId, false));
+            $this->setRedirect(Route::_(self::REDIRECTBULLETINS_URL . $teamId, false));
             return false;
         }
         
         if ($id <= 0) {
             $app->enqueueMessage('Invalid ID value provided - Bulletin DELETE failed', 'error');
-            $this->setRedirect(Route::_('index.php?option=com_jsports&view=bulletins&teamid=' . $teamId, false));
+            $this->setRedirect(Route::_(self::REDIRECTBULLETINS_URL . $teamId, false));
             return false;
         }
         
@@ -152,7 +151,7 @@ class BulletinController extends BaseController
             BulletinService::delete($id);
             
             $app->enqueueMessage("Bulletin '{$item->title}' was successfully deleted", 'message');
-            $this->setRedirect(Route::_('index.php?option=com_jsports&view=bulletins&teamid=' . (int) $item->teamid, false));
+            $this->setRedirect(Route::_(self::REDIRECTBULLETINS_URL. (int) $item->teamid, false));
             return true;
             
         } catch (\Exception $e) {
@@ -170,18 +169,16 @@ class BulletinController extends BaseController
 
         $app   = $this->app;
         $user = $app->getIdentity();
-        //check user session
+        
+        /* If this funciton is called and the user is a guest, redirect them to the postings view */
         if ($user->guest) {
             $app->enqueueMessage(Text::_('COM_JSPORTS_INVALID_USERSESSION'), 'error');
-            $this->setRedirect(Route::_('index.php?option=com_jsports&view=team&id=' . $teamid, false));
+            $this->setRedirect(Route::_('index.php?option=com_jsports&view=postings', false));
             return false;
         }
         
         $jinput = Factory::getApplication()->input;
-        $files  = $jinput->files->get('jform', [], 'array');
         $bulletinid = $jinput->getInt('id');
-        
-        $filepath = JSHelper::getBulletinFilePath($bulletinid);
         
         if (BulletinService::deleteAttachmentFolder($bulletinid)) {
             Factory::getApplication()->enqueueMessage("Attachment has been deleted", 'message');
@@ -214,7 +211,7 @@ class BulletinController extends BaseController
         $this->app->setUserState('com_jsports.edit.bulletin', null);
         
         // Redirect to user profile.
-        $this->setRedirect(Route::_('index.php?option=com_jsports&view=bulletins&teamid=' . $teamid, false));
+        $this->setRedirect(Route::_(self::REDIRECTBULLETINS_URL . $teamid, false));
     }
 
 }
