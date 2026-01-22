@@ -92,8 +92,8 @@ class JSHelper
     /**
      * This function is used to present the 24 hour time into the normal HH:MM PM/AM format. 
      * 
-     * @param unknown $value
-     * @return unknown|string
+     * @param string $value
+     * @return string|string
      */
     public static function displayGameTime($value) {
 
@@ -167,7 +167,7 @@ class JSHelper
     
     /**
      * @deprecated
-     * @param unknown $key
+     * @param number $key
      * @return string
      */
     public static function getBulletinFilePath($key) {
@@ -193,8 +193,8 @@ if (substr($attachmentdir, 0, 1) !== '/') {
 
     /**
      * @deprecated
-     * @param unknown $key
-     * @param unknown $filename
+     * @param number $key
+     * @param string $filename
      * @return string
      */
     public static function getBulletinAttachmentURL($key, $filename) {
