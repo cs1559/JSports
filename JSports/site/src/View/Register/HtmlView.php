@@ -25,7 +25,7 @@ use FP4P\Component\JSports\Site\Services\RegistrationService;
 /**
  * HTML Registration View.  This is the initial view does nothing more than display a drop down for the
  * client to select a program they are selecting from.
- * 
+ *
  * NOTE:  Not sure if canDo is really used.  Non-authenticated users can register a team.
  *
  * @
@@ -42,7 +42,7 @@ class HtmlView extends BaseHtmlView
         /** @var \FP4P\Component\JSports\Site\Model\RegisterModel $model */
         $model = $this->getModel();
         
-        $this->data       = $model->getItem();            
+        $this->data       = $model->getItem();
         $this->form       = $model->getForm($this->data,true);
         
         // Check authorizations
