@@ -11,3 +11,9 @@
 2.  Changed Factory::getDocument to Factory::getApplication()->getDocument();
 3.  Removed admin/services/LeagueService class.
 4.  Cleaned up several modules to eliminate unnecessary code.
+5.  Fixed an issue with the Opponents Team List when entering a game score.  The teams current division of teams were duplicated and showing in the "outside division" section.  This required changes to the DivisionService and the TeamlistField classes.
+6.  Updated TeamService queries to support parameter typing via Joomla's query buildree with BINDs
+7.  Introduced the GAMES view that allows for the ability to query upcoming games and completed games.
+8.  Introduced the POSTINGS view to provide a list of league wide bulletins
+9.  Added appproval email for when a bulletin has been added or edited.
+10. Support configuraton of maximum bulletin attachment size.
