@@ -5,7 +5,7 @@
  * @version     1.0.0
  * @package     JSports.Site
  * @subpackage  com_jsports
- * @copyright   Copyright (C) 2023-2024 Chris Strieter
+ * @copyright   Copyright (C) 2023-2026 Chris Strieter
  * @license     GNU/GPLv2, see http://www.gnu.org/licenses/gpl-2.0.html
  *
  */
@@ -32,7 +32,7 @@ class DisplayController extends BaseController
 	 * Method to display a view.
 	 *
 	 * @param   boolean  $cachable   If true, the view output will be cached
-	 * @param   array    $urlparams  An array of safe URL parameters and their variable types, 
+	 * @param   array    $urlparams  An array of safe URL parameters and their variable types,
 	 *             for valid values see {@link \JFilterInput::clean()}.
 	 *
 	 * @return  static  This object to support chaining.
@@ -46,6 +46,6 @@ class DisplayController extends BaseController
 	    $itemid = $params->get('itemid');
 	    $uri->setVar('Itemid', $itemid);
 	    
-	    return parent::display($cachable = false, $urlparams = array());
+	    return parent::display($cachable, $urlprams);
 	}
 }
