@@ -1,3 +1,4 @@
+
 <?php
 /**
  * JSports - Joomla Sports Management Component
@@ -114,20 +115,20 @@ class BulletinService
         $params = ComponentHelper::getParams('com_jsports');
         $attachmentdir = trim((string) $params->get('attachmentdir',''));
         
-        $value = rtrim($attachmentdir); // optional: remove trailing whitespace
-        
-        if (substr($attachmentdir, -1) !== '/') {
-            $attachmentdir .= '/';
+        $path = JPATH_ROOT . '/' . $attachmentdir;
+
+        $value = rtrim($path); // optional: remove trailing whitespace
+        if (str_ends_with($path, '/') || str_ends_with($path, '\\')) {
+            $endswithsep = true;
+        } else {
+            $endswithsep = false;
         }
         
-        if (substr($attachmentdir, 0, 1) !== '/') {
-            $attachmentdir = '/' . $attachmentdir;
+        if (!$endswithsep) {
+            $filepath = Folder::makeSafe( $path . '/Bulletin-' . $key .'/');
+        } else {
+	       $filepath = Folder::makeSafe( $path . '/Bulletin-' . $key .'/');
         }
-        
-        $filepath = Folder::makeSafe( $attachmentdir . '/Bulletin-' . $key .'/');
-        
-        $filepath = JPATH_ROOT . $filepath;
-        
         return $filepath;
     }
     
@@ -143,10 +144,8 @@ class BulletinService
         $params = ComponentHelper::getParams('com_jsports');
         $attachmentdir = trim((string) $params->get('attachmentdir',''));
         
-//         $filepath =  Uri::root() . $attachmentdir . '/Bulletin-' . $key .'/' . $filename;
-//         return $filepath;
         return Uri::root() . $attachmentdir . '/Bulletin-' . $key . '/' . rawurlencode($filename);
-        
+                
     }
     
     
@@ -228,5 +227,11 @@ class BulletinService
         }
 //         return true;
     }
+
+
+
 }
+
+
+
 
