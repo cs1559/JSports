@@ -74,16 +74,9 @@ class BulletinController extends BaseController
         
         // 4. Persistence
         /* @var \FP4P\Component\JSports\Site\Model\BulletinModel $model */
-        $model  = $this->getModel('Bulletin', 'Site');
+        $model  = $this->getModel();
         $result = $model->save($requestData);
 
-            $data = (object)[
-                'title' => $requestData['title'],
-                'content' => $requestData['content'],
-                'updatedby' => $requestData['updatedby'],
-            ];
-
-            $jsapp->triggerEvent('onAfterBulletinSave', ['data' => $data]);
 
         // File upload array (jform[afile])
 //         $files = $input->files->get('jform', [], 'array');
@@ -99,10 +92,20 @@ class BulletinController extends BaseController
             LogService::error($msg);
             $app->enqueueMessage($msg, "error");
             $app->enqueueMessage($model->getError(), 'error');
-            $this->setRedirect(Route::_(self::REDIRECTBULLETINS_URL . $teamid,false));
+            $this->setRedirect(Route::_('index.php?option=com_jsports&view=bulletin&layout=edit&id=' . $bulletinid . '&teamid=' . $teamid, false));
+//             $this->setRedirect(Route::_(self::REDIRECTBULLETINS_URL . $teamid,false));
             return false;
         } else {
             $msg = "Bulletin has been saved.";
+            
+            $data = (object)[
+                'title' => $requestData['title'],
+                'content' => $requestData['content'],
+                'updatedby' => $requestData['updatedby'],
+            ];
+            
+            $jsapp->triggerEvent('onAfterBulletinSave', ['data' => $data]);
+            
             if ($model->uploadError) {
                 $msg = $msg . " File upload failed - check logs.";
                 $app->enqueueMessage($msg, "warning");
