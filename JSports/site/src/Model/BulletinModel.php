@@ -72,18 +72,18 @@ class BulletinModel extends FormModel
         if (!$result) {
             return false;
         }
+
+        /**
+         * NOTE:  From beyond this point in the model, return should always be TRUE.  Any future failures 
+         * should set the uploaderror flag.
+         */
         
         $bulletinId = $this->getState($this->getName() . '.id');
         
         // Fallbacks if needed
         if ($bulletinId <= 0) {
-            // Try reading from jform (often present post-save)
             $bulletinId = (int) ($requestData['id'] ?? 0);
         }
-//         if ($bulletinId <= 0) {
-//             // Try request id
-//             $bulletinId = (int) $input->getInt('id');
-//         }
         
         // Log create
         $isNew = empty($data['id']) || (int) $data['id'] === 0;
@@ -115,9 +115,13 @@ class BulletinModel extends FormModel
                 LogService::error($errmsg);
                 $this->setError($errmsg);
                 $this->uploadError = true;
-                return $result;
+                return true;
             }
             
+            /**
+             * If the upload process fails, the user should be redirected to the bulletin list and 
+             * displayed an error message.  The db record was saved, but the attachment didn't work.
+             */
             if (File::upload($src, $dest)) {
                 LogService::info("Bulletin " . $bulletinId . ": File " . $safeName . " has been uploaded");
                 if (!BulletinService::updateAttachmentFilename($bulletinId, $safeName)) {
@@ -129,12 +133,15 @@ class BulletinModel extends FormModel
                     LogService::info("Bulletin " . $bulletinId . ": Record filename has been updated to " . $safeName . " ");
                 }
             } else {
-                LogService::error("Error uploading attachment " . $safeName . " for bulletin " . $bulletinId);
+                $errmsg = "Error uploading attachment " . $safeName . " ";
+                LogService::error($errmsg . " for bulletin id = " . $bulletinId);
+                $this->setError($errmsg);
                 $this->uploadError = true;
             }
+        
         }
         
-        return $result;
+        return true;
         
     }
     
@@ -153,10 +160,9 @@ class BulletinModel extends FormModel
         
         $tsvc = new TeamService();
         if ((int) $item->teamid > 0) {
-            $this->team = $tsvc->getItem($teamid);
+            $this->team = $tsvc->getItem($item->teamid);
         } else {
             $this->team = $tsvc->getItem($teamid);
-            $item->teamid = $teamid;
         }
 
         $item->hasAttachment = false;
