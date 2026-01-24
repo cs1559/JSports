@@ -215,7 +215,7 @@ class SecurityService
      * @param number $teamid
      * @param GamesTable $item         
      */
-    public static function canEditGame(int $teamid, GamesTable|object $item ) : bool {
+    public static function canEditGame(int $teamid, \stdClass $item ) : bool {
       //  $params = ComponentHelper::getParams('com_jsports');
       //  $editawaygame = $params->get('editawaygame');
         
