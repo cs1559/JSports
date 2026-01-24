@@ -170,6 +170,10 @@ class JSHelper
     }
     
     /**
+     * This funciton returns the full file path for an attachment that is associated with a bulletin.
+     * 
+     * NOTE:  Use BulletinService::getBulletinFilePath instead.
+     * 
      * @deprecated
      * @param number $key
      * @return string
