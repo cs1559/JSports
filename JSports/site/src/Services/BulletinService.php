@@ -1,4 +1,3 @@
-
 <?php
 /**
  * JSports - Joomla Sports Management Component

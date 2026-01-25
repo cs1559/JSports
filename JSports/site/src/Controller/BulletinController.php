@@ -26,6 +26,7 @@ use FP4P\Component\JSports\Site\Services\LogService;
 use FP4P\Component\JSports\Administrator\Helpers\JSHelper;
 use Joomla\CMS\Component\ComponentHelper;
 use FP4P\Component\JSports\Site\Model\BulletinModel;
+use FP4P\Component\JSports\Site\Services\UserService;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
@@ -59,7 +60,8 @@ class BulletinController extends BaseController
         
         $app    = $this->app;
         $input = $app->input;
-        $user   = $this->app->getIdentity();
+//         $user   = $this->app->getIdentity();
+        $user = UserService::getUser();
 
         // Posted form data
         $requestData   = $input->post->get('jform', [], 'array');

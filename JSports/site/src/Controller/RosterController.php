@@ -41,7 +41,8 @@ class RosterController extends FormController
     {
         
         $app            = $this->app;
-        $user           = $this->app->getIdentity();
+//         $user           = $this->app->getIdentity();
+        $user = UserService::getUser();
         
         $params = ComponentHelper::getParams('com_jsports');
         $itemid = $params->get('itemid');
@@ -116,7 +117,8 @@ class RosterController extends FormController
         $app    = $this->app;
         
         $model  = $this->getModel('Roster', 'Site');
-        $user   = $this->app->getIdentity();
+//         $user   = $this->app->getIdentity();
+        $user = UserService::getUser();
         
         // Get the user data.
         $requestData = $app->getInput()->post->get('jform', [], 'array');

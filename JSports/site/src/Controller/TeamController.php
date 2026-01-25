@@ -42,7 +42,9 @@ class TeamController extends BaseController
     {
         
         $app            = $this->app;
-        $user           = $this->app->getIdentity();
+//         $user           = $this->app->getIdentity();
+        $user = UserService::getUser();
+        
         
         $params = ComponentHelper::getParams('com_jsports');
         $itemid = $params->get('itemid');
@@ -72,7 +74,8 @@ class TeamController extends BaseController
         $logger = Myapp::getLogger();
         
         $model  = $this->getModel('Team', 'Site');
-        $user   = $this->app->getIdentity();
+//         $user   = $this->app->getIdentity();
+        $user = UserService::getUser();
         
         
         // Get the user data.

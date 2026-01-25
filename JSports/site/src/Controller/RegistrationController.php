@@ -20,10 +20,12 @@ use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Input\Input;
 use FP4P\Component\JSports\Site\Objects\Application;
 use FP4P\Component\JSports\Site\Objects\Application as Myapp;
+use FP4P\Component\JSports\Site\Services\UserService;
 
 
 use FP4P\Component\JSports\Site\Services\ProgramsService;
 use Joomla\CMS\Component\ComponentHelper;
+use FP4P\Component\JSports\Site\Services\UserService;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
@@ -47,7 +49,9 @@ class RegistrationController extends BaseController
     {
         
         $app            = $this->app;
-        $user           = $this->app->getIdentity();
+//         $user           = $this->app->getIdentity();
+        $user = UserService::getUser();
+
         $registrationId = (int) $this->input->get('id');
         
         $params = ComponentHelper::getParams('com_jsports');
@@ -109,7 +113,8 @@ class RegistrationController extends BaseController
         $app    = $this->app;
         
         $model  = $this->getModel('Registration', 'Site');
-        $user   = $this->app->getIdentity();
+//         $user   = $this->app->getIdentity();
+        $user = UserService::getUser();
         $userId = (int) $user->get('id');
         
         // Get the user data.
