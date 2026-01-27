@@ -18,6 +18,7 @@ use FP4P\Component\JSports\Site\Services\LogService;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\Filesystem\File;
 use Joomla\Database\ParameterType;
+use FP4P\Component\JSports\Site\Services\UserService;
 
 class BulletinModel extends AdminModel
 {
@@ -28,6 +29,7 @@ class BulletinModel extends AdminModel
         
         $app   = Factory::getApplication();
         $input = $app->input;
+        $user = UserService::getUser();
         
         // Posted form data
         $requestData   = $input->post->get('jform', [], 'array');
@@ -35,6 +37,10 @@ class BulletinModel extends AdminModel
         
         // File upload array (jform[afile])
         $files = $input->files->get('jform', [], 'array');
+        
+        // Set username to whomever is editing/updating the bulletin
+        $data['updatedby'] = $user->username;
+        
         $result = parent::save($data);
         
         if (!$result) {
