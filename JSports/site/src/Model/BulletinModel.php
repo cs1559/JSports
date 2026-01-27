@@ -24,6 +24,7 @@ use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Services\BulletinService;
 use FP4P\Component\JSports\Site\Services\LogService;
 use FP4P\Component\JSports\Site\Services\TeamService;
+use FP4P\Component\JSports\Site\Services\UserService;
 use FP4P\Component\JSports\Administrator\Helpers\JSHelper;
 use FP4P\Component\JSports\Administrator\Table\TeamsTable;
 
@@ -48,7 +49,8 @@ class BulletinModel extends FormModel
         
         $app   = Factory::getApplication();
         $input = $app->input;
-        $user   = $app->getIdentity();
+//         $user   = $app->getIdentity();
+        $user = UserService::getUser();
         
         // Posted form data
         $requestData   = $input->post->get('jform', [], 'array');
@@ -184,7 +186,8 @@ class BulletinModel extends FormModel
      */
     protected function canDelete($record)
     {
-        $user = Factory::getApplication()->getIdentity();
+//         $user = Factory::getApplication()->getIdentity();
+        $user = UserService::getUser();
         
         if (empty($record->id) || (int) $record->published !== -2) {
             return false;

@@ -138,7 +138,8 @@ class BulletinController extends BaseController
         $id    = $input->getInt('id');
         $teamId = $input->getInt('teamid');
         
-        $user = $app->getIdentity();
+//         $user = $app->getIdentity();
+        $user = UserService::getUser();
         if ($user->guest) {
             $app->enqueueMessage(Text::_('COM_JSPORTS_INVALID_USERSESSION'), 'error');
             $this->setRedirect(Route::_(self::REDIRECTBULLETINS_URL . $teamId, false));
@@ -173,7 +174,8 @@ class BulletinController extends BaseController
         $this->checkToken($this->input->getMethod() == 'GET' ? 'get' : 'post');
 
         $app   = $this->app;
-        $user = $app->getIdentity();
+//         $user = $app->getIdentity();
+        $user = UserService::getUser();
         
         /* If this funciton is called and the user is a guest, redirect them to the postings view */
         if ($user->guest) {
