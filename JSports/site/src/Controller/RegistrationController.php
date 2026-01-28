@@ -21,11 +21,8 @@ use Joomla\CMS\Input\Input;
 use FP4P\Component\JSports\Site\Objects\Application;
 use FP4P\Component\JSports\Site\Objects\Application as Myapp;
 use FP4P\Component\JSports\Site\Services\UserService;
-
-
 use FP4P\Component\JSports\Site\Services\ProgramsService;
 use Joomla\CMS\Component\ComponentHelper;
-use FP4P\Component\JSports\Site\Services\UserService;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
