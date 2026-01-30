@@ -297,6 +297,10 @@ class GameService
                 $db->quoteName('g.divisionid') . ' = :divisionid',
                 $db->quoteName('g.gamedate') . ' >= CURRENT_DATE',
                  );
+                if ($teamid > 0) {
+                    $conditions[] = "(" . $db->quoteName('g.hometeamid') . ' = :homeid or '
+                        . $db->quoteName('g.awayteamid') . ' = :awayid) ';
+                }
         } else {
             $conditions = array(
                 $db->quoteName('g.divisionid') . ' = ' . $db->quoteName('d.id'),
@@ -311,6 +315,10 @@ class GameService
         $query->bind(':programid', $programid, ParameterType::INTEGER);
         if ($divisionid > 0) {
             $query->bind(':divisionid', $divisionid, ParameterType::INTEGER);
+        }
+        if ($teamid > 0) {
+            $query->bind(':homeid', $teamid, ParameterType::INTEGER);
+            $query->bind(':awayid', $teamid, ParameterType::INTEGER);
         }
         $db->setQuery($query);
         return $db->loadObjectList();
