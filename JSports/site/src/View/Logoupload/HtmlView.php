@@ -34,6 +34,9 @@ class HtmlView extends BaseHtmlView
     
     /** @var string  Team Name */
     protected $teamname;
+   
+    /** @var int Team ID */
+    protected $teamid;
     
     public function display($tpl = null)
     {
@@ -48,8 +51,9 @@ class HtmlView extends BaseHtmlView
         $this->teamlogo = "/media/com_jsports/images/swibl-large.png";
         
         $this->teamname = $this->item->name;
+        $this->teamid = $this->item->id;
         
-        $this->form->bind($this->item);        
+//         $this->form->bind($this->item);        
         
         // Check for errors.
         $errors = $model->getErrors();

@@ -25,7 +25,7 @@ HTMLHelper::_('behavior.keepalive');
 // $document = Factory::getDocument();
 $document = Factory::getApplication()->getDocument();
 
-// Load 
+// Load
 $wa = $this->document->getWebAssetManager();
 $wa->getRegistry()->addExtensionRegistryFile('com_jsports');
 $wa->useScript('com_jsports.jsports.script');
@@ -34,8 +34,9 @@ $wa->useStyle('com_jsports.teamprofile.style');
 $document->setTitle(Text::_('COM_JSPORTS_TEAMPROFILE_PAGE_TITLE'));
 ?>
 
-<form  enctype="multipart/form-data" action="<?php echo Route::_('index.php?option=com_jsports&view=logoupload'); ?>"
-	method="post" name="uploadform" id="upload-form" class="form-validate">
+<form  enctype="multipart/form-data" action="<?php
+        echo Route::_('index.php?option=com_jsports&view=logoupload'); ?>"
+		method="post" name="uploadform" id="upload-form" class="form-validate">
 	
 
 <div class="teamprofile-header-container" >
