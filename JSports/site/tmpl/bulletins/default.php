@@ -22,6 +22,7 @@ use FP4P\Component\JSports\Site\Services\SecurityService;
 use FP4P\Component\JSports\Site\Services\UserService;
 use FP4P\Component\JSports\Site\Services\GameService;
 use FP4P\Component\JSports\Administrator\Helpers\JSHelper;
+use Joomla\CMS\Session\Session;
 
 $clientId  = (int) $this->state->get('client_id', 0);
 // $user      = Factory::getUser();
@@ -41,6 +42,8 @@ $wa->useStyle('com_jsports.teamprofile.style');
 
 $document->setTitle(Text::_('COM_JSPORTS_TEAMBULLETINS_PAGE_TITLE'));
 
+$token = Session::getFormToken();
+
 ?>
 <form action="<?php echo Route::_('index.php?option=com_jsports&view=bulletins'); ?>" method="post" name="adminForm" id="adminForm">
 	
@@ -55,7 +58,7 @@ $document->setTitle(Text::_('COM_JSPORTS_TEAMBULLETINS_PAGE_TITLE'));
 					<?php 
 					   if ($this->canEdit) {
 					?>
-						<a class="btn btn-primary btn-sm" 
+						<a class="btn btn-primary btn-sm"
 							href="<?php echo Route::_('index.php?option=com_jsports&view=bulletin&layout=edit'
 							    . '&teamid=' . $this->team->id . '&id=0' ); ?>">Add Bulletin </a>
 
@@ -141,7 +144,7 @@ $document->setTitle(Text::_('COM_JSPORTS_TEAMBULLETINS_PAGE_TITLE'));
     					if ($this->canEdit) {
     					 ?>
         							<a class="btn btn-primary btn-sm" href="<?php echo Route::_('index.php?option=com_jsports&view=bulletin&layout=edit&id=' . $item->id . '&teamid=' . $this->team->id); ?>">Edit</a>
-        							<a class="btn btn-danger btn-sm" onClick="return confirm('Are you sure?');" href="<?php echo Route::_('index.php?option=com_jsports&task=bulletin.delete&id=' . $item->id . '&teamid=' . $this->team->id); ?>">Delete</a>
+        							<a class="btn btn-danger btn-sm" onClick="return confirm('Are you sure?');" href="<?php echo Route::_('index.php?option=com_jsports&task=bulletin.delete&id=' . $item->id . '&teamid=' . $this->team->id . '&' . $token . '=1'); ?>">Delete</a>
 						  <?php 
     					 } 
     						?>
