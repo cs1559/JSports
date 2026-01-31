@@ -123,11 +123,12 @@ class BulletinService
             $endswithsep = false;
         }
         
-        if (!$endswithsep) {
-            $filepath = Folder::makeSafe( $path . '/Bulletin-' . $key .'/');
-        } else {
-	       $filepath = Folder::makeSafe( $path . '/Bulletin-' . $key .'/');
-        }
+//         if (!$endswithsep) {
+//             $filepath = Folder::makeSafe( $path . '/Bulletin-' . $key .'/');
+//         } else {
+// 	       $filepath = Folder::makeSafe( $path . '/Bulletin-' . $key .'/');
+//         }
+        $filepath = $path . '/Bulletin-' . $key .'/';
         return $filepath;
     }
     
