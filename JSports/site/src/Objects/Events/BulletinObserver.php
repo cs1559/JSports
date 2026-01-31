@@ -27,6 +27,12 @@ class BulletinObserver extends BaseObserver
         $multiadmins    = strpos(',', $adminemails);
         $orgemail       = $params->get('orgemail');
         
+        $sendemails     = $params->get('bulletinapprovalemail');
+        
+        if (!$sendemails) {
+            return true;
+        }
+        
         $body = "
 <p>A new bulletin has been posted/saved and needs to be approved by the league. </p>
 <p>
