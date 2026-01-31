@@ -43,11 +43,12 @@ $token = Session::getFormToken();
 		<?php //echo $this->form->renderField('location'); ?>
 		<?php //echo $this->form->renderField('startdate'); ?>
 		<?php //echo $this->form->renderField('enddate'); ?>
-		<?php echo $this->form->renderField('externalurl'); ?>
+		<?php //echo $this->form->renderField('externalurl'); ?>
 
 		<?php echo $this->form->renderField('teamid'); ?>
 		<?php echo $this->form->renderField('id'); ?>
-		
+
+		<?php if ($this->item->id > 0) {?>		
 		<?php if ($this->attachmentsenabled) { ?>
 		<div class="control-group">
 			<div class="control-label">
@@ -70,7 +71,9 @@ $token = Session::getFormToken();
 		</div>
 		<?php echo $this->form->renderField('afile'); ?>
 		<?php } // end of if attachments enabled ?>
+		<?php } // if item->id > 0 ?>
 		
+	<br/><br/>
 	<input type="hidden" name="task" value="">
 
 	<?php echo HTMLHelper::_('form.token'); ?>
