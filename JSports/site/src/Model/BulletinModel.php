@@ -17,6 +17,7 @@ defined('_JEXEC') or die;
 
 
 use Joomla\Filesystem\Folder;
+use Joomla\CMS\Application\SiteApplication;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\MVC\Model\FormModel;
 use Joomla\Filesystem\File;
@@ -38,6 +39,7 @@ class BulletinModel extends FormModel
     
     public $uploadError = false;
     public $team = null;
+    public $teamid = null;
     
     public function getTeam() : ?TeamsTable {
         return $this->team;
@@ -149,22 +151,29 @@ class BulletinModel extends FormModel
     
     public function getItem($pk = null)
     {
-        $input      = Factory::getApplication()->input;
-        $id         = $input->getInt("id");
-        $teamid     = $input->getInt("teamid");
-        
-        $svc = new BulletinService();
-        $item = $svc->getItem($id);
+    $pk = $pk ?: (int) $this->getState('item.id');           // or bulletin.id if you prefer
+
+    if (!$pk) {
+        $pk = Factory::getApplication()->input->getInt('id');
+    }
+
+
+    $teamid = (int) $this->getState('bulletin.teamid')
+        ?: Factory::getApplication()->input->getInt('teamid');
+
+
+    $svc  = new BulletinService();
+    $item = $svc->getItem($pk);
         
         if (!$item) {
             return null; // or return false; consistent with your calling code
         }
-        
         $tsvc = new TeamService();
         if ((int) $item->teamid > 0) {
             $this->team = $tsvc->getItem($item->teamid);
         } else {
             $this->team = $tsvc->getItem($teamid);
+            $item->teamid = $teamid;
         }
 
         $item->hasAttachment = false;
@@ -214,27 +223,44 @@ class BulletinModel extends FormModel
     
     public function getForm($data = [], $loadData = true)
     {
-        $form = $this->loadForm(
-            'com_jsports.bulletin',
-            'bulletin',
-            ['control' => 'jform', 'load_data' => $loadData]
-            );
+        $form = $this->loadForm('com_jsports.bulletin', 'bulletin', ['control' => 'jform', 'load_data' => true]);
         
-        return $form ?: false;
+        if (empty($form))
+        {
+            return false;
+            $errors = $this->getErrors();
+            throw new \Exception(implode("\n", $errors), 500);
+        }
+        $game = $this->getItem($this->getState('bulletin.id'));
+        //         $game = $this->getItem();
+        return $form;
     }
     
     protected function loadFormData()
     {
-        $app  = Factory::getApplication();
-        $data = $app->getUserState('com_jsports.edit.bulletin.data', []);
+	    $data = Factory::getApplication()->getUserState(
+        	'com_jsports_form.bulletin.data',
+       	 []
+    	);
+
+    	if (empty($data)) {
+        	$data = $this->getItem();
+    	}
+
+    	$this->preprocessData('com_jsports.bulletin', $data);
+
+    	return $data;
+    }
+    
+    
+    protected function populateState() {
         
-        if (empty($data)) {
-            $data = $this->getItem();
-        }
-        
-        $this->preprocessData('com_jsports.bulletin', $data);
-        
-        return $data;
+        parent::populateState();
+
+        /** @var SiteApplication $app */
+        $app = Factory::getContainer()->get(SiteApplication::class);
+        $this->setState('bulletin.id', $app->getInput()->getInt('id'));
+        $this->setState('bulletin.teamid', $app->getInput()->getInt('teamid'));        
     }
     
 }
