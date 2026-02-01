@@ -25,6 +25,7 @@ use FP4P\Component\JSports\Site\Services\ProgramsService;
 use FP4P\Component\JSports\Site\Services\LogService;
 use FP4P\Component\JSports\Administrator\Helpers\JSHelper;
 use Joomla\CMS\Component\ComponentHelper;
+use Joomla\Filesystem\Folder;
 use FP4P\Component\JSports\Site\Model\BulletinModel;
 use FP4P\Component\JSports\Site\Services\UserService;
 
@@ -103,7 +104,7 @@ class BulletinController extends BaseController
             $data = (object)[
                 'title' => $requestData['title'],
                 'content' => $requestData['content'],
-                'updatedby' => $requestData['updatedby'],
+                'updatedby' => $user->username,
             ];
             
             $jsapp->triggerEvent('onAfterBulletinSave', ['data' => $data]);
@@ -150,6 +151,26 @@ class BulletinController extends BaseController
             $app->enqueueMessage('Invalid ID value provided - Bulletin DELETE failed', 'error');
             $this->setRedirect(Route::_(self::REDIRECTBULLETINS_URL . $teamId, false));
             return false;
+        }
+        
+        $filepath = BulletinService::getBulletinFilePath($id);
+        $bulletinId = $id;
+        if (is_dir($filepath)) {
+            if (BulletinService::deleteAttachmentFolder($id)) {
+                echo "folder deleted";
+                Factory::getApplication()->enqueueMessage("Attachment folder deleted for ID " . $bulletinId, 'message');
+                LogService::info("Attachment folder for Bulletin ID " . $bulletinId . " has been deleted");
+            } else {
+                LogService::error("Failed removing attachment folder for Bulletin ID " . $bulletinId);
+                Factory::getApplication()->enqueueMessage("Could not remove attachment folder for ID " . $bulletinId , 'warning');
+                $this->setRedirect(Route::_('index.php?option=com_jsports&view=bulletins&teamid=' . $teamId, false));
+            }
+        }
+        
+        if (is_dir($filepath)) {
+            LogService::error("Bulletin attachment folder still exists when it should have been deleted" . $bulletinId);
+            Factory::getApplication()->enqueueMessage("Cant delete bulletin - attachment still exists (" . $bulletinId . ")", 'warning');
+            $this->setRedirect(Route::_('index.php?option=com_jsports&view=bulletins&teamid=' . $teamId, false));
         }
         
         try {
