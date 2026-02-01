@@ -90,7 +90,7 @@ $token = Session::getFormToken();
         </button>
         <input type="hidden" name="option" value="com_jsports">
     </div>
-</div>
+	</div>
 	
 	<?php echo HTMLHelper::_('form.token'); ?>
 	
