@@ -34,7 +34,7 @@ class BulletinObserver extends BaseObserver
         }
         
         $body = "
-<p>A new bulletin has been posted/saved and needs to be approved by the league. </p>
+<p>A bulletin has been created/updated and needs to be approved by the league. </p>
 <p>
 <strong>NOTE:  All bulletins that have been updated will no longer be visibile on the website UNTIL it has been approved.</strong>
 </p>
