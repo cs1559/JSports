@@ -57,6 +57,8 @@ class BulletinModel extends FormModel
         // Posted form data
         $requestData   = $input->post->get('jform', [], 'array');
         $bulletinTitle = $requestData['title'] ?? '';
+        $isNew = empty($data['id']) || (int) $data['id'] === 0;
+        
         
         // File upload array (jform[afile])
         $files = $input->files->get('jform', [], 'array');
@@ -66,11 +68,16 @@ class BulletinModel extends FormModel
          */
         $data['approved'] = 0;
         $data['published'] = 0;
+        $data['updatedby'] = $user->username;
+        
+        if ($isNew) {
+            $data['ownerid'] = $user->id;
+        }
         
         $bulletin->bind($data);
         $bulletin->check();
                 
-        $bulletin->updatedby = $user->username;
+//         $bulletin->updatedby = $user->username;
         
         $result = $bulletin->save($data);
         if (!$result) {
@@ -88,9 +95,6 @@ class BulletinModel extends FormModel
         if ($bulletinId <= 0) {
             $bulletinId = (int) ($requestData['id'] ?? 0);
         }
-        
-        // Log create
-        $isNew = empty($data['id']) || (int) $data['id'] === 0;
         
         if ($isNew) {
             LogService::info("Bulletin created - {$bulletinTitle} - ID: {$bulletinId}");
