@@ -32,12 +32,16 @@ use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Services\SecurityService;
 use FP4P\Component\JSports\Site\Services\GameService;
 use FP4P\Component\JSports\Administrator\Helpers\JSHelper;
+use FP4P\Component\JSports\Site\Services\UserService;
+use Joomla\CMS\Session\Session;
 
 $clientId  = (int) $this->state->get('client_id', 0);
-$user      = Factory::getUser();
+// $user      = Factory::getUser();
+$user = UserService::getUser();
 
 // Set Page Title and load specific stylesheet
-$document = Factory::getDocument();
+// $document = Factory::getDocument();
+$document = Factory::getApplication()->getDocument();
 
 // Load Web Asset Manager
 $wa = $this->document->getWebAssetManager();
@@ -45,6 +49,8 @@ $wa->getRegistry()->addExtensionRegistryFile('com_jsports');
 $wa->useScript('com_jsports.jsports.script');
 $wa->useStyle('com_jsports.jsports.style');
 $wa->useStyle('com_jsports.teamprofile.style');
+
+$token = Session::getFormToken();
 
 $document->setTitle(Text::_('COM_JSPORTS_TEAMSCHEDULE_PAGE_TITLE'));
 
@@ -146,14 +152,14 @@ $document->setTitle(Text::_('COM_JSPORTS_TEAMSCHEDULE_PAGE_TITLE'));
         					    if ($item->gamestatus != 'C') {
         					    ?>
         							<a class="btn btn-primary btn-sm" href="<?php echo Route::_('index.php?option=com_jsports&view=game&layout=edit&id=' . $item->id . '&contextid=' . $this->team->id); ?>">Edit</a>
-        							<a class="btn btn-danger btn-sm" onClick="return confirm('Are you sure?');" href="<?php echo Route::_('index.php?option=com_jsports&task=game.delete&id=' . $item->id . '&contextid=' . $this->team->id); ?>">Delete</a>
+        							<a class="btn btn-danger btn-sm" onClick="return confirm('Are you sure?');" href="<?php echo Route::_('index.php?option=com_jsports&task=game.delete&id=' . $item->id . '&contextid=' . $this->team->id . '&' . $token . '=1'); ?>">Delete</a>
         						  <?php 
         					    }
     					 } 
 
     			         if (SecurityService::isAdmin() && $item->gamestatus == "C") {
     				          ?>
-    				        <a class="btn btn-secondary btn-sm" onClick="return confirm('Are you sure?');" href="<?php echo Route::_('index.php?option=com_jsports&task=game.reset&id=' . $item->id . '&teamid=' . $this->team->id); ?>">Reset Status</a>
+    				        <a class="btn btn-secondary btn-sm" onClick="return confirm('Are you sure?');" href="<?php echo Route::_('index.php?option=com_jsports&task=game.reset&id=' . $item->id . '&teamid=' . $this->team->id . '&' . $token . '=1'); ?>">Reset Status</a>
     				          <?php
     				     }
     						?>

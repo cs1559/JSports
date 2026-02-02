@@ -12,6 +12,7 @@
 namespace FP4P\Component\JSports\Site\Services;
 
 use FP4P\Component\JSports\Administrator\Table\TeamsTable;
+use Joomla\Database\DatabaseInterface;
 use Joomla\Database\ParameterType;
 use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Services\ProgramsService;
@@ -19,8 +20,19 @@ use FP4P\Component\JSports\Site\Services\ProgramsService;
 class StandingsService
 {
 
-    public static function getProgramStandings($programid, $past = false, $divid = 0)
+    /**
+     * 
+     * @param int $programid
+     * @param bool $past
+     * @param int $divid
+     * @return array<int, array<string, mixed>>
+     */
+    public static function getProgramStandings(int $programid, bool $past = false, int $divid = 0) : array 
     {
+               
+        if ($programid === 0) {
+            return [];
+        }
         
         $program = ProgramsService::getItem($programid);
         
@@ -29,7 +41,7 @@ class StandingsService
         } else {
             $table = '#__jsports_standings';
         }
-        $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
 
         // $query->select('a.*, (wins/(losses+wins)) as winpct, d.name as divisionname, d.ordering');
@@ -37,11 +49,11 @@ class StandingsService
         $query->from($db->quoteName($table) . ' AS a, ' . $db->quoteName('#__jsports_divisions') . ' AS d');
         $conditions = array(
             $db->quoteName('a.divisionid') . ' = ' . $db->quoteName('d.id'),
-            $db->quoteName('a.programid') . ' = ' . $db->quote($programid)
+            $db->quoteName('a.programid') . ' = :programid' //. $db->quote($programid)
         );
 
         if ($divid > 0) {
-            $conditions[] = $db->quoteName('a.divisionid') . ' = ' . $db->quote($divid);
+            $conditions[] = $db->quoteName('a.divisionid') . ' = :divisionid'; //. $db->quote($divid);
         }
         $query->where($conditions);
         
@@ -60,7 +72,10 @@ class StandingsService
                 break;
         }
 
-
+        $query->bind(':programid',$programid, ParameterType::INTEGER);
+        if ($divid > 0) {
+            $query->bind(':divisionid',$divid, ParameterType::INTEGER);
+        }
         // $query->where($conditions);
         $db->setQuery($query);
 
@@ -72,11 +87,11 @@ class StandingsService
      * @param int $teamid
      * @param int $programid
      * @param int $divisionid
-     * @return array
+     * @return array<int, array<string, mixed>>
      */
-    public static function getTeamList($teamid, $programid, $divisionid = null)
+    public static function getTeamList(int $teamid, int $programid, ?int $divisionid = null) : array 
     {
-        $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
 
         if (is_null($divisionid)) {
@@ -89,16 +104,29 @@ class StandingsService
                 and m.divisionid in (
                     select divisionid from #__jsports_map as m, #__jsports_divisions as d
                     where m.divisionid = d.id
-                    and m.teamid = " . $db->quote($teamid) . " and m.programid = " . $db->quote($programid) . "
-                    )";
+                    and m.teamid = :teamid and m.programid = :programid) ";
+        } else {
+            $sql = "SELECT a.id as teamid, a.name as teamname, m.divisionid, d.name as divisionname,
+                        d.agegroup FROM " . $db->quoteName('#__jsports_teams') . " as a, " .
+                        $db->quoteName('#__jsports_map') . " as m, " .
+                        $db->quoteName('#__jsports_divisions') . " as d
+                where m.teamid = a.id
+                and m.divisionid = d.id
+                and m.divisionid in (
+                    select divisionid from #__jsports_map as m, #__jsports_divisions as d
+                    where m.divisionid = d.id
+                    and m.teamid = :teamid and m.programid = :programid 
+                    and m.divisionid = :divisionid)";
         }
 
         $query->setQuery($sql);
-        // $query->bind(':teamid', $teamid, ParameterType::INTEGER);
-        // $query->bind(':programid', $programid, ParameterType::INTEGER);
+        $query->bind(':teamid', $teamid, ParameterType::INTEGER);
+        $query->bind(':programid', $programid, ParameterType::INTEGER);
+        if (!is_null($divisionid)) {
+            $query->bind(':divisionid', $divisionid, ParameterType::INTEGER);
+        }
         $db->setQuery($query);
 
-        // Load the results as a list of stdClass objects (see later for more options on retrieving data).
         return $db->loadAssocList();
     }
 }

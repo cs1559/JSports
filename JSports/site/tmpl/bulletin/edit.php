@@ -16,6 +16,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
+use Joomla\CMS\Session\Session;
 
 use FP4P\Component\JSports\Administrator\Helpers\Html;
 
@@ -26,6 +27,8 @@ $wa = $this->document->getWebAssetManager();
 $wa->getRegistry()->addExtensionRegistryFile('com_jsports');
 $wa->useStyle('com_jsports.jsports.style');
 $wa->useStyle('com_jsports.game.style');
+
+$token = Session::getFormToken();
 
 ?>
 
@@ -40,11 +43,12 @@ $wa->useStyle('com_jsports.game.style');
 		<?php //echo $this->form->renderField('location'); ?>
 		<?php //echo $this->form->renderField('startdate'); ?>
 		<?php //echo $this->form->renderField('enddate'); ?>
-		<?php echo $this->form->renderField('externalurl'); ?>
+		<?php //echo $this->form->renderField('externalurl'); ?>
 
 		<?php echo $this->form->renderField('teamid'); ?>
 		<?php echo $this->form->renderField('id'); ?>
-		
+
+		<?php if ($this->item->id > 0) {?>		
 		<?php if ($this->attachmentsenabled) { ?>
 		<div class="control-group">
 			<div class="control-label">
@@ -53,7 +57,13 @@ $wa->useStyle('com_jsports.game.style');
             <div class="controls">
             <?php if ($this->item->hasAttachment) { ?>
                 <a href="<?php echo $this->item->attachmentUrl;?>" target="_blank"><?php echo $this->item->attachment; ?></a>
-            	<a href="<?php echo Route::_('index.php?option=com_jsports&task=bulletin.deleteAttachment&id=' . (int) $this->item->id); ?>">[Remove Attachment]</a>
+<a href="<?php echo Route::_('index.php?option=com_jsports&task=bulletin.deleteAttachment&id=' .
+    (int) $this->item->id . '&' . $token . '=1&teamid=' . $this->item->teamid); ?>"
+   class="text-danger"
+   title="Remove Attachment"
+   aria-label="Remove Attachment">
+   <span class="icon-delete" aria-hidden="true"></span>
+</a>
             	<?php } else {
             	   echo "No attachments";
             	}?>					
@@ -61,7 +71,9 @@ $wa->useStyle('com_jsports.game.style');
 		</div>
 		<?php echo $this->form->renderField('afile'); ?>
 		<?php } // end of if attachments enabled ?>
+		<?php } // if item->id > 0 ?>
 		
+	<br/><br/>
 	<input type="hidden" name="task" value="">
 
 	<?php echo HTMLHelper::_('form.token'); ?>
@@ -78,7 +90,8 @@ $wa->useStyle('com_jsports.game.style');
         </button>
         <input type="hidden" name="option" value="com_jsports">
     </div>
-</div>
+	</div>
 	
+	<?php echo HTMLHelper::_('form.token'); ?>
 	
 </form>

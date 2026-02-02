@@ -5,7 +5,7 @@
  * @version     1.0.0
  * @package     JSports.Site
  * @subpackage  com_jsports
- * @copyright   Copyright (C) 2023-2024 Chris Strieter
+ * @copyright   Copyright (C) 2023-2026 Chris Strieter
  * @license     GNU/GPLv2, see http://www.gnu.org/licenses/gpl-2.0.html
  *
  */
@@ -19,62 +19,62 @@ use Joomla\Database\ParameterType;
 use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Services\TeamService;
 use FP4P\Component\JSports\Site\Services\ProgramsService;
+use FP4P\Component\JSports\Administrator\Table\TeamsTable;
+use FP4P\Component\JSports\Administrator\Table\ProgramsTable;
 
 /**
- * Methods supporting a list of LEAGUE records.
+ * Methods supporting displaying a list of games on a teams schedule.
  *
  * @since  1.0.0
  */
 class SchedulesModel extends ListModel
 {
+    /** 
+     * @var TeamsTable $team
+     */
     protected $team;
-    protected $teamlastyearplayed;
+//     protected $teamlastyearplayed;
+    
+    /**
+     * @var int
+     */
     protected $programid;
+    
+    /**
+     * @var ProgramsTable
+     */
     protected $program;
     
-	/**
-	 * Constructor.
-	 *
-	 * @param   array  $config  An optional associative array of configuration settings.
-	 *
-	 * @since   1.0.0
-	 * @see     \Joomla\CMS\MVC\Controller\BaseController
-	 */
-	public function __construct($config = array())
-	{
-		if (empty($config['filter_fields']))
-		{
-			$config['filter_fields'] = array(
-			);
-		}
+    /**
+     * Return the current team object
+     * @return TeamsTable|NULL
+     */
+    public function getTeam() : ?TeamsTable 
+    {
+        return $this->team;
+    }
+    
+    /**
+     * return the current progrma table.
+     * @return ProgramsTable
+     */
+    public function getProgram() : ?ProgramsTable
+    {
+        return $this->program;
+    }
+    
+    protected function populateState($ordering = null, $direction = null)
+    {
+        parent::populateState($ordering, $direction);
+        
+        $app = Factory::getApplication();
+        $input = $app->input;
 
-		parent::__construct($config);
-	}
-
-
-	/**
-	 * Method to get a store id based on model configuration state.
-	 *
-	 * This is necessary because the model is used by the component and
-	 * different modules that might need different sets of data or different
-	 * ordering requirements.
-	 *
-	 * @param   string  $id  A prefix for the store id.
-	 *
-	 * @return  string  A store id.
-	 *
-	 * @since   1.0.0
-	 */
-	protected function getStoreId($id = '')
-	{
-		// Compile the store id.
-// 		$id .= ':' . $this->team->id;
-// 		$id .= ':' . $this->program->id;
-
-		return parent::getStoreId($id);
-	}
-
-	/**
+        $this->setState('schedules.teamid', $input->getInt('teamid'));
+        $this->setState('schedules.programid', $input->getInt('programid'));
+    }
+    
+    /**
 	 * Build an SQL query to load the list data.
 	 *
 	 * @return  \Joomla\Database\DatabaseQuery
@@ -88,8 +88,10 @@ class SchedulesModel extends ListModel
 	    $input = Factory::getApplication()->input;
 	    
 	    // Get Team Id
-	    $teamid     = $input->getInt("teamid");
-	    $programid     = $input->getInt("programid");
+	    $teamid ??= (int) $this->getState('schedules.teamid', 0);
+	    $programid ??= (int) $this->getState('schedules.programid', 0);
+// 	    $teamid     = $input->getInt("teamid");
+// 	    $programid     = $input->getInt("programid");
 	    
 	    $svc = new TeamService();
 	    $this->team = $svc->getItem($teamid);
@@ -104,8 +106,7 @@ class SchedulesModel extends ListModel
 	    } else {
 	        $this->programid = $programid;
 	    }
-	
-	    
+
 	    $psvc = new ProgramsService();
 	    $this->program = $psvc->getItem($this->programid);
 	    
@@ -113,30 +114,18 @@ class SchedulesModel extends ListModel
 	    $db    = $this->getDatabase();
 	    $query = $db->getQuery(true);
 	    
-        $query->select("a.*");
+	    $query->select("a.*");
 	    $query->from($db->quoteName('#__jsports_games') . ' AS a')
- 	       ->where($db->quoteName('a.programid') . ' = ' . $db->quote($this->programid))
-           ->where(" (" . $db->quoteName('a.teamid') . ' = ' . $db->quote($teamid)
-                . " or " . $db->quoteName('a.opponentid') . ' = ' . $db->quote($teamid) . ")")
-           ->order("gamedate asc");
-
+  	       ->where($db->quoteName('a.programid') . ' = :programid' )
+            ->where(" (" . $db->quoteName('a.teamid') . ' = :teamid or ' 
+                . $db->quoteName('a.opponentid') . ' = :opponentid )')
+            ->order("gamedate asc");
+	    
+        $query->bind(':programid', $this->programid, ParameterType::INTEGER);
+        $query->bind(':teamid', $teamid, ParameterType::INTEGER);
+        $query->bind(':opponentid', $teamid, ParameterType::INTEGER);
            
 	    return $query;
 	}
 	
-
-	/**
-	 * Method to get a list of GAME RECORDS.
-	 * Overridden to add a check for access levels.
-	 *
-	 * @return  mixed  An array of data items on success, false on failure.
-	 *
-	 * @since   1.0.0
-	 */
-	public function getItems()
-	{
-		return parent::getItems();
-
-	}
-		
 }

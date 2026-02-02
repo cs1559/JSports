@@ -5,7 +5,7 @@
  * @version     1.0.0
  * @package     JSports.Site
  * @subpackage  com_jsports
- * @copyright   Copyright (C) 2023-2024 Chris Strieter
+ * @copyright   Copyright (C) 2023-2026 Chris Strieter
  * @license     GNU/GPLv2, see http://www.gnu.org/licenses/gpl-2.0.html
  *
  */
@@ -23,33 +23,27 @@ use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Services\RegistrationService;
 
 /**
- * HTML Registration View
+ * HTML Registration View.  This is the initial view does nothing more than display a drop down for the
+ * client to select a program they are selecting from.
  *
- * @since  1.5
+ * NOTE:  Not sure if canDo is really used.  Non-authenticated users can register a team.
+ *
+ * @
  */
 class HtmlView extends BaseHtmlView
 {
 
     protected $item;
         
-    /**
-     * Execute and display a template script.
-     *
-     * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
-     *
-     * @return  mixed  A string if successful, otherwise an Error object.
-     */
     public function display($tpl = null)
     {
         $user       = $this->getCurrentUser();
         
-        $this->data       = $this->get('Data');
-        $this->state      = $this->get('State');
-        $this->item       = $this->get('Item');
-        $this->reports    = $this->get('Reports');
+        /** @var \FP4P\Component\JSports\Site\Model\RegisterModel $model */
+        $model = $this->getModel();
         
-        
-        $this->form               = $this->getModel()->getForm($this->data,true);
+        $this->data       = $model->getItem();
+        $this->form       = $model->getForm($this->data,true);
         
         // Check authorizations
         //        $this->canDo = ContentHelper::getActions('com_content', 'article', $this->item->id);
@@ -67,14 +61,7 @@ class HtmlView extends BaseHtmlView
         if (!$bool){
             return false;
         }
-        
-        
-        // Check for errors.
-        //         if (count($errors = $this->get('Errors')))
-            //         {
-            //             throw new GenericDataException(implode("\n", $errors), 500);
-            //         }
-        
+               
         return parent::display($tpl);
     }
 }

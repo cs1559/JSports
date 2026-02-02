@@ -24,6 +24,7 @@ use Joomla\CMS\Application\SiteApplication;
 use FP4P\Component\JSports\Site\Objects\Application as Myapp;
 use FP4P\Component\JSports\Administrator\Helpers\JSHelper;
 use Joomla\CMS\Form\Form;
+use FP4P\Component\JSports\Site\Services\UserService;
 
 /**
  * GameModel - Methods/functions to manage games within the component.
@@ -48,6 +49,9 @@ class GameModel extends FormModel
     protected $contextid = 0;
     
     protected function populateState() {
+        
+        parent::populateState();
+        
         /** @var SiteApplication $app */
         $app = Factory::getContainer()->get(SiteApplication::class);
         $this->setState('game.id', $app->getInput()->getInt('id'));
@@ -80,35 +84,41 @@ class GameModel extends FormModel
                 return false;
             }
         }
-        return parent::validate($form, $data, $group = null);
+        return parent::validate($form, $data, $group);
     }
     
     
     
-    public function getItem(){
+    public function getItem($pk = null){
         
         $input = Factory::getApplication()->input;
-        $id     = $input->getInt("id");
+        $data   = $input->post->get('jform', [], 'array');
+        
+//         $id = $pk ?? $input->getInt('id');
+        $id = $pk ?? (int) ($data['id'] ?? $input->getInt('id'));
         $this->contextid = $input->getInt("contextid");
         
         $svc = new GameService();
         $item = $svc->getItem($id);
-        
+        if (!$item) {
+            $this->setError(Text::_('COM_JSPORTS_ERR_MISSING_GAME'));
+            return null;
+        }
         
         if ($id == 0) {
-            $this->teamid = $input->getInt('teamid');
-            $this->programid = $input->getInt('programid');
+            $this->teamid = (int) ($data['teamid'] ?? $input->getInt('teamid'));
+//             $this->teamid = (int) ($data['teamid'] ?? 0);
+            $this->programid = (int) ($data['programid'] ?? $input->getInt('programid'));
             $this->divisionid = TeamService::getTeamDivisionId($this->teamid, $this->programid);
         }
         
         // Get a Team record and place within our model
         $this->team = TeamService::getItem($item->teamid);
 
-        if ($this->contextid < 1) {
-            $this->contextid = $this->team->id;
-        }
         if (is_null($this->team)) {
             $this->setError(Text::_('COM_JSPORTS_ERR_MISSING_TEAM'));
+        } elseif ($this->contextid < 1) {
+            $this->contextid = $this->team->id;
         }
         return $item;
     }
@@ -125,7 +135,7 @@ class GameModel extends FormModel
             throw new \Exception(implode("\n", $errors), 500);
         }
         $game = $this->getItem($this->getState('game.id'));
-        
+//         $game = $this->getItem();
         return $form;
     }
     
@@ -140,9 +150,9 @@ class GameModel extends FormModel
         
         if (empty($data)) {
             $data = $this->getItem();
-            echo "GameModel::loadFormData";
-            var_dump($data);
-            exit;
+//             echo "GameModel::loadFormData";
+//             var_dump($data);
+//             exit;
         }
         
         $this->preprocessData('com_jsports.game', $data);
@@ -162,7 +172,8 @@ class GameModel extends FormModel
         $logger = Myapp::getLogger();
         $isNew = false;
         
-        $user = Factory::getUser();
+//         $user = Factory::getUser();
+        $user = UserService::getUser();
         
         $table = GameService::getGamesTable();
         $table->bind($data);

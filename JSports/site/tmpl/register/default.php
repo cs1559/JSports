@@ -40,7 +40,7 @@ $itemid = $params->get('itemid');
             <span class="icon-check" aria-hidden="true"></span>
             <?php echo Text::_('Continue'); ?>
         </button>
-        <button type="submit" class="btn btn-danger" name="task" value="registration.cancel" formnovalidate>
+        <button type="submit" class="btn btn-danger" name="task" value="register.cancel" formnovalidate>
             <span class="icon-times" aria-hidden="true"></span>
             <?php echo Text::_('JCANCEL'); ?>
         </button>

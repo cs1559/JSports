@@ -14,6 +14,7 @@ namespace FP4P\Component\JSports\Site\Model;
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Application\SiteApplication;
 use Joomla\CMS\MVC\Model\FormModel;
 
 use Joomla\Database\ParameterType;
@@ -38,7 +39,7 @@ class LogouploadModel extends FormModel
     protected $programs;
     protected $recordhistory;
     protected $actionmenu;
-    
+    protected $teamid;    
     protected $form = 'team';
     
     
@@ -46,12 +47,14 @@ class LogouploadModel extends FormModel
     public function getItem(){
         
         $input = Factory::getApplication()->input;
-        $id     = $input->getInt("id");
+
+        $this->teamid = (int) $this->getState('logoupload.id')
+            ?: Factory::getApplication()->input->getInt('teamid');
         
         $svc = new TeamService();
-        return $svc->getItem($id);
+        $item = $svc->getItem($this->teamid);
 
-
+        return $item;
     }
     
     
@@ -69,7 +72,7 @@ class LogouploadModel extends FormModel
                 'control' => 'jform',	// the name of the array for the POST parameters
                 'load_data' => $loadData	// will be TRUE
             )
-            );
+        );
                 
         if (empty($form))
         {
@@ -82,22 +85,30 @@ class LogouploadModel extends FormModel
     
     protected function loadFormData()
     {
-        
-        // Check the session for previously entered form data.
         $data = Factory::getApplication()->getUserState(
-            'com_jsports_form.logoupload.data',	// a unique name to identify the data in the session
-//             array("name" => "Coach Name")
-                array($this->data)	// prefill data if no data found in session
+            'com_jsports_form.logoupload.data',
+            []
             );
         
         if (empty($data)) {
             $data = $this->getItem();
-        }        
+        }
         
+
         $this->preprocessData('jsports.logoupload', $data);
         
         
         return $data;
+    }
+    
+    
+    protected function populateState() {
+        
+        parent::populateState();
+        
+        /** @var SiteApplication $app */
+        $app = Factory::getContainer()->get(SiteApplication::class);
+        $this->setState('logoupload.id', $app->getInput()->getInt('teamid'));
     }
     
 }

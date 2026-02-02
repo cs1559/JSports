@@ -5,7 +5,7 @@
  * @version     1.0.0
  * @package     JSports.Site
  * @subpackage  com_jsports
- * @copyright   Copyright (C) 2023-2024 Chris Strieter
+ * @copyright   Copyright (C) 2023-2026 Chris Strieter
  * @license     GNU/GPLv2, see http://www.gnu.org/licenses/gpl-2.0.html
  *
  */
@@ -20,7 +20,12 @@ use FP4P\Component\JSports\Site\Services\SecurityService;
 use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\Pagination\Pagination;
 use Joomla\CMS\Form\Form;
-
+use FP4P\Component\JSports\Site\Model\TeamsModel;
+/**
+ * This is the TEAMS view that allows a user to list teams.
+ * @author Chris Strieter
+ *
+ */
 class HtmlView extends BaseHtmlView
 {
     public $form;
@@ -60,42 +65,39 @@ class HtmlView extends BaseHtmlView
      */
     public $activeFilters;
     
-    public $showData;
     public $isProgramPending;
     
     public function display($tpl = null)
     {
         
-        $this->items         = $this->get('Items');
-        $this->pagination    = $this->get('Pagination');
-        $this->state         = $this->get('State');
-        $this->filterForm    = $this->get('FilterForm');
-        $this->activeFilters = $this->get('ActiveFilters');
+        /** @var TeamsModel $model */  
+        $model = $this->getModel();
+        
+        $this->items         = $model->getItems();
+        $this->pagination    = $model->getPagination();
+        $this->state         = $model->getState();
+        $this->filterForm    = $model->getFilterForm();
+        $this->activeFilters = $model->getActiveFilters();
+        
         $this->isProgramPending = false;
         
         /* removed 12/6/2024 - this caused pagination issues */
         //$this->pagination->limit = 30;
         
-        $programid = $this->state['filter.programid'];
+        $programid = (int) ($this->state->get('filter.programid') ?? 0);
         $this->program = ProgramsService::getItem($programid);
         
-        $this->showData = false;
-        if ($this->program->status == "P") {
-            $this->isProgramPending = true;
-            if (SecurityService::isAdmin()) {
-                $this->showData = true;
-            }
-            $this->showData = false;
-        } else {
-            $this->showData = true;
-        }
+        $isAdmin = SecurityService::isAdmin();
+        $status = $this->program->status ?? '';
+        $setupFinal = !empty($this->program->setupfinal);
         
-        if (!$this->program->setupfinal && $this->program->id > 0) {
-            $this->isProgramPending = true;
+        $this->isProgramPending = ($status === 'P') || (!$setupFinal && (int) ($this->program->id ?? 0) > 0);
+        
+        if (!$this->program) {
+            $this->setLayout('noprogram');
         }
-         
         // Check for errors.       
-        if (count($errors = $this->get('Errors')))
+        if (count($errors = $model->getErrors()))
         {
             throw new GenericDataException(implode("\n", $errors), 500);
         }
@@ -104,6 +106,5 @@ class HtmlView extends BaseHtmlView
         
     }
     
-   
 }
 

@@ -82,6 +82,8 @@ class Router extends RouterView
      */
     public function __construct(SiteApplication $app, AbstractMenu $menu, CategoryFactoryInterface $categoryFactory, DatabaseInterface $db)
     {
+        //* @todo for views that have no arguments, then remove the appropriate setKey statements below.
+        
         $this->categoryFactory = $categoryFactory;
         $this->db              = $db;
 
@@ -89,8 +91,9 @@ class Router extends RouterView
         $this->noIDs = (bool) $params->get('sef_ids');
 
         // DEFINE/CONFIGURE ALL VIEWS ON THE SITE SIDE OF THE EXTENSION
+        // NOTE:  The KEY should map to a variable passed on the URL
         $dashboard = new RouterViewConfiguration('dashboard');
-        $dashboard->setKey('id');
+//         $dashboard->setKey('id');
         $this->registerView($dashboard);
         
         $register = new RouterViewConfiguration('register');
@@ -98,11 +101,11 @@ class Router extends RouterView
         $this->registerView($register);
         
         $standings  = new RouterViewConfiguration('standings');
-        $standings->setKey('id');
+//         $standings->setKey('id');
         $this->registerView($standings);
 
         $teams = new RouterViewConfiguration('teams');
-        $teams->setKey('id');
+//         $teams->setKey('id');
         $this->registerView($teams);
         
         $team = new RouterViewConfiguration('team');
@@ -110,24 +113,32 @@ class Router extends RouterView
         $this->registerView($team);
         
         $myteams = new RouterViewConfiguration('myteams');
-        $myteams->setKey('id');
+//         $myteams->setKey('id');
         $this->registerView($myteams);
 
         $venues = new RouterViewConfiguration('venues');
-        $venues->setKey('id');
+//         $venues->setKey('id');
         $this->registerView($venues);
         
         $openings = new RouterViewConfiguration('openings');
-        $openings->setKey('id');
+//         $openings->setKey('id');
         $this->registerView($openings);
 
-        $bulletins = new RouterViewConfiguration('bulletins');
-        $bulletins->setKey('id');
-        $this->registerView($bulletins);
+        $postings = new RouterViewConfiguration('postings');
+        //         $openings->setKey('id');
+        $this->registerView($postings);
+        
+//         $bulletins = new RouterViewConfiguration('bulletins');
+//         $bulletins->setKey('id');
+//         $this->registerView($bulletins);
 
-        $bulletin = new RouterViewConfiguration('bulletin');
-        $bulletin->setKey('id');
-        $this->registerView($bulletin);
+//         $bulletin = new RouterViewConfiguration('bulletin');
+//         $bulletin->setKey('id');
+//         $this->registerView($bulletin);
+        
+        $games = new RouterViewConfiguration('games');
+//         $games->setKey('id');
+        $this->registerView($games);
         
         parent::__construct($app, $menu);
 
@@ -140,18 +151,27 @@ class Router extends RouterView
     public function preprocess($query)
     {
         $params = ComponentHelper::getParams('com_jsports');
-        $itemid = $params->get('itemid');
-
-        if (!key_exists('Itemid', $query)) {
+        $itemid = (int) $params->get('itemid');
+        
+        if (!isset($query['Itemid']) && $itemid > 0) {
             $query['Itemid'] = $itemid;
         }
         
-        // Process the parsed variables based on custom defined rules
-        foreach ($this->rules as $rule) {
-            $rule->preprocess($query);
-        }
-        
         return $query;
+        
+//         $params = ComponentHelper::getParams('com_jsports');
+//         $itemid = $params->get('itemid');
+
+//         if (!key_exists('Itemid', $query)) {
+//             $query['Itemid'] = $itemid;
+//         }
+        
+//         // Process the parsed variables based on custom defined rules
+//         foreach ($this->rules as $rule) {
+//             $rule->preprocess($query);
+//         }
+        
+//         return $query;
     }
         
     /*   
@@ -163,40 +183,75 @@ class Router extends RouterView
      */
     public function getTeamSegment($id, $query)
     {
-                      
-        $db = Factory::getDbo();
-        $dbquery = $db->getQuery(true);
+
+            // Accept "1011" or "1011:alias"
+            $id = (int) explode(':', (string) $id, 2)[0];
+            
+            $db = $this->db;
+            $q  = $db->getQuery(true)
+            ->select($db->quoteName('alias'))
+            ->from($db->quoteName('#__jsports_teams'))
+            ->where($db->quoteName('id') . ' = :id')
+            ->bind(':id', $id, ParameterType::INTEGER);
+            
+            $db->setQuery($q);
+            $alias = (string) $db->loadResult();
+            
+            // If no alias found, fall back to numeric id segment
+            if ($alias === '') {
+                return [$id => (string) $id];
+            }
+            
+            return [$id => $alias];
+            
+//         $db         = $this->db;
+//         $dbquery    = $db->getQuery(true);
         
-        $dbquery->select($dbquery->qn('alias'))
-        ->from($db->qn('#__jsports_teams'))
-        ->where('id = ' . $db->q($id));
+//         $dbquery->select($dbquery->qn('alias'))
+//             ->from($db->qn('#__jsports_teams'))
+//             ->where('id = ' . $db->q($id));
         
-        $db->setQuery($dbquery);
+//         $db->setQuery($dbquery);
+            
+//         $id .= ':' . $db->loadResult();
         
-        $id .= ':' . $db->loadResult();
-        
-        list($void, $segment) = explode(':', $id, 2);
+//         list($void, $segment) = explode(':', $id, 2);
      
-        return array($void => $segment);
+//         return array($void => $segment);
     }
     
     
     public function getTeamId($segment, $query)
     {
-        $db = Factory::getDbo();
-        $dbquery = $db->getQuery(true);
+
+        $db = $this->db;
         
-        $dbquery->select($dbquery->qn('id'))
-        ->from($dbquery->qn('#__jsports_teams'))
-        ->where('alias = ' . $dbquery->q($segment));
+        $q = $db->getQuery(true)
+        ->select($db->quoteName('id'))
+        ->from($db->quoteName('#__jsports_teams'))
+        ->where($db->quoteName('alias') . ' = :alias')
+        ->bind(':alias', (string) $segment, ParameterType::STRING);
         
-        $db->setQuery($dbquery);
+        $db->setQuery($q);
+        $id = (int) $db->loadResult();
         
-        if (!(int) $db->loadResult())
-        {
-            return false;
-        }
-        return (int) $db->loadResult();
+        return $id ?: false;
+        
+        
+//         $db         = $this->db;
+//         $dbquery    = $db->getQuery(true);
+        
+//         $dbquery->select($dbquery->qn('id'))
+//         ->from($dbquery->qn('#__jsports_teams'))
+//         ->where('alias = ' . $dbquery->q($segment));
+        
+//         $db->setQuery($dbquery);
+        
+//         if (!(int) $db->loadResult())
+//         {
+//             return false;
+//         }
+//         return (int) $db->loadResult();
     }
     
     

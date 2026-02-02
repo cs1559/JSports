@@ -13,6 +13,7 @@ namespace FP4P\Component\JSports\Site\Objects\Logger;
 
 use FP4P\Component\JSports\Site\Objects\Logger\Logger;
 use Joomla\CMS\Factory;
+use FP4P\Component\JSports\Site\Services\UserService;
 
 class DatabaseLogger extends Logger 
 {
@@ -46,7 +47,8 @@ class DatabaseLogger extends Logger
     {
         
         $db = Factory::getDbo();
-        $user = Factory::getUser();
+//         $user = Factory::getUser();
+        $user = UserService::getUser();
         
         $query = $db->getQuery(true);
                 
@@ -72,15 +74,20 @@ class DatabaseLogger extends Logger
          * NOTE:  the save functions need to be "tightened" up to check for an authenticate session before allowing a save to 
          * be performed.
          */
+//         die  ("Databaselogger: die");
         if (!$user->id) {
-            $user->name = "Unknown";
+            $userid = 0;
+            $name = "Unknown";
+        } else {
+            $userid = $user->id;
+            $name = $user->username;
         }
         
         $values = array(
             0,
             $db->quote($datetime), // teamname
-            $db->quote($user->id), // alias
-            $db->quote($user->username), // city
+            $db->quote($userid), // alias
+            $db->quote($username), // city
             $db->quote($msg), // state
         );
         

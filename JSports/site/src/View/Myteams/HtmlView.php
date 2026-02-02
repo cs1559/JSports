@@ -5,7 +5,7 @@
  * @version     1.0.0
  * @package     JSports.Site
  * @subpackage  com_jsports
- * @copyright   Copyright (C) 2023-2024 Chris Strieter
+ * @copyright   Copyright (C) 2023-2026 Chris Strieter
  * @license     GNU/GPLv2, see http://www.gnu.org/licenses/gpl-2.0.html
  *
  */
@@ -18,16 +18,24 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Component\ComponentHelper;
 
 /**
- * HTML Dashboard View
+ * HTML MyTeams View - this view will list all the teams a user is associated with.
  *
  * @since  1.5
  */
 class HtmlView extends BaseHtmlView
 {
 
-    protected $item;
+    /**   
+     * $teams - This is an array of objects based on a custom query.
+     * 
+     * @var array
+     */
     protected $teams;
+    
+    /** string $defaultlogo - full url path and filename of the default logo. */
     protected $defaultlogo;
+    
+    /** string $logodir - this is the directory for team logos */
     protected $logodir;
     
     /**
@@ -44,6 +52,7 @@ class HtmlView extends BaseHtmlView
         $this->logodir = $params->get('logodir');
         
         $this->teams = $this->get('Teams');
+        // @todo This needs to be configurable.
         $this->defaultlogo = '/media/com_jsports/images/swibl-square-logo.png';
         
         return parent::display($tpl);

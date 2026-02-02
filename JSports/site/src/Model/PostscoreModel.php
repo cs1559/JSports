@@ -15,13 +15,15 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\MVC\Model\FormModel;
 use Joomla\CMS\Language\Text;
-use Joomla\Database\ParameterType;
 use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Services\GameService;
 use FP4P\Component\JSports\Site\Services\TeamService;
 use Joomla\CMS\Application\SiteApplication;
 use FP4P\Component\JSports\Site\Objects\Application as Myapp;
 use Joomla\CMS\Form\Form;
+use FP4P\Component\JSports\Site\Services\UserService;
+use FP4P\Component\JSports\Administrator\Table\TeamsTable;
+use FP4P\Component\JSports\Administrator\Table\GamesTable;
 
 /**
  * GameModel - Methods/functions to manage games within the component.
@@ -37,19 +39,31 @@ class PostscoreModel extends FormModel
      */
     protected $data;
     protected $form = 'postscore';
+    /** int $teamid */
     protected $teamid;
+    
+    /** int $programid */
     protected $programid;
+    
+    /** int $divisionid */
     protected $divisionid;
+    
+    /**
+     * @var TeamsTable
+     */
     protected $team;
     protected $_context = 'com_jsports.postscore';
     protected $_item = [];
     
-    protected function populateState() {
+    protected function populateState() : void {
+        
+        parent::populateState();
+        
         /** @var SiteApplication $app */
-        $app = Factory::getContainer()->get(SiteApplication::class);
-	$this->setState('postscore.game.id', $app->getInput()->getInt('id'));
-	$this->setState('postscore.game.teamid', $app->getInput()->getInt('teamid'));
-	$this->setState('postscore.game.programid', $app->getInput()->getInt('programid'));
+       $app = Factory::getContainer()->get(SiteApplication::class);
+	   $this->setState('postscore.game.id', $app->getInput()->getInt('id'));
+	   $this->setState('postscore.game.teamid', $app->getInput()->getInt('teamid'));
+	   $this->setState('postscore.game.programid', $app->getInput()->getInt('programid'));
 
     }
     
@@ -63,20 +77,27 @@ class PostscoreModel extends FormModel
      */
     public function validate($form, $data, $group = null) {
         
-        $startDate = strtotime(date('Y-m-d', strtotime($data['gamedate']) ) );
+        if (!empty($data['gamedate'])) {
+            $startDate = strtotime(date('Y-m-d', strtotime($data['gamedate']) ) );
         
-         $currentDate = strtotime(date('Y-m-d'));
-        if($startDate > $currentDate) {
-            $this->setError(Text::_('COM_JSPORTS_ERR_POSTSCORE_FOR_FUTURE_GAME'));
+            $currentDate = strtotime(date('Y-m-d'));
+            if($startDate > $currentDate) {
+                $this->setError(Text::_('COM_JSPORTS_ERR_POSTSCORE_FOR_FUTURE_GAME'));
+                return false;
+            }
+        } else {
             return false;
         }
         
-        return parent::validate($form, $data, $group = null);
+        return parent::validate($form, $data, $group);
     }
     
     
-    
-    public function getItem(){
+    /**
+     * 
+     * @return \FP4P\Component\JSports\Administrator\Table\GamesTable
+     */
+    public function getItem($id = null) :  ?GamesTable {
 
         $input = Factory::getApplication()->input;
         $id     = $input->getInt("id");
@@ -84,13 +105,12 @@ class PostscoreModel extends FormModel
         $svc = new GameService();
         $item = $svc->getItem($id);
 
-       
         if ($id == 0) {
             $this->teamid = $input->getInt('teamid');
             $this->programid = $input->getInt('programid');
             $this->divisionid = TeamService::getTeamDivisionId($this->teamid, $this->programid);
             echo "PostScoreModel::getItem - TeamID=" . $this->teami;
-            exit;
+            return null;
         }
         
         // Get a Team record and place within our model
@@ -110,7 +130,7 @@ class PostscoreModel extends FormModel
 
         if (empty($form))
         {
-	    return false;
+	        return false;
             $errors = $this->getErrors();
             throw new \Exception(implode("\n", $errors), 500);
         }
@@ -130,9 +150,9 @@ class PostscoreModel extends FormModel
         
         if (empty($data)) {
             $data = $this->getItem();
-            echo "PostScoreModel::loadFormData";
-            var_dump($data);
-            exit;
+//             echo "PostScoreModel::loadFormData";
+//             var_dump($data);
+//             return null;
         }
 
         $this->preprocessData('com_jsports.postscore', $data);
@@ -153,7 +173,8 @@ class PostscoreModel extends FormModel
         
         $logger = Myapp::getLogger();
         
-        $user = Factory::getUser();
+//         $user = Factory::getUser();
+        $user = UserService::getUser();
 
         $id = $data['id'];
         $hscore = $data['hometeamscore'];

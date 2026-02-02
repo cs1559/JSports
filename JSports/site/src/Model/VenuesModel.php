@@ -14,7 +14,9 @@ namespace FP4P\Component\JSports\Site\Model;
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Factory;
 use Joomla\CMS\MVC\Model\ListModel;
+use Joomla\Database\DatabaseInterface;
 use Joomla\Database\ParameterType;
 
 /**
@@ -93,7 +95,7 @@ class VenuesModel extends ListModel
 		$id .= ':' . $this->getState('filter.search');
 		$id .= ':' . $this->getState('filter.published');
 		$id .= ':' . $this->getState('filter.city');
-		$id .= ':' . $this->getState('filter.name');
+// 		$id .= ':' . $this->getState('filter.name');
 
 		return parent::getStoreId($id);
 	}
@@ -109,7 +111,8 @@ class VenuesModel extends ListModel
 	protected function getListQuery()
 	{
 	    // Create a new query object.
-	    $db    = $this->getDatabase();
+	    //$db    = $this->getDatabase();
+	    $db = Factory::getContainer()->get(DatabaseInterface::class);
 	    $query = $db->getQuery(true);
 	    
 	    // Select the required fields from the table.
@@ -133,7 +136,8 @@ class VenuesModel extends ListModel
 	    }
 	    elseif ($published === '')
 	    {
-	        $query->whereIn($db->quoteName('a.published'), array(0, 1));
+// 	        $query->whereIn($db->quoteName('a.published'), array(0, 1));
+	        $query->where($db->quoteName('a.published') . ' IN (0,1)');
 	    }
 	    
 	    

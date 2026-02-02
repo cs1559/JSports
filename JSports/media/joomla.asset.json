@@ -20,6 +20,10 @@
 			"type" : "style",
 			"uri" : "com_jsports/myteams.css"
 		}, {
+			"name" : "com_jsports.postings.style",
+			"type" : "style",
+			"uri" : "com_jsports/postings.css"
+		}, {
 			"name" : "com_jsports.standings.style",
 			"type" : "style",
 			"uri" : "com_jsports/standings.css"

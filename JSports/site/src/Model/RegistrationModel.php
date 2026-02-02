@@ -1,11 +1,11 @@
-<?php
+<?php   
 /**
  * JSports - Joomla Sports Management Component
  *
  * @version     1.0.0
  * @package     JSports.Site
  * @subpackage  com_jsports
- * @copyright   Copyright (C) 2023-2024 Chris Strieter
+ * @copyright   Copyright (C) 2023-2026 Chris Strieter
  * @license     GNU/GPLv2, see http://www.gnu.org/licenses/gpl-2.0.html
  *
  */
@@ -25,35 +25,46 @@ use Joomla\CMS\Form\Form;
 /**
  * This model supports methods required to enable users to register for a program from the front-end side of the JSports component.
  *
- * @since  1.6
  */
 class RegistrationModel extends FormModel
 {
     
     /**
-     * @var     object  Registration data.
-     * @since   1.6
+     * @var     RegistrationsTable  
      */
     protected $data;
     
+    /**
+     * @var string
+     */
     protected $agreementurl = null;
+ 
+    
+    protected function populateState()
+    {
+        parent::populateState();
+        
+        $app = Factory::getApplication();
+        $this->setState('registration.id', $app->input->getInt('id'));
+    }
     
     
     /**
      * This function will retrieve a registration record from the database.
-     *
+     * @deprecated
      * @return RegistrationsTable
-     */
-    public function getData(){
-        $input = Factory::getApplication()->input;
-        $id     = $input->getInt("id");
+     */ 
+    public function getData() : RegistrationsTable {
+//         $input = Factory::getApplication()->input;
+//         $id     = $input->getInt("id");
         
-        $svc = new RegistrationService();
-        $item = $svc->getItem($id);
+//         $svc = new RegistrationService();
+//         $item = $svc->getItem($id);
     
-        $this->agreementurl = "https://cdn1.sportngin.com/attachments/document/446a-3026828/swibl_coaching_agreement.pdf";
+//         // @todo  This needs to be removed and make it a configurable option at the component level.
+//         $this->agreementurl = "https://cdn1.sportngin.com/attachments/document/446a-3026828/swibl_coaching_agreement.pdf";
         
-        return $item;
+//         return $item;
     }
 
     /**
@@ -62,10 +73,9 @@ class RegistrationModel extends FormModel
      * @return RegistrationsTable
      */
    
-    public function getItem(){
+    public function getItem(?int $id = null) : ?RegistrationsTable {
         
-        $input = Factory::getApplication()->input;
-        $id     = $input->getInt("id");
+        $id = Factory::getApplication()->input->getInt('id', 0);
         
         $svc = new RegistrationService();
         return $svc->getItem($id);
@@ -124,7 +134,6 @@ class RegistrationModel extends FormModel
         
         $this->preprocessData('jsports.registration', $data);
         
-        
         return $data;
     }
     
@@ -137,7 +146,6 @@ class RegistrationModel extends FormModel
      */
     public function save($data) {
         
-//         $user = Factory::getUser();
         $app = Application::getInstance();
         
         

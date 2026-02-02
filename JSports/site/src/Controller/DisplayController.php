@@ -48,6 +48,6 @@ class DisplayController extends BaseController
 	    $itemid = $params->get('itemid');
 	    $uri->setVar('Itemid', $itemid);
 	    
-		return parent::display();
+	    return parent::display($cachable = false, $urlparams = array());
 	}
 }

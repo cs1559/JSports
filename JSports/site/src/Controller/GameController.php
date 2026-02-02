@@ -23,6 +23,7 @@ use FP4P\Component\JSports\Site\Services\GameService;
 use Joomla\CMS\Component\ComponentHelper;
 use FP4P\Component\JSports\Site\Objects\Application as Myapp;
 use FP4P\Component\JSports\Site\Services\BulletinService;
+use FP4P\Component\JSports\Site\Services\UserService;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
@@ -39,8 +40,7 @@ class GameController extends FormController
     
     public function display($cachable = false, $urlparams = [])
     {
-        
-        parent::display($cachable = false, $urlparams = []);
+        return parent::display($cachable, $urlparams);
     }
     
     /**
@@ -49,91 +49,113 @@ class GameController extends FormController
      */
     public function delete() {
 
-        // Check for request forgeries.
-        $this->checkToken();
+        $this->checkToken($this->input->getMethod() == 'GET' ? 'get' : 'post');
         
         $logger = Myapp::getLogger();
-        $app = Factory::getApplication();
+        $app    = Factory::getApplication();
+        $input  = $app->input;
+        $id     = $input->getInt('id');
+        //@TODO  Context ID needs to be changed to Team ID for Game/Schedule management
+        $contextid = $input->getInt('contextid');
+        $teamid    = $input->getInt('teamid', $contextid);
+        $user   = UserService::getUser();
         
-        $input = Factory::getApplication()->input;
-        $id     = $input->getInt("id");
-        $contextid = $input->getInt("contextid");
+//         $method = strtoupper($this->input->getMethod());
         
-        $lasturl = $_SERVER['HTTP_REFERER'];
+//         if ($method === 'GET') {
+//             $this->checkToken('get');
+//         } else {
+//             // Check for request forgeries.
+//             $this->checkToken();
+//         }
         
-        /* Code to prevent further action if user is NOT logged in */
-        $user = Factory::getUser();
+//         $lasturl = $_SERVER['HTTP_REFERER'];
+//         if ($lastUrl && Uri::isInternal($lastUrl)) {
+//             $this->setRedirect($lastUrl);
+//         }
+        
         // Check if the user is logged in
         if ($user->guest) {
             $app->enqueueMessage(Text::sprintf('COM_JSPORTS_INVALID_USERSESSION'), 'error');
             $logger->info('Game ID: ' . $id. ' Game DELETE failed due to user session invalid');
-            $this->setRedirect(Route::_('index.php?option=com_jsports&view=schedules&teamid=' . $contextid, false));
+            $this->setRedirect(Route::_('index.php?option=com_jsports&view=schedules&teamid=' . $teamid, false));
             return false;
         }
-   
-        if ($id == 0) {
-            $this->setMessage(Text::_('COM_JSPORTS_GAME_INVALID_ID_DELETE_FAILED'), 'error');
-            $this->setRedirect(Route::_('index.php?option=com_jsports&view=dashboard', false));
-            return false;
-        }
-   
+     
         // Get the record to be deleted so you know the team ID and the program ID.
         $svc = new GameService();
         $item = $svc->getItem($id);
         
-        $redirectURL = 'index.php?option=com_jsports&view=dashboard';
-        $rUrl = 'index.php?option=com_jsports&view=schedules&teamid=' .
-            $contextid . '&programid=' . $item->programid;
-               // $item->teamid . '&programid=' . $item->programid;
+        if (!$item || $id == 0) {
+            $this->setMessage(Text::_('COM_JSPORTS_GAME_INVALID_ID_DELETE_FAILED'), 'error');
+            $this->setRedirect(Route::_('index.php?option=com_jsports&view=dashboard', false));
+            return false;
+        }
+
         if ($item->gamestatus === 'C') {
-            $this->setMessage(Text::_('COM_JSPORTS_GAME_CANNOT_BE_DELETED'),'info');
-            $redirectURL = $rUrl;
-        } else {
-            
-            try {
-                $result = GameService::delete($id);
-                if ($result) {
-                    $logger->info('Game ID: ' . $id. ' has been DELETED  ' . $item->gamedate . ' ' . $item->name . ' STATUS=' . $item->gamestatus);
-                    $this->setMessage(Text::_('COM_JSPORTS_GAME_SUCCESSFULLY_DELETED'),'info');
-                } else {
-                    $logger->error('Game ID: ' . $id. ' has NOT been deleted' );
-                    $this->setMessage(Text::_('COM_JSPORTS_GAME_NOT_DELETED'),'info');
-                }
-                $redirectURL = $rUrl;
-                
-            } catch (\Exception $e) {
-                $errors = $item->getErrors();
-                $this->setError($errors[0]);
-                $app->enqueueMessage($errors[0],'error');
-                $redirectURL = 'index.php?option=com_jsports&view=schedules&teamid=' .
-                    $contextid . '&programid=' . $item->programid;
-                   // $item->teamid   . '&programid=' . $item->programid;
-            }
+            $this->setMessage(Text::_('COM_JSPORTS_GAME_CANNOT_BE_DELETED'), 'info');
+            return $this->setRedirect(
+                Route::_('index.php?option=com_jsports&view=schedules&teamid=' . (int) $teamid . '&programid=' . (int) $item->programid, false)
+                );
         }
         
-        $this->setRedirect(Route::_($redirectURL));
+        $redirectURL = 'index.php?option=com_jsports&view=dashboard';
+        $rUrl = 'index.php?option=com_jsports&view=schedules&teamid=' .
+            (int) $teamid . '&programid=' . (int) $item->programid;
+
+        try {
+            $result = GameService::delete($id);
+            if ($result) {
+                $logger->info('Game ID: ' . $id. ' has been DELETED  ' . $item->gamedate . ' ' . $item->name . ' STATUS=' . $item->gamestatus);
+                $this->setMessage(Text::_('COM_JSPORTS_GAME_SUCCESSFULLY_DELETED'),'success');
+            } else {
+                $logger->error('Game ID: ' . $id. ' has NOT been deleted' );
+                $this->setMessage(Text::_('COM_JSPORTS_GAME_NOT_DELETED'),'error');
+            }
+            $redirectURL = $rUrl;
+            
+            
+            $this->setRedirect(Route::_($redirectURL, false));
+            return (bool) $result;
+            
+        } catch (\Exception $e) {
+            $errors = $item->getErrors();
+            $this->setError($errors[0]);
+            $app->enqueueMessage($errors[0],'error');
+            $redirectURL = 'index.php?option=com_jsports&view=schedules&teamid=' .
+                (int) $teamid . '&programid=' . (int) $item->programid;
+            $logger->error('Game ID: ' . $id. ' has NOT been deleted' );
+            $this->setMessage(Text::_('COM_JSPORTS_GAME_NOT_DELETED'),'error');
+                
+            $this->setRedirect(Route::_($redirectURL, false));
+                return false;
+        }
+
+//         $this->setRedirect(Route::_($redirectURL, false));
         
     }
 
     
+    
     /**
-     * Function to support the RESET of a game from the team schedule.  This function resets the status to 'S'
+     * Function to support the RESET of a game from the team schedule.
+     * This function resets the status to 'S'
      * @return boolean
      */
     public function reset() {
         
-        // Check for request forgeries.
-        $this->checkToken();
+        $this->checkToken($this->input->getMethod() == 'GET' ? 'get' : 'post');
         
         $logger = Myapp::getLogger();
         $app = Factory::getApplication();
         
-        $input = Factory::getApplication()->input;
+        $input = $app->input;
         $id     = $input->getInt("id");
-        $teamid     = $input->getInt("teamid");
+        $teamid = $input->getInt("teamid");
         
         /* Code to prevent further action if user is NOT logged in */
-        $user = Factory::getUser();
+        $user = UserService::getUser();
+        
         // Check if the user is logged in
         if ($user->guest) {
             $app->enqueueMessage(Text::sprintf('COM_JSPORTS_INVALID_USERSESSION'), 'error');
@@ -153,30 +175,92 @@ class GameController extends FormController
         $item = $svc->getItem($id);
         
         $redirectURL = 'index.php?option=com_jsports&view=dashboard';
-//         $rUrl = 'index.php?option=com_jsports&view=schedules&teamid=' . $item->teamid . '&programid=' . $item->programid;
-        $rUrl = 'index.php?option=com_jsports&view=schedules&teamid=' . $teamid . '&programid=' . $item->programid;
-            try {
-                $result = GameService::reset($id);
-                if ($result) {
-                    $logger->info('Game ID: ' . $id . ' status has been reset');
-                    $this->setMessage(Text::_('COM_JSPORTS_GAME_RESET_SUCCESSFUL'),'info');
-                } else {
-                    $this->setMessage("Game status was NOT reset",'info');
-                }
-                $redirectURL = $rUrl;
-                
-            } catch (\Exception $e) {
-                $errors = $item->getErrors();
-                $this->setError($errors[0]);
-                $app->enqueueMessage($errors[0],'error');
-                $redirectURL = 'index.php?option=com_jsports&view=schedules&teamid=' .
-                    $itemid   . '&programid=' . $item->programid;
+        $rUrl = 'index.php?option=com_jsports&view=schedules&teamid=' . (int) $teamid
+                . '&programid=' . (int) $item->programid;
+        try {
+            $result = GameService::reset($id);
+            if ($result) {
+                $logger->info('Game ID: ' . $id . ' status has been reset');
+                $this->setMessage(Text::_('COM_JSPORTS_GAME_RESET_SUCCESSFUL'),'success');
+            } else {
+                $this->setMessage("Game status was NOT reset",'info');
             }
+            $redirectURL = $rUrl;
+            
+        } catch (\Exception $e) {
+            $errors = $item->getErrors();
+            $this->setError($errors[0]);
+            $app->enqueueMessage($errors[0],'error');
+            // FIX: Changed $itemid to $teamid
+            $redirectURL = 'index.php?option=com_jsports&view=schedules&teamid=' .
+                $teamid . '&programid=' . $item->programid;
+        }
+        
+        $this->setRedirect(Route::_($redirectURL, false));
+        return true;
+    }
+    
+//     /**
+//      * Function to support the RESET of a game from the team schedule.  This function resets the status to 'S'
+//      * @return boolean
+//      */
+//     public function reset() {
+        
+//         $this->checkToken($this->input->getMethod() == 'GET' ? 'get' : 'post');
+        
+//         $logger = Myapp::getLogger();
+//         $app = Factory::getApplication();
+        
+//         $input = Factory::getApplication()->input;
+//         $id     = $input->getInt("id");
+//         $teamid     = $input->getInt("teamid");
+        
+//         /* Code to prevent further action if user is NOT logged in */
+// //         $user = Factory::getUser();
+//         $user = UserService::getUser();
+//         // Check if the user is logged in
+//         if ($user->guest) {
+//             $app->enqueueMessage(Text::sprintf('COM_JSPORTS_INVALID_USERSESSION'), 'error');
+//             $logger->info('Game ID: ' . $id. ' Game RESET failed due to user session invalid');
+//             $this->setRedirect(Route::_('index.php?option=com_jsports&view=schedules&teamid=' . $teamid, false));
+//             return false;
+//         }
+        
+//         if ($id == 0) {
+//             $this->setMessage(Text::_('COM_JSPORTS_GAME_INVALID_ID_RESET_FAILED'),'error');
+//             $this->setRedirect(Route::_('index.php?option=com_jsports&view=dashboard', false));
+//             return false;
+//         }
+        
+//         // Get the record to be reset so you know the team ID and the program ID.
+//         $svc = new GameService();
+//         $item = $svc->getItem($id);
+        
+//         $redirectURL = 'index.php?option=com_jsports&view=dashboard';
+// //         $rUrl = 'index.php?option=com_jsports&view=schedules&teamid=' . $item->teamid . '&programid=' . $item->programid;
+//         $rUrl = 'index.php?option=com_jsports&view=schedules&teamid=' . $teamid . '&programid=' . $item->programid;
+//             try {
+//                 $result = GameService::reset($id);
+//                 if ($result) {
+//                     $logger->info('Game ID: ' . $id . ' status has been reset');
+//                     $this->setMessage(Text::_('COM_JSPORTS_GAME_RESET_SUCCESSFUL'),'info');
+//                 } else {
+//                     $this->setMessage("Game status was NOT reset",'info');
+//                 }
+//                 $redirectURL = $rUrl;
+                
+//             } catch (\Exception $e) {
+//                 $errors = $item->getErrors();
+//                 $this->setError($errors[0]);
+//                 $app->enqueueMessage($errors[0],'error');
+//                 $redirectURL = 'index.php?option=com_jsports&view=schedules&teamid=' .
+//                     $itemid   . '&programid=' . $item->programid;
+//             }
         
             
-        $this->setRedirect(Route::_($redirectURL));
+//         $this->setRedirect(Route::_($redirectURL), false);
         
-    }
+//     }
     
     
     
@@ -191,8 +275,8 @@ class GameController extends FormController
     {
                 
         // Check for request forgeries.
-        $this->checkToken();
-
+        $this->checkToken($this->input->getMethod() == 'GET' ? 'get' : 'post');
+        
         $app    = $this->app;
         $model  = $this->getModel('Game', 'Site');
 
@@ -205,7 +289,8 @@ class GameController extends FormController
         $contextid = $requestData['contextid'];
         
         /* Code to prevent further action if user is NOT logged in */
-        $user = Factory::getUser();
+//         $user = Factory::getUser();
+        $user = UserService::getUser();
         // Check if the user is logged in
         if ($user->guest) {
             $app->enqueueMessage(Text::sprintf('COM_JSPORTS_INVALID_USERSESSION'), 'error');
@@ -285,7 +370,7 @@ class GameController extends FormController
                         '&programid='  . $data['programid'];
                     //@TODO  need to look at.
                     //$redirect = 'index.php?option=com_jsports&view=schedules&teamid=' .  $data['contextid'] .
-                    '&programid='  . $data['programid'];
+//                     '&programid='  . $data['programid'];
                 }
                 
 
@@ -308,19 +393,18 @@ class GameController extends FormController
      */
     public function cancel($key = null)
     {
-        // Check for request forgeries.
-        $this->checkToken();
-
-        $app    = $this->app;
-        // Get the team id.
-        $requestData = $app->getInput()->post->get('jform', [], 'array');
-        $teamid = $requestData['teamid'];
-        $contextid = $requestData['contextid'];
+        
+        $this->checkToken($this->input->getMethod() == 'GET' ? 'get' : 'post');
+        
+        $input = $this->input;
+        $requestData = $input->get('jform', [], 'array'); // pulls from request (post/get)
+        $teamid = (int) ($requestData['teamid'] ?? $input->getInt('teamid'));
         
         // Flush the data from the session.
         $this->app->setUserState('com_jsports.edit.game.data', null);
         
         // Redirect to team schedule.
+        $this->setMessage(Text::_('COM_JSPORTS_OPERATION_CANCELLED'),'success');
         $this->setRedirect(Route::_('index.php?option=com_jsports&view=schedules&teamid=' . $teamid, false));
 //         $this->setRedirect(Route::_('index.php?option=com_jsports&view=schedules&teamid=' . $contextid, false));
     }

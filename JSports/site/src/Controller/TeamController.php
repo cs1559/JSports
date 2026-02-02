@@ -25,6 +25,7 @@ use FP4P\Component\JSports\Site\Services\TeamService;
 use FP4P\Component\JSports\Site\Services\GameService;
 use FP4P\Component\JSports\Administrator\Helpers\JSHelper;
 use FP4P\Component\JSports\Site\Services\LogService;
+use FP4P\Component\JSports\Site\Services\UserService;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
@@ -41,7 +42,9 @@ class TeamController extends BaseController
     {
         
         $app            = $this->app;
-        $user           = $this->app->getIdentity();
+//         $user           = $this->app->getIdentity();
+        $user = UserService::getUser();
+        
         
         $params = ComponentHelper::getParams('com_jsports');
         $itemid = $params->get('itemid');
@@ -71,16 +74,18 @@ class TeamController extends BaseController
         $logger = Myapp::getLogger();
         
         $model  = $this->getModel('Team', 'Site');
-        $user   = $this->app->getIdentity();
+//         $user   = $this->app->getIdentity();
+        $user = UserService::getUser();
         
         
         // Get the user data.
         $requestData = $app->getInput()->post->get('jform', [], 'array');
         
-        $teamid = $requestData['id'];
+        $teamid = (int) ($requestData['teamid'] ?? $requestData['id'] ?? 0);
         
         /* Code to prevent further action if user is NOT logged in */
-        $user = Factory::getUser();
+//         $user = Factory::getUser();
+        $user = UserService::getUser();
         // Check if the user is logged in
         if ($user->guest) {
             $app->enqueueMessage(Text::sprintf('COM_JSPORTS_INVALID_USERSESSION'), 'error');
@@ -212,12 +217,13 @@ class TeamController extends BaseController
         $app    = $this->app;
         // Get the user data.
         $requestData = $app->getInput()->post->get('jform', [], 'array');
-        $teamid = $requestData['id'];
+        $teamid = (int) ($requestData['teamid'] ?? $requestData['id'] ?? 0);
         
         // Flush the data from the session.
         $this->app->setUserState('com_jsports.edit.team.data', null);
         
         // Redirect to user profile.
+        $this->setMessage(Text::_('COM_JSPORTS_OPERATION_CANCELLED'), 'success');
         $this->setRedirect(Route::_('index.php?option=com_jsports&view=team&id=' . $teamid, false));
     }
     

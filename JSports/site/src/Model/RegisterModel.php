@@ -5,7 +5,7 @@
  * @version     1.0.0
  * @package     JSports.Site
  * @subpackage  com_jsports
- * @copyright   Copyright (C) 2023-2024 Chris Strieter
+ * @copyright   Copyright (C) 2023-2026 Chris Strieter
  * @license     GNU/GPLv2, see http://www.gnu.org/licenses/gpl-2.0.html
  *
  */
@@ -21,29 +21,17 @@ use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Services\RegistrationService;
 
 /**
- * Methods supporting a list of mywalks records.
+ * RegisterModel to support program registration.  This is a pretty thin model as it does not perform many
+ * functions other than to assist in rendering a page for a client to select a particular program to register for.
  *
  * @since  1.6
  */
 class RegisterModel extends FormModel
 {
-    
-    /**
-     * @var     object  The user profile data.
-     * @since   1.6
-     */
-    protected $data;
-
-    public function getData(){
-        return null;
-    }
-    
- 
+        
     public function getItem(){
         return null;
     }
-    
-    
     public function getForm($data = array(), $loadData = true)
     {
         $form = $this->loadForm(
@@ -74,7 +62,6 @@ class RegisterModel extends FormModel
             array($this->data)	// prefill data if no data found in session
             );
         
-//         return $data;
     }
     
 }

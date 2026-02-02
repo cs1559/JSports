@@ -5,7 +5,7 @@
  * @version     1.0.0
  * @package     JSports.Site
  * @subpackage  com_jsports
- * @copyright   Copyright (C) 2023-2024 Chris Strieter
+ * @copyright   Copyright (C) 2023-2026 Chris Strieter
  * @license     GNU/GPLv2, see http://www.gnu.org/licenses/gpl-2.0.html
  *
  */
@@ -17,9 +17,10 @@ defined('_JEXEC') or die;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Database\ParameterType;
 use Joomla\CMS\Factory;
+use FP4P\Component\JSports\Site\Services\ProgramsService;
 
 /**
- * Methods supporting a list of mywalks records.
+ * Methods supporting a list of Teams.
  *
  */
 class TeamsModel extends ListModel
@@ -65,17 +66,19 @@ class TeamsModel extends ListModel
 	 */
 	protected function populateState($ordering = 'a.name', $direction = 'asc')
 	{
-	    
-// 	    $app = Factory::getApplication();
-	    
+	        
 		$search = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
 		$this->setState('filter.search', $search);
 
 		$city = $this->getUserStateFromRequest($this->context . '.filter.city', 'filter_city', '');
 		$this->setState('filter.city', $city);
 			
-		$programid = $this->getUserStateFromRequest($this->context . '.filter.programid', 'filter_programid', '');
-		$this->setState('filter.programid', $programid);
+		$programid = $this->getUserStateFromRequest($this->context . '.filter.programid', 'filter_programid',0);
+
+// 		$programid = $this->getUserStateFromRequest($this->context . '.filter.programid', 'filter_programid',
+// 		    ProgramsService::getDefaultProgram()->id
+		    
+// 		$this->setState('filter.programid', $programid);
 		
 		// List state information.
 		parent::populateState($ordering, $direction);
@@ -129,8 +132,8 @@ class TeamsModel extends ListModel
 	        );
 
 	   
-	    $programid = (string) $this->getState('filter.programid');	    
-	    $divisionid = (string) $this->getState('filter.divisionid');
+	    $programid         = (string) $this->getState('filter.programid');	    
+	    $divisionid        = (string) $this->getState('filter.divisionid');
 	    
         if (strlen($programid) < 1) {
  	        $programid = 0;
@@ -154,7 +157,7 @@ class TeamsModel extends ListModel
 	    
 	    
 	    // Filter by published state
-	    $published = (string) $this->getState('filter.published');
+	    $published         = (string) $this->getState('filter.published');
 	    
 	    if (is_numeric($published))
 	    {
@@ -198,74 +201,6 @@ class TeamsModel extends ListModel
 	    $query->order($db->escape($orderCol . ' ' . $orderDirn));
 	    
 	    return $query;
-	}
-	
-
-	/**
-	 * Method to get a list of proggrams.
-	 * Overridden to add a check for access levels.
-	 *
-	 * @return  mixed  An array of data items on success, false on failure.
-	 *
-	 * @since   4.0.0
-	 */
-	public function getItems()
-	{
-		return parent::getItems();
-
-		
-	}
-	
-	
-
-	    /**
-	     * Method to change the published state of one or more records.
-	     *
-	     * @param   array    &$pks   A list of the primary keys to change.
-	     * @param   integer  $value  The value of the published state.
-	     *
-	     * @return  boolean  True on success.
-	     *
-	     * @since   4.0.0
-	     */
-	    public function publish(&$pks, $value = 1) {
-	        
-	        /* this is a very simple method to change the state of each item selected */
-	        $db = $this->getDatabase();
-	        
-	        $query = $db->getQuery(true);
-	        
-	        $query->update($db->quoteName('#__jsports_teams'))
-	        ->set($db->quoteName('published') . ' = :value')
-	        ->bind(':value', $value , ParameterType::INTEGER)
-	        ->whereIn($db->quoteName('id'), $pks);
-	        $db->setQuery($query);
-	        $db->execute();
-	    }
-	
-	    
-	    /**
-	     * Method to DELETE one or more records from the database
-	     *
-	     * @param   array    &$pks   A list of the primary keys to change.
-	     * @param   integer  $value  The value of the published state.
-	     *
-	     * @return  boolean  True on success.
-	     *
-	     * @since   4.0.0
-	     */
-	    public function delete(&$pks, $value = 1) {
-	        
-	        /* this is a very simple method to change the state of each item selected */
-	        $db = $this->getDatabase();
-	        
-	        $query = $db->getQuery(true);
-	        
-	        $query->delete($db->quoteName('#__jsports_teams'))
-	        ->whereIn($db->quoteName('id'), $pks);
-	        $db->setQuery($query);
-	        $db->execute();
-	    }
-	    
+	}	    
 	
 }

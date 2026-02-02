@@ -10,16 +10,6 @@
  *
  */
 
-/**
- * CHANGE HISTORY:
- * - Fixed isAdmin function.  There was logic to check if a person was
- *    assigned to a team and that wasn't the intention of that function.
- * 2024-03-07 - Added logic to set the ownerid parameter to user-> on
- *              canEditTeamRoster and canEditTeamSchedule
- * 2024-03-11 - Changed code to check isAdmin when the viewTeamRoster
- *              function is called.
- *
- */
 namespace FP4P\Component\JSports\Site\Services;
 
 
@@ -35,8 +25,14 @@ use FP4P\Component\JSports\Administrator\Table\GamesTable;
 class SecurityService
 {
     
+    /**
+     * This function returns a Joomla User Object
+     * 
+     * @return User
+     */
     public static function getUser() : User {
-        $user = Factory::getApplication()->getIdentity();
+//         $user = Factory::getApplication()->getIdentity();
+        $user = UserService::getUser();
         return $user;
     }
     
@@ -49,21 +45,20 @@ class SecurityService
     public static function canEditTeam(array $context) : bool {
         
         if (isset($context['teamid'])) {
-            $teamid = $context['teamid'];
+            $teamid = (int) ($context['teamid'] ?? 0);
+            if ($teamid <= 0) {
+                return false;
+            }
         } else {
             return false;
         }
-        
-        if (isset($context['ownerid'])) {
-            $ownerid = $context['ownerid'];
-        } else {
-            $ownerid = null;
-        }
-        if (isset($context['programid'])) {
-            $programid = $context['programid'];
-        } else {
-            $programid = TeamService::getMostRecentProgram($teamid);
-        }
+        $ownerid = isset($context['ownerid']) ? (int) $context['ownerid'] : null;
+        $programid = isset($context['programid']) ? (int) $context['programid'] : TeamService::getMostRecentProgram($teamid);
+//         if (isset($context['programid'])) {
+//             $programid = $context['programid'];
+//         } else {
+//             $programid = TeamService::getMostRecentProgram($teamid);
+//         }
         
         // Check to see if FRONT END ADMINISTRATIN is enabled.  Prevent all
         // users from editing items on the front end if disabled. League
@@ -71,6 +66,7 @@ class SecurityService
         $params = ComponentHelper::getParams('com_jsports');
         $frontendenabled = $params->get('frontend_admin');
    
+        
         // If front-end adminstration is turned off, return FASLE;
         if (!$frontendenabled) {
             return false;
@@ -84,16 +80,17 @@ class SecurityService
         if ($user->guest) {
             return false;
         }
-        
         // If the user is a "super user" or "administrator" immediately grant them access
         if (SecurityService::isAdmin()) {
             return true;
         }
-            
+        
         if (is_null($ownerid)) {
             $svc = new TeamService();
             $team = $svc->getItem($teamid);
-            
+            if (!$team) {
+                return false;
+            }
             if ($team->id == 0) {
                 return false;
             }
@@ -122,14 +119,18 @@ class SecurityService
      * This function verifies that a specific user can EDIT a team's roster.  Additional
      * business rules can be added here. Current business rules prohibit a team roster
      * from being edited if the rosters are "locked" (set at the program level) and
-     * if the program/season is currently CLOSED.
+     * if the program/season is currently CLOSED.  
+     * 
+     * These rules should prohibit a coach who had been previously tied to a team from editing
+     * that same team's roster in another season in case they were removed from thier staff
+     * roster.
      *
      * @param number $teamid
      * @param number $programid
      * @param number $ownerid
      * @return boolean
      */
-    public static function canEditTeamRoster($teamid, $programid, $ownerid = null) : bool {
+    public static function canEditTeamRoster(int $teamid, int $programid, ?int $ownerid = null) : bool {
         
         // If the user is a "super user" or "administrator" immediately grant them access
         if (SecurityService::isAdmin()) {
@@ -167,22 +168,25 @@ class SecurityService
      * This function verifies that a specific user can EDIT a team's schedule.
      * Additional business rules can be added here.
      *
+
      * @param number $teamid
      * @param number $programid
      * @param number $ownerid
      * @return boolean
      */
-    public static function canEditTeamSchedule($teamid, $programid, $ownerid = null) : bool {
+    public static function canEditTeamSchedule(int $teamid, int $programid, ?int $ownerid = null) : bool {
 
         // If the user is a "super user" or "administrator" immediately grant them access
         if (SecurityService::isAdmin()) {
             return true;
         }
-        
-    
+            
         $divisionid = TeamService::getTeamDivisionId($teamid, $programid);
         $division = DivisionService::getItem($divisionid);
-
+        if (!$division) {
+            return false;
+        }
+        
         // If the league manages the schedule for a divsion, then return false
         // regardless if the user owns the team profile.
         if ($division->leaguemanaged) {
@@ -212,11 +216,9 @@ class SecurityService
      * @param number $teamid
      * @param GamesTable $item         
      */
-    public static function canEditGame($teamid, object $item ){
+    public static function canEditGame(int $teamid, \stdClass $item ) : bool {
       //  $params = ComponentHelper::getParams('com_jsports');
       //  $editawaygame = $params->get('editawaygame');
-        
-        $canEdit = true;
         
         // Get current user
         //$user = Factory::getUser();
@@ -250,7 +252,7 @@ class SecurityService
             return false;
         }
         
-        return $canEdit;
+        return true;
     }
     
     
@@ -261,10 +263,9 @@ class SecurityService
      *
      * @return boolean
      */
-    public static function frontEndAdminEnabled() {
+    public static function frontEndAdminEnabled() : bool {
         $params = ComponentHelper::getParams('com_jsports');
-        return $params->get('frontend_admin');
-        
+        return (bool) $params->get('frontend_admin');
     }
 
     
@@ -275,7 +276,7 @@ class SecurityService
      *
      * @return boolean
      */
-    public static function isAdmin(){
+    public static function isAdmin() : bool {
         // Get current user
         //$user = Factory::getUser();
         $user = SecurityService::getUser();
@@ -284,7 +285,10 @@ class SecurityService
         if ($user->authorise('core.jsports.admin','com_jsports')) {
             return true;
         }
-        
+
+        if ($user->authorise('core.admin','com_jsports')) {
+            return true;
+        }
         // If the user is assigned "ownership" of a profile, then YES.
         //$teams = UserService::getUserteams($user->id);
 //         if (count($teams)>0) {
@@ -300,7 +304,7 @@ class SecurityService
      * any user who is assigned as owner of a team or part of their staff.
      * @return boolean
      */
-    public static function isCoach() {
+    public static function isCoach() : bool {
         
         //$user = Factory::getUser();
         $user = SecurityService::getUser();
@@ -332,7 +336,7 @@ class SecurityService
      * @param number $divisionid
      * @return boolean
      */
-    public static function canViewTeamRoster($teamid, $divisionid = 0) : bool {
+    public static function canViewTeamRoster(int $teamid, int $divisionid = 0) : bool {
         
         $retval= false;
         
@@ -349,7 +353,9 @@ class SecurityService
         }
         
         $division = DivisionService::getItem($divisionid);
-        
+        if (!$division) {
+            return false;
+        }
         $allowed_agegroups = UserService::getAssignedAgeGroups();
         
         foreach ($allowed_agegroups as $item) {
@@ -368,7 +374,7 @@ class SecurityService
      * @param int $teamid
      * @return boolean
      */
-    public static function canEditTeamBulletins($teamid) : bool {
+    public static function canEditTeamBulletins(int $teamid) : bool {
         $retval = false;
         //$user = Factory::getUser();
         $user = SecurityService::getUser();

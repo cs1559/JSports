@@ -25,7 +25,8 @@ HTMLHelper::_('behavior.formvalidator');
 HTMLHelper::_('behavior.keepalive');
 
 // Set Page Title and load specific stylesheet
-$document = Factory::getDocument();
+// $document = Factory::getDocument();
+$document = Factory::getApplication()->getDocument();
 
 // Load Web Asset Manager
 $wa = $this->document->getWebAssetManager();
@@ -83,7 +84,7 @@ $document->setTitle(Text::_('COM_JSPORTS_TEAMPROFILE_PAGE_TITLE'));
 			<div class="teamprofile-section container">  <!--  LOGO/General Data -->
 				<div class="row">
 					<div class="teamprofile-logo col-lg-3 text-center">
-						<img class="img-responsive" src="<?php echo $this->teamlogo;?>" />
+						<img class="img-responsive" src="<?php echo $this->teamlogo;?>?t=<?php echo time(); ?>?>" />
 					</div>
 					<div class="teamprofile-info col-lg-5">
 						<strong>Team ID:</strong>&nbsp;<?php echo $this->data->id; ?><br /> 

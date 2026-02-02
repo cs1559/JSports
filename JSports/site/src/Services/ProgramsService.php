@@ -7,6 +7,7 @@
  * @subpackage  com_jsports
  * @copyright   Copyright (C) 2023-2024 Chris Strieter
  * @license     GNU/GPLv2, see http://www.gnu.org/licenses/gpl-2.0.html
+ * @todo        Needs additional refactoring
  *
  */
 
@@ -26,7 +27,7 @@ class ProgramsService
      * @param number $id
      * @return \FP4P\Component\JSports\Administrator\Table\ProgramsTable|NULL
      */
-    public static function getItem($id = 0) {
+    public static function getItem(int $id = 0) : ?ProgramsTable {
         
 //         $db = Factory::getDbo();
         $db = Factory::getContainer()->get(DatabaseInterface::class);
@@ -45,9 +46,9 @@ class ProgramsService
      * This function will return an array of objects that represent a list of programs that have not
      * been completed.
      *
-     * @return array
+     * @return array<int, stdClass>
      */
-    public static function getNonCompletedPrograms($activeonly = false) {
+    public static function getNonCompletedPrograms(bool $activeonly = false) {
         $db = Factory::getContainer()->get(DatabaseInterface::class);
         //$db = Factory::getDbo();
         $query = $db->getQuery(true);
@@ -81,8 +82,11 @@ class ProgramsService
         return $programs[0];
     }
     
-    
-    public static function getProgramList() {
+    /**
+     * 
+     * @return array
+     */
+    public static function getProgramList() : array {
         
 //         $db = Factory::getDbo();
         $db = Factory::getContainer()->get(DatabaseInterface::class);
@@ -96,13 +100,16 @@ class ProgramsService
         $query->where($conditions);
         $query->order("name desc");
         $db->setQuery($query);
-        return $db->loadAssocList();
-        
+        return $db->loadAssocList(); 
         
     }
     
-    
-    public static function getMostRecentProgram() {
+    /**
+     * This function will return one row (first row) from an associated array.
+     * 
+     * @return array 
+     */
+    public static function getMostRecentProgram() : array {
 //         $db = Factory::getDbo();
         $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
@@ -117,7 +124,6 @@ class ProgramsService
         $db->setQuery($query);
         $rows = $db->loadAssocList();
         return $rows[0];
-        
     }
     
     
@@ -128,7 +134,7 @@ class ProgramsService
      * @param number $programid
      * @return array
      */
-    public static function getProgramGroups($programid) {
+    public static function getProgramGroups(int $programid) : array {
         
         $pgm = ProgramsService::getItem($programid);
         

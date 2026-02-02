@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+
+	<fields name="filter">
+
+		<field
+			name="search"
+			type="text"
+			label="Seach Title/Content"
+			description=""
+			hint=""
+		/>
+
+		<field name="bulletintype" type="sql" 
+			label="COM_JSPORTS_BULLETIN_TYPE"
+			query="SELECT bulletintype, typedesc FROM #__jsports_bulletin_types where publicaccess = 1 order by typedesc"
+			key_field="bulletintype"
+			value_field="typedesc" 
+			header="-Select Type-"
+		/>
+				
+	</fields>
+
+	<fields name="list">
+
+		<field
+			name="fullordering"
+			type="list"
+			label="JGLOBAL_SORT_BY"
+			default="a.name ASC"
+			onchange="this.form.submit();"
+			>
+			<option value="">JGLOBAL_SORT_BY</option>
+ 			<option value="a.name ASC">COM_JSPORTS_NAME_ASC</option>  
+
+		</field>
+
+		<field
+			name="limit"
+			type="hidden"
+			label="JGLOBAL_LIST_LIMIT"
+			default="25"
+			onchange="this.form.submit();"
+		/>
+	</fields>
+</form>
