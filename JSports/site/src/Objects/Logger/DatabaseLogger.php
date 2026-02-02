@@ -77,10 +77,10 @@ class DatabaseLogger extends Logger
 //         die  ("Databaselogger: die");
         if (!$user->id) {
             $userid = 0;
-            $name = "Unknown";
+            $username = "Unknown";
         } else {
             $userid = $user->id;
-            $name = $user->username;
+            $username = $user->username;
         }
         
         $values = array(
