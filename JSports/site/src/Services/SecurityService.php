@@ -31,7 +31,8 @@ class SecurityService
      * @return User
      */
     public static function getUser() : User {
-        $user = Factory::getApplication()->getIdentity();
+//         $user = Factory::getApplication()->getIdentity();
+        $user = UserService::getUser();
         return $user;
     }
     
