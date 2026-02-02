@@ -15,6 +15,7 @@ namespace FP4P\Component\JSports\Administrator\Controller;
 defined('_JEXEC') or die;
 
 use Joomla\CMS\MVC\Controller\FormController;
+use Joomla\CMS\Router\Route;
 
 /**
  * Controller for a single Game
@@ -23,12 +24,13 @@ use Joomla\CMS\MVC\Controller\FormController;
 class GameController extends FormController
 {
     
-    public function savenew($key = null, $urlVar = null) {
+//     public function savenew($key = null, $urlVar = null) {
         
-        parent::save($key, $urlVar);
+//         parent::save($key, $urlVar);
         
-        $this->redirect('index.php?option=com_jsports&view=game&layout=edit');
-    }
+//         $this->setRedirect(Route::_('index.php?option=com_jsports&view=game&layout=edit', false));
+//         return true;
+//     }
     
 }
 

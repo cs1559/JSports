@@ -79,7 +79,7 @@ CREATE TABLE `#__jsports_groups` (
 
 -- ------------------------------------------------------------------------------------
 -- ------------------------------------------------------------------------------------
-CREATE TABLE `#__jsports_groups_items` (
+CREATE TABLE IF NOT EXISTS `#__jsports_groups_items` (
 	 `groupid` int(11) NOT NULL AUTO_INCREMENT,
 	 `groupcode` varchar(4) NOT NULL,
 	 `code` varchar(4) NOT NULL,
@@ -91,7 +91,7 @@ CREATE TABLE `#__jsports_groups_items` (
 -- League table.  This table is the highest "node" in the main data hierarchy.
 -- NOTE:  There is a 1:n relationship between a LEAGUE and a PROGRAM
 -- ------------------------------------------------------------------------------------
-CREATE TABLE `#__jsports_leagues` (
+CREATE TABLE IF NOT EXISTS `#__jsports_leagues` (
 	 `id` int(11) NOT NULL AUTO_INCREMENT,
 	 `name` varchar(100) NOT NULL DEFAULT '',
 	 `abbr` varchar(10) DEFAULT NULL,
@@ -105,7 +105,7 @@ CREATE TABLE `#__jsports_leagues` (
 -- ------------------------------------------------------------------------------------
 -- Map Table - This table ties everything (program,division, teams, etc.) together
 -- ------------------------------------------------------------------------------------
-CREATE TABLE `#__jsports_map` (
+CREATE TABLE IF NOT EXISTS `#__jsports_map` (
 	 `id` int(11) NOT NULL AUTO_INCREMENT,
 	 `programid` int(11) NOT NULL DEFAULT 0,
 	 `teamid` int(11) NOT NULL DEFAULT 0,
@@ -123,7 +123,7 @@ CREATE TABLE `#__jsports_map` (
 -- Past Standings - holds past standings information.  when a program is closed, the
 -- standings are placed in this table for future reference.
 -- ------------------------------------------------------------------------------------
-CREATE TABLE `#__jsports_past_standings` (
+CREATE TABLE IF NOT EXISTS `#__jsports_past_standings` (
 	 `id` int(9) NOT NULL,
 	 `programid` int(9) NOT NULL,
 	 `divisionid` int(9) NOT NULL,
@@ -149,7 +149,7 @@ CREATE TABLE `#__jsports_past_standings` (
 -- NOTE:  There is a 1:n relationship between League and a Programs.
 -- NOTE:  THere is a 1:n relationship between a Program and Divisions.
 -- ------------------------------------------------------------------------------------
-CREATE TABLE `#__jsports_programs` (
+CREATE TABLE IF NOT EXISTS `#__jsports_programs` (
  `id` int(11) NOT NULL AUTO_INCREMENT,
  `leagueid` int(11) NOT NULL,
  `name` varchar(100) NOT NULL DEFAULT '',
@@ -188,7 +188,7 @@ CREATE TABLE `#__jsports_programs` (
 -- ------------------------------------------------------------------------------------
 -- Record History - stores an individual teams record per program
 -- ------------------------------------------------------------------------------------
-CREATE TABLE `#__jsports_recordhistory` (
+CREATE TABLE IF NOT EXISTS `#__jsports_recordhistory` (
  `teamid` int(11) NOT NULL DEFAULT 0,
  `programid` int(11) NOT NULL DEFAULT 0,
  `programname` varchar(100) NOT NULL DEFAULT '',
@@ -208,7 +208,7 @@ CREATE TABLE `#__jsports_recordhistory` (
 -- ------------------------------------------------------------------------------------
 --  Registrations - This table stores all of the regisration data.
 -- ------------------------------------------------------------------------------------
-CREATE TABLE `#__jsports_registrations` (
+CREATE TABLE IF NOT EXISTS `#__jsports_registrations` (
 	 `id` int(11) NOT NULL AUTO_INCREMENT,
 	 `divisionid` int(11) NOT NULL DEFAULT 0,
 	 `programid` int(11) NOT NULL DEFAULT 0,
@@ -246,7 +246,7 @@ CREATE TABLE `#__jsports_registrations` (
 -- ------------------------------------------------------------------------------------
 --  Rosters - This table holds all roster information for a specific team/program.
 -- ------------------------------------------------------------------------------------
-CREATE TABLE `#__jsports_rosters` (
+CREATE TABLE IF NOT EXISTS `#__jsports_rosters` (
 	 `id` int(11) NOT NULL AUTO_INCREMENT,
 	 `programid` int(11) NOT NULL,
 	 `teamid` int(11) NOT NULL,
@@ -269,7 +269,7 @@ CREATE TABLE `#__jsports_rosters` (
 -- Tames - This table stores information for each team within the league.
 -- NOTE:  There is a 1:n relationship between DIVISIONS and TEAMS
 -- ------------------------------------------------------------------------------------
-CREATE TABLE `#__jsports_teams` (
+CREATE TABLE IF NOT EXISTS `#__jsports_teams` (
 	 `id` int(11) NOT NULL AUTO_INCREMENT,
 	 `name` varchar(50) NOT NULL DEFAULT '',
 	 `alias` varchar(50) DEFAULT NULL,
@@ -283,7 +283,7 @@ CREATE TABLE `#__jsports_teams` (
 	 `contactemail` varchar(100) DEFAULT NULL,
 	 `contactphone` varchar(12) DEFAULT NULL,
 	 `ownerid` int(11) DEFAULT 0,
-	 `hits` int(11) DEFAULT NULL,
+	 `hits` int(11) DEFAULT 0,
 	 `dateupdated` timestamp NULL DEFAULT NULL,
 	 `updatedby` varchar(30) DEFAULT NULL,
 	 `properties` text DEFAULT NULL,
@@ -297,7 +297,7 @@ CREATE TABLE `#__jsports_teams` (
 -- ------------------------------------------------------------------------------------
 --  Vanues - this table holds common locaations where games are played.
 -- ------------------------------------------------------------------------------------
-CREATE TABLE `#__jsports_venues` (
+CREATE TABLE IF NOT EXISTS `#__jsports_venues` (
 	 `id` int(11) NOT NULL AUTO_INCREMENT,
 	 `name` varchar(50) NOT NULL,
 	 `alias` varchar(50) NOT NULL,
@@ -320,7 +320,7 @@ CREATE TABLE `#__jsports_venues` (
 -- ------------------------------------------------------------------------------------
 -- Record History - stores an individual teams record per program
 -- ------------------------------------------------------------------------------------
-CREATE TABLE `#__jsports_teamprofile_audit` (
+CREATE TABLE IF NOT EXISTS `#__jsports_teamprofile_audit` (
  `teamid` int(11) NOT NULL DEFAULT 0,
  `programid` int(11) NOT NULL DEFAULT 0,
  `auditdate` datetime DEFAULT NULL,
@@ -329,4 +329,47 @@ CREATE TABLE `#__jsports_teamprofile_audit` (
 PRIMARY KEY (`teamid`, 'programid')
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
  
- 
+-- version 1.0.31 
+alter table `#__jsports_teams` add `tournament` tinyint default 0 after ownerid;
+alter table `#__jsports_teams` add `showcontactinfo` tinyint default 0 after tournament;
+alter table `#__jsports_teams` addd `openroster` tinyint  default 0 after show_contact_info;
+-- version 1.1.0
+alter table `#__jsports_divisions` add `leaguemanaged` tinyint default 0 after agegroup;
+
+-- Version 1.1.1
+CREATE TABLE IF NOT EXISTS `#__jsports_bulletins` (
+	 `id` int(11) NOT NULL AUTO_INCREMENT,
+	 `ownerid` int(11) NOT NULL DEFAULT 0,
+	 `teamid` int(11) DEFAULT 0,
+	 `bulletintype` varchar(1) DEFAULT 'B',
+	 `title` varchar(50) DEFAULT 'B',	
+	 `approved` tinyint DEFAULT 0,
+	 `content` text DEFAULT null,
+	 `startdate` date DEFAULT NULL COMMENT 'Start Date',
+	 `enddate` date DEFAULT NULL COMMENT 'End Date',
+	 `location` varchar(100) DEFAULT null,
+	 `externalurl` varchar(100) DEFAULT null,
+	 `attachment` varchar(100) DEFAULT null,
+	 `createdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	 `updatedate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+	 `updatedby` varchar(25) DEFAULT null,
+	 `published` tinyint(4) NOT NULL DEFAULT 0,
+ PRIMARY KEY (`id`),
+    KEY `bulletins_ownerid_idx` (`ownerid`, `createdate`),
+    KEY `bulletins_teamid_idx` (`teamid`, `createdate`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- -------------------------------------------------------
+-- BULLETIN TYPES
+-- --------------------------------------------------------
+CREATE TABLE IF NOT EXISTS #__jsports_bulletin_types (
+	 bulletintype varchar(1) NOT NULL,
+	 typedesc varchar(30) not null,
+	 publicaccess tinyint default 0, 
+ PRIMARY KEY (`bulletintype`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+insert into #__jsports_bulletin_types values('G','General',0);
+insert into #__jsports_bulletin_types values('T','Tournament',0);
+insert into #__jsports_bulletin_types values('Y','Tryout',1);
+insert into #__jsports_bulletin_types values('F','Fundraising',0);

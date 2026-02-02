@@ -17,6 +17,7 @@ defined('_JEXEC') or die;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Services\LogService;
+use Joomla\CMS\Router\Route;
 
 /**
  * Controller for a single Program
@@ -30,16 +31,27 @@ class ProgramController extends FormController
         
         $data = $this->input->post->get('jform', array(), 'array');
         LogService::writeArray($data, 'PROGRAM');
-        parent::save($key, $urlVar);
+        return parent::save($key, $urlVar);
         
     }
     
     public function setup() {
-        $app = Factory::getApplication();
         
-        $programid = $app->input->get('id', 0, 'int');
+        $this->checkToken();
         
-        $this->setRedirect('index.php?option=com_jsports&view=programsetup&programid=' . $programid);
+//         // Optional but recommended: ACL
+//         if (!$this->app->getIdentity()->authorise('core.edit', 'com_jsports'))
+//         {
+//             throw new \Exception(Text::_('JERROR_ALERTNOAUTHOR'), 403);
+//         }
+        
+        $programid = $this->input->getInt('id', 0);
+        
+        $this->setRedirect(
+            Route::_('index.php?option=com_jsports&view=programsetup&programid=' . $programid, false)
+            );
+        
+        return true;
     }
     
 }

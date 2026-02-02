@@ -22,6 +22,7 @@ use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\Table\Table;
 use FP4P\Component\JSports\Site\Services\GameService;
 use FP4P\Component\JSports\Site\Services\TeamService;
+use FP4P\Component\JSports\Site\Services\UserService;
 
 
 class GameModel extends AdminModel
@@ -149,7 +150,9 @@ class GameModel extends AdminModel
     
     public function save($data) {
      
-        $user = Factory::getUser();
+        // Moved to the UserService due to Factory::getUser being deprecated
+//         $user = Factory::getUser();
+        $user = UserService::getUser();
 
         /*
          * @todo Need to validate the session has been authenticated

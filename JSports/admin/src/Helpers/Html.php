@@ -1,6 +1,6 @@
 <?php
 /**
- * JSports - Joomla Sports Management Component 
+ * JSports - Joomla Sports Management Component
  *
  * @version     1.0.0
  * @package     JSports.Administrator
@@ -19,7 +19,7 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\Database\DatabaseInterface;
 
 /**
- * The Html class is a helper class that returns various HTML elements. 
+ * The Html class is a helper class that returns various HTML elements.
  * @deprecated
  *
  */
@@ -27,11 +27,9 @@ class Html
 {
 
     /**
-     * 
+     *
      */
     public static function getProgramDivisions($programid, $itemkey=0, $defaultvalue=0) {
-        
-//         $db    = Factory::getDbo();
         $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
         
@@ -100,7 +98,7 @@ class Html
         $menuOptions["Manage Roster"] = Route::_('index.php?option=com_jsports&view=rosters&teamid=' . $id);
         $menuOptions["Manage Schedule"] = Route::_('index.php?option=com_jsports&view=schedules&teamid=' . $id);
         $menuOptions["Post Score(s)"] = Route::_('index.php?option=com_jsports&view=postscores&teamid=' . $id);
-        $menuOptions["Upload Logo"] = Route::_('index.php?option=com_jsports&view=logoupload&id=' . $id);
+        $menuOptions["Upload Logo"] = Route::_('index.php?option=com_jsports&view=logoupload&teamid=' . $id);
         
         $enablebulletins = $params->get('enablebulletins');
         if ($enablebulletins) {
@@ -120,8 +118,14 @@ class Html
         return $html;
     }
     
+    /**
+     * @deprecated
+     * @param number $teamid
+     * @param number $programid
+     */
     public static function getDivisionalOpponents($teamid, $programid){
   
+        throw new \Exception('Undefine function');
     }
     
     
@@ -148,11 +152,7 @@ class Html
         
         $html =  "<div id=\"schedule-opponents-list-container\">";
         
-//         if (strlen($label) > 0) {
-//             $html = $html . "<label for=\"profile-actions\" id=\"profile-actions-label\">" . $label . ":</label>";
-//         }        
-        
-       // $class="schedule-opponents-list";
+
         $html = $html . "<select name=\"" . $id . "\" class=\"" . $class . "\" id=\"" . $id  . "\"> ";
         
         $menuOptions = array();
@@ -175,7 +175,7 @@ class Html
     }
     
     protected static function getOpponentData($teamid, $programid) {
-//         $db    = Factory::getDbo();
+
         $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
         
@@ -186,7 +186,7 @@ class Html
             where m.teamid = a.id
             and m.divisionid = d.id
             and m.divisionid in (
-                select divisionid from xkrji_jsports_map as m, xkrji_jsports_divisions as d
+                select divisionid from #__jsports_map as m, #__jsports_divisions as d
                 where m.divisionid = d.id
                 and m.teamid = " . $db->quote($teamid) . " and m.programid = " . $db->quote($programid) . "
                 )";
@@ -196,15 +196,14 @@ class Html
             $db->setQuery($query);
             
             // Load the results as a list of stdClass objects (see later for more options on retrieving data).
-            $rows = $db->loadAssocList();
-            
-            return $rows;
+            return $db->loadAssocList();
+
     }
     
     /**
      * getProgramsList - this function will return an HTML select list for all of the programs
      * in the database.
-     * 
+     *
      * @param number $defaultvalue
      * @return string
      */
@@ -213,12 +212,11 @@ class Html
         $params = ComponentHelper::getParams('com_jsports');
         $activeonly = $params->get('activestandingsonly');
         
-//         $db    = Factory::getDbo();
         $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
         
         $conditions = array(
-            $db->quoteName('registrationonly') . ' = 0',    
+            $db->quoteName('registrationonly') . ' = 0',
             $db->quoteName('published') . ' = 1 ',
         );
         

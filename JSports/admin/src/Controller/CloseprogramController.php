@@ -17,37 +17,43 @@ defined('_JEXEC') or die;
 use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Services\ProgramsService;
+use Joomla\CMS\Router\Route;
+use Joomla\CMS\Language\Text;
 
 
 class CloseprogramController extends AdminController
 {
     protected $default_view = 'closeprogram';
     
-    public function display($cachable = false, $urlparams = array())
-    {
+//     public function display($cachable = false, $urlparams = array())
+//     {
         
-        return parent::display($cachable, $urlparams);
-    }
+//         return parent::display($cachable, $urlparams);
+//     }
     
-    public function cancel() {
-        $this->setRedirect('index.php?option=com_jsports&view=programs');
+    public function cancel($key = null) {
+        parent::cancel($key);
+        $this->setRedirect(Route::_('index.php?option=com_jsports&view=programs', false));
+        return true;
     }
     
     public function process() {
 
-        $input = Factory::getApplication()->input;
-        $programid     = $input->getInt("programid");
+        $this->checkToken() or jexit(Text::_('JINVALID_TOKEN'));
         
-          //  $programid = 33;
+//         $input = Factory::getApplication()->input;
+        $app = Factory::getApplication();
+        $programid     = $this->input->getInt("programid");
             
-            $result = ProgramsService::closeProgram($programid);
+        $result = ProgramsService::closeProgram($programid);
              
-            if ($result) {
-                Factory::getApplication()->enqueueMessage("Program closed", 'message');
-            } else {
-                Factory::getApplication()->enqueueMessage("An issue occurred when closing program", 'warning');
-            }
-            $this->setRedirect('index.php?option=com_jsports&view=programs');
+        if ($result) {
+            $app->enqueueMessage("Program closed", 'message');
+        } else {
+            $app->enqueueMessage("An issue occurred when closing program", 'warning');
+        }
+        $this->setRedirect(Route::_('index.php?option=com_jsports&view=programs', false));
+        return true;
     }
     
     

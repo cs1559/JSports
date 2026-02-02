@@ -19,15 +19,22 @@ HTMLHelper::_('behavior.keepalive');
 
 ?>
 
-<form action="<?php echo Route::_('index.php?option=com_jsports&view=league&layout=edit&id=' . (int) $this->item->id); ?>"
-	method="post" name="adminForm" id="closeprograms-form" class="form-validate">
+<form action="<?php echo Route::_('index.php?option=com_jsports&task=closeprogram.process'); ?>"
+      method="post" name="adminForm" id="closeprogram-form" class="form-validate">
 
-	<h1>Close Program</h1>
-	<p>This process will perform all of the close out activities for the <strong><?php echo $this->item->name; ?></strong>.  This includes copying the standings
-	to the historical standings table, creating a new team record history entry and more.
-	</p>
-	
-	<a class="btn btn-primary" href="<?php echo Route::_('index.php?option=com_jsports&task=closeprogram.process&programid=' . (int) $this->item->id); ?>">CLICK HERE TO CLOSE PROGRAM</a>
-	<input type="hidden" name="task" value="">
+<h1>Close Program</h1>
+
+    <p>
+        This process will perform all of the close out activities for the
+        <strong><?php echo $this->escape($this->item->name); ?></strong>.
+        This includes copying the standings to the historical standings table,
+        creating a new team record history entry and more.
+    </p>
+
+    <input type="hidden" name="programid" value="<?php echo (int) $this->item->id; ?>">
+
+    <button type="submit" class="btn btn-danger">
+        <?php echo Text::_('COM_JSPORTS_CLOSE_PROGRAM'); ?>
+    </button>
 	<?php echo HTMLHelper::_('form.token'); ?>
 </form>

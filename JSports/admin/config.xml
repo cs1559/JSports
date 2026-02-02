@@ -261,9 +261,22 @@
 			<option value="1">Yes</option>
 		</field>
 
+		<field name="bulletinapprovalemail" type="radio" default="0"
+			label="COM_JSPORTS_BULLETIN_APPROVAL_EMAIL_LABEL"
+			description="COM_JSPORTS_BULLETIN_APPROVAL_EMAIL_DESC"
+			layout="joomla.form.field.radio.switcher">
+			<option value="0">No</option>
+			<option value="1">Yes</option>
+		</field>
+		
 		<field name="attachmentdir" type="text" default="/media/com_jsports/attachments"
 			label="COM_JSPORTS_ATTACHMENTPATH"
 			description="COM_JSPORTS_ATTACHMENTPATH_DESC">
+		</field>
+		
+		<field name="maxuploadsize" type="text" default="2"
+			label="COM_JSPORTS_ATTACHMENT_MAX_UPLOAD_SIZE"
+			description="COM_JSPORTS_ATTACHMENT_MAX_UPLOAD_SIZE_DESC">
 		</field>
 							
 	</fieldset>

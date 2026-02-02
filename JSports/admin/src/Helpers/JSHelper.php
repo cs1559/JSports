@@ -20,30 +20,32 @@ class JSHelper
 {
     /**
      * This function translates the game status value into something more meaningful.
-     * 
+     *
      * @param string $code
      * @return string
      */
-    public static function translateGameStatus($code = "") 
+    public static function translateGameStatus($code = "")
     {
         
+        $status = '';
         switch ($code) {
             case 'S':
-                return 'Scheduled';
+                $status = 'Scheduled';
                 break;
             case 'C':
-                return 'Complete';
+                $status = 'Complete';
                 break;
             case 'X':
-                return 'Cancelled';
+                $status = 'Cancelled';
                 break;
             case 'R':
-                return 'Rain Out';
+                $status = 'Rain Out';
                 break;
             default:
-                return '*error*';
+                $status = '*error*';
                 break;
-        }       
+        }
+        return $status;
     }
 
     /**
@@ -55,14 +57,12 @@ class JSHelper
     public static function translateYesNo($value = 0)
     {
         
-        switch ($value) {
-            case 1:
-                return 'Yes';
-                break;
-            default:
-                return 'No';
-                break;
+        if ($value) {
+            return 'Yes';
+        } else {
+            return 'No';
         }
+
     }
 
     /**
@@ -90,10 +90,10 @@ class JSHelper
     
     
     /**
-     * This function is used to present the 24 hour time into the normal HH:MM PM/AM format. 
-     * 
-     * @param unknown $value
-     * @return unknown|string
+     * This function is used to present the 24 hour time into the normal HH:MM PM/AM format.
+     *
+     * @param string $value
+     * @return string|string
      */
     public static function displayGameTime($value) {
 
@@ -127,7 +127,7 @@ class JSHelper
     public static function getVersion() {
         $xml_path = JPATH_ADMINISTRATOR . '/components/com_jsports/jsports.xml';
         $xml_obj = new \SimpleXMLElement(file_get_contents($xml_path));
-        return strval($xml_obj->version); 
+        return strval($xml_obj->version);
     }
     
     /**
@@ -148,41 +148,47 @@ class JSHelper
      */
     public static function translateBulletinType($code = "")
     {
-        
+        $type = '';
         switch ($code) {
             case 'G':
-                return 'General';
+                $type = 'General';
                 break;
             case 'T':
-                return 'Tournament';
+                $type = 'Tournament';
                 break;
             case 'Y':
-                return 'Tryouts';
+                $type = 'Tryouts';
+                break;
+            case 'F':
+                $type = 'Fundraiser';
                 break;
             default:
-                return '*error*';
+                $type = '*error*';
                 break;
         }
+        return $type;
     }
     
     /**
+     * This funciton returns the full file path for an attachment that is associated with a bulletin.
+     * 
+     * NOTE:  Use BulletinService::getBulletinFilePath instead.
+     * 
      * @deprecated
-     * @param unknown $key
+     * @param number $key
      * @return string
      */
     public static function getBulletinFilePath($key) {
         $params = ComponentHelper::getParams('com_jsports');
-        $attachmentdir = $params->get('attachmentdir');
-        
-        $value = rtrim($attachmentdir); // optional: remove trailing whitespace
+        $attachmentdir = rtrim($params->get('attachmentdir'));
         
         if (substr($attachmentdir, -1) !== '/') {
             $attachmentdir .= '/';
         }
         
-if (substr($attachmentdir, 0, 1) !== '/') {
-    $attachmentdir = '/' . $attachmentdir;
-}
+        if (substr($attachmentdir, 0, 1) !== '/') {
+            $attachmentdir = '/' . $attachmentdir;
+        }
 
         $filepath = Folder::makeSafe( $attachmentdir . '/Bulletin-' . $key .'/');
         
@@ -193,17 +199,16 @@ if (substr($attachmentdir, 0, 1) !== '/') {
 
     /**
      * @deprecated
-     * @param unknown $key
-     * @param unknown $filename
+     * @param number $key
+     * @param string $filename
      * @return string
      */
     public static function getBulletinAttachmentURL($key, $filename) {
         $params = ComponentHelper::getParams('com_jsports');
         $attachmentdir = $params->get('attachmentdir');
         
-        $filepath =  Uri::root() . $attachmentdir . '/Bulletin-' . $key .'/' . $filename;
-        
-        return $filepath;
+        return Uri::root() . $attachmentdir . '/Bulletin-' . $key .'/' . $filename;
+
     }
 }
 

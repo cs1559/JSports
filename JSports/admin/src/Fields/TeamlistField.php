@@ -15,7 +15,6 @@ defined('JPATH_PLATFORM') or die;
     
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\FormField;
-use Joomla\CMS\Form\FormFieldList;
 use Joomla\CMS\Form\Formhelper;
 use Joomla\CMS\Form\Field\ListField;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -97,7 +96,7 @@ class TeamlistField extends ListField
 
        		
        		// get divisions within age group.
-       		$divisions = DivisionService::getDivisionList($this->programid, $division->agegroup);
+       		$divisions = DivisionService::getDivisionList($this->programid, $division->agegroup, $divisionid);
        		
 //        		print_r($divisions);
 //        		exit;

@@ -24,50 +24,32 @@ use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Services\LogService;
+use Joomla\CMS\Router\Route;
 
 class LogsController extends AdminController
 {
-    protected $default_view = 'logs';
-    
-    public function display($cachable = false, $urlparams = array())
-    {
-        return parent::display($cachable, $urlparams);
-    }
-
-
-    /**
-     * Proxy for getModel.
-     *
-     * @param   string  $name    The model name. Optional.
-     * @param   string  $prefix  The class prefix. Optional.
-     * @param   array   $config  The array of possible config values. Optional.
-     *
-     * @return  \Joomla\CMS\MVC\Model\BaseDatabaseModel
-     *
-     * @since   1.6
-     */
-    public function getModel($name = 'Logs', $prefix = 'Administrator', $config = ['ignore_request' => true])
-    {
-        return parent::getModel($name, $prefix, $config);
-    }
-    
+    protected $default_view = 'logs';   
 
     /**
      * This function supports the purging of the log records so it doesn't become unnecessarily 
      * too large.  The number of days is a configurable option within the component.
      */
     public function purge() {
+        
+        $this->checkToken();
+        
         // Retrieve the number of logdays to retain
         $params = ComponentHelper::getParams('com_jsports');
-        $logdays = $params->get('logdays');
+        $logdays = (int) $params->get('logdays', 30);
        
         $rows = LogService::purge($logdays);
         
         $msg = $rows . " log messages purged (Older than " . $logdays . ' days)';
-        Factory::getApplication()->enqueueMessage($msg, 'message');
+        $this->app->enqueueMessage($msg, 'message');
         LogService::info($msg);
         
-        $this->setRedirect('index.php?option=com_jsports&view=logs');
+        $this->setRedirect(Route::_('index.php?option=com_jsports&view=logs', false));
+        return true;
     }
     
 }
