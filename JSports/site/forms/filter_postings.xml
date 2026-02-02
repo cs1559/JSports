@@ -11,14 +11,13 @@
 			hint=""
 		/>
 
-		<field name="bulletintype" type="list" required="false"
-			label="COM_JSPORTS_BULLETIN_TYPE" onchange="this.form.submit();">
-			<option selected="selected" value="">- Select Type -</option>
-			<option value="G">General</option>
-			<option value="T">Tournament</option>
-			<option value="Y">Tryout</option>
-			<option value="F">Fundraiser</option>	
-		</field>
+		<field name="bulletintype" type="sql" 
+			label="COM_JSPORTS_BULLETIN_TYPE"
+			query="SELECT bulletintype, typedesc FROM #__jsports_bulletin_types where publicaccess = 1 order by typedesc"
+			key_field="bulletintype"
+			value_field="typedesc" 
+			header="-Select Type-"
+		/>
 				
 	</fields>
 

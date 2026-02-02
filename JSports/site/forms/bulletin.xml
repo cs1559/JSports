@@ -10,11 +10,14 @@
 		<field name="title" type="text" label="COM_JSPORTS_BULLETIN_TITLE"
 			size="40" required="true" />
 
-		<field name="bulletintype" type="list" required="true"
-			label="COM_JSPORTS_BULLETIN_TYPE">
-			<option selected="selected" value="">- Select Type -</option>
-			<option value="Y">Tryout</option>
-		</field>
+		
+		<field name="bulletintype" type="sql" 
+			label="COM_JSPORTS_BULLETIN_TYPE"
+			query="SELECT bulletintype, typedesc FROM #__jsports_bulletin_types where publicaccess = 1 order by typedesc"
+			key_field="bulletintype"
+			value_field="typedesc" 
+			header="-Select Type-"
+		/>
 		
 		<field name="content" type="editor"
 			label="COM_JSPORTS_BULLETIN_CONTENT" rows="10" cols="70" required="true" />
