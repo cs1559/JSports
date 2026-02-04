@@ -80,10 +80,22 @@ class GameModel extends FormModel
         
         if ($data['leaguegame']) {
             if (!$data['opponentid']) {
-                $this->setError('Missing opponent');
+                $this->setError(Text::_('COM_JSPORTS_ERR_GAME_MISSING_OPPONENT'));
                 return false;
             }
         }
+        
+        $date = $data['gamedate'] ?? null;
+        if ($date) {
+            $today = Factory::getDate('now')->format('Y-m-d');
+            
+            if ($date < $today) {
+                $this->setError(Text::_('COM_JSPORTS_ERR_GAME_HAS_PREVIOUS_DATE'));
+                return false;
+            }
+        }
+        
+        
         return parent::validate($form, $data, $group);
     }
     
