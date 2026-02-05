@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="component" version="3.0" method="upgrade">
+<extension type="component" version="4.4" method="upgrade">
 	<name>JSports</name>
 	<!-- The following elements are optional and free of formatting constraints -->
-	<creationDate>2026-02-01</creationDate>
+	<creationDate>2026-02-05</creationDate>
 	<author>Chris Strieter</author>
 	<authorEmail>chris@swibl.org</authorEmail>
 	<authorUrl>http://www.swibl.org</authorUrl>
-	<copyright>Copyright (c) 2006-2025. Chris Strieter. All rights reserved.</copyright>
+	<copyright>Copyright (c) 2006-2026. Chris Strieter. All rights reserved.</copyright>
 	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
 	<!--  The version string is recorded in the components table -->
-	<version>1.2.1</version>
+	<version>1.2.2</version>
 	<!-- The description is optional and defaults to the name -->
 	<description>JSports is a sports management tool for sports league.  It was designed and built to meet the needs of a youth 
 	select sports league.   Currently functionality includes building of programs (e.g. seasons), division management, rostering, registration
 	and more.
-
 	</description>
 
 	<namespace path="src/">FP4P\Component\JSports</namespace>
@@ -40,6 +39,12 @@
 	</media>
 
 
+	<update>
+		<schemas>
+			<schemapath type="mysql">sql/updates/mysql</schemapath>
+		</schemas>
+	</update>
+			
 	<administration>
 	 	<menu link="index.php?option=com_jsports&amp;view=dashboard">JSports</menu>
 
@@ -68,11 +73,7 @@
 				<!-- file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file> -->
 			</sql>
 		</uninstall>
-			<update>
-				<schemas>
-					<schemapath type="mysql">sql/updates/mysql</schemapath>
-				</schemas>
-			</update>
+
 	</administration>
 
 </extension>
