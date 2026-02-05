@@ -170,7 +170,7 @@
 			
 	</fieldset>
 	
-	<fieldset name="teamproile" description="COM_JSPORTS_TEAMPROFILE_DESC" label="COM_JSPORTS_TEAMPROFILE_LABEL">
+	<fieldset name="teamprofile" description="COM_JSPORTS_TEAMPROFILE_DESC" label="COM_JSPORTS_TEAMPROFILE_LABEL">
 	
 		<field name="showlocation" type="radio" default="0"
 			label="COM_JSPORTS_SHOWLOCATION_ENABLED"
@@ -240,7 +240,12 @@
 			<option value="0">No</option>
 			<option value="1">Yes</option>
 		</field>
-					
+
+		<field name="limitgameslisted" type="text" default=""
+			label="COM_JSPORTS_LIMIT_GAMES_LISTED"
+			description="COM_JSPORTS_LIMIT_GAMES_LISTED_DESC">
+		</field>
+							
 	</fieldset>
 
 	<fieldset name="bulletins" description="COM_JSPORTS_BULLETINS_DESC" label="COM_JSPORTS_BULLETINS_LABEL">

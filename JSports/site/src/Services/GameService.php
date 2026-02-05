@@ -279,11 +279,10 @@ class GameService
      * @param int $limit
      * @return array<int, object>
      */
-    public static function getUpcomingGamesByDivision(int $programid, int $divisionid, ?int $teamid = null) : array {
+    public static function getUpcomingGamesByDivision(int $programid, int $divisionid, int $limit=300, ?int $teamid = null) : array {
         
         $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
-        $limit = 99999;
         
         $query->select('g.*, d.name as divisionname');
         $query->from($db->quoteName('#__jsports_games') . ' AS g, ' .
@@ -333,11 +332,10 @@ class GameService
      * @param ?int $teamid
      * @return array<int, object>
      */
-    public static function getCompletedGamesByDivision(int $programid, int $divisionid, ?int $teamid = null) : array {
+    public static function getCompletedGamesByDivision(int $programid, int $divisionid, int $limit = 300, ?int $teamid = null) : array {
         
         $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
-        $limit = 99999;
         
         $query->select('g.*, d.name as divisionname');
         $query->from($db->quoteName('#__jsports_games') . ' AS g, ' .

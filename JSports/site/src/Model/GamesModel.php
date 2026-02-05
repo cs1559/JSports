@@ -14,6 +14,7 @@ namespace FP4P\Component\JSports\Site\Model;
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\Database\ParameterType;
 use Joomla\CMS\Factory;
@@ -127,7 +128,7 @@ class GamesModel extends ListModel
 	    $query->select('1')->from($db->quoteName('#__jsports_programs'))->where('1 = 0');
 	    
 	    return $query;
-	}	    
+	}
 	
 	public function getItems() {
 
@@ -135,15 +136,21 @@ class GamesModel extends ListModel
 	    $divisionid    = (int) $this->getState('filter.divisionid') ?? 0;
 	    $viewtype      = (string) $this->getState('filter.viewtype') ?? 'U';
 	    $teamid        = (int) $this->getState('filter.teamid') ?? 0;
+	    $params = ComponentHelper::getParams('com_jsports');
+	    $limit = $params->get('limitgameslisted');
+	    
+	    if (empty($limit)) {
+	        $limit = 300;
+	    }
 
 // 	    die('view type=' . $viewtype);
-	    $limit = 100;
+// 	    $limit = 100;
 	    if ($viewtype === "U") {
-	       return GameService::getUpcomingGamesByDivision($programid, $divisionid, $teamid);
+	       return GameService::getUpcomingGamesByDivision($programid, $divisionid, $limit, $teamid);
 	    } 
 	    if ($viewtype === "C") {
-	        return GameService::getCompletedGamesByDivision($programid, $divisionid, $teamid);
+	        return GameService::getCompletedGamesByDivision($programid, $divisionid, $limit, $teamid);
 	    }
-	    return GameService::getUpcomingGamesByDivision($programid, $divisionid, $teamid);
+	    return GameService::getUpcomingGamesByDivision($programid, $divisionid, $limit, $teamid);
 	}
 }
