@@ -82,12 +82,13 @@ class HtmlView extends BaseHtmlView
         $this->teamlastyearplayed   = $model->teamlastyearplayed;
         $this->program              = $model->program;
                        
-        $context = array('teamid' => $this->team->id,
-            'ownerid' => $this->team->ownerid,
-            'programid' => $this->program->id
-        );
-        $this->canEdit = (bool) SecurityService::canEditTeam($context);
-
+//         if (is_null($this->team)) {
+//             $context = array('teamid' => $this->team->id,
+//                 'ownerid' => $this->team->ownerid,
+//                 'programid' => $this->program->id
+//             );
+        $this->canEdit = (bool) SecurityService::canManageBulletins();
+                       
         // Check for errors.
         $errors = $model->getErrors();
         if (!empty($errors))

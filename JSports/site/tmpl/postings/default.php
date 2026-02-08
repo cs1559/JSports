@@ -42,7 +42,7 @@ $wa->useStyle('com_jsports.postings.style');
 	
 	<div class="row">
 		<div class="col-sm-3">
-			<?php echo $this->filterForm->renderField('bulletintype', 'filter'); ?>
+			<?php echo $this->filterForm->renderField('category', 'filter'); ?>
 		</div>
 		<div class="col-sm-3">
 			<?php echo $this->filterForm->renderField('search', 'filter'); ?>
@@ -93,7 +93,7 @@ $wa->useStyle('com_jsports.postings.style');
    [ Show ]
 </a>
 			</td>
-			<!-- <td><?php echo $item->bulletintype; ?></td>   -->
+			<!-- <td><?php echo $item->category; ?></td>   -->
 			<td>
 				<?php 
 					if (!empty($item->attachment)) {

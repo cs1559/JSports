@@ -146,7 +146,7 @@ class JSHelper
      * @param string $code
      * @return string
      */
-    public static function translateBulletinType($code = "")
+    public static function translateBulletinCategory($code = "")
     {
         $type = '';
         switch ($code) {

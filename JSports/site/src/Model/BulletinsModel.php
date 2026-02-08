@@ -19,6 +19,7 @@ use Joomla\Database\ParameterType;
 use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Services\TeamService;
 use FP4P\Component\JSports\Site\Services\ProgramsService;
+use FP4P\Component\JSports\Site\Services\UserService;
 
 /**
  * Methods supporting a list of LEAGUE records.
@@ -88,26 +89,41 @@ class BulletinsModel extends ListModel
 	    // Get Team Id
 	    $teamid     = $input->getInt("teamid");
 	    
-	    $svc = new TeamService();
-	    $this->team = $svc->getItem($teamid);
-	    $pgmArray = $svc->getMostRecentProgram($teamid);
+	    $user = UserService::getUser();
+	 	    
+	    if ($teamid) {
+	        $this->getTeam($teamid);
+	    }
 
-$lastprogramid = $pgmArray['lastprogramid'];
-$this->teamlastyearplayed = $lastprogramid;
- 	$psvc = new ProgramsService();
- 	$this->program = $psvc->getItem($lastprogramid);
-	    
- 	    
 	    // Create a new query object.
 	    $db    = $this->getDatabase();
 	    $query = $db->getQuery(true);
 	    
-        $query->select("a.*");
-	    $query->from($db->quoteName('#__jsports_bulletins') . ' AS a')
- 	       ->where($db->quoteName('a.teamid') . ' = ' . $db->quote($teamid))
-           ->order("createdate desc");
-
+	    if ($teamid) {
+            $query->select("a.*");
+    	    $query->from($db->quoteName('#__jsports_bulletins') . ' AS a')
+     	       ->where($db->quoteName('a.teamid') . ' = ' . $db->quote($teamid))
+               ->order("createdate desc");
+	    } else {
+	        $query->select("a.*");
+	        $query->from($db->quoteName('#__jsports_bulletins') . ' AS a')
+	        ->where($db->quoteName('a.ownerid') . ' = ' . $db->quote($teamid))
+	        ->order("createdate desc");
+	    }
+	    
 	    return $query;
+	}
+	
+	private function getTeam($teamid) {
+
+	    $svc = new TeamService();
+	    $this->team = $svc->getItem($teamid);
+	    $pgmArray = $svc->getMostRecentProgram($teamid);
+	    $lastprogramid = $pgmArray['lastprogramid'];
+	    $this->teamlastyearplayed = $lastprogramid;
+	    $psvc = new ProgramsService();
+	    $this->program = $psvc->getItem($lastprogramid);
+	    
 	}
 		
 }

@@ -11,12 +11,12 @@
 			hint=""
 		/>
 
-		<field name="bulletintype" type="sql" 
+		<field name="category" type="sql" 
 			label="COM_JSPORTS_BULLETIN_TYPE"
-			query="SELECT bulletintype, typedesc FROM #__jsports_bulletin_types where publicaccess = 1 order by typedesc"
-			key_field="bulletintype"
-			value_field="typedesc" 
-			header="-Select Type-"
+			query="SELECT category catdesc FROM #__jsports_bulletin_types where publicaccess = 1 order by catdesc"
+			key_field="category"
+			value_field="catdesc" 
+			header="-Select Category-"
 		/>
 				
 	</fields>

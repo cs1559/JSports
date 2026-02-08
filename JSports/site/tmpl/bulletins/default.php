@@ -49,9 +49,8 @@ $token = Session::getFormToken();
 	
 	<div class="" >
 	<div class="teamprofile-header-name">
-		<h1>		
-			<a href="<?php echo Route::_('index.php?option=com_jsports&view=team&id=' . $this->team->id); ?>">
-				<?php echo $this->team->name; ?></a> - Manage Bulletins
+		<h1>
+			<?php echo Text::_('COM_JSPORTS_BULLETINS_HEADING'); ?>
 		</h1>
 	</div>
 </div>
@@ -60,12 +59,12 @@ $token = Session::getFormToken();
 					?>
 						<a class="btn btn-primary btn-sm"
 							href="<?php echo Route::_('index.php?option=com_jsports&view=bulletin&layout=edit'
-							    . '&teamid=' . $this->team->id . '&id=0' ); ?>">Add Bulletin </a>
+							    . '&id=0' ); ?>">Add Bulletin </a>
 
 					<?php 
 					   } 
 					?>
-                    <a class="btn btn-primary btn-sm" href="<?php echo Route::_('index.php?option=com_jsports&view=team&id=' . $this->team->id); ?>">Team Profile </a>
+                    <a class="btn btn-primary btn-sm" href="<?php //echo Route::_('index.php?option=com_jsports&view=team&id=' . $this->team->id); ?>">Team Profile </a>
                     <hr class="hr-bar">
 	
 	<?php if (empty($this->items)) : 
@@ -143,8 +142,8 @@ $token = Session::getFormToken();
     					//     canEditGame(team id of schedule being viewed, game object)
     					if ($this->canEdit) {
     					 ?>
-        							<a class="btn btn-primary btn-sm" href="<?php echo Route::_('index.php?option=com_jsports&view=bulletin&layout=edit&id=' . $item->id . '&teamid=' . $this->team->id); ?>">Edit</a>
-        							<a class="btn btn-danger btn-sm" onClick="return confirm('Are you sure?');" href="<?php echo Route::_('index.php?option=com_jsports&task=bulletin.delete&id=' . $item->id . '&teamid=' . $this->team->id . '&' . $token . '=1'); ?>">Delete</a>
+        							<a class="btn btn-primary btn-sm" href="<?php echo Route::_('index.php?option=com_jsports&view=bulletin&layout=edit&id=' . $item->id); ?>">Edit</a>
+        							<a class="btn btn-danger btn-sm" onClick="return confirm('Are you sure?');" href="<?php echo Route::_('index.php?option=com_jsports&task=bulletin.delete&id=' . $item->id . '&' . $token . '=1'); ?>">Delete</a>
 						  <?php 
     					 } 
     						?>

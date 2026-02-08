@@ -10,11 +10,11 @@
 		<field name="title" type="text" label="COM_JSPORTS_BULLETIN_TITLE"
 			size="40" required="true" />
 
-		<field name="bulletintype" type="sql" 
+		<field name="category" type="sql" 
 			label="COM_JSPORTS_BULLETIN_TYPE"
-			query="SELECT bulletintype, typedesc FROM #__jsports_bulletin_types order by typedesc"
-			key_field="bulletintype"
-			value_field="typedesc" 
+			query="SELECT category catdesc FROM #__jsports_bulletin_categories order by catdesc"
+			key_field="category"
+			value_field="catdesc" 
 			header="-Select Type-"
 		/>
 		

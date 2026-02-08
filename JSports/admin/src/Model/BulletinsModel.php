@@ -42,7 +42,7 @@ class BulletinsModel extends ListModel
 		if (empty($config['filter_fields']))
 		{
 			$config['filter_fields'] = array(
-				'bulletintype', 'a.bulletintype',
+				'category', 'a.category',
 				'title', 'a.title',
 			    'ownerid', 'a.ownerid',
 			    'published', 'a.published',
@@ -69,12 +69,12 @@ class BulletinsModel extends ListModel
 	    
 	    $app = Factory::getApplication();
 	    
-	    $bulletintype = $app->input->get('bulletintype', 'E');
-	    if (empty($bulletintype)) {
-	        $bulletintype = (string) $app->getUserState('com_jsports.bulletintype');
+	    $category = $app->input->get('category', 'E');
+	    if (empty($category)) {
+	        $category = (string) $app->getUserState('com_jsports.category');
 	    }
-	    $this->setState('filter.bulletintype', $bulletintype);
-	    $app->setUserState('com_jsports.bulletintype', $bulletintype);
+	    $this->setState('filter.category', $category);
+	    $app->setUserState('com_jsports.category', $category);
 	    
 		$search = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
 		$this->setState('filter.search', $search);
@@ -104,7 +104,7 @@ class BulletinsModel extends ListModel
 		// Compile the store id.
 		$id .= ':' . $this->getState('filter.search');
 		$id .= ':' . $this->getState('filter.published');
-		$id .= ':' . $this->getState('filter.bulletintype');
+		$id .= ':' . $this->getState('filter.category');
 
 		return parent::getStoreId($id);
 	}
@@ -146,10 +146,10 @@ class BulletinsModel extends ListModel
 	    }
 	    
 	    // Filter by TYPE.
-	    $bulletintype = $this->getState('filter.bulletintype');
-	    if (!empty($bulletintype)) {	        
-	        $query->where($db->quoteName('a.bulletintype') . ' = :bulletintype');
-	        $query->bind(':bulletintype', $bulletintype, ParameterType::STRING);
+	    $category = $this->getState('filter.category');
+	    if (!empty($category)) {	        
+	        $query->where($db->quoteName('a.category') . ' = :category');
+	        $query->bind(':category', $category, ParameterType::STRING);
 	    }
 	    
 	    // Filter by search in TEAMNAME.

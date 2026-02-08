@@ -11,17 +11,14 @@
 			hint="JSEARCH_FILTER"
 		/>
 		
-		<field
-			name="bulletintype"
-			type="list"
-			label="Bulletin Type"
+		<field name="category" type="sql" 
+			label="COM_JSPORTS_BULLETIN_TYPE"
+			query="SELECT category, catdesc FROM #__jsports_bulletin_categories order by catdesc"
+			key_field="category"
+			value_field="catdesc" 
+			header="-Select Cateogry-"
 			onchange="this.form.submit();"
-			>
-			<option selected="selected" value="">- Select Type? -</option>
-			<option value="G">General</option>
-			<option value="T">Tournament</option>
-			<option value="Y">Tryout</option>
-		</field>
+		/>
 		
 		<field
 			name="published"

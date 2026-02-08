@@ -58,7 +58,7 @@ $user = UserService::getUser();
 						<?php echo HTMLHelper::_('searchtools.sort', 'COM_JSPORTS_BULLETIN_TITLE', 'a.title', $listDirn, $listOrder); ?>
 					</th>
 					<th scope="col" class="w-10">
-						<?php echo HTMLHelper::_('searchtools.sort', 'COM_JSPORTS_BULLETIN_TYPE', 'a.bulletintype', $listDirn, $listOrder); ?>
+						<?php echo HTMLHelper::_('searchtools.sort', 'COM_JSPORTS_BULLETIN_TYPE', 'a.category', $listDirn, $listOrder); ?>
 					</th>
 					<th scope="col" class="w-10">
 						<?php echo Text::_('COM_JSPORTS_BULLETIN_APPROVED_LABEL'); ?>
@@ -101,7 +101,7 @@ $user = UserService::getUser();
 						</a>
 					</th>
 					<td class="">
-						<?php echo JSHelper::translateBulletinType($item->bulletintype); ?>
+						<?php echo JSHelper::translateBulletinCategory($item->category); ?>
 					</td>
 					<td class="">
 						<?php echo JSHelper::translateYesNo($item->approved); ?>

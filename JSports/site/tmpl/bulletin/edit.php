@@ -36,7 +36,7 @@ $token = Session::getFormToken();
 <form action="<?php echo Route::_('index.php?option=com_jsports&view=bulletin&layout=edit&id=' . (int) $this->item->id); ?>"
 	method="post" enctype="multipart/form-data" name="bulletinForm" id="bulletin-form" class="form-validate">
 
-		<?php echo $this->form->renderField('bulletintype'); ?>
+		<?php echo $this->form->renderField('category'); ?>
 		<?php echo $this->form->renderField('title'); ?>
 		<?php echo $this->form->renderField('content'); ?>
 		<br/>

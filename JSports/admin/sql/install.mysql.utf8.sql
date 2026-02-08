@@ -341,7 +341,7 @@ CREATE TABLE IF NOT EXISTS `#__jsports_bulletins` (
 	 `id` int(11) NOT NULL AUTO_INCREMENT,
 	 `ownerid` int(11) NOT NULL DEFAULT 0,
 	 `teamid` int(11) DEFAULT 0,
-	 `bulletintype` varchar(1) DEFAULT 'B',
+	 `category` varchar(1) DEFAULT 'B',
 	 `title` varchar(50) DEFAULT 'B',	
 	 `approved` tinyint DEFAULT 0,
 	 `content` text DEFAULT null,
@@ -363,10 +363,10 @@ CREATE TABLE IF NOT EXISTS `#__jsports_bulletins` (
 -- BULLETIN TYPES
 -- --------------------------------------------------------
 CREATE TABLE IF NOT EXISTS #__jsports_bulletin_types (
-	 bulletintype varchar(1) NOT NULL,
-	 typedesc varchar(30) not null,
+	 category varchar(1) NOT NULL,
+	 catdesc varchar(30) not null,
 	 publicaccess tinyint default 0, 
- PRIMARY KEY (`bulletintype`)
+ PRIMARY KEY (`category`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 insert into #__jsports_bulletin_types values('G','General',0);

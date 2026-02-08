@@ -45,7 +45,7 @@ class PostingsModel extends ListModel
 		if (empty($config['filter_fields']))
 		{   
 			$config['filter_fields'] = array(
-				'bulletintype', 'a.bulletintype',
+				'category', 'a.category',
 			);
 		}
 		parent::__construct($config);
@@ -69,8 +69,8 @@ class PostingsModel extends ListModel
 		$search = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
 		$this->setState('filter.search', $search);
 
-		$bulletintype = $this->getUserStateFromRequest($this->context . '.filter.bulletintype', 'filter_bulletintype', '');
-		$this->setState('filter.bulletintype', $bulletintype);
+		$category = $this->getUserStateFromRequest($this->context . '.filter.category', 'filter_category', '');
+		$this->setState('filter.category', $category);
 				
 		// List state information.
 		parent::populateState($ordering, $direction);
@@ -92,7 +92,7 @@ class PostingsModel extends ListModel
 	protected function getStoreId($id = '')
 	{
 		// Compile the store id.
-		$id .= ':' . $this->getState('filter.bulletintype');
+		$id .= ':' . $this->getState('filter.category');
 		return parent::getStoreId($id);
 	}
 
@@ -119,17 +119,17 @@ class PostingsModel extends ListModel
 	            )
 	        );
 	    
-	    $bulletintype          = (string) $this->getState('filter.bulletintype');
+	    $category          = (string) $this->getState('filter.category');
 	    $search                = (string) $this->getState('filter.search');
 	   	
 	   	$query->from($db->quoteName('#__jsports_bulletins') . ' AS a ');
 	   	$query->where($db->quoteName('a.approved') . ' = 1');
 
 	    // Filter by bulletin type`   
-	    if (!empty($bulletintype))
+	    if (!empty($category))
 	    {
-	        $query->where($db->quoteName('a.bulletintype') . ' = :bulletintype');
-	        $query->bind(':bulletintype', $bulletintype, ParameterType::INTEGER);
+	        $query->where($db->quoteName('a.category') . ' = :category');
+	        $query->bind(':category', $category, ParameterType::INTEGER);
 	    }
 
 	    if (!empty($search))

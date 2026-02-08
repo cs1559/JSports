@@ -46,7 +46,7 @@ $wa->useStyle('com_jsports.jsports.style');
 			<div class="col-md-9">
 				<div class="row">
 					<div class="">
-						<?php echo $this->form->renderField('bulletintype'); ?>
+						<?php echo $this->form->renderField('category'); ?>
 						<?php echo $this->form->renderField('content'); ?>
 						<?php echo $this->form->renderField('location'); ?>
 						<?php //echo $this->form->renderField('startdate'); ?>
