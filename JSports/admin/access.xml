@@ -12,6 +12,6 @@
 		<action name="core.edit.value" title="JACTION_EDITVALUE" />
 		<action name="core.register" title="Allow Registration"/>
 		<action name="core.jsports.admin" title="COM_JSPORTS_PERM_PLATFORM_ADMIN"/>
-		<action name="core.jsports.bulletins" title="COM_JSPORTS_PERM_BULLETINS"/>
+		<action name="core.jsports.bulletins.manage" title="COM_JSPORTS_PERM_BULLETINS"/>
 	</section>
 </access>
