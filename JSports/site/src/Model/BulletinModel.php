@@ -59,6 +59,9 @@ class BulletinModel extends FormModel
         $bulletinTitle = $requestData['title'] ?? '';
         $isNew = empty($data['id']) || (int) $data['id'] === 0;
         
+        if (empty($data['teamid'])) {
+            $data['teamid'] = 0;
+        }
         
         // File upload array (jform[afile])
         $files = $input->files->get('jform', [], 'array');
@@ -81,6 +84,7 @@ class BulletinModel extends FormModel
         
         $result = $bulletin->save($data);
         if (!$result) {
+            $this->setError($bulletin->getError());
             return false;
         }
 
