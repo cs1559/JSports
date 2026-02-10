@@ -32,7 +32,7 @@ $token = Session::getFormToken();
 
 ?>
 
-<h1><?php echo $this->team->name; ?> - Add/Edit Bulletin </h1>
+<h1>Add/Edit Bulletin </h1>
 <form action="<?php echo Route::_('index.php?option=com_jsports&view=bulletin&layout=edit&id=' . (int) $this->item->id); ?>"
 	method="post" enctype="multipart/form-data" name="bulletinForm" id="bulletin-form" class="form-validate">
 
