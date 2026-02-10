@@ -117,7 +117,8 @@ class ProgramsService
         $query->select('p.*');
         $query->from($db->quoteName('#__jsports_programs') . ' AS p ');
         $conditions = array(
-            $db->quoteName('p.published') . ' in (1) '
+            $db->quoteName('p.published') . ' in (1) ',
+            $db->quoteName('p.registrationonly') . ' = 0 '
         );
         $query->where($conditions);
         $query->order("id desc");
