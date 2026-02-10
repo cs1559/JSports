@@ -396,6 +396,41 @@ class SecurityService
         return $retval;
     }
     
+    public static function canManageBulletins() : bool {
+
+        $user = SecurityService::getUser();
+        
+        // If the current user a guest, return false
+        if ($user->guest) {
+            return false;
+        }
+        
+        // If the user is assigned with ADMINISTRATOR permissions, then yes.
+        if (SecurityService::isAdmin()) {
+            return true;
+        }
+        
+        $teams = UserService::getUserActiveTeams();
+        if ($teams) {
+            return true;
+        }
+        
+        if ($user->authorise('core.jsports.bulletins.manage', 'com_jsports'))
+        {
+            return true;
+        }
+        
+//         $params = ComponentHelper::getParams('com_jsports');
+//         $authorizedgroup = $params->get('groupid');
+        
+//         // If user is in a specific group -- MAY NOT BE NEEDED
+//         if (in_array($authorizedgroup, $user->getAuthorisedGroups()))
+//         {
+//             return true;
+//         }
+        
+        return false;
+    }
     
 }
 
