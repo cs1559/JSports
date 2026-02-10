@@ -89,25 +89,6 @@ class UserService
         if ($uid == 956) {
             $uid = 1176;
         }
-//         $sql = "select distinct t.id as keyid, t.*,  p.name as lastprogramname
-//             from #__jsports_teams t, #__jsports_map m, #__jsports_programs p,
-//             (select max(programid) xid from #__jsports_map
-//                 group by teamid) as maxp
-//                 where t.id = m.teamid
-//                 and m.programid = p.id
-//                 and m.programid = maxp.xid
-//                 and t.ownerid = " . $db->quote($uid) . "
-//             group by keyid
-//             UNION
-//             select distinct t.id as keyid, t.*, p.name as lastprogramname
-//             from #__jsports_teams t, #__jsports_map m, #__jsports_programs p,
-//             	(select max(programid) xid from #__jsports_map group by teamid) as maxp,
-//                 #__jsports_rosters r
-//             where t.id = m.teamid and m.programid = p.id and m.programid = maxp.xid
-//             	and r.programid = m.programid
-//                 and r.teamid = m.teamid
-//             	and r.userid = " . $db->quote($uid) . "
-//             group by keyid";
         $sql = "
 select * from (
 select t.*, temp1.*, p.id as lastprogramid, p.name AS lastprogramname
@@ -302,5 +283,103 @@ order by lastprogramid desc";
         return $db->loadObjectList();
         
     }
+    
+    /**
+     * This function will return an array of Teams that the user is associated and who partiicpated in the
+     * most recent program/season.  If no team is identified, then this function will return an empty array.a
+     * 
+     * @param int|User|null $user
+     * @return array
+     */
+    public static function getUserActiveTeams(int|User|null $user  = null) : array {
+        
+        
+        $pgm = ProgramsService::getMostRecentProgram();
+        
+        $pgmid = $pgm['id'];
+        $uid = self::resolveUserid($user);
+        if ($uid === null) {
+            return [];
+        }
+        
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $query = $db->getQuery(true);
+        
+        if ($uid == 956) {
+            $uid = 1176;
+        }
+        $sql = "
+select * from (
+select t.*
+from 
+	(select teamid
+	from #__jsports_map
+     WHERE programid = :pgm1
+	group by teamid 
+	) temp1, #__jsports_teams t
+where 
+temp1.teamid = t.id
+and t.ownerid = :uid1
+UNION
+select t.*
+from  
+	(select teamid
+	from #__jsports_map
+     where programid = :pgm2
+	group by teamid 
+	) temp1, #__jsports_teams t, #__jsports_rosters r
+where temp1.teamid = t.id
+    and temp1.teamid = r.teamid
+    and r.programid = :pgm3
+and r.userid = :uid2
+and r.staffadmin = 1
+) table1
+
+";
+        
+        $query->setQuery($sql)
+        ->bind(':uid1', $uid, ParameterType::INTEGER)
+        ->bind(':uid2', $uid, ParameterType::INTEGER)
+        ->bind(':pgm1', $pgmid, ParameterType::INTEGER)
+        ->bind(':pgm2', $pgmid, ParameterType::INTEGER)
+        ->bind(':pgm3', $pgmid, ParameterType::INTEGER);
+
+        
+        $db->setQuery($query);
+        
+        return $db->loadObjectList() ?: [];
+        
+    }
+    
+    
+    /**
+     * 
+     * 
+     * select * from (
+select t.*
+from 
+	(select teamid
+	from jos2823_jsports_map
+     WHERE programid = 37
+	group by teamid 
+	) temp1, jos2823_jsports_teams t
+where 
+temp1.teamid = t.id
+and t.ownerid = 963
+UNION
+select t.*
+from  
+	(select teamid
+	from jos2823_jsports_map
+     where programid = 37
+	group by teamid 
+	) temp1, jos2823_jsports_teams t, jos2823_jsports_rosters r
+where temp1.teamid = t.id
+    and temp1.teamid = r.teamid
+    and r.programid = 37
+and r.userid = 963
+and r.staffadmin = 1
+) table1;
+     */
 }
 
