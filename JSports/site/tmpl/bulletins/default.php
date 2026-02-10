@@ -6,7 +6,7 @@
  * @package     JSports
  * @subpackage  Schedules.Site
  * @category    Templates
- * @copyright   Copyright (C) 2023-2024 Chris Strieter
+ * @copyright   Copyright (C) 2023-2026 Chris Strieter
  * @license     GNU/GPLv2, see http://www.gnu.org/licenses/gpl-2.0.html
  *
  */
@@ -54,17 +54,16 @@ $token = Session::getFormToken();
 		</h1>
 	</div>
 </div>
-					<?php 
-					   if ($this->canEdit) {
-					?>
-						<a class="btn btn-primary btn-sm"
-							href="<?php echo Route::_('index.php?option=com_jsports&view=bulletin&layout=edit'
-							    . '&id=0' ); ?>">Add Bulletin </a>
+		<?php 
+		   if ($this->canEdit) {
+		?>
+			<a class="btn btn-primary btn-sm"
+				href="<?php echo Route::_('index.php?option=com_jsports&view=bulletin&layout=edit&id=0' ); ?>">Add Bulletin 
+			</a>
 
-					<?php 
-					   } 
-					?>
-                    <a class="btn btn-primary btn-sm" href="<?php //echo Route::_('index.php?option=com_jsports&view=team&id=' . $this->team->id); ?>">Team Profile </a>
+		<?php 
+		   } 
+		?>
                     <hr class="hr-bar">
 	
 	<?php if (empty($this->items)) : 
@@ -91,15 +90,15 @@ $token = Session::getFormToken();
 					</th>
 					<th scope="col" class="w-15">
 						<?php echo Text::_('COM_JSPORTS_ATTACHMENT'); ?>
-					</th>						
+					</th>
 					<th scope="col" class="w-15">
 						<?php echo Text::_('COM_JSPORTS_ID'); ?>
 					</th>
 					<?php if ($this->canEdit) {?>
 					<th scope="col" class="w-15">
 						<?php echo Text::_('COM_JSPORTS_ACTIONS'); ?>
-					</th>				
-					<?php } ?>						
+					</th>
+					<?php } ?>
 				</tr>
 			</thead>
 			<tbody>
