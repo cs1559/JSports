@@ -10,7 +10,7 @@ $wa->useStyle('com_jsports.admin.style');
 <div id="dashboard-container container">
 	<div class="row">
 		<div class="dashboard-heading brand mb-3 p-3">
-			<h1 style="background: #32386c; color: #ffffff; padding: 5px; "><?php echo $this->title; ?></h1	>
+			<h1><?php echo $this->title; ?></h1	>
 		</div>
 	</DIV>
 	
@@ -101,6 +101,13 @@ $wa->useStyle('com_jsports.admin.style');
         </div>
     </a>
 
+    <a href="index.php?option=com_jsports&view=dashboard" class="card-link">  <!-- adjust view if needed -->
+        <div class="dashboard-card">
+            <i class="fas fa-file-lines"></i>
+            <h2>Sponsors (Future)</h2>
+        </div>
+    </a>
+    
     <a href="index.php?option=com_jsports&view=dashboard" class="card-link">  <!-- adjust view if needed -->
         <div class="dashboard-card">
             <i class="fas fa-file-lines"></i>
