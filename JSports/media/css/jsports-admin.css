@@ -84,3 +84,10 @@
         min-height: 120px;
     }
 }
+
+.dashboard-heading h1 {
+    background: #32386c;
+    color: #ffffff;
+    padding: 15px;
+    margin: 0;
+}
