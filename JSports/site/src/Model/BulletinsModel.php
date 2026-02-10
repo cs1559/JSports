@@ -107,7 +107,7 @@ class BulletinsModel extends ListModel
 	    } else {
 	        $query->select("a.*");
 	        $query->from($db->quoteName('#__jsports_bulletins') . ' AS a')
-	        ->where($db->quoteName('a.ownerid') . ' = ' . $db->quote($teamid))
+	        ->where($db->quoteName('a.ownerid') . ' = ' . $db->quote($user->id))
 	        ->order("createdate desc");
 	    }
 	    
