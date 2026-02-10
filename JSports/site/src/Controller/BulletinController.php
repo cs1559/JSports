@@ -5,7 +5,7 @@
  * @version     1.0.0
  * @package     JSports.Site
  * @subpackage  com_jsports
- * @copyright   Copyright (C) 2023-2024 Chris Strieter
+ * @copyright   Copyright (C) 2023-2026 Chris Strieter
  * @license     GNU/GPLv2, see http://www.gnu.org/licenses/gpl-2.0.html
  *
  */
@@ -80,7 +80,6 @@ class BulletinController extends BaseController
         $model  = $this->getModel();
         $result = $model->save($requestData);
 
-
         // File upload array (jform[afile])
 //         $files = $input->files->get('jform', [], 'array');
         
@@ -88,6 +87,7 @@ class BulletinController extends BaseController
 //         $incomingId = (int) ($requestData['id'] ?? $input->getInt('id'));
         
         if (!$result) {
+            $app->enqueueMessage($model->getError(), 'error');
             $msg = "An error occurred saving the bulletin.";
             if ($model->uploadError) {
                 $msg = $msg . " File upload failed - check logs.";
