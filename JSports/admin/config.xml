@@ -279,6 +279,14 @@
 			description="COM_JSPORTS_ATTACHMENTPATH_DESC">
 		</field>
 		
+		<field name="sponsorgroupid" type="sql" 
+			label="COM_JSPORTS_BULLETIN_SPONSORGROUP"
+			query="SELECT id, title FROM #__usergroups order by title desc"
+			key_field="id"
+			value_field="title" 
+			header="- Select User Group -"
+		/>
+		
 		<field name="maxuploadsize" type="text" default="2"
 			label="COM_JSPORTS_ATTACHMENT_MAX_UPLOAD_SIZE"
 			description="COM_JSPORTS_ATTACHMENT_MAX_UPLOAD_SIZE_DESC">
