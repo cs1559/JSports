@@ -5,7 +5,7 @@
  * @version     1.0.0
  * @package     JSports.Administrator
  * @subpackage  com_jsports
- * @copyright   Copyright (C) 2023-2024 Chris Strieter
+ * @copyright   Copyright (C) 2023-2026 Chris Strieter
  * @license     GNU/GPLv2, see http://www.gnu.org/licenses/gpl-2.0.html
  *
  */
@@ -22,6 +22,8 @@ use FP4P\Component\JSports\Administrator\Table\LeaguesTable;
 
 use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\MVC\View\GenericDataException;
+use Joomla\CMS\Pagination\Pagination;
+use Joomla\CMS\Form\Form;
 
 class HtmlView extends BaseHtmlView
 {
@@ -37,21 +39,21 @@ class HtmlView extends BaseHtmlView
     /**
      * The pagination object
      *
-     * @var  \JPagination
+     * @var  Pagination
      */
     protected $pagination;
     
     /**
      * The model state
      *
-     * @var  \JObject
+     * @var  object
      */
     protected $state;
     
     /**
      * Form object for search filters
      *
-     * @var  \JForm
+     * @var  Form
      */
     public $filterForm;
     
@@ -72,13 +74,18 @@ class HtmlView extends BaseHtmlView
         $this->filterForm    = $this->get('FilterForm');
         $this->form          = $this->get('Form');
         $this->activeFilters = $this->get('ActiveFilters');
-    
+        $this->model        = $this->getModel();
+        
+        $viewname = $this->model->getState('filter.viewname');
+        
+        $this->setLayout($viewname);
        
         // Obtain the state variables and bind them to the search form
         $_programid = $this->state->get('programid');
         $_divisionid = $this->state->get('divisionid');
         $_teamid = $this->state->get('teamid');
         $_gameid = $this->state->get('gameid');
+        
         $defaults = array('programid' => $_programid, 
                 'divisionid' => $_divisionid,
                 'teamid' => $_teamid,

@@ -89,11 +89,14 @@ class GamesModel extends ListModel
 	    $programid  = $this->getUserStateFromRequest($this->context . '.filter.programid', 'filter_programid', '', 'int');
 	    $divisionid = $this->getUserStateFromRequest($this->context . '.filter.divisionid', 'filter_divisionid', '', 'int');
 	    $teamid     = $this->getUserStateFromRequest($this->context . '.filter.teamid', 'filter_teamid', '', 'int');
+	    $viewname     = $this->getUserStateFromRequest($this->context . '.filter.viewname', 'filter_viewname', '', 'string');
 	    
 	    $this->setState('filter.gameid', $gameid);
 	    $this->setState('filter.programid', $programid);
 	    $this->setState('filter.divisionid', $divisionid);
 	    $this->setState('filter.teamid', $teamid);
+	    $this->setState('filter.viewname', $viewname);
+	    
 	    
 	    parent::populateState($ordering, $direction);
 	    

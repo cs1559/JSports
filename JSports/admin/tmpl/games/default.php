@@ -45,28 +45,32 @@ $wa->useStyle('com_jsports.jsports.style');
 	<div hidden id="spinner"></div>
 	<div class="selection-criteria row" style="display: flex; flex-direction: row; ">
 	
-		<div class="w-20">
+		<div class="w-15">
    		<?php echo $this->filterForm->renderField('gameid','filter'); ?>
 		</div>
-		<div class="w-20">
+		<div class="w-15">
    		<?php echo $this->filterForm->renderField('programid','filter'); ?>	
 		</div>
 	
-		<div class="w-20">
+		<div class="w-15">
 			<?php echo $this->filterForm->renderField('divisionid','filter'); ?> 		
 		</div>	
 		
-		<div class="w-20">
+		<div class="w-15">
 			<?php echo $this->filterForm->renderField('teamid','filter'); ?> 		
 		</div>	
 		
+		<div class="w-15">
+			<?php echo $this->filterForm->renderField('viewname','filter'); ?> 		
+		</div>	
+	
 		<div class="w-20">
 			<button style="margin-top: 30px;" type="submit" class="btn btn-primary validate" >
             <span class="icon-check" aria-hidden="true"></span>
             <?php echo Text::_('COM_JSPORTS_SEARCH'); ?>
     	    </button>
-		</div>
-		
+	
+		</div>		
 		
 	</div>
 	<?php if (empty($this->items)) : 

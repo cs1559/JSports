@@ -15,7 +15,7 @@
 			name="gameid"
 			type="text"
 			label="Game ID"
-			description="Game ID"
+			description=""
 		/>
 		
 		<field name="programid" type="sql" 
@@ -55,6 +55,18 @@
 			header="- Select Team -"
 		/>
 
+		<field
+			name="viewname"
+			type="list"
+			label="View Name"
+			default="default"
+			onchange="this.form.submit();"
+			>
+			<option value="default">Default</option>
+			<option value="schedule">Schedule</option>
+
+		</field>
+		
 	</fields>
 
 	<fields name="list">
