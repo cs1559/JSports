@@ -111,11 +111,6 @@ $wa->useStyle('com_jsports.jsports.style');
 					<th scope="col" class="w-5">
 						<?php echo Text::_('COM_JSPORTS_AWAYTEAMSCORE'); ?>
 					</th>					
-					<th scope="col" class="w-5">
-						<?php echo Text::_('State'); ?>
-					</th>					
-										
-					
 					<th scope="col" class="w-5 d-none d-md-table-cell">
 						<?php echo HTMLHelper::_('searchtools.sort', 'JGRID_HEADING_ID', 'a.id', $listDirn, $listOrder); ?>
 					</th>
@@ -165,11 +160,6 @@ $wa->useStyle('com_jsports.jsports.style');
 					<td class="">
 						<?php echo $item->awayteamscore; ?>
 					</td>
-					<td class="">
-						<?php echo $item->published; ?>
-					</td>
-
-					
 					<td class="">
 						<?php echo $item->id; ?>
 					</td>
