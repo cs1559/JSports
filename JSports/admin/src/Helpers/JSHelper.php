@@ -162,6 +162,9 @@ class JSHelper
             case 'F':
                 $type = 'Fundraiser';
                 break;
+            case 'S':
+                return 'Sponsor';
+                break;
             default:
                 $type = '*error*';
                 break;
