@@ -5,7 +5,7 @@
  * @version     1.0.0
  * @package     JSports.Administrator
  * @subpackage  com_jsports
- * @copyright   Copyright (C) 2023-2024 Chris Strieter
+ * @copyright   Copyright (C) 2023-2026 Chris Strieter
  * @license     GNU/GPLv2, see http://www.gnu.org/licenses/gpl-2.0.html
  *
  */
@@ -80,35 +80,26 @@ class GamesModel extends ListModel
 	{
 	    
 	    $app = Factory::getApplication();
-
-	    $input = Factory::getApplication()->input;
-	    $input = $input->post->get('jform', array(), 'array');
-
-	    if (array_key_exists('gameid', $input)) {
-	        $_gameid = $input['gameid'];
-	        $this->setState('gameid', $gameid);
-// 	        $this->setState('gameid', $_gameid);
-	    }
 	    
+	    // Typical admin list state
+	    $search = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search', '', 'string');
+	    $this->setState('filter.search', $search);
 	    
-	    if (array_key_exists('programid', $input)) {
-    	    $_programid = $input['programid'];
-	        $this->setState('programid', $programid);
-// 	        $this->setState('programid', $_programid);
-	    }
+	    $gameid     = $this->getUserStateFromRequest($this->context . '.filter.gameid', 'filter_gameid', '', 'int');
+	    $programid  = $this->getUserStateFromRequest($this->context . '.filter.programid', 'filter_programid', '', 'int');
+	    $divisionid = $this->getUserStateFromRequest($this->context . '.filter.divisionid', 'filter_divisionid', '', 'int');
+	    $teamid     = $this->getUserStateFromRequest($this->context . '.filter.teamid', 'filter_teamid', '', 'int');
 	    
-	    if (array_key_exists('divisionid', $input)) {
-    	    $_divisionid = $input['divisionid'];
-            $this->setState('divisionid', $divisionid);
-	    }
+	    $this->setState('filter.gameid', $gameid);
+	    $this->setState('filter.programid', $programid);
+	    $this->setState('filter.divisionid', $divisionid);
+	    $this->setState('filter.teamid', $teamid);
 	    
-	    if (array_key_exists('teamid', $input)) {
-	       $_teamid = $input['teamid'];
-	       $this->setState('teamid', $teamid);
-	    }
+	    parent::populateState($ordering, $direction);
 	    
-		// List state information.
-		parent::populateState($ordering, $direction);
+	    // If you truly want to override pagination:
+	    $this->setState('list.start', 0);
+	    $this->setState('list.limit', 500);
 	}
 
 	/**
@@ -126,15 +117,13 @@ class GamesModel extends ListModel
 	 */
 	protected function getStoreId($id = '')
 	{
-		// Compile the store id.
-		$id .= ':' . $this->getState('filter.search');
-//		$id .= ':' . $this->getState('filter.published');
-		$id .= ':' . $this->getState('filter.gameid');
-		$id .= ':' . $this->getState('filter.programid');
-		$id .= ':' . $this->getState('filter.divisionid');
-		$id .= ':' . $this->getState('filter.teamid');
-
-		return parent::getStoreId($id);
+	    $id .= ':' . $this->getState('filter.search');
+	    $id .= ':' . $this->getState('filter.gameid');
+	    $id .= ':' . $this->getState('filter.programid');
+	    $id .= ':' . $this->getState('filter.divisionid');
+	    $id .= ':' . $this->getState('filter.teamid');
+	    
+	    return parent::getStoreId($id);
 	}
 
 	/**
@@ -147,89 +136,46 @@ class GamesModel extends ListModel
 	
 	protected function getListQuery()
 	{
-	    
-	    $input = Factory::getApplication()->input;
-	    $input = $input->post->get('jform', array(), 'array');
-
-// 	    if (array_key_exists('gameid', $input)) {
-// 	        $_gameid = $input['gameid'];
-// 	    } else {
-// 	        $_gameid = 0;
-// 	    }
-	    
-//  	    if (array_key_exists('programid', $input)) {
-// 	       $_programid = $input['programid'];
-//  	    } else {
-//  	        $_programid = 0;
-//  	    }
- 	    
-// 	    if (array_key_exists('divisionid', $input)) {
-// 	       $_divisionid = $input['divisionid'];
-// 	    } else {
-// 	        $_divisionid = null;
-// 	    }
-	    
-// 	    if (array_key_exists('teamid', $input)) {
-// 	       $_teamid = $input['teamid'];
-// 	    } else {
-// 	        $_teamid = null;
-// 	    }
-
-	    $_programid = (string) $this->getState('filter.programid');
-	    $_divisionid = (string) $this->getState('filter.divisionid');
-	    $_teamid = (string) $this->getState('filter.teamid');
-	    $_gameid = (string) $this->getState('filter.gameid');
-	    
-    
-	    // Create a new query object.
 	    $db    = $this->getDatabase();
 	    $query = $db->getQuery(true);
 	    
-	    // Select the required fields from the table.
-	    $query->select(
-	        $this->getState(
-	            'list.select',
-	            'a.*'
-	            )
-	        );
-	    $query->from($db->quoteName('#__jsports_games') . ' AS a');   
-
+	    $query->select($this->getState('list.select', 'a.*'))
+	    ->from($db->quoteName('#__jsports_games', 'a'));
+	    
+	    $gameid     = (int) $this->getState('filter.gameid');
+	    $programid  = (int) $this->getState('filter.programid');
+	    $divisionid = (int) $this->getState('filter.divisionid');
+	    $teamid     = (int) $this->getState('filter.teamid');
+	    
 	    // Filter by GAME ID
-	    $gameid = $_gameid;
-	    if (is_numeric($gameid))
-	    {
-	        $query->where($db->quoteName('a.id') . ' = :gameid');
-	        $query->bind(':gameid', $gameid, ParameterType::INTEGER);
+	    if ($gameid > 0) {
+	        $query->where($db->quoteName('a.id') . ' = :gameid')
+	        ->bind(':gameid', $gameid, ParameterType::INTEGER);
+	    }
+	    
+	    // Filter by PROGRAM ID
+	    if ($programid > 0) {
+	        $query->where($db->quoteName('a.programid') . ' = :programid')
+	        ->bind(':programid', $programid, ParameterType::INTEGER);
 	    }
 	    
 	    // Filter by DIVISION ID
-	    $divisionid = $_divisionid;
-	    if (is_numeric($divisionid))
-	    {
-	        $query->where($db->quoteName('a.divisionid') . ' = :divisionid');
-	        $query->bind(':divisionid', $divisionid, ParameterType::INTEGER);
+	    if ($divisionid > 0) {
+	        $query->where($db->quoteName('a.divisionid') . ' = :divisionid')
+	        ->bind(':divisionid', $divisionid, ParameterType::INTEGER);
 	    }
 	    
-	    $programid = $_programid;
-	    if (is_numeric($programid))
-	    {
-	        $query->where($db->quoteName('a.programid') . ' = :programid');
-	        $query->bind(':programid', $programid, ParameterType::INTEGER);
+	    // Filter by TEAM ID (either home or away)
+	    if ($teamid > 0) {
+	        $query->where(
+	            '(' . $db->quoteName('a.hometeamid') . ' = :teamid OR ' .
+	            $db->quoteName('a.awayteamid') . ' = :teamid)'
+	            )->bind(':teamid', $teamid, ParameterType::INTEGER);
 	    }
 	    
-	    $teamid = $_teamid;
-	    if (is_numeric($teamid))
-	    {
-	        $query->where('(' . $db->quoteName('a.hometeamid') . ' = :hteamid or ' . $db->quoteName('a.awayteamid') . ' = :ateamid )');
-	        $query->bind(':hteamid', $teamid, ParameterType::INTEGER);
-	        $query->bind(':ateamid', $teamid, ParameterType::INTEGER);
-	    }
-	   
-	    // Add the list ordering clause.
-// 	    $orderCol  = $this->state->get('list.ordering', 'a.id');
-// 	    $orderDirn = $this->state->get('list.direction', 'ASC');
+	    // Sorting (simple)
+	    $query->order($db->quoteName('a.gamedate') . ' ASC');
 	    
-        $query->order($db->escape('gamedate asc'));
 	    return $query;
 	}
 	
@@ -262,18 +208,23 @@ class GamesModel extends ListModel
 	     */
 	    public function publish(&$pks, $value = 1) {
 	        
-	        /* this is a very simple method to change the state of each item selected */
 	        $db = $this->getDatabase();
+	        $pks = array_map('intval', (array) $pks);
 	        
-	        $query = $db->getQuery(true);
+	        if (!$pks) {
+	            return false;
+	        }
 	        
-	        /* 2/12/2024 - added $db->quote to $value */
-	        $query->update($db->quoteName('#__jsports_programs'))
+	        $query = $db->getQuery(true)
+	        ->update($db->quoteName('#__jsports_games'))
 	        ->set($db->quoteName('published') . ' = :value')
-	        ->bind(':value', $db->quote($value) , ParameterType::INTEGER)
-	        ->whereIn($db->quoteName('id'), $pks);
+	        ->whereIn($db->quoteName('id'), $pks)
+	        ->bind(':value', (int) $value, ParameterType::INTEGER);
+	        
 	        $db->setQuery($query);
 	        $db->execute();
+	        
+	        return true;
 	    }
 	    
 	
