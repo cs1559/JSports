@@ -40,6 +40,12 @@ class BulletinModel extends AdminModel
         
         // Set username to whomever is editing/updating the bulletin
         $data['updatedby'] = $user->username;
+
+        $isNew = empty($data['id']) || (int) $data['id'] === 0;
+        
+        if ($isNew) {
+            $data['ownerid'] = $user->id;    
+        }
         
         $result = parent::save($data);
         
@@ -59,11 +65,8 @@ class BulletinModel extends AdminModel
             $bulletinId = (int) $input->getInt('id');
         }
 
-        // Log create
-        $isNew = empty($data['id']) || (int) $data['id'] === 0;
-        
         if ($isNew) {
-            LogService::info("Bulletin created - {$bulletinTitle} - ID: {$bulletinId}");
+            LogService::info("Bulletin created - {$bulletinTitle} - ID: {$bulletinId}");            
         }
 
         // Handle attachment upload
