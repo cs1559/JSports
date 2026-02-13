@@ -5,7 +5,7 @@
  * @version     1.0.0
  * @package     JSports.Administrator
  * @subpackage  com_jsports
- * @copyright   Copyright (C) 2023-2024 Chris Strieter
+ * @copyright   Copyright (C) 2023-2026 Chris Strieter
  * @license     GNU/GPLv2, see http://www.gnu.org/licenses/gpl-2.0.html
  *
  */
@@ -20,8 +20,10 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Administrator\Table\LeaguesTable;
 
+use Joomla\CMS\Form\Form;
 use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\MVC\View\GenericDataException;
+use Joomla\CMS\Pagination\Pagination;
 
 class HtmlView extends BaseHtmlView
 {
@@ -37,21 +39,21 @@ class HtmlView extends BaseHtmlView
     /**
      * The pagination object
      *
-     * @var  \JPagination
+     * @var  Pagination
      */
     protected $pagination;
     
     /**
      * The model state
      *
-     * @var  \JObject
+     * @var  object
      */
     protected $state;
     
     /**
      * Form object for search filters
      *
-     * @var  \JForm
+     * @var  Form
      */
     public $filterForm;
     

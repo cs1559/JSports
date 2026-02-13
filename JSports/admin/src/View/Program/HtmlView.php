@@ -14,6 +14,7 @@ namespace FP4P\Component\JSports\Administrator\View\Program;
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Form\Form;
 use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\View\GenericDataException;
@@ -31,7 +32,7 @@ class HtmlView extends BaseHtmlView
     /**
      * The \JForm object
      *
-     * @var  \JForm
+     * @var  Form
      */
     protected $form;
     
@@ -52,7 +53,7 @@ class HtmlView extends BaseHtmlView
     /**
      * The actions the user is authorised to perform
      *
-     * @var  \JObject
+     * @var  object
      */
     protected $canDo;
     

@@ -5,7 +5,7 @@
  * @version     1.0.0
  * @package     Tools.Administrator
  * @subpackage  com_jsports
- * @copyright   Copyright (C) 2023-2024 Chris Strieter
+ * @copyright   Copyright (C) 2023-2026 Chris Strieter
  * @license     GNU/GPLv2, see http://www.gnu.org/licenses/gpl-2.0.html
  *
  */
@@ -20,6 +20,7 @@ use Joomla\CMS\MVC\View\GenericDataException;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
+use Joomla\CMS\Form\Form;
 
 /**
  * View to edit an article.
@@ -31,7 +32,7 @@ class HtmlView extends BaseHtmlView
     /**
      * The \JForm object
      *
-     * @var  \JForm
+     * @var  Form
      */
     protected $form;
     
@@ -52,7 +53,7 @@ class HtmlView extends BaseHtmlView
     /**
      * The actions the user is authorised to perform
      *
-     * @var  \JObject
+     * @var  object
      */
     protected $canDo;
     

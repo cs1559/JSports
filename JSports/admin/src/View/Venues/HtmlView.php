@@ -22,6 +22,8 @@ use FP4P\Component\JSports\Administrator\Table\LeaguesTable;
 
 use Joomla\CMS\Helper\ContentHelper;
 use Joomla\CMS\MVC\View\GenericDataException;
+use Joomla\CMS\Pagination\Pagination;
+use Joomla\CMS\Form\Form;
 
 class HtmlView extends BaseHtmlView
 {
@@ -37,21 +39,21 @@ class HtmlView extends BaseHtmlView
     /**
      * The pagination object
      *
-     * @var  \JPagination
+     * @var  Pagination
      */
     protected $pagination;
     
     /**
      * The model state
      *
-     * @var  \JObject
+     * @var  object
      */
     protected $state;
     
     /**
      * Form object for search filters
      *
-     * @var  \JForm
+     * @var  Form
      */
     public $filterForm;
     
