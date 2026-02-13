@@ -3,7 +3,7 @@
  * @package     Registration.Administrator
  * @subpackage  com_jsports
  *
- * @copyright   Copyright (C) 2005 - 2019 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2024 - 2026 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -83,11 +83,6 @@ $wa->useStyle('com_jsports.jsports.style');
 				</div>
 			</div>
 			<div class="col-md-3">
-				<div class="card card-light">
-					<div class="card-body">
-						<?php echo LayoutHelper::render('joomla.edit.global', $this); ?>
-					</div>
-				</div>
 			</div>
 		</div>
 		<?php echo HTMLHelper::_('uitab.endTab'); ?>
@@ -98,7 +93,7 @@ $wa->useStyle('com_jsports.jsports.style');
 				<div class="row">
 					<div class="col-md-8"> 
 						<div class="control-group">
-							<div class="control-label">
+							<div class="control-label"> 
   								<?php echo $this->form->getLabel('attachment'); ?>
 							</div>
                             <div class="controls">
@@ -116,11 +111,7 @@ $wa->useStyle('com_jsports.jsports.style');
 				</div>
 			</div>
 			<div class="col-md-3">
-				<div class="card card-light">
-					<div class="card-body">
-						<?php echo LayoutHelper::render('joomla.edit.global', $this); ?>
-					</div>
-				</div>
+
 			</div>
 		</div>
 		<?php echo HTMLHelper::_('uitab.endTab'); ?>
