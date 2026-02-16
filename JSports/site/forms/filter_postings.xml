@@ -13,7 +13,7 @@
 
 		<field name="category" type="sql" 
 			label="COM_JSPORTS_BULLETIN_TYPE"
-			query="SELECT category, catdesc FROM #__jsports_bulletin_categories where publicaccess = 1 order by catdesc"
+			query="SELECT category, catdesc FROM #__jsports_bulletin_categories order by catdesc"
 			key_field="category"
 			value_field="catdesc" 
 			header="-Select Category-"
