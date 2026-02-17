@@ -69,7 +69,7 @@ class BulletinsModel extends ListModel
 	    
 	    $app = Factory::getApplication();
 	    
-	    $category = $app->input->get('category', 'E');
+	    $category = $app->input->get('category');
 	    if (empty($category)) {
 	        $category = (string) $app->getUserState('com_jsports.category');
 	    }
