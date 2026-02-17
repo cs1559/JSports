@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="JSports - User My Bulletins">
+		<message>
+			<![CDATA[Lists all bulletins owned by a given user.]]>
+		</message>
+	</layout>
+</metadata>
