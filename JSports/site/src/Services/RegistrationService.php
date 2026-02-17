@@ -32,7 +32,7 @@ class RegistrationService
      * This function will return an individual row based on the Registration ID.
      *
      * @param number $id
-     * @return \FP4P\Component\JSports\Site\Services\Registration\RegistrationsTable|NULL
+     * @return RegistrationsTable|NULL
      */
     public function getItem($id = 0) {
         
