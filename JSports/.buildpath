@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <buildpath>
 	<buildpathentry external="true" kind="lib" path="C:/xampp/htdocs/j4/administrator"/>
-	<buildpathentry external="true" kind="lib" path="C:/xampp/htdocs/j4/components"/>
 	<buildpathentry external="true" kind="lib" path="C:/xampp/htdocs/j4/libraries"/>
 	<buildpathentry external="true" kind="lib" path="C:/xampp/htdocs/j4/plugins"/>
 	<buildpathentry kind="con" path="org.eclipse.php.core.LANGUAGE"/>
