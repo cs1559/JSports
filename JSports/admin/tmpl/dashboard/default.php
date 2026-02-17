@@ -115,10 +115,10 @@ $wa->useStyle('com_jsports.admin.style');
         </div>
     </a>
     
-    <a href="index.php?option=com_jsports&view=dashboard" class="card-link">  <!-- adjust view if needed -->
+    <a href="index.php?option=com_jsports&view=reports" class="card-link">  <!-- adjust view if needed -->
         <div class="dashboard-card">
             <i class="fas fa-file-lines"></i>
-            <h2>Reports (Future)</h2>
+            <h2>Reports</h2>
         </div>
     </a>
 </div>
