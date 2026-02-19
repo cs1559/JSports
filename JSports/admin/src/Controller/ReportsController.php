@@ -7,6 +7,7 @@ use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Objects\Reports\NoRosterReport;
+use FP4P\Component\JSports\Site\Objects\Reports\ReportFactory;
 
 class ReportsController extends BaseController
 {
@@ -17,69 +18,99 @@ class ReportsController extends BaseController
         // CSRF check (POST)
         $this->checkToken('post');
         
-        $model = $this->getModel('Reports', 'Administrator', ['ignore_request' => false]);
+        $model = $this->getModel('Reports', 'Administrator', ['ignore_request' => false]);      
         
-//         echo get_class($model);
-//         exit;
+        $viewmode   = $app->input->getCmd('viewmode', 'summary');
+        $programid  = $app->input->getCmd('programid', 0);
+        $format     = $app->input->getCmd('rformat', 'html');
         
+        $context = [];
+        $context['reportname'] = $viewmode;
+        $context['format'] = $format;
+        $context['filters']['programid'] = $programid;
+               
+//         $layout = match ($viewmode) {
+//             'table' => 'ajax.table',
+//             'noroster' => 'reports.noroster',
+//             default => 'ajax.summary',
+//         };
         
-        $viewmode = $app->input->getCmd('viewmode', 'summary');
+        $report = ReportFactory::create($viewmode);
+        $report->setContext($context);
+        echo $report->render();
         
-        // Typically you'd call your Service here
-        $displayData = [
-            'stats' => ['teams' => 159, 'divisions' => 19],
-            'rows'  => [
-                ['team' => 'Athletics', 'wins' => 25],
-                ['team' => 'Sox', 'wins' => 13],
-            ],
-        ];
-        
-        $layout = match ($viewmode) {
-            'table' => 'ajax.table',
-            'noroster' => 'reports.noroster',
-            default => 'ajax.summary',
-        };
-        
-        if ($viewmode === "noroster") {
-            echo $this->renderReport();
-        } else {
-        // Render from administrator component layouts folder
-            echo LayoutHelper::render($layout, $displayData, JPATH_ADMINISTRATOR . '/components/com_jsports/layouts');
-        }
+//         if ($viewmode === "noroster") {
+//             echo $this->renderReport($context);
+//         } else {
+//         // Render from administrator component layouts folder
+//             echo LayoutHelper::render($layout, $displayData, JPATH_ADMINISTRATOR . '/components/com_jsports/layouts');
+//         }
         
         $app->close();
     }
 
-    protected function renderReport()
+    protected function renderReport($context)
     {
-           $report = new NoRosterReport();
-           return $report->toHtml();
+        
+        $filters = $context['filters'];
+        
+        $report = new NoRosterReport($filters);
+        
+        if ($context['format'] === "csv") {
+            return $report->toCSV();
+        } else {
+            return $report->toHtml();
+        }
     }
     
     
-    protected function renderSummary()
-    {
-        return '<div class="alert alert-info">
-            <strong>Summary View</strong><br>
-            Total Teams: 159<br>
-            Divisions: 19
-        </div>';
-    }
+    public function export() {
+        $app = Factory::getApplication();
 
-    protected function renderTable()
-    {
-        return '
-        <table class="table table-sm">
-            <thead>
-                <tr>
-                    <th>Team</th>
-                    <th>Wins</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr><td>Athletics</td><td>5</td></tr>
-                <tr><td>Sox</td><td>3</td></tr>
-            </tbody>
-        </table>';
+        // CSRF check (POST)
+        //$this->checkToken('post');
+        
+//         $model = $this->getModel('Reports', 'Administrator', ['ignore_request' => false]);
+        
+        $viewmode   = $app->input->getCmd('viewmode', 'summary');
+        $programid  = $app->input->getCmd('programid', 0);
+        $format     = $app->input->getCmd('rformat', 'html');
+        
+        $context = [];
+        $context['reportname'] = $viewmode;
+        $context['format'] = $format;
+        $context['filters']['programid'] = $programid;
+
+        $filters = $context['filters'];
+        
+        $report = ReportFactory::create($viewmode);
+        $report->setContext($context);
+//         echo $report->render($format);
+        
+        $outputfn = preg_replace('/\s+/', '', $report->getName());
+        $rows = $report->getData(); // or $db->loadObjectList()
+        
+        if (empty($rows)) {
+            throw new \Exception('No data to export');
+        }
+        
+        // Force download
+        header('Content-Type: text/csv');
+        header('Content-Disposition: attachment; filename="'. $outputfn . '.csv"');
+        header('Pragma: no-cache');
+        header('Expires: 0');
+        $output = fopen('php://output', 'w');
+        
+        // Write CSV header from first object
+        fputcsv($output, array_keys(get_object_vars($rows[0])));
+        
+        // Write rows
+        foreach ($rows as $row) {
+            fputcsv($output, get_object_vars($row));
+        }
+        
+        fclose($output);
+        
+        $app->close();
     }
 }

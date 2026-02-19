@@ -18,20 +18,25 @@ use Joomla\Database\ParameterType;
 
 class NoRosterReport implements Report
 {
-    private $name;
-    private $layout;
+    private $name       = "No Roster Report";
+    private $layout     = "reports.noroster"; 
     private $data;
+    private $programid;
+    private $format;
+    private $filters;
     
-    public function __construct() {
-        $this->name = "No Roster Report";
-        $this->layout = "reports.noroster";
-    }
+//     public function __construct($context = []) {
+//         $this->name         = "No Roster Report";
+//         $this->layout       = "reports.noroster";        
+//         $this->programid    = isset($context['programid']) ? $context['programid'] : 0;
+//         $this->format       = isset($context['format']) ? $context['format'] : 0;
+//     }
     
     public function getName() {
         return $this->name;
     }
     
-    private function getData() {
+    public function getData() {
         
         /*
          * select t.id, t.name as 'team_name', t.contactname, d.agegroup, d.name as 'division_name'
@@ -82,8 +87,8 @@ order by a.agegroup, d.name, t.name
             $db->quoteName('t.name'),
         ]);
         
-        $query->bind(':pid', $programId, ParameterType::INTEGER);
-        $query->bind(':pid2', $programId, ParameterType::INTEGER);
+        $query->bind(':pid', $this->programid, ParameterType::INTEGER);
+        $query->bind(':pid2', $this->programid, ParameterType::INTEGER);
         $db->setQuery($query);
         return $db->loadObjectList();
         
@@ -97,9 +102,32 @@ order by a.agegroup, d.name, t.name
         return LayoutHelper::render($this->layout, $rows, JPATH_ADMINISTRATOR . '/components/com_jsports/layouts');
         
     }
-    public function toCSV() {
-        return "Not Implemented";
+
+    
+    
+    public function render()
+    {
+        
+        switch ($this->format) {
+            case 'html':
+                return $this->toHtml();
+                break;
+                
+            default:
+                return $this->toHtml();
+        }
+        
     }
+    public function setContext(array $context)
+    {
+
+        $this->filters      = $context['filters'];
+        $this->programid    = isset($this->filters['programid']) ? $this->filters['programid'] : 0;
+        $this->format       = isset($context['format']) ? $context['format'] : 0;
+        
+    }
+
+
     
 }
 

@@ -30,7 +30,7 @@ class HtmlView extends BaseHtmlView
     {
         $this->state            = $this->get('State');
         $this->filterForm       = $this->get('FilterForm');
-        $this->programs         = ProgramsService::getNonCompletedPrograms(true);
+        $this->programs         = ProgramsService::getNonCompletedPrograms();
 
         $this->addToolbar();
         

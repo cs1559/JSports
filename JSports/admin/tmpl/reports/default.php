@@ -43,13 +43,23 @@ $programs2 = [
             <label class="form-label">Select Report</label>
             <select id="viewmode" class="form-select">
                 <option value="noroster">Teams with NO ROSTER</option>
+                <option value="registrationlist">Registration Report</option>
             </select>
         </div>
 
+        <!-- Form -->
+        <div class="col-auto">
+            <label class="form-label">Format</label>
+            <select id="rformat" class="form-select">
+                <option value="html">Html</option>
+                <option value="csv">CSV</option>
+            </select>
+        </div>
+        
         <!-- Refresh -->
         <div class="col-auto">
             <button id="previewBtn" class="btn btn-primary">
-                Preview
+                Run
             </button>
         </div>
 
@@ -61,20 +71,37 @@ $programs2 = [
 
 <script>
 document.getElementById('previewBtn').addEventListener('click', function(e) {
-
     e.preventDefault();
 
     const programid = document.getElementById('programid').value;
     const viewmode  = document.getElementById('viewmode').value;
+    const rformat   = document.getElementById('rformat').value;
 
+    // CSV: do a normal navigation so Content-Disposition triggers download
+    if (rformat === 'csv') {
+
+        const params = new URLSearchParams({
+            '<?php echo $token; ?>': 1,
+            programid: programid,
+            viewmode: viewmode,
+            rformat: rformat
+        });
+
+        window.location.href =
+            'index.php?option=com_jsports&task=reports.export&format=raw&' + params.toString();
+
+        return;
+    }
+
+    // HTML preview: AJAX
     Joomla.request({
         url: 'index.php?option=com_jsports&task=reports.ajaxPreview&format=raw',
         method: 'POST',
-
         data: new URLSearchParams({
             '<?php echo $token; ?>': 1,
-            'programid': programid,
-            'viewmode': viewmode
+            programid: programid,
+            rformat: rformat,
+            viewmode: viewmode
         }).toString(),
 
         onSuccess: function(response) {
@@ -88,3 +115,4 @@ document.getElementById('previewBtn').addEventListener('click', function(e) {
     });
 });
 </script>
+

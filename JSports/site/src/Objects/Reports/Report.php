@@ -13,9 +13,11 @@ namespace FP4P\Component\JSports\Site\Objects\Reports;
 
 interface Report
 {
+//     public function __construct($context);
+    public function getData();
+    public function setContext(array $context);
+    public function render();
     public function getName();
-    public function toHtml();
-    public function toCSV();
     
 }
 
