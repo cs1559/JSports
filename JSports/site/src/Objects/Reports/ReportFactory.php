@@ -20,6 +20,7 @@ class ReportFactory {
         return match ($type) {
             'noroster' => new NoRosterReport(),
             'registrationlist' => new Registrationlist(),
+            'duplicateplayers' => new Duplicateplayers(),
             default => throw new InvalidArgumentException("Unknown type."),
         };
     }

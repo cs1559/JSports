@@ -10,11 +10,6 @@ HTMLHelper::_('behavior.keepalive');
 $app   = Factory::getApplication();
 $token = $app->getFormToken();
 
-// Example program list – normally passed from View or Service
-$programs2 = [
-    37 => '2026 Spring Baseball',
-    35 => '2025 Spring   Baseball',
-];
 ?>
 
 <div class="container-fluid">
@@ -42,8 +37,9 @@ $programs2 = [
         <div class="col-auto">
             <label class="form-label">Select Report</label>
             <select id="viewmode" class="form-select">
-                <option value="noroster">Teams with NO ROSTER</option>
-                <option value="registrationlist">Registration Report</option>
+                <option value="registrationlist">Registration - List Registrations</option>
+                <option value="noroster">Roster - Teams with NO Roster</option>
+                <option value="duplicateplayers">Roster - Possible Duplicate Players</option>
             </select>
         </div>
 
