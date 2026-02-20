@@ -39,7 +39,8 @@
 <tr>
   <th>DivID</th>
   <th>Division Name</th>
-  <th>Differntial</th>
+  <th>Game Count</th>
+  <th>Differential</th>
 </tr>
 </thead>
 
@@ -50,6 +51,7 @@ foreach ($displayData as $row) {
     <tr>
 					<td><?php echo $row->divisionid; ?> </td>
 					<td><?php echo $row->name; ?> </td>
+					<td><?php echo $row->gamecount; ?> </td>
 					<td><?php echo $row->diff; ?> </td>
 				</tr>
 <?php
