@@ -48,6 +48,33 @@ class ProgramsService
      *
      * @return array<int, stdClass>
      */
+    public static function getPrograms($inclregistrations = false) {
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        //$db = Factory::getDbo();
+        $query = $db->getQuery(true);
+        
+        $query->select('p.*');
+        $query->from($db->quoteName('#__jsports_programs') . ' AS p ');
+        $conditions = array(
+            $db->quoteName('p.registrationonly') . ' = 0',
+            $db->quoteName('p.published') . ' in (1) '
+        );
+//         if ($activeonly) {
+//             $conditions[] = $db->quoteName('p.status') . ' = "A"';
+//         }
+        $query->where($conditions);
+        $query->order('id desc');
+        $db->setQuery($query);
+        return $db->loadObjectList();
+        
+    }
+    
+    /**
+     * This function will return an array of objects that represent a list of programs that have not
+     * been completed.
+     *
+     * @return array<int, stdClass>
+     */
     public static function getNonCompletedPrograms(bool $activeonly = false) {
         $db = Factory::getContainer()->get(DatabaseInterface::class);
         //$db = Factory::getDbo();
