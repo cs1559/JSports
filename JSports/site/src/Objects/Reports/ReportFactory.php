@@ -21,6 +21,7 @@ class ReportFactory {
             'noroster' => new NoRosterReport(),
             'registrationlist' => new Registrationlist(),
             'duplicateplayers' => new Duplicateplayers(),
+            'rundifferential' => new RunDifferential(),
             default => throw new InvalidArgumentException("Unknown type."),
         };
     }

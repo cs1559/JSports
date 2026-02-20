@@ -16,18 +16,20 @@ use Joomla\CMS\Factory;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Database\ParameterType;
 
-class Registrationlist implements Report
+class Registrationlist extends AbstractReport
 {
-    private $name       = "Registration List Report";
-    private $layout     = "reports.registrationlist"; 
-    private $data;
+//     private $name       = "Registration List Report";
+//     private $layout     = "reports.registrationlist"; 
+//     private $data;
     private $programid;
-    private $format;
-    private $filters;
+//     private $format;
+//     private $filters;
         
-    public function getName() {
-        return $this->name;
+    public function __construct() {
+        $this->setName("Registration List Report");
+        $this->setLayout("reports.registrationlist");
     }
+
     
     public function getData() {
         
@@ -70,29 +72,8 @@ order by grouping, name;
         
     }
     
-    public function toHtml() {
-        
-        $rows = $this->getData();
-               
-        // Render from administrator component layouts folder
-        return LayoutHelper::render($this->layout, $rows, JPATH_ADMINISTRATOR . '/components/com_jsports/layouts');
-        
-    }
- 
+
     
-    public function render()
-    {
-        
-        switch ($this->format) {
-            case 'html':
-                return $this->toHtml();
-                break;
-                
-            default:
-                return $this->toHtml();
-        }
-        
-    }
     public function setContext(array $context)
     {
 

@@ -3,6 +3,9 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Layout\LayoutHelper;
+use Joomla\CMS\Router\Route;
 
 HTMLHelper::_('behavior.core');
 HTMLHelper::_('behavior.keepalive');
@@ -11,6 +14,8 @@ $app   = Factory::getApplication();
 $token = $app->getFormToken();
 
 ?>
+
+<form action="<?php echo Route::_('index.php?option=com_jsports&view=reports'); ?>" method="post" name="adminForm" id="adminForm">
 
 <div class="container-fluid">
 
@@ -40,6 +45,7 @@ $token = $app->getFormToken();
                 <option value="registrationlist">Registration - List Registrations</option>
                 <option value="noroster">Roster - Teams with NO Roster</option>
                 <option value="duplicateplayers">Roster - Possible Duplicate Players</option>
+                <option value="rundifferential">Run Differential By Division</option>
             </select>
         </div>
 
@@ -112,3 +118,7 @@ document.getElementById('previewBtn').addEventListener('click', function(e) {
 });
 </script>
 
+	<input type="hidden" name="task" value="">
+	<input type="hidden" name="boxchecked" value="0">
+	<?php echo HTMLHelper::_('form.token'); ?>
+</form>
