@@ -191,6 +191,15 @@ class HtmlView extends BaseHtmlView
         {
             throw new GenericDataException(implode("\n", $errors), 500);
         }    
+  
+        $document = Factory::getApplication()->getDocument();
+        $wa = $this->document->getWebAssetManager();
+        $wa->getRegistry()->addExtensionRegistryFile('com_jsports');
+        $wa->useScript('com_jsports.phone-formatter.script');
+        $phoneSelector = '#jform_contactphone';
+        $document->addScriptOptions('com_yourcomponent.phone', [
+            'selector' => $phoneSelector
+        ]);
         
         return parent::display($tpl);
     }

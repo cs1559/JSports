@@ -25,7 +25,8 @@
 			pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" 
 			message="Please make sure it is in the 000-000-0000 format"
 			inputtype="tel"
-			maxlength="12"
+			autocomplete="tel" 
+			maxlength="14"
 			required="true" />
 						
 		<field name="city" type="text"

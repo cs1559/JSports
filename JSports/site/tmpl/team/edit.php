@@ -20,6 +20,9 @@ use Joomla\CMS\Router\Route;
 HTMLHelper::_('behavior.formvalidator');
 HTMLHelper::_('behavior.keepalive');
 
+
+
+
 ?>
 <h1>Edit Profile -<?php echo $this->data->name; ?>  </h1>
 

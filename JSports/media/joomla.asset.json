@@ -109,6 +109,17 @@
 			"attributes" : {
 				"defer" : true
 			}
+		}, {
+			"name" : "com_jsports.phone-formatter.script",
+			"type" : "script",
+			"uri" : "com_jsports/phone-formatter.js",
+			"version" : "1.0.0",
+			"dependencies" : [
+				"core"
+			],
+			"attributes" : {
+				"defer" : true
+			}
 		}
 	],
 	"description" : "JSports Assets",
