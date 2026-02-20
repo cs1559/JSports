@@ -11,23 +11,24 @@
  */
 namespace FP4P\Component\JSports\Site\Objects\Reports;
 
-use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Factory;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Database\ParameterType;
 
-class Duplicateplayers implements Report
+class Duplicateplayers extends AbstractReport
 {
-    private $name       = "Possible Duplicate Players";
-    private $layout     = "reports.duplicateplayers"; 
-    private $data;
+//     private $name       = "Possible Duplicate Players";
+//     private $layout     = "reports.duplicateplayers"; 
+//     private $data;
     private $programid;
-    private $format;
-    private $filters;
-        
-    public function getName() {
-        return $this->name;
+//     private $format;
+//     private $filters;
+
+    public function __construct() {
+        $this->setName("Possible Duplicate Players");
+        $this->setLayout("reports.duplicateplayers");
     }
+    
     
     public function getData() {
         
@@ -130,29 +131,6 @@ $db->setQuery($query);
         
     }
     
-    public function toHtml() {
-        
-        $rows = $this->getData();
-
-        // Render from administrator component layouts folder
-        return LayoutHelper::render($this->layout, $rows, JPATH_ADMINISTRATOR . '/components/com_jsports/layouts');
-        
-    }
- 
-    
-    public function render()
-    {
-        
-        switch ($this->format) {
-            case 'html':
-                return $this->toHtml();
-                break;
-                
-            default:
-                return $this->toHtml();
-        }
-        
-    }
     public function setContext(array $context)
     {
 

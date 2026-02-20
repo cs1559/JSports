@@ -11,29 +11,18 @@
  */
 namespace FP4P\Component\JSports\Site\Objects\Reports;
 
-use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Factory;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Database\ParameterType;
 
-class NoRosterReport implements Report
+class NoRosterReport extends AbstractReport
 {
-    private $name       = "No Roster Report";
-    private $layout     = "reports.noroster"; 
-    private $data;
+
     private $programid;
-    private $format;
-    private $filters;
     
-//     public function __construct($context = []) {
-//         $this->name         = "No Roster Report";
-//         $this->layout       = "reports.noroster";        
-//         $this->programid    = isset($context['programid']) ? $context['programid'] : 0;
-//         $this->format       = isset($context['format']) ? $context['format'] : 0;
-//     }
-    
-    public function getName() {
-        return $this->name;
+    public function __construct() {
+        $this->setName("No Roster Report");
+        $this->setLayout("reports.noroster");
     }
     
     public function getData() {
@@ -94,30 +83,6 @@ order by a.agegroup, d.name, t.name
         
     }
     
-    public function toHtml() {
-        
-        $rows = $this->getData();
-               
-        // Render from administrator component layouts folder
-        return LayoutHelper::render($this->layout, $rows, JPATH_ADMINISTRATOR . '/components/com_jsports/layouts');
-        
-    }
-
-    
-    
-    public function render()
-    {
-        
-        switch ($this->format) {
-            case 'html':
-                return $this->toHtml();
-                break;
-                
-            default:
-                return $this->toHtml();
-        }
-        
-    }
     public function setContext(array $context)
     {
 
