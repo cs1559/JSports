@@ -66,32 +66,66 @@ INNER JOIN xkrji_jsports_divisions d
 WHERE m.programid = 35
 ORDER BY soundex, r.lastname, r.firstname;
 */
-        $query
-        ->select([
-            $db->quoteName('d.name', 'divisionname'),
-            $db->quoteName('d.agegroup'),
-            $db->quoteName('t.name', 'teamname'),
-            $db->quoteName('r.lastname'),
-            $db->quoteName('r.firstname'),
-            // MySQL expression; alias "soundex"
-            'SOUNDEX(CONCAT(' . $db->quoteName('r.lastname') . ', ' . $db->quoteName('r.firstname') . ')) AS ' . $db->quoteName('soundex'),
-        ])
-        ->from($db->quoteName('#__jsports_rosters', 'r'))
-        ->innerJoin($db->quoteName('#__jsports_teams', 't') . ' ON ' . $db->quoteName('r.teamid') . ' = ' . $db->quoteName('t.id'))
-        ->innerJoin($db->quoteName('#__jsports_map', 'm')   . ' ON ' . $db->quoteName('r.teamid')        . ' = ' . $db->quoteName('m.teamid') . ' AND ' . $db->quoteName('r.programid') . ' = ' . $db->quoteName('m.programid'))
-        ->innerJoin($db->quoteName('#__jsports_divisions', 'd') . ' ON ' . $db->quoteName('d.id')      . ' = ' . $db->quoteName('m.divisionid'))
-        ->where($db->quoteName('m.programid') . ' = :programid')
-        ->bind(':programid', $this->programid, ParameterType::INTEGER)
-        ->order([
-            $db->quoteName('soundex'),
-            $db->quoteName('r.lastname'),
-            $db->quoteName('r.firstname'),
-        ]);
-        
-        $db->setQuery($query);
+// Subquery to find soundex values that appear more than once
+$subQuery = $db->getQuery(true);
+$subQuery
+    ->select('SOUNDEX(CONCAT(' . $db->quoteName('r.lastname') . ', ' . $db->quoteName('r.firstname') . ')) AS soundex')
+    ->from($db->quoteName('#__jsports_rosters', 'r'))
+    ->innerJoin(
+        $db->quoteName('#__jsports_map', 'm') .
+        ' ON ' . $db->quoteName('r.teamid') . ' = ' . $db->quoteName('m.teamid') .
+        ' AND ' . $db->quoteName('r.programid') . ' = ' . $db->quoteName('m.programid')
+    )
+    ->innerJoin(
+        $db->quoteName('#__jsports_teams', 't') .
+        ' ON ' . $db->quoteName('r.teamid') . ' = ' . $db->quoteName('t.id')
+    )
+    ->innerJoin(
+        $db->quoteName('#__jsports_divisions', 'd') .
+        ' ON ' . $db->quoteName('m.divisionid') . ' = ' . $db->quoteName('d.id')
+    )
+    ->where($db->quoteName('m.programid') . ' = :programid')
+    ->group($db->quoteName('soundex'))
+    ->having('COUNT(*) > 1');
 
-//echo (string) $query;
+// Main query – get full rows only for duplicate soundex groups
+$query
+    ->select([
+        $db->quoteName('d.name', 'divisionname'),
+        $db->quoteName('d.agegroup'),
+        $db->quoteName('t.name', 'teamname'),
+        $db->quoteName('r.lastname'),
+        $db->quoteName('r.firstname'),
+        'SOUNDEX(CONCAT(' . $db->quoteName('r.lastname') . ', ' . $db->quoteName('r.firstname') . ')) AS ' . $db->quoteName('soundex')
+    ])
+    ->from($db->quoteName('#__jsports_rosters', 'r'))
+    ->innerJoin(
+        $db->quoteName('#__jsports_teams', 't') .
+        ' ON ' . $db->quoteName('r.teamid') . ' = ' . $db->quoteName('t.id')
+    )
+    ->innerJoin(
+        $db->quoteName('#__jsports_map', 'm') .
+        ' ON ' . $db->quoteName('r.teamid') . ' = ' . $db->quoteName('m.teamid') .
+        ' AND ' . $db->quoteName('r.programid') . ' = ' . $db->quoteName('m.programid')
+    )
+    ->innerJoin(
+        $db->quoteName('#__jsports_divisions', 'd') .
+        ' ON ' . $db->quoteName('m.divisionid') . ' = ' . $db->quoteName('d.id')
+    )
+    ->where($db->quoteName('m.programid') . ' = :programid')	
+    ->where(
+        'SOUNDEX(CONCAT(' . $db->quoteName('r.lastname') . ', ' . $db->quoteName('r.firstname') . ')) IN (' .
+        $subQuery->__toString() .
+        ')'
+    )
+    ->bind(':programid', $this->programid, ParameterType::INTEGER)
+    ->order($db->quoteName('soundex') . ' ASC')
+    ->order($db->quoteName('r.lastname') . ' ASC')
+    ->order($db->quoteName('r.firstname') . ' ASC');
 
+
+
+$db->setQuery($query);
         return $db->loadObjectList();
         
     }
