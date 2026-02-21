@@ -27,7 +27,7 @@ class RunDifferential extends AbstractReport
     }
 
     
-    public function getData() {
+    public function getData() : array {
         
         /*
 
@@ -68,7 +68,7 @@ order by d.ordering
     
 
     
-    public function setContext(array $context)
+    public function setContext(array $context) : void
     {
 
         $this->filters      = $context['filters'];

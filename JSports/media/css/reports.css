@@ -6,9 +6,10 @@
 	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 	
+/* NOTE:  If I used max-width 100 percent the browser page would still scroll */
 .report-table-wrap{
-  /* max-height: 400px; */
-  overflow: auto;
+  max-width: 98%; 
+  overflow-x: auto;
   border: 1px solid #dee2e6;
   border-radius: .5rem;
   background: #fff;

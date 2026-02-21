@@ -25,7 +25,7 @@ class NoRosterReport extends AbstractReport
         $this->setLayout("reports.noroster");
     }
     
-    public function getData() {
+    public function getData() : array {
         
         /*
          * select t.id, t.name as 'team_name', t.contactname, d.agegroup, d.name as 'division_name'
@@ -83,7 +83,7 @@ order by a.agegroup, d.name, t.name
         
     }
     
-    public function setContext(array $context)
+    public function setContext(array $context) : void
     {
 
         $this->filters      = $context['filters'];

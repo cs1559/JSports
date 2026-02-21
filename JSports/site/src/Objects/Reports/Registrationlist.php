@@ -31,7 +31,7 @@ class Registrationlist extends AbstractReport
     }
 
     
-    public function getData() {
+    public function getData() : array {
         
         /*
          * select teamname, grouping, name as 'coach name', address, city, email, phone, cellphone, registeredby, skilllevel, if (playoffs=1,'Yes','No') as "Playoffs"
@@ -74,7 +74,7 @@ order by grouping, name;
     
 
     
-    public function setContext(array $context)
+    public function setContext(array $context) : void
     {
 
         $this->filters      = $context['filters'];

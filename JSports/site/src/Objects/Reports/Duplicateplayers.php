@@ -30,7 +30,7 @@ class Duplicateplayers extends AbstractReport
     }
     
     
-    public function getData() {
+    public function getData() : array {
         
         /*
          * 
@@ -131,7 +131,7 @@ $db->setQuery($query);
         
     }
     
-    public function setContext(array $context)
+    public function setContext(array $context) : void
     {
 
         $this->filters      = $context['filters'];
