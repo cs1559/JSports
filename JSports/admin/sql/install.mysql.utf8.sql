@@ -374,3 +374,7 @@ insert into #__jsports_bulletin_categories values('T','Tournament',0);
 insert into #__jsports_bulletin_categories values('Y','Tryout',1);
 insert into #__jsports_bulletin_categories values('F','Fundraising',0);
 insert into #__jsports_bulletin_categories values('S','Sponsors',0);
+
+-- Version 1.2.2 - introduce archived team attribute for FUTURE USE
+ALTER TABLE `#__jsports_teams` 
+    ADD COLUMN IF NOT EXISTS `archived` TINYINT(1) NOT NULL DEFAULT 0 AFTER `properties`;
