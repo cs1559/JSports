@@ -40,6 +40,10 @@
 			"type" : "style",
 			"uri" : "com_jsports/game.css"
 		}, {
+			"name" : "com_jsports.reports.style",
+			"type" : "style",
+			"uri" : "com_jsports/reports.css"
+		}, {
 			"name" : "com_jsports.game.script",
 			"type" : "script",
 			"uri" : "com_jsports/game.js",
