@@ -193,11 +193,11 @@ class HtmlView extends BaseHtmlView
         }    
   
         $document = Factory::getApplication()->getDocument();
-        $wa = $this->document->getWebAssetManager();
+        $wa = $this->getDocument()->getWebAssetManager();
         $wa->getRegistry()->addExtensionRegistryFile('com_jsports');
         $wa->useScript('com_jsports.phone-formatter.script');
         $phoneSelector = '#jform_contactphone';
-        $document->addScriptOptions('com_yourcomponent.phone', [
+        $document->addScriptOptions('com_jsports.phone', [
             'selector' => $phoneSelector
         ]);
         

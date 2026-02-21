@@ -7,7 +7,7 @@
  * @subpackage  com_jsports
  * @copyright   Copyright (C) 2023-2024 Chris Strieter
  * @license     GNU/GPLv2, see http://www.gnu.org/licenses/gpl-2.0.html
- *
+ *-
  */
 namespace FP4P\Component\JSports\Site\View\Registration;
 
@@ -80,6 +80,15 @@ class HtmlView extends BaseHtmlView
         {
             throw new GenericDataException(implode("\n", $errors), 500);
         }
+        
+        $document = Factory::getApplication()->getDocument();
+        $wa = $this->getDocument()->getWebAssetManager();
+        $wa->getRegistry()->addExtensionRegistryFile('com_jsports');
+        $wa->useScript('com_jsports.phone-formatter.script');
+        $phoneSelector = '#jform_phone';
+        $document->addScriptOptions('com_jsports.phone', [
+            'selector' => $phoneSelector
+        ]);
         
         return parent::display($tpl);
     }
