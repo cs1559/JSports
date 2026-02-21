@@ -35,6 +35,11 @@ class HtmlView extends BaseHtmlView
 
         $this->addToolbar();
         
+//         $document = Factory::getApplication()->getDocument();
+        $wa = $this->getDocument()->getWebAssetManager();
+        $wa->getRegistry()->addExtensionRegistryFile('com_jsports');
+        $wa->useStyle('com_jsports.reports.style');
+        
         parent::display($tpl);
     }
     
