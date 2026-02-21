@@ -85,7 +85,7 @@ class DatabaseLogger extends Logger
         
         $values = array(
             0,
-            $db->quote($datetime), // teamname
+            'CURRENT_TIMESTAMP', // teamname
             $db->quote($userid), // alias
             $db->quote($username), // city
             $db->quote($msg), // state
