@@ -1,0 +1,36 @@
+
+.report-container {
+	background: #ffffff;
+	padding: 25px;
+	border-radius: 8px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+	
+.report-table-wrap{
+  /* max-height: 400px; */
+  overflow: auto;
+  border: 1px solid #dee2e6;
+  border-radius: .5rem;
+  background: #fff;
+}
+
+.report-table{
+  min-width: 1200px;
+  margin-bottom: 0;
+}
+
+.report-table thead th{
+  position: sticky;
+  top: 0;
+  background: #f8f9fa;
+  z-index: 2;
+  white-space: nowrap;
+}
+
+.report-table th,
+.report-table td{
+  white-space: nowrap;
+  vertical-align: top;
+  padding: .35rem .5rem;
+  font-size: .9rem;
+}
