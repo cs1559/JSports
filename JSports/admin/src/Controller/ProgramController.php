@@ -50,7 +50,7 @@ class ProgramController extends FormController
     /**
      * The setup function essentially is used to redirect the client to the program setup screen.
      */
-    public function setup() : void {
+    public function setup() {
         
         $this->checkToken();
         
