@@ -36,19 +36,19 @@ class GameModel extends AdminModel
      *
      * @since   1.6
      */
-    protected function canDelete($record)
-    {
+//     protected function canDelete($record)
+//     {
         
-        if (empty($record->id) || $record->published != -2) {
-            return false;
-        }
+//         if (empty($record->id) || $record->published != -2) {
+//             return false;
+//         }
         
-        if (!empty($record->id)) {
-            return $this->getCurrentUser()->authorise('core.delete', 'com_jsports.game.' . (int) $record->id);
-        }
+//         if (!empty($record->id)) {
+//             return $this->getCurrentUser()->authorise('core.delete', 'com_jsports.game.' . (int) $record->id);
+//         }
         
-        return parent::canDelete($record);
-    }
+//         return parent::canDelete($record);
+//     }
         
         
     
@@ -61,17 +61,17 @@ class GameModel extends AdminModel
      *
      * @since   1.6
      */
-    protected function canEditState($record)
-    {
-        // Check for existing article.
-        if (!empty($record->id))
-        {
-            return $this->getCurrentUser()->authorise('core.edit.state', 'com_jsports.game.' . (int) $record->id);
-        }
+//     protected function canEditState($record)
+//     {
+//         // Check for existing article.
+//         if (!empty($record->id))
+//         {
+//             return $this->getCurrentUser()->authorise('core.edit.state', 'com_jsports.game.' . (int) $record->id);
+//         }
         
-        // Default to component settings if neither article nor category known.
-        return parent::canEditState($record);
-    }
+//         // Default to component settings if neither article nor category known.
+//         return parent::canEditState($record);
+//     }
     
     /**
      * Method to get a table object, load it if necessary.

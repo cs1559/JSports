@@ -32,42 +32,42 @@ class TeamModel extends AdminModel
      *
      * @since   1.6
      */
-    protected function canDelete($record)
-    {
+//     protected function canDelete($record)
+//     {
         
-           if (empty($record->id) || $record->state != -2) {
-                return false;
-            }
+//            if (empty($record->id) || $record->state != -2) {
+//                 return false;
+//             }
             
-            if (!empty($record->id)) {
-                return $this->getCurrentUser()->authorise('core.delete', 'com_jsports.team.' . (int) $record->id);
-            }
+//             if (!empty($record->id)) {
+//                 return $this->getCurrentUser()->authorise('core.delete', 'com_jsports.team.' . (int) $record->id);
+//             }
             
-            return parent::canDelete($record);
-    }
+//             return parent::canDelete($record);
+//     }
         
         
     
-    /**
-     * Method to test whether a record can have its state edited.
-     *
-     * @param   object  $record  A record object.
-     *
-     * @return  boolean  True if allowed to change the state of the record. Defaults to the permission set in the component.
-     *
-     * @since   1.6
-     */
-    protected function canEditState($record)
-    {
-        // Check for existing article.
-        if (!empty($record->id))
-        {
-            return $this->getCurrentUser()->authorise('core.edit.state', 'com_jsports.team.' . (int) $record->id);
-        }
+//     /**
+//      * Method to test whether a record can have its state edited.
+//      *
+//      * @param   object  $record  A record object.
+//      *
+//      * @return  boolean  True if allowed to change the state of the record. Defaults to the permission set in the component.
+//      *
+//      * @since   1.6
+//      */
+//     protected function canEditState($record)
+//     {
+//         // Check for existing article.
+//         if (!empty($record->id))
+//         {
+//             return $this->getCurrentUser()->authorise('core.edit.state', 'com_jsports.team.' . (int) $record->id);
+//         }
         
-        // Default to component settings if neither article nor category known.
-        return parent::canEditState($record);
-    }
+//         // Default to component settings if neither article nor category known.
+//         return parent::canEditState($record);
+//     }
     
     /**
      * Method to get a table object, load it if necessary.

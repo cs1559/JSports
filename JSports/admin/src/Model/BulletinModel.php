@@ -121,24 +121,21 @@ class BulletinModel extends AdminModel
     /**
      * Permissions: only delete if trashed (-2) and user is authorized.
      */
-    protected function canDelete($record)
-    {
-        $user = Factory::getApplication()->getIdentity();
+//     protected function canDelete($record)
+//     {
+//         $user = Factory::getApplication()->getIdentity();
         
-        if (empty($record->id) || (int) $record->published !== -2) {
-            return false;
-        }
+//         if (empty($record->id) || (int) $record->published !== -2) {
+//             return false;
+//         }
 
-        return $user->authorise(
-            'core.delete',
-            'com_jsports.bulletin.' . (int) $record->id
-        );
-    }
+//         return $user->authorise(
+//             'core.delete',
+//             'com_jsports.bulletin.' . (int) $record->id
+//         );
+//     }
 
-    protected function canEditState($record)
-    {
-        return parent::canEditState($record);
-    }
+  
 
     /**
      * Joomla 4/5 namespaced table resolution.

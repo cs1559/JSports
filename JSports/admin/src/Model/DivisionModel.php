@@ -31,19 +31,19 @@ class DivisionModel extends AdminModel
      * @return  boolean  True if allowed to delete the record. Defaults to the permission set in the component.
      *
      */
-    protected function canDelete($record)
-    {
+//     protected function canDelete($record)
+//     {
         
-           if (empty($record->id) || $record->state != -2) {
-                return false;
-            }
+//            if (empty($record->id) || $record->state != -2) {
+//                 return false;
+//             }
             
-            if (!empty($record->id)) {
-                return $this->getCurrentUser()->authorise('core.delete', 'com_jsports.division.' . (int) $record->id);
-            }
+//             if (!empty($record->id)) {
+//                 return $this->getCurrentUser()->authorise('core.delete', 'com_jsports.division.' . (int) $record->id);
+//             }
             
-            return parent::canDelete($record);
-    }
+//             return parent::canDelete($record);
+//     }
         
         
     
@@ -55,17 +55,17 @@ class DivisionModel extends AdminModel
      * @return  boolean  True if allowed to change the state of the record. Defaults to the permission set in the component.
      *
      */
-    protected function canEditState($record)
-    {
-        // Check for existing article.
-        if (!empty($record->id))
-        {
-            return $this->getCurrentUser()->authorise('core.edit.state', 'com_jsports.division.' . (int) $record->id);
-        }
+//     protected function canEditState($record)
+//     {
+//         // Check for existing article.
+//         if (!empty($record->id))
+//         {
+//             return $this->getCurrentUser()->authorise('core.edit.state', 'com_jsports.division.' . (int) $record->id);
+//         }
         
-        // Default to component settings if neither article nor category known.
-        return parent::canEditState($record);
-    }
+//         // Default to component settings if neither article nor category known.
+//         return parent::canEditState($record);
+//     }
     
     /**
      * Method to get a table object, load it if necessary.

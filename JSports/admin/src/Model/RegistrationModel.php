@@ -41,44 +41,44 @@ class RegistrationModel extends AdminModel
      *
      * @since   1.6
      */
-    protected function canDelete($record)
-    {
+//     protected function canDelete($record)
+//     {
         
-           if (empty($record->id) || $record->published != -2) {
-                return false;
-            }
+//            if (empty($record->id) || $record->published != -2) {
+//                 return false;
+//             }
             
-            if (!empty($record->id)) {
-                return $this->getCurrentUser()->authorise('core.delete', 'com_jsports.registration.' . (int) $record->id);
-            }
+//             if (!empty($record->id)) {
+//                 return $this->getCurrentUser()->authorise('core.delete', 'com_jsports.registration.' . (int) $record->id);
+//             }
             
-            return parent::canDelete($record);
-    }
+//             return parent::canDelete($record);
+//     }
         
         
     
-    /**
-     * Method to test whether a record can have its state edited.
-     *
-     * @param   object  $record  A record object.
-     *
-     * @return  boolean  True if allowed to change the state of the record. Defaults to the permission set in the component.
-     *
-     * @since   1.6
-     */
-    protected function canEditState($record)
-    {
+//     /**
+//      * Method to test whether a record can have its state edited.
+//      *
+//      * @param   object  $record  A record object.
+//      *
+//      * @return  boolean  True if allowed to change the state of the record. Defaults to the permission set in the component.
+//      *
+//      * @since   1.6
+//      */
+//     protected function canEditState($record)
+//     {
 
-        // You cannot "unpublish" a registration record once it's been published.  This is because of all the actions that take place to setup
-        // the team, etc. in the database.
+//         // You cannot "unpublish" a registration record once it's been published.  This is because of all the actions that take place to setup
+//         // the team, etc. in the database.
         
-        if ($record->published > 0) {
-            return false;
-        }
+//         if ($record->published > 0) {
+//             return false;
+//         }
         
-        // Default to component settings if neither article nor category known.
-        return parent::canEditState($record);
-    }
+//         // Default to component settings if neither article nor category known.
+//         return parent::canEditState($record);
+//     }
     
     /**
      * Method to get a table object, load it if necessary.
@@ -199,7 +199,7 @@ class RegistrationModel extends AdminModel
      * 2.  Add the record to the Team/Program/Division mapping file.
      * 3.  Publish the registration record.  Once its published, it cannot be published again.
      *
-     * @param unknown $regid
+     * @param int $regid
      * @return boolean
      */
     protected function processRegistration($regid) {
@@ -332,7 +332,7 @@ class RegistrationModel extends AdminModel
 
             $this->sendProcessedNotification($new_row_id, $item);
             
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             // // catch any database errors.
             $db->transactionRollback();
             Factory::getApplication()->enqueueMessage("Registration publish failed for one or more registration records", 'error');
