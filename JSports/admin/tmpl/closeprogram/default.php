@@ -20,7 +20,7 @@ HTMLHelper::_('behavior.keepalive');
 ?>
 
 <form action="<?php echo Route::_('index.php?option=com_jsports&task=closeprogram.process'); ?>"
-      method="post" name="adminForm" id="closeprogram-form" class="form-validate">
+      method="post" name="adminForm" id="adminForm" class="form-validate">
 
 <h1>Close Program</h1>
 
@@ -36,5 +36,8 @@ HTMLHelper::_('behavior.keepalive');
     <button type="submit" class="btn btn-danger">
         <?php echo Text::_('COM_JSPORTS_CLOSE_PROGRAM'); ?>
     </button>
+    	<input type="hidden" name="task" value="">
+    	<input type="hidden" name="boxchecked" value="0">
 	<?php echo HTMLHelper::_('form.token'); ?>
+	
 </form>
