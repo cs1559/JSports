@@ -5,7 +5,7 @@
  * @version     1.0.0
  * @package     JSports.Administrator
  * @subpackage  com_jsports
- * @copyright   Copyright (C) 2023-2024 Chris Strieter
+ * @copyright   Copyright (C) 2023-2026 Chris Strieter
  * @license     GNU/GPLv2, see http://www.gnu.org/licenses/gpl-2.0.html
  *
  */
@@ -22,16 +22,9 @@ class DivisionsController extends AdminController
     protected $default_view = 'divisions';
     
     public function display($cachable = false, $urlparams = array())
-    {
-        
+    {      
         return parent::display($cachable, $urlparams);
     }
-    
-    
-//     public function publish() {
-//         $model = $this->getModel('Division');
-//         parent::publish();
-//     }
 
     /**
      * Proxy for getModel.
@@ -46,5 +39,10 @@ class DivisionsController extends AdminController
     {
         return parent::getModel($name, $prefix, $config);
     }
-
+    
+    public function publish() {
+        $model = $this->getModel('Division');
+        
+        parent::publish();
+    }
 }

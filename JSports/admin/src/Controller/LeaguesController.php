@@ -5,7 +5,7 @@
  * @version     1.0.0
  * @package     JSports.Administrator
  * @subpackage  com_jsports
- * @copyright   Copyright (C) 2023-2024 Chris Strieter
+ * @copyright   Copyright (C) 2023-2026 Chris Strieter
  * @license     GNU/GPLv2, see http://www.gnu.org/licenses/gpl-2.0.html
  *
  */
@@ -28,20 +28,25 @@ class LeaguesController extends AdminController
 {
     protected $default_view = 'leagues';
     
-    /**
-     * Proxy for getModel.
-     *
-     * @param   string  $name    The model name. Optional.
-     * @param   string  $prefix  The class prefix. Optional.
-     * @param   array   $config  The array of possible config values. Optional.
-     *
-     * @return  \Joomla\CMS\MVC\Model\BaseDatabaseModel
-     *
-     * @since   1.6
-     */
+//     /**
+//      * Proxy for getModel.
+//      *
+//      * @param   string  $name    The model name. Optional.
+//      * @param   string  $prefix  The class prefix. Optional.
+//      * @param   array   $config  The array of possible config values. Optional.
+//      *
+//      * @return  \Joomla\CMS\MVC\Model\BaseDatabaseModel
+//      *
+//      * @since   1.6
+//      */
     public function getModel($name = 'League', $prefix = 'Administrator', $config = ['ignore_request' => true])
     {
         return parent::getModel($name, $prefix, $config);
     }
-    
+
+    public function publish() {
+        $model = $this->getModel();
+        
+        parent::publish();
+    }
 }

@@ -5,7 +5,7 @@
  * @version     1.0.0
  * @package     JSports.Administrator
  * @subpackage  com_jsports
- * @copyright   Copyright (C) 2023-2024 Chris Strieter
+ * @copyright   Copyright (C) 2023-2026 Chris Strieter
  * @license     GNU/GPLv2, see http://www.gnu.org/licenses/gpl-2.0.html
  *
  */
@@ -24,10 +24,5 @@ use Joomla\CMS\MVC\Controller\FormController;
 class RegistrationController extends FormController
 {
     
-//     public function save($key = null, $urlVar = null) {       
-        
-//         parent::save($key, $urlVar);
-        
-//     }
 
 }

@@ -5,7 +5,7 @@
  * @version     1.0.0
  * @package     JSports.Administrator
  * @subpackage  com_jsports
- * @copyright   Copyright (C) 2023-2024 Chris Strieter
+ * @copyright   Copyright (C) 2023-2026 Chris Strieter
  * @license     GNU/GPLv2, see http://www.gnu.org/licenses/gpl-2.0.html
  *
  */
@@ -20,11 +20,6 @@ use Joomla\CMS\Factory;
 class RegistrationsController extends AdminController
 {
     protected $default_view = 'registrations';
-    
-    public function display($cachable = false, $urlparams = array())
-    {
-        return parent::display($cachable, $urlparams);
-    }
     
     public function getModel($name = 'Registration', $prefix = 'Administrator', $config = ['ignore_request' => true])
     {

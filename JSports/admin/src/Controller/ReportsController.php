@@ -1,9 +1,19 @@
-<?php 
+<?php   
+/**
+ * JSports - Joomla Sports Management Component
+ *
+ * @version     1.0.0
+ * @package     JSports.Administrator
+ * @subpackage  com_jsports
+ * @copyright   Copyright (C) 2023-2026 Chris Strieter
+ * @license     GNU/GPLv2, see http://www.gnu.org/licenses/gpl-2.0.html
+ *
+ */
+
 namespace FP4P\Component\JSports\Administrator\Controller;
 
 defined('_JEXEC') or die;
 
-use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Objects\Reports\NoRosterReport;
@@ -11,6 +21,10 @@ use FP4P\Component\JSports\Site\Objects\Reports\ReportFactory;
 
 class ReportsController extends BaseController
 {
+    
+    /**
+     * This function generates the output for the AJAX request.
+     */
     public function ajaxPreview()
     {
         $app = Factory::getApplication();
@@ -29,26 +43,20 @@ class ReportsController extends BaseController
         $context['format'] = $format;
         $context['filters']['programid'] = $programid;
                
-//         $layout = match ($viewmode) {
-//             'table' => 'ajax.table',
-//             'noroster' => 'reports.noroster',
-//             default => 'ajax.summary',
-//         };
-        
         $report = ReportFactory::create($viewmode);
         $report->setContext($context);
         echo $report->render();
         
-//         if ($viewmode === "noroster") {
-//             echo $this->renderReport($context);
-//         } else {
-//         // Render from administrator component layouts folder
-//             echo LayoutHelper::render($layout, $displayData, JPATH_ADMINISTRATOR . '/components/com_jsports/layouts');
-//         }
-        
         $app->close();
     }
 
+    /**
+     * This function is NOT needed due to refactoring a each report object will handle the rendering of the output.
+     * 
+     * @deprecated
+     * @param mixed $context
+     * @return string 
+     */
     protected function renderReport($context)
     {
         
@@ -63,7 +71,9 @@ class ReportsController extends BaseController
         }
     }
     
-    
+    /**
+     * This function will handle the export capability of of the report to a CSV format.
+     */
     public function export() {
         $app = Factory::getApplication();
 

@@ -5,7 +5,7 @@
  * @version     1.0.0
  * @package     JSports.Administrator
  * @subpackage  com_jsports
- * @copyright   Copyright (C) 2023-2024 Chris Strieter
+ * @copyright   Copyright (C) 2023-2026 Chris Strieter
  * @license     GNU/GPLv2, see http://www.gnu.org/licenses/gpl-2.0.html
  *
  */
@@ -28,23 +28,47 @@ use FP4P\Component\JSports\Site\Services\ProgramsService;
  */
 class AjaxController extends BaseController
 {
-            
+    
+    /**
+     * Common function to properly reply the output of a given ajax function.
+     * 
+     * @param string $html
+     */
+    private function sendHtml(string $html): void
+    {
+        $app = Factory::getApplication();
+        
+        $app->setHeader('Content-Type', 'text/html; charset=utf-8', true);
+        $app->setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0', true);
+        $app->setHeader('Pragma', 'no-cache', true);
+        
+        echo $html;
+        $app->close();
+    }
+    
     /**
      * This function is called by jQuery ajax calls to populate the options for a division
      * drop down list based on a selected Program id.
      */
-    public function buildDivisionList() {
+    public function buildDivisionList() : void {
+
+        // Session::checkToken('get') or jexit('Invalid Token');
         
         $input = Factory::getApplication()->input;
-        $programid     = $input->getInt("programid");
+        $programid = $input->getInt('programid');
         
         $divisions = DivisionService::getDivisionList($programid);
         
-        $options  = "<option value=''>-- Select Division -- </option>";
+        $options = "<option value=\"\">-- Select Division --</option>";
+        
         foreach ($divisions as $division) {
-            $options = $options . "<option value='" . $division['id'] . "'>" . $division['name'] . "</option>";
+            $id   = (int) ($division['id'] ?? 0);
+            $name = htmlspecialchars((string) ($division['name'] ?? ''), ENT_QUOTES, 'UTF-8');
+            
+            $options .= "<option value=\"{$id}\">{$name}</option>";
         }
-        echo $options;
+        
+        $this->sendHtml($options);
     }
     
     
@@ -52,38 +76,53 @@ class AjaxController extends BaseController
      * This function is called by jQuery ajax calls to populate the options for a team
      * drop down list based on a selected Program id and division id.
      */
-    public function buildTeamList() {
+    public function buildTeamList() : void {
+        // Session::checkToken('get') or jexit('Invalid Token');
         
         $input = Factory::getApplication()->input;
-        $programid     = $input->getInt("programid");
-        $divisionid     = $input->getInt("divisionid");
+        $programid  = $input->getInt('programid');
+        $divisionid = $input->getInt('divisionid');
         
         $teams = TeamService::getTeamList2($programid, $divisionid);
         
-        $options  = "<option value=''>-- Select Team -- </option>";
+        $options = "<option value=\"\">-- Select Team --</option>";
+        
         foreach ($teams as $team) {
-            $options = $options . "<option value='" . $team['teamid'] . "'>" . 
-                $team['teamname'].' (' .$team['contactname'].')' . "</option>";
+            $id      = (int) ($team['teamid'] ?? 0);
+            $teamname = htmlspecialchars((string) ($team['teamname'] ?? ''), ENT_QUOTES, 'UTF-8');
+            $contact  = htmlspecialchars((string) ($team['contactname'] ?? ''), ENT_QUOTES, 'UTF-8');
+            
+            $label = trim($contact) !== '' ? "{$teamname} ({$contact})" : $teamname;
+            
+            $options .= "<option value=\"{$id}\">{$label}</option>";
         }
-        echo $options;
+        
+        $this->sendHtml($options);
+        
     }
     
     /**
      * This function is called by jQuery ajax calls to populate the options for a GROUP
      * drop down list based on a selected Program id .
      */
-    public function buildGroupList() {
+    public function buildGroupList() : void {
+        
+        // Session::checkToken('get') or jexit('Invalid Token');
         
         $input = Factory::getApplication()->input;
-        $programid     = $input->getInt("programid");
+        $programid = $input->getInt('programid');
         
         $groups = ProgramsService::getProgramGroups($programid);
         
-        $options  = "<option value=''>-- Select Group -- </option>";
+        $options = "<option value=\"\">-- Select Group --</option>";
+        
         foreach ($groups as $group) {
-            $options = $options . "<option value='" . $group['code'] . "'>" .
-                $group['name'] . "</option>";
+            $code = htmlspecialchars((string) ($group['code'] ?? ''), ENT_QUOTES, 'UTF-8');
+            $name = htmlspecialchars((string) ($group['name'] ?? ''), ENT_QUOTES, 'UTF-8');
+            
+            $options .= "<option value=\"{$code}\">{$name}</option>";
         }
-        echo $options;
+        
+        $this->sendHtml($options);
     }
 }

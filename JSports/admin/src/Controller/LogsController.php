@@ -5,18 +5,12 @@
  * @version     1.0.0
  * @package     JSports.Administrator
  * @subpackage  com_jsports
- * @copyright   Copyright (C) 2023-2024 Chris Strieter
+ * @copyright   Copyright (C) 2023-2026 Chris Strieter
  * @license     GNU/GPLv2, see http://www.gnu.org/licenses/gpl-2.0.html
  *
  */
 
-
 namespace FP4P\Component\JSports\Administrator\Controller;
-
-/**
- * REVISION HISTORY:
- * 2025-01-16  Cleaned up the code and added comments.
- */
 
 defined('_JEXEC') or die;
 
@@ -34,7 +28,7 @@ class LogsController extends AdminController
      * This function supports the purging of the log records so it doesn't become unnecessarily 
      * too large.  The number of days is a configurable option within the component.
      */
-    public function purge() {
+    public function purge() : bool {
         
         $this->checkToken();
         

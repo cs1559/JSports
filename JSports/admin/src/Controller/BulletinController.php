@@ -5,7 +5,7 @@
  * @version     1.0.0
  * @package     JSports.Administrator
  * @subpackage  com_jsports
- * @copyright   Copyright (C) 2023-2024 Chris Strieter
+ * @copyright   Copyright (C) 2023-2026 Chris Strieter
  * @license     GNU/GPLv2, see http://www.gnu.org/licenses/gpl-2.0.html
  *
  */
@@ -14,16 +14,12 @@ namespace FP4P\Component\JSports\Administrator\Controller;
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\FormController;
-use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Component\ComponentHelper;
-use Joomla\CMS\Filesystem\Folder;
-use Joomla\Database\ParameterType;
 use FP4P\Component\JSports\Administrator\Helpers\JSHelper;
 use FP4P\Component\JSports\Site\Services\BulletinService;
 use FP4P\Component\JSports\Site\Services\LogService;
-use Joomla\CMS\Router\Route;
 
 /**
  * Controller for a BULLETIN
@@ -58,9 +54,10 @@ class BulletinController extends FormController
             $result = $model->save($requestData);
             
             if (!$result) {
-                $msg = "An error occurred saving the bulletin.";
+                $msg = Text::_('COM_JSPORTS_ERR_SAVINGBULLETIN');
                 if ($model->uploadError) {
-                    $msg = $msg . " File upload failed - check logs.";
+                    $app->enqueueMessage(Text::_('COM_JSPORTS_ERR_FILEUPLOAD'), "error");
+//                     $msg = $msg . " " . Text::_('');
                 }
                 LogService::error($msg);
                 $app->enqueueMessage($msg, "error");

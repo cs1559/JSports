@@ -23,10 +23,12 @@ class GamesController extends AdminController
     
     public function display($cachable = false, $urlparams = array())
     {
-        
         return parent::display($cachable, $urlparams);
     }
 
+    /**
+     * This function supports exporting of the games to a CSV file.
+     */
     public function export(): void
     {
         // CSRF check
@@ -48,12 +50,17 @@ class GamesController extends AdminController
         
         // Ensure we export ALL matching rows (not just the current page)
         $model->setState('list.start', 0);
-        $model->setState('list.limit', 0); // 0 = no limit
+        $model->setState('list.limit', 9999999); // 0 = no limit
         
-        $rows = $model->getItems();
+        $rows = $model->getItems() ?: [];
         
         // Normalize to array-of-assoc
         $rows = array_map(function($row) { return (array) $row; }, $rows ?? []);
+        
+        // IMPORTANT: stop any accidental buffered output corrupting CSV
+        while (ob_get_level() > 0) {
+            ob_end_clean();
+        }
         
         // Prepare headers
         $filename = 'games-' . gmdate('Ymd_His') . '.csv';
