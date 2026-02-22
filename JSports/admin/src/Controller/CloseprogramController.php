@@ -5,7 +5,7 @@
  * @version     1.0.0
  * @package     JSports.Administrator
  * @subpackage  com_jsports
- * @copyright   Copyright (C) 2023-2024 Chris Strieter
+ * @copyright   Copyright (C) 2023-2026 Chris Strieter
  * @license     GNU/GPLv2, see http://www.gnu.org/licenses/gpl-2.0.html
  *
  */
@@ -25,19 +25,28 @@ class CloseprogramController extends AdminController
 {
     protected $default_view = 'closeprogram';
     
-//     public function display($cachable = false, $urlparams = array())
-//     {
+    /**
+     * This function supports the CANCEL button that is on the Programs view
+     * 
+     * @param mixed $key
+     * @return boolean
+     */   
+    public function cancel($key = null) : bool {
         
-//         return parent::display($cachable, $urlparams);
-//     }
-    
-    public function cancel($key = null) {
-        parent::cancel($key);
+        $this->checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+        
+//         parent::cancel($key);
         $this->setRedirect(Route::_('index.php?option=com_jsports&view=programs', false));
         return true;
     }
     
-    public function process() {
+    /**
+     * The process function will validate the programid and execute the closeprogram function that is 
+     * part of the ProgramsService service.
+     * 
+     * @return bool
+     */
+    public function process() : bool {
 
         $this->checkToken() or jexit(Text::_('JINVALID_TOKEN'));
         
@@ -45,6 +54,12 @@ class CloseprogramController extends AdminController
         $app = Factory::getApplication();
         $programid     = $this->input->getInt("programid");
             
+        if ($programid <= 0) {
+            $app->enqueueMessage('Invalid program id.', 'warning');
+            $this->setRedirect(Route::_('index.php?option=com_jsports&view=programs', false));
+            return false;
+        }
+        
         $result = ProgramsService::closeProgram($programid);
              
         if ($result) {
@@ -53,8 +68,7 @@ class CloseprogramController extends AdminController
             $app->enqueueMessage("An issue occurred when closing program", 'warning');
         }
         $this->setRedirect(Route::_('index.php?option=com_jsports&view=programs', false));
-        return true;
+        return (bool) true;
     }
-    
     
 }
