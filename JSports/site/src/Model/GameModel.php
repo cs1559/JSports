@@ -22,7 +22,7 @@ use FP4P\Component\JSports\Site\Services\GameService;
 use FP4P\Component\JSports\Site\Services\TeamService;
 use Joomla\CMS\Application\SiteApplication;
 use FP4P\Component\JSports\Site\Objects\Application as Myapp;
-use FP4P\Component\JSports\Administrator\Helpers\JSHelper;
+use FP4P\Component\JSports\Site\Objects\Helpers\JSHelper;
 use Joomla\CMS\Form\Form;
 use FP4P\Component\JSports\Site\Services\UserService;
 

@@ -18,7 +18,7 @@ use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\MVC\Model\BaseModel;
 use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Administrator\Table\LeaguesTable;
-use FP4P\Component\JSports\Administrator\Helpers\JSHelper;
+use FP4P\Component\JSports\Site\Objects\Helpers\JSHelper;
 
 class ToolsModel extends BaseModel
 {

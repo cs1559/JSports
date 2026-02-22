@@ -20,7 +20,7 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Services\SecurityService;
 use FP4P\Component\JSports\Site\Services\UserService;
-use FP4P\Component\JSports\Administrator\Helpers\JSHelper;
+use FP4P\Component\JSports\Site\Objects\Helpers\JSHelper;
 
 // $clientId  = (int) $this->state->get('client_id', 0);
 // $user      = Factory::getUser();

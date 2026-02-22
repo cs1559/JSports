@@ -26,7 +26,7 @@ use FP4P\Component\JSports\Site\Services\BulletinService;
 use FP4P\Component\JSports\Site\Services\LogService;
 use FP4P\Component\JSports\Site\Services\TeamService;
 use FP4P\Component\JSports\Site\Services\UserService;
-use FP4P\Component\JSports\Administrator\Helpers\JSHelper;
+use FP4P\Component\JSports\Site\Objects\Helpers\JSHelper;
 use FP4P\Component\JSports\Administrator\Table\TeamsTable;
 
 /**

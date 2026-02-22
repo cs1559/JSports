@@ -18,7 +18,7 @@ use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Services\GameService;
-use FP4P\Component\JSports\Administrator\Helpers\JSHelper;
+use FP4P\Component\JSports\Site\Objects\Helpers\JSHelper;
 use Joomla\CMS\Component\ComponentHelper;
 
 HTMLHelper::_('behavior.formvalidator');

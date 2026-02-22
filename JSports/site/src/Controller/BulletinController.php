@@ -23,7 +23,7 @@ use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Services\BulletinService;
 use FP4P\Component\JSports\Site\Services\ProgramsService;
 use FP4P\Component\JSports\Site\Services\LogService;
-use FP4P\Component\JSports\Administrator\Helpers\JSHelper;
+use FP4P\Component\JSports\Site\Objects\Helpers\JSHelper;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\Filesystem\Folder;
 use FP4P\Component\JSports\Site\Model\BulletinModel;

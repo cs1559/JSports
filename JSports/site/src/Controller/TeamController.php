@@ -23,7 +23,7 @@ use FP4P\Component\JSports\Site\Services\ProgramsService;
 use Joomla\CMS\Component\ComponentHelper;
 use FP4P\Component\JSports\Site\Services\TeamService;
 use FP4P\Component\JSports\Site\Services\GameService;
-use FP4P\Component\JSports\Administrator\Helpers\JSHelper;
+use FP4P\Component\JSports\Site\Objects\Helpers\JSHelper;
 use FP4P\Component\JSports\Site\Services\LogService;
 use FP4P\Component\JSports\Site\Services\UserService;
 

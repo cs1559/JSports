@@ -21,7 +21,7 @@ use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Services\SecurityService;
 use FP4P\Component\JSports\Site\Services\UserService;
 use FP4P\Component\JSports\Site\Services\GameService;
-use FP4P\Component\JSports\Administrator\Helpers\JSHelper;
+use FP4P\Component\JSports\Site\Objects\Helpers\JSHelper;
 use Joomla\CMS\Session\Session;
 
 $clientId  = (int) $this->state->get('client_id', 0);
