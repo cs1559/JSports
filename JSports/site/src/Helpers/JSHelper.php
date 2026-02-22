@@ -10,7 +10,7 @@
  *
  */
 
-namespace FP4P\Component\JSports\Site\Objects\Helpers;
+namespace FP4P\Component\JSports\Site\Helpers;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Uri\Uri;

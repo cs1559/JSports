@@ -34,7 +34,7 @@ class ToolsController extends BaseController
         
 //         $input = Factory::getApplication()->input;       
         return parent::display($cachable, $urlparams);
-        
+         
     }
     
     public function newsletterImport($cachable = false, $urlparams = array()) {

@@ -2,7 +2,7 @@
 /**
  * JSports - Joomla Sports Management Component
  *
- * @version     1.0.0
+ * @version     1.0.0 
  * @package     JSports.Site
  * @subpackage  com_jsports
  * @copyright   Copyright (C) 2023-2024 Chris Strieter
@@ -23,7 +23,7 @@ use FP4P\Component\JSports\Site\Services\ProgramsService;
 use Joomla\CMS\Component\ComponentHelper;
 use FP4P\Component\JSports\Site\Services\TeamService;
 use FP4P\Component\JSports\Site\Services\GameService;
-use FP4P\Component\JSports\Site\Objects\Helpers\JSHelper;
+use FP4P\Component\JSports\Site\Helpers\JSHelper;
 use FP4P\Component\JSports\Site\Services\LogService;
 use FP4P\Component\JSports\Site\Services\UserService;
 

@@ -18,12 +18,12 @@ use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\MVC\Model\BaseModel;
 use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Administrator\Table\LeaguesTable;
-use FP4P\Component\JSports\Site\Objects\Helpers\JSHelper;
+use FP4P\Component\JSports\Site\Helpers\JSHelper;
 use FP4P\Component\JSports\Site\Services\ProgramsService;
 use FP4P\Component\JSports\Site\Services\GameService;
 use FP4P\Component\JSports\Site\Objects\stats\TotalTeams;
 use FP4P\Component\JSports\Site\Objects\stats\GameStatistics;
-
+ 
 class DashboardModel extends BaseModel
 {
     

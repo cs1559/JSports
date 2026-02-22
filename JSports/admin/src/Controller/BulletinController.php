@@ -17,7 +17,7 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Factory;
-use FP4P\Component\JSports\Site\Objects\Helpers\JSHelper;
+use FP4P\Component\JSports\Site\Helpers\JSHelper;
 use FP4P\Component\JSports\Site\Services\BulletinService;
 use FP4P\Component\JSports\Site\Services\LogService;
 

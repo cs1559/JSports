@@ -20,7 +20,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Factory;
-use FP4P\Component\JSports\Site\Objects\Helpers\JSHelper;
+use FP4P\Component\JSports\Site\Helpers\JSHelper;
 
 $listOrder = $this->escape($this->state->get('list.ordering'));
 $listDirn  = $this->escape($this->state->get('list.direction'));
