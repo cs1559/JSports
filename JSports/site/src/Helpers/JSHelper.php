@@ -12,11 +12,13 @@
 
 namespace FP4P\Component\JSports\Site\Helpers;
 
+defined('_JEXEC') or die;
+
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Filesystem\Folder;
 
-class JSHelper
+final class JSHelper
 {
     /**
      * This function translates the game status value into something more meaningful.
@@ -24,28 +26,17 @@ class JSHelper
      * @param string $code
      * @return string
      */
-    public static function translateGameStatus($code = "")
+    public static function translateGameStatus($code = '') : string
     {
         
-        $status = '';
-        switch ($code) {
-            case 'S':
-                $status = 'Scheduled';
-                break;
-            case 'C':
-                $status = 'Complete';
-                break;
-            case 'X':
-                $status = 'Cancelled';
-                break;
-            case 'R':
-                $status = 'Rain Out';
-                break;
-            default:
-                $status = '*error*';
-                break;
-        }
-        return $status;
+        static $map = [
+            'S' => 'Scheduled',
+            'C' => 'Complete',
+            'X' => 'Cancelled',
+            'R' => 'Rain Out',
+        ];
+        
+        return $map[$code] ?? '*error*';
     }
 
     /**
@@ -54,7 +45,7 @@ class JSHelper
      * @param string $value (1 or 0)
      * @return string
      */
-    public static function translateYesNo($value = 0)
+    public static function translateYesNo($value = 0) : string
     {
         
         if ($value) {
@@ -68,23 +59,18 @@ class JSHelper
     /**
      * This function translates the roster classication into a readable value.
      *
-     * @param string $code
+     * @param string $type
      * @return string
      */
-    public static function translateRosterClassification($type = "")
+    public static function translateRosterClassification($type = '') : string
     {
         
-        switch ($type) {
-            case 'S':
-                return 'Staff';
-                break;
-            case 'P':
-                return 'Player';
-                break;
-            default:
-                return '*error*';
-                break;
-        }
+        static $map = [
+            'S' => 'Staff',
+            'P' => 'Player',
+        ];
+        
+        return $map[$type] ?? '*error*';
         
     }
     
@@ -95,7 +81,7 @@ class JSHelper
      * @param string $value
      * @return string|string
      */
-    public static function displayGameTime($value) {
+    public static function displayGameTime($value) : string {
 
     	if (str_contains(strtoupper($value),'PM')) {
     		return $value;
@@ -148,28 +134,15 @@ class JSHelper
      */
     public static function translateBulletinCategory($code = "")
     {
-        $type = '';
-        switch ($code) {
-            case 'G':
-                $type = 'General';
-                break;
-            case 'T':
-                $type = 'Tournament';
-                break;
-            case 'Y':
-                $type = 'Tryouts';
-                break;
-            case 'F':
-                $type = 'Fundraiser';
-                break;
-            case 'S':
-                return 'Sponsor';
-                break;
-            default:
-                $type = '*error*';
-                break;
-        }
-        return $type;
+        static $map = [
+            'G' => 'General',
+            'T' => 'Tournament',
+            'Y' => 'Tryouts',
+            'F' => 'Fundraiser',
+            'S' => 'Sponsor',
+        ];
+        
+        return $map[$code] ?? '*error*';
     }
     
     /**
