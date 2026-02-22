@@ -21,6 +21,7 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Form\Form;
+use CBOR\OtherObject\FalseObject;
 
 /**
  * View to edit an article.
@@ -93,35 +94,21 @@ class HtmlView extends BaseHtmlView
      */
     protected function addToolbar()
     {
-        Factory::getApplication()->input->set('hidemainmenu', true);
-        $isNew      = ($this->item->id == 0);
+        // Get the toolbar object instance
+        $toolbar = Toolbar::getInstance('toolbar');
         
-        $toolbar = Toolbar::getInstance();
+        $canDo = ContentHelper::getActions('com_jsports');       
+        
+        Factory::getApplication()->input->set('hidemainmenu', false);
+        
+//         $isNew      = ($this->item->id == 0);
         
         ToolbarHelper::title(
             Text::_('COM_JSPORTS_CLOSEPROGRAM_PAGE_TITLE')
             );
         
-        $canDo = ContentHelper::getActions('com_jsports');
-//         if ($canDo->get('core.create'))
-//         {
-//             $toolbar->apply('game.apply');
-//             $toolbar->save('game.save');
-//             $toolbar->save2new('game.save2new');
-// //             ToolbarHelper::custom('game.savenew', 'save', 'save', 'Save / New', false, 'game-form');
-//         }
-//         if ($canDo->get('core.delete')) {
-//             $toolbar->delete('game.delete');
-//         }
-//         if ($isNew)
-//         {
-             $toolbar->cancel('closeprogram.cancel', 'JTOOLBAR_CANCEL');
-//         }
-//         else
-//         {
-//             $toolbar->cancel('game.cancel', 'JTOOLBAR_CLOSE');
-//         }
-
+//         $canDo = ContentHelper::getActions('com_jsports');
+       $toolbar->cancel('Closeprogram.cancel', 'JTOOLBAR_CANCEL');
        $toolbar->preferences('com_jsports');
         
     }
