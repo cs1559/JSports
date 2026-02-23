@@ -35,3 +35,8 @@
   padding: .35rem .5rem;
   font-size: .9rem;
 }
+
+.report-footer {
+	padding: 15px;
+	text-align: center;
+}

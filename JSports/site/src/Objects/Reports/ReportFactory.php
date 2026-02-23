@@ -22,6 +22,7 @@ class ReportFactory {
             'registrationlist' => new Registrationlist(),
             'duplicateplayers' => new Duplicateplayers(),
             'rundifferential' => new RunDifferential(),
+            'gamescores' => new Gamescores(),
             default => throw new InvalidArgumentException("Unknown type."),
         };
     }

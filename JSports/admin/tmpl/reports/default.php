@@ -42,6 +42,7 @@ $token = $app->getFormToken();
         <div class="col-auto">
             <label class="form-label">Select Report</label>
             <select id="viewmode" class="form-select">
+                <option value="gamescores">Games - List of Game Scores</option>
                 <option value="registrationlist">Registration - List Registrations</option>
                 <option value="noroster">Roster - Teams with NO Roster</option>
                 <option value="duplicateplayers">Roster - Possible Duplicate Players</option>
