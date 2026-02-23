@@ -174,7 +174,7 @@ final class JSHelper
     }
 
     /**
-     * @deprecated
+     * 
      * @param number $key
      * @param string $filename
      * @return string
