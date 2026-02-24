@@ -1,6 +1,6 @@
 <?php
 /**
- * JSports - Joomla Sports Management Component 
+ * JSports - Joomla Sports Management Component
  *
  * @version     1.0.0
  * @package     JSports.Administrator
@@ -22,12 +22,12 @@ class BulletinsController extends AdminController
     
     public function getModel(
         $name = 'Bulletin',
-        $prefix = 'Administrator\\Model',
+        $prefix = 'Administrator',
         $config = ['ignore_request' => true]
         ) {
             return parent::getModel($name, $prefix, $config);
     }
-
+    
     public function publish() {
         $model = $this->getModel('Bulletin');
         
