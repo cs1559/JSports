@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+
+		<fieldset addfieldprefix="FP4P\Component\JSports\Administrator\Fields" 
+			name="details" label="COM_JSPORTS_DETAILS">
+
+		<field name="id" type="number" label="JGLOBAL_FIELD_ID_LABEL"
+			default="0" class="readonly" readonly="true" />
+
+		<field name="sponsorid" type="hidden" label="COM_JSPORTS_SPONSORID" required="true" />
+			
+		<field name="title" type="URL"
+			size="50" required="true"
+			label="COM_JSPORTS_ASSET_TITLE" class="" default=""
+			hint="">
+		</field>
+		
+		<field name="description" type="textarea"
+			label="COM_JSPORTS_DESCRIPTION" rows="3" cols="40" required="false" />
+			
+		<field name="xfilename" type="text" label="COM_JSPORTS_FILENAME" 
+			description=""  readonly="true"></field>
+					
+		<field name="filename" 
+				type="file" label="COM_JSPORTS_ASSET_FILEUPLOAD" required="false"
+				description="Choose an file from your computer with maximum 100KB" 
+				accept="image/*, application/pdf"
+    			  enctype="multipart/form-data"
+			/>
+						
+
+		<field name="mimetype" type="text" label="COM_JSPORTS_MIMETYPE"
+			default="" class="readonly" readonly="readonly" />
+			
+							
+		<field name="assettype" type="list"
+			label="COM_JSPORTS_ASSET_TYPE" class="" default="l"
+			validate="options">
+			<option value="L">Logo</option>
+			<option value="B">Banner</option>
+		</field>	
+
+
+		<field name="height" type="number" label="COM_JSPORTS_HEIGHT"
+			default="0" class="" readonly="" />
+
+		<field name="width" type="number" label="COM_JSPORTS_WIDTH"
+			default="0" class="" readonly="" />
+										
+		<field name="createdate" type="text" label="COM_JSPORTS_CREATEDATE"
+			default="" class="readonly" readonly="readonly" />
+								
+	</fieldset>
+
+
+</form>

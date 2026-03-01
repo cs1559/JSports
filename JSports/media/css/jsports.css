@@ -63,3 +63,10 @@
 	
 }
 
+.sponsor-logo-wrapper {
+	text-align: center;
+}
+.sponsor-logo {
+	height: 250px;
+	width: 250px;
+}

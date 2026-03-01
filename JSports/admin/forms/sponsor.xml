@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+
+		<fieldset addfieldprefix="FP4P\Component\JSports\Administrator\Fields" 
+			name="details" label="COM_JSPORTS_DETAILS">
+
+		<field name="id" type="number" label="JGLOBAL_FIELD_ID_LABEL"
+			default="0" class="readonly" readonly="true" />
+
+		<field name="name" type="text" label="COM_JSPORTS_NAME"
+			size="40" required="true" />
+			
+		<field name="alias" type="text"
+			label="COM_JSPORTS_ALIAS" size="80" 
+			hint="Will be used in the URL"
+			 />
+
+		<field name="email" type="text"
+			label="COM_JSPORTS_COMPANYEMAIL" size="40" />
+			
+		<field name="contactname" type="text"
+			label="COM_JSPORTS_CONTACTNAME" size="40" />
+			
+		<field name="contactemail" type="text"
+			label="COM_JSPORTS_CONTACTEMAIL" size="40" />			
+
+		<field name="contactphone" type="tel"
+			label="COM_JSPORTS_CONTACTphone" size="40" />	
+			
+			
+		<field name="website" type="URL"
+			size="100"
+			label="COM_JSPORTS_URL" class="" default=""
+			hint="External URL of the sponsors websites">
+		</field>
+		
+		<field name="logo" type="text" label="COM_JSPORTS_LOGOFILENAME" 
+			description=""  readonly="true"></field>
+					
+		<field name="afile" 
+				type="file" label="COM_JSPORTS_FILEUPLOAD"
+				description="Choose an file from your computer with maximum 100KB" 
+				accept="image/*, application/pdf"
+    			  enctype="multipart/form-data"
+			/>
+			
+		
+					
+	</fieldset>
+
+
+</form>

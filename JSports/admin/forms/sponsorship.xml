@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+
+		<fieldset addfieldprefix="FP4P\Component\JSports\Administrator\Fields" 
+			name="details" label="COM_JSPORTS_DETAILS">
+
+		<field name="id" type="number" label="JGLOBAL_FIELD_ID_LABEL"
+			default="0" class="readonly" readonly="true" />
+
+		<field name="sponsorid" type="hidden" label="COM_JSPORTS_SPONSORID" required="true" />
+			
+		<field name="startdate" type="calendar"
+			label="COM_JSPORTS_STARTDATE"  default="0000-00-00"/>
+
+		<field name="enddate" type="calendar"
+			label="COM_JSPORTS_ENDDATE"  default="0000-00-00"/>
+			
+			<field name="programid" type="sql" 
+			label="COM_JSPORTS_PROGRAM"
+			query="SELECT id, name FROM #__jsports_programs where status &lt;&gt; 'C' order by id desc"
+			key_field="id"
+			value_field="name" 
+			header="-Select Program-"
+		/>		
+			
+		<field name="planlevel" type="list"
+			label="COM_JSPORTS_SPONSORSHIP_LEVEL" class="" default="D"
+			validate="options">
+			<option value="G">Gold</option>
+			<option value="S">Silver</option>
+			<option value="B">Bronze</option>
+			<option value="D">Default</option>
+		</field>
+	
+		<field name="plantype" type="list"
+			label="COM_JSPORTS_SPONSORSHIP_TYPE" class="" default="L"
+			validate="options">
+			<option value="L">League</option>
+			<option value="D">Division</option>
+			<option value="T">Team</option>
+		</field>		
+					
+	</fieldset>
+
+
+</form>

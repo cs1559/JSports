@@ -89,11 +89,11 @@ $wa->useStyle('com_jsports.admin.style');
 						<i class="fas fa-bullhorn"></i>
 						<h2>Bulletins</h2>
 					</div>
-				</a> <a href="index.php?option=com_jsports&view=dashboard"
+				</a> <a href="index.php?option=com_jsports&view=sponsors"
 					class="card-link"> <!-- adjust view if needed -->
 					<div class="dashboard-card">
 						<i class="fas fa-file-lines"></i>
-						<h2>Sponsors (Future)</h2>
+						<h2>Sponsors</h2>
 					</div>
 				</a> <a href="index.php?option=com_jsports&view=dashboard"
 					class="card-link"> <!-- adjust view if needed -->

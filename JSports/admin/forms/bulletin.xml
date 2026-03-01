@@ -69,7 +69,7 @@
 		<field name="updatedby" type="text" label="COM_JSPORTS_UPDATEDBY" 
 			description="Username of the person who last updated the record"  readonly="true"></field>			
 	
-		<field name="attachment" type="hiddens" label="COM_JSPORTS_FILENAME" 
+		<field name="attachment" type="hidden" label="COM_JSPORTS_FILENAME" 
 			description=""  readonly="true"></field>
 					
 		<field name="afile" 

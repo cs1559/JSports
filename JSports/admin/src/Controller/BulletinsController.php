@@ -22,7 +22,7 @@ class BulletinsController extends AdminController
     
     public function getModel(
         $name = 'Bulletin',
-        $prefix = 'Administrator\\Model',
+        $prefix = 'Administrator',
         $config = ['ignore_request' => true]
         ) {
             return parent::getModel($name, $prefix, $config);
