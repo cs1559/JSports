@@ -12,6 +12,8 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use FP4P\Component\JSports\Administrator\Helpers\Html;
+use FP4P\Component\JSports\Site\Campaigns\CampaignManager;
+
 
 // Load Web Asset Manager
 $wa = $this->document->getWebAssetManager();
@@ -19,9 +21,14 @@ $wa->getRegistry()->addExtensionRegistryFile('com_jsports');
 $wa->useScript('com_jsports.jsports.script');
 $wa->useScript('com_jsports.standings.script');
 $wa->useStyle('com_jsports.jsports.style');
+$wa->useStyle('com_jsports.campaigns.style');
 
 ?>
 
+<?php
+    // Display any content for standings-top position
+    echo CampaignManager::renderCampaigns('standings-top');
+?>
     
 <div id="top" class="page-header">
 	<h1><?php echo "Standings"; ?></h1>
@@ -42,3 +49,7 @@ $wa->useStyle('com_jsports.jsports.style');
 </div>
 <!--  </div> -->
 
+<?php
+    // Display any content for standings-top position
+    echo CampaignManager::renderCampaigns('standings-bottom');
+?>

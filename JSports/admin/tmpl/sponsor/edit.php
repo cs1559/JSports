@@ -54,7 +54,7 @@ $return = base64_encode('index.php?option=com_jsports&view=sponsor&layout=edit&i
 				</div>
 			</div>  <!-- GOOD -->
 			<div class="col-md-6">
-			<?php if (strlen($this->item->logo) > 0) {?>
+			<?php if (!empty($this->item->logo)) {?>
 				<div class="sponsor-logo-wrapper">  <!-- GOOD -->
 					<img class="sponsor-logo img-responsive"
 						src="<?php echo SponsorHelper::getLogoURL($this->item->id, $this->item->logo);?>?t=<?php echo time(); ?>" />
@@ -74,6 +74,18 @@ $return = base64_encode('index.php?option=com_jsports&view=sponsor&layout=edit&i
 ?>
 				<div class="card card-light">  <!-- GOOD -->
 					<div class="card-body">  <!-- GOOD -->
+					</div>   <!-- GOOD -->
+				</div> <!--  end of card-light  -->
+			</div>  <!--  end of right side  -- GOOD -->
+		</div>  <!--  end of row -->
+		<?php echo HTMLHelper::_('uitab.endTab'); ?>
+
+
+		<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'details', Text::_('COM_JSPORTS_SPONSORSHIPS')); ?>
+		<div class="row">   <!-- GOOD -->
+			<div class="col-md-8"> 
+				<div class="row">  <!-- GOOD -->
+				
 						<?php //echo LayoutHelper::render('joomla.edit.global', $this); ?>
 						<h3>Sponsorship(s)</h3>
 <?php if (empty($sponsorships)) : ?>
@@ -122,11 +134,27 @@ $return = base64_encode('index.php?option=com_jsports&view=sponsor&layout=edit&i
 							</table>
 						</div>
 <?php endif; ?>
+				
+				
+				
+				</div>
+			</div>  <!-- GOOD -->
+			<div class="col-md-3">
+<?php 
+// ===============================================================================
+//                          SPONSORSHIP TAB
+// ===============================================================================
+?>
+				<div class="card card-light">  <!-- GOOD -->
+					<div class="card-body">  <!-- GOOD -->
 					</div>   <!-- GOOD -->
 				</div> <!--  end of card-light  -->
 			</div>  <!--  end of right side  -- GOOD -->
 		</div>  <!--  end of row -->
 		<?php echo HTMLHelper::_('uitab.endTab'); ?>
+
+
+
 
 <?php 
 // ===============================================================================

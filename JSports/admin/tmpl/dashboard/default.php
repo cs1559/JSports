@@ -92,7 +92,7 @@ $wa->useStyle('com_jsports.admin.style');
 				</a> <a href="index.php?option=com_jsports&view=sponsors"
 					class="card-link"> <!-- adjust view if needed -->
 					<div class="dashboard-card">
-						<i class="fas fa-file-lines"></i>
+						<i class="fas fa-handshake"></i>
 						<h2>Sponsors</h2>
 					</div>
 				</a> <a href="index.php?option=com_jsports&view=dashboard"
@@ -104,8 +104,15 @@ $wa->useStyle('com_jsports.admin.style');
 				</a> <a href="index.php?option=com_jsports&view=reports"
 					class="card-link"> <!-- adjust view if needed -->
 					<div class="dashboard-card">
-						<i class="fas fa-file-lines"></i>
+						<i class="fas fa-chart-line"></i>
 						<h2>Reports</h2>
+					</div>
+				</a>
+				<a href="index.php?option=com_jsports&view=campaigns"
+					class="card-link"> <!-- adjust view if needed -->
+					<div class="dashboard-card">
+						<i class="fas fa-bullseye"></i>
+						<h2>Campaigns</h2>
 					</div>
 				</a>
 			</div>

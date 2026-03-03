@@ -1,0 +1,149 @@
+<?php
+/**
+ * JSports - Joomla Sports Management Component
+ *
+ * @version     1.0.0
+ * @package     JSports.Administrator
+ * @subpackage  com_jsports
+ * @copyright   Copyright (C) 2023-2026 Chris Strieter
+ * @license     GNU/GPLv2, see http://www.gnu.org/licenses/gpl-2.0.html
+ *
+ */
+
+namespace FP4P\Component\JSports\Site\Campaigns;
+
+defined('_JEXEC') or die;
+
+use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Uri\Uri;
+use Joomla\CMS\Filesystem\Folder;
+use FP4P\Component\JSports\Site\Services\CampaignService;
+
+class Campaign
+{
+    /** var int $id */
+    public $id = 0;
+    public $title = '';
+    public $sponsorid;
+    public $sponsorshipid = 0; 
+    public $campaigntype = 0;
+    public $assetid = 0;
+    public $positions = '';
+    public $impressions = 0;
+    public $clicks = 0;
+    public $startdate;
+    public $enddate;
+    public $published = 0;
+    public $customcss;
+    public $classname;
+    
+    public $data;
+    
+    /**
+     * @return mixed
+     */
+    public function getCustomcss()
+    {
+        return $this->customcss;
+    }
+
+    /**
+     * @return number
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @return number
+     */
+    public function getSponsorshipid()
+    {
+        return $this->sponsorshipid;
+    }
+
+    /**
+     * @return number
+     */
+    public function getCampaigntype()
+    {
+        return $this->campaigntype;
+    }
+
+    /**
+     * @return number
+     */
+    public function getAssetid()
+    {
+        return $this->assetid;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPositions()
+    {
+        return $this->positions;
+    }
+
+    /**
+     * @return number
+     */
+    public function getImpressions()
+    {
+        return $this->impressions;
+    }
+
+    /**
+     * @return number
+     */
+    public function getClicks()
+    {
+        return $this->clicks;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStartdate()
+    {
+        return $this->startdate;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEnddate()
+    {
+        return $this->enddate;
+    }
+
+    /**
+     * @return number
+     */
+    public function getPublished()
+    {
+        return $this->published;
+    }
+    
+    public function loadObject($source) {
+        $this->data = $source;
+        foreach (get_object_vars($source) as $key => $value) {
+            if (property_exists($this, $key)) {
+                $this->$key = $value;
+            }
+        }
+    }
+    
+
+}
+

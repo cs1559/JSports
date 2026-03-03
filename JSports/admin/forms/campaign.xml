@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+
+		<fieldset addfieldprefix="FP4P\Component\JSports\Administrator\Fields" 
+			name="details" label="COM_JSPORTS_DETAILS">
+
+		<field name="id" type="number" label="JGLOBAL_FIELD_ID_LABEL"
+			default="0" class="readonly" readonly="true" />
+
+		<field name="title" type="text" label="COM_JSPORTS_CAMPAIGN_TITLE"
+			size="40" required="true" />
+
+		<field name="sponsorid" type="sql" 
+			label="COM_JSPORTS_SPONSOR"
+			query="SELECT id, name FROM #__jsports_sponsors order by name"
+			key_field="id"
+			value_field="name" 
+			header="-Select Sponsor-"
+			onchange="refreshSponsorships(); refreshAssets();"
+			class=""
+		/>
+
+		<field name="sponsorshipid" type="list"
+			label="COM_JSPORTS_SPONSORSHIP_LEVEL" class="" default=""
+			header="-Select Sponsorship-">
+			validate="options">
+
+		</field>		
+		
+		<field name="assetid" type="sql" 
+			label="Asset"
+		    sql_select="a.*"
+		    sql_from="#__jsports_sponsor_assets as a"
+		    sql_order="a.title ASC"
+			key_field="id"
+			value_field="title" 
+			sql_filter="sponsorid"
+			sql_default_programid="9999999999"
+			header="- Select Asset -"
+			 showon="campaigntype:I,D"
+		/>
+
+		<field name="url" type="url"
+			label="Link to Redirect To" required="false"  showon="campaigntype:I,D"/>
+			
+		<field name="campaigntype" type="list" label="COM_JSPORTS_CAMPAIGN_TYPE"
+			class="form-select-color-state" default="T" validate="options">
+				<option value="T">Text (Display Only)</option>
+				<option value="D">Text with LOCAL Document Link</option>
+				<option value="I">Display Asset/Graphic</option>
+			</field>
+		
+		<field name="content" type="editor"
+			label="COM_JSPORTS_CAMPAIGN_CONTENT" filter="raw" height="250" required="false"  showon="campaigntype:T,D"/>
+		
+		<field name="startdate" type="calendar" label="COM_JSPORTS_STARTDATE"
+			default="0" class=""  require="true"/>
+			
+		<field name="enddate" type="calendar" label="COM_JSPORTS_STARTDATE"
+			default="0" class=""  require="true"/>
+			
+		<field name="published" type="list" label="JSTATUS"
+			class="form-select-color-state" default="0" validate="options">
+			<option value="1">JPUBLISHED</option>
+			<option value="0">JUNPUBLISHED</option>
+			<option value="2">JARCHIVED</option>
+			<option value="-2">JTRASHED</option>
+		</field>
+		
+<field
+        name="customcss" 
+        type="textarea" 
+        default="" 
+        label="Custom CSS" 
+        description="" 
+        rows="10" 
+        cols="50"
+/>		
+
+<field
+    name="positions"
+    type="list"
+    label="COM_JSPORTS_POSITIONS"
+    multiple="true"
+    size="5"
+    required="true"
+>
+    <option value="module">Joomla Module</option>
+    <option value="standings-top">Standings - Top </option>
+    <option value="standings-bottom">Standings - Bottom</option>
+    <option value="teamprofile-top">Team Profiles - Top</option>
+    <option value="teamprofile-bottom">Team Profiles - Bottom</option>
+    <option value="games-top">Upcoming/Completed Games - Top</option>
+    <option value="venues-top">Venues - Top</option>
+    <option value="teams-top">Teams - Top</option>        
+    <option value="bulletins-top">Bulletins - Top</option>          
+</field>
+		
+		<field name="externalurl" type="URL"
+			size="100"
+			label="COM_JSPORTS_BULLETIN_EXTERNALURL" class="" default=""
+			hint="External URL associated with the bulletin">
+		</field>
+							
+		<field name="impressions" type="number" label="COM_JSPORTS_CAMPAIGN_IMPRESSIONS"
+			default="0" class="readonly" readonly="true" />
+	
+		<field name="clicks" type="number" label="COM_JSPORTS_CAMPAIGN_CLICKS"
+			default="0" class="readonly" readonly="true" />
+
+		<field name="classname" type="text" label="COM_JSPORTS_CAMPAIGN_CLASSNAME"
+			size="100" required="true" />
+
+					
+	</fieldset>
+
+
+</form>

@@ -20,6 +20,20 @@
 			"type" : "style",
 			"uri" : "com_jsports/myteams.css"
 		}, {
+			"name" : "com_jsports.campaigns.style",
+			"type" : "style",
+			"uri" : "com_jsports/campaigns.css"
+		}, {
+			"name" : "com_jsports.campaigns.script",
+			"type" : "script",
+			"uri" : "com_jsports/campaigns.js",
+			"dependencies" : [
+				"jquery"
+			],
+			"attributes" : {
+				"defer" : true
+			}
+		}, {
 			"name" : "com_jsports.postings.style",
 			"type" : "style",
 			"uri" : "com_jsports/postings.css"

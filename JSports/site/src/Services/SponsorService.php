@@ -7,7 +7,6 @@
  * @subpackage  com_jsports
  * @copyright   Copyright (C) 2023-2026 Chris Strieter
  * @license     GNU/GPLv2, see http://www.gnu.org/licenses/gpl-2.0.html
- * @todo        Needs additional refactoring
  *
  */
 
@@ -152,8 +151,7 @@ class SponsorService
         return $db->loadObjectList();
         
     }
-    
-    
+
     
 //     public static function deleteSponsorship(int $id = 0) : bool {
         

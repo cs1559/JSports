@@ -20,6 +20,7 @@ use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Services\GameService;
 use FP4P\Component\JSports\Site\Helpers\JSHelper;
 use Joomla\CMS\Component\ComponentHelper;
+use FP4P\Component\JSports\Site\Campaigns\CampaignManager;
 
 HTMLHelper::_('behavior.formvalidator');
 HTMLHelper::_('behavior.keepalive');
@@ -33,6 +34,7 @@ $wa = $this->document->getWebAssetManager();
 $wa->getRegistry()->addExtensionRegistryFile('com_jsports');
 $wa->useScript('com_jsports.jsports.script');
 $wa->useStyle('com_jsports.teamprofile.style');
+$wa->useStyle('com_jsports.campaigns.style');
 
 $params = ComponentHelper::getParams('com_jsports');
 $showlinks = $params->get('showpagelinks');
@@ -42,6 +44,10 @@ $showhits = $params->get('showhits');
 $downloadschedule = $params->get('downloadcvsschedule');
 
 $document->setTitle(Text::_('COM_JSPORTS_TEAMPROFILE_PAGE_TITLE'));
+?>
+
+<?php
+    echo CampaignManager::renderCampaigns('teamprofile-top');
 ?>
 
 <div class="container">
@@ -364,3 +370,7 @@ $document->setTitle(Text::_('COM_JSPORTS_TEAMPROFILE_PAGE_TITLE'));
 	</form>
 
 </div>  <!--  end of container -->
+
+<?php
+    echo CampaignManager::renderCampaigns('teamprofile-bottom');
+?>

@@ -38,6 +38,7 @@
 			validate="options">
 			<option value="L">Logo</option>
 			<option value="B">Banner</option>
+			<option value="D">Document</option>
 		</field>	
 
 

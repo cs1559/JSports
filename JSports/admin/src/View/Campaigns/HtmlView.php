@@ -1,0 +1,152 @@
+<?php
+/**
+ * JSports - Joomla Sports Management Component
+ *
+ * @version     1.0.0
+ * @package     JSports.Administrator
+ * @subpackage  com_jsports
+ * @copyright   Copyright (C) 2023-2026 Chris Strieter
+ * @license     GNU/GPLv2, see http://www.gnu.org/licenses/gpl-2.0.html
+ *
+ */
+namespace FP4P\Component\JSports\Administrator\View\campaigns;
+
+defined('_JEXEC') or die;
+
+use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
+use Joomla\CMS\Toolbar\Toolbar;
+use Joomla\CMS\Toolbar\ToolbarHelper;
+use Joomla\CMS\Language\Text;
+use Joomla\CMS\Factory;
+use FP4P\Component\JSports\Administrator\Table\LeaguesTable;
+
+use Joomla\CMS\Helper\ContentHelper;
+use Joomla\CMS\MVC\View\GenericDataException;
+use Joomla\CMS\Pagination\Pagination;
+use Joomla\CMS\Form\Form;
+
+class HtmlView extends BaseHtmlView
+{
+    public $form;
+    
+    /**
+     * An array of items
+     *
+     * @var  array
+     */
+    protected $items;
+    
+    /**
+     * The pagination object
+     *
+     * @var  Pagination
+     */
+    protected $pagination;
+    
+    /**
+     * The model state
+     *
+     * @var  object
+     */
+    protected $state;
+    
+    /**
+     * Form object for search filters
+     *
+     * @var  Form
+     */
+    public $filterForm;
+    
+    /**
+     * The active search filters
+     *
+     * @var  array
+     */
+    public $activeFilters;
+    
+    
+    public function display($tpl = null)
+    {
+        
+        $this->items         = $this->get('Items');
+        $this->pagination    = $this->get('Pagination');
+        $this->state         = $this->get('State');
+        $this->filterForm    = $this->get('FilterForm');
+        $this->activeFilters = $this->get('ActiveFilters');
+        
+        // Check for errors.
+        if (count($errors = $this->get('Errors')))
+        {
+            throw new GenericDataException(implode("\n", $errors), 500);
+        }
+        
+        $this->addToolbar();
+        
+        return parent::display($tpl);
+        
+    }
+    
+    protected function addToolBar()
+    {
+        
+        // Get the toolbar object instance
+        $toolbar = Toolbar::getInstance('toolbar');
+
+        ToolbarHelper::title(Text::_('COM_JSPORTS_VIEW_CAMPAIGNS_TITLE'));
+               
+        $canDo = ContentHelper::getActions('com_jsports');       
+        
+        if ($canDo->get('core.create'))
+        {
+            $toolbar->addNew('campaign.add');
+        }
+        
+        if ($canDo->get('core.edit.state'))
+        {
+            $dropdown = $toolbar->dropdownButton('status-group')
+            ->text('JTOOLBAR_CHANGE_STATUS')
+            ->toggleSplit(false)
+            ->icon('icon-ellipsis-h')
+            ->buttonClass('btn btn-action')
+            ->listCheck(true);
+            
+            $childBar = $dropdown->getChildToolbar();
+            
+            $childBar->publish('campaigns.publish')->listCheck(true);
+            
+            $childBar->unpublish('campaigns.unpublish')->listCheck(true);
+            
+            $childBar->archive('campaigns.archive')->listCheck(true);
+            
+            if ($this->state->get('filter.published') != -2)
+            {
+                $childBar->trash('campaigns.trash')->listCheck(true);
+            }
+        }
+        
+        if ($this->state->get('filter.published') == -2 && $canDo->get('core.delete'))
+        {
+            $toolbar->delete('campaigns.delete')
+            ->text('JTOOLBAR_EMPTY_TRASH')
+            ->message('JGLOBAL_CONFIRM_DELETE')
+            ->listCheck(true);
+        }
+        
+//         ToolbarHelper::custom('registrations.export', 'download', 'download', 'Export CSV', false);
+        
+        $toolbar->standardButton('dashboard')
+        ->icon('fa fa-home')
+        ->text('Dashboard')
+        ->task('display.dashboard')
+        ->listCheck(false);
+        
+        
+        if ($canDo->get('core.create'))
+        {
+            $toolbar->preferences('com_jsports');
+        }
+        
+        ToolbarHelper::help('help.html', true);
+    }
+   
+}

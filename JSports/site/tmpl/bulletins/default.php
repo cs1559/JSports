@@ -45,6 +45,12 @@ $document->setTitle(Text::_('COM_JSPORTS_TEAMBULLETINS_PAGE_TITLE'));
 $token = Session::getFormToken();
 
 ?>
+
+<?php 
+    use FP4P\Component\JSports\Site\Campaigns\CampaignManager;
+    echo CampaignManager::renderCampaigns('bulletins-top'); 
+?>
+
 <form action="<?php echo Route::_('index.php?option=com_jsports&view=bulletins'); ?>" method="post" name="adminForm" id="adminForm">
 	
 	<div class="" >

@@ -31,6 +31,12 @@ $user = UserService::getUser();
 
 ?>
 
+<?php 
+    use FP4P\Component\JSports\Site\Campaigns\CampaignManager;
+    echo CampaignManager::renderCampaigns('venues-top'); 
+?>
+
+
 <h1>League Venues</h1>
 <form action="#<?php //echo Route::_('index.php?option=com_jsports&view=venues'); ?>" method="post" name="adminForm" id="adminForm">
 	<?php // echo LayoutHelper::render('joomla.searchtools.default', array('view' => $this)); ?>

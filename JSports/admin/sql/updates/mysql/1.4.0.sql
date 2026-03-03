@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS `#__jsports_sponsors` (
 	 `contactname` 	varchar(100) DEFAULT NULL,
  	 `contactemail` varchar(100) DEFAULT NULL,
   	 `contactphone` varchar(12) DEFAULT NULL,
- 	 `website` 		varchar(100) DEFAULT NULL,
+ 	 `website` 		varchar(150) DEFAULT NULL,
  	 `description` 	text DEFAULT NULL,
  	 `logo` 		varchar(100) DEFAULT NULL,
 	 `notes` 		text DEFAULT NULL,
@@ -22,14 +22,15 @@ PRIMARY KEY (`id`)
 --  PLAN TYPE = League (L), Program/Season (P), Division (D), Team (T)
 --
 CREATE TABLE IF NOT EXISTS `#__jsports_sponsorships` (
-	 `id` 			int(11) 		NOT NULL AUTO_INCREMENT,
- 	 `sponsorid` 	int(11)			NOT NULL,
-   	 `planlevel` 	varchar(1) 		NOT NULL DEFAULT 'D',
-   	 `plantype` 	varchar(1) 		NOT NULL DEFAULT 'L',
-  	 `programid` 	int(11) 		NOT NULL DEFAULT 0,
-	 `startdate` 	DATE 			DEFAULT NULL,
- 	 `enddate`   	date 			DEFAULT NULL,
-	 `published` 	tinyint 		default 0,
+	 `id` 				int(11) 		NOT NULL AUTO_INCREMENT,
+ 	 `sponsorid` 		int(11)			NOT NULL,
+   	 `planlevel` 		varchar(1) 		NOT NULL DEFAULT 'D',
+   	 `plantype` 		varchar(1) 		NOT NULL DEFAULT 'L',
+  	 `programid` 		int(11) 		NOT NULL DEFAULT 0,
+	 `startdate` 		DATE 			DEFAULT NULL,
+ 	 `enddate`   		date 			DEFAULT NULL,
+ 	 `campaign_limit`	int				DEFAULT 0,
+	 `published` 		tinyint 		default 0,
 PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -40,8 +41,8 @@ PRIMARY KEY (`id`)
 --
 CREATE TABLE IF NOT EXISTS `#__jsports_sponsor_assets` (
 	 `id` 				tinyint 		NOT NULL AUTO_INCREMENT,
- 	 `sponsorid` 		tinyint,
- 	 `title`  			VARCHAR(30),
+ 	 `sponsorid` 		tinyint default 0,
+ 	 `title`  			VARCHAR(50),
  	 `description` 		VARCHAR(255),	
  	 `assettype` 		VARCHAR(1),
  	 `filename`  		VARCHAR(255),
@@ -59,16 +60,44 @@ CONSTRAINT UC_filename UNIQUE (sponsorid,filename)
 
 --
 -- CAMPAIGN Table
---  PLAN LEVEL = Default (D), Premium (P), Gold (G), Silver (S), Bronze (B)
---  PLAN TYPE = League (L), Program/Season (P), Division (D), Team (T)
+--  Campaign is what actually generates the ad/banner on the site.  It ties the sponsor and particular asset together and will be used to render the asset/content
+--  in a specific position on the website.
 --
-CREATE TABLE `#__jsports_sponsor_campaign` (
-	 `campaignid` 		tinyint 		NOT NULL AUTO_INCREMENT,
- 	 `sponsorshipid` 	tinyint,
- 	 `assetid` 			tinyint,
+--  CAMPAIGN TYPE - could be a banner, ad, link to asset, external link, etc.
+--
+CREATE TABLE `#__jsports_campaigns` (
+	 `id` 		tinyint 		NOT NULL AUTO_INCREMENT,
+ 	 `campaigntype` 	VARCHAR(1),
+ 	 `name`				VARCHAR(30),	
+ 	 `sponsorid` 		tinyint default 0,
+ 	 `sponsorshipid`	tinyint default 0,
+ 	 `assetid` 			tinyint default 0,
+  	 `positions` 		VARCHAR(150),
+   	 `url` 				VARCHAR(150),		
+ 	 `content` 			text,		
   	 `impressions` 		int default 0,
    	 `clicks`	 		int default 0,
 	 `startdate` 		DATE 			NOT NULL,
  	 `enddate`   		date 			NOT NULL,
+ 	 `classname`		varchar(100)  default null,
+ 	 `customcss`		varchar(500)  default '';
+ 	 `published`		tinyint default 0,
 PRIMARY KEY (`campaignid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+CREATE TABLE `#__jsports_campaign_positions` (
+	`id` 			tinyint 		NOT NULL AUTO_INCREMENT,
+	`title` 		VARCHAR(50),
+ 	`position` 		VARCHAR(25),	
+ 	`maxwidth` 		INT NULL,
+	`maxheight`		INT NULL,
+	`css_class` 	VARCHAR(50) NULL,
+	`rotation` 		VARCHAR(50) NULL,
+PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+insert into #__jsports_campaign_positions values(null,'Joomla Module','module',0,0,'','');
+insert into #__jsports_campaign_positions values(null,'Standings (TOP)','standings-top',0,0,'','');
+insert into #__jsports_campaign_positions values(null,'Profile pages','profile-',0,0,'','');

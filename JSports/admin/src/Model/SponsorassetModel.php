@@ -12,6 +12,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Filesystem\File;
 use Joomla\CMS\Filesystem\Folder;
 use Joomla\CMS\MVC\Model\AdminModel;
+use finfo;
 
 class SponsorassetModel extends AdminModel
 {
@@ -72,7 +73,6 @@ class SponsorassetModel extends AdminModel
 
         // Posted form data
         $requestData = $input->post->get('jform', [], 'array');
-        // $bulletinTitle = $requestData['title'] ?? '';
 
         // File upload array (jform[afile])
         $files = $input->files->get('jform', [], 'array');
@@ -119,14 +119,19 @@ class SponsorassetModel extends AdminModel
             $dest = $filepath . $safeName;
 
             $tmpPath = $afile['tmp_name'];
-            $imageInfo = getimagesize($tmpPath);
-            if ($imageInfo !== false) {
-                echo "calc image size";
-                $data['width']  = $imageInfo[0];
-                $data['height'] = $imageInfo[1];
-                $data['mimetype']   = $imageInfo['mime'];
-            }
             
+            $finfo = new finfo(FILEINFO_MIME_TYPE);
+            $mime  = $finfo->file($tmpPath);
+            if (str_starts_with($mime, 'image/')) {
+                $imageInfo = getimagesize($tmpPath);
+                if ($imageInfo !== false) {
+                    $data['width']  = $imageInfo[0];
+                    $data['height'] = $imageInfo[1];
+                    $data['mimetype']   = $imageInfo['mime'];
+                }
+            } else {
+                $data['mimetype'] = $mime;
+            }
             if (File::upload($src, $dest)) {
 
                 $data['filename'] = $safeName;

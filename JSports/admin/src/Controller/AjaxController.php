@@ -15,10 +15,14 @@ namespace FP4P\Component\JSports\Administrator\Controller;
 defined('_JEXEC') or die;
 
 use Joomla\CMS\MVC\Controller\BaseController;
+use Joomla\CMS\Response\JsonResponse;
+use Joomla\CMS\Session\Session;
 use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Services\DivisionService;
 use FP4P\Component\JSports\Site\Services\TeamService;
 use FP4P\Component\JSports\Site\Services\ProgramsService;
+use FP4P\Component\JSports\Site\Services\SponsorService;
+use FP4P\Component\JSports\Site\Helpers\SponsorHelper;
    
 /**
  * The AjaxController supports a series of functions used in AJAX calls by the front-end side of the component 
@@ -125,4 +129,60 @@ class AjaxController extends BaseController
         
         $this->sendHtml($options);
     }
-}
+    
+    
+    public function getSponsorships(): void
+    {
+        $app = Factory::getApplication();
+        
+        // CSRF check (use 'get' if you call via GET token)
+//         if (!Session::checkToken('get')) {
+//             echo new JsonResponse(null, 'Invalid token', true);
+//             return;+
+//         }
+        
+        $sponsorid = $app->input->getInt('sponsorid', 0);
+        
+        $sponsorships = SponsorService::getSponsorships($sponsorid);       
+        
+        $options = "<option value=\"\">-- Select Sponsorship --</option>";
+        
+        foreach ($sponsorships as $sponsorship) {
+            $id = htmlspecialchars((string) ($sponsorship->id ?? ''), ENT_QUOTES, 'UTF-8');
+            //$planlevel = SponsorHelper::translatePlanLevel()
+            $planlevel = htmlspecialchars((string) (SponsorHelper::translatePlanLevel($sponsorship->planlevel) ?? ''), 
+                ENT_QUOTES, 'UTF-8');
+            
+            $options .= "<option value=\"{$id}\">{$planlevel}</option>";
+        }
+        
+        $this->sendHtml($options);
+    }
+    
+    
+    public function getAssets(): void
+    {
+        $app = Factory::getApplication();
+        
+        // CSRF check (use 'get' if you call via GET token)
+        //         if (!Session::checkToken('get')) {
+        //             echo new JsonResponse(null, 'Invalid token', true);
+        //             return;+
+        //         }
+        
+        $sponsorid = $app->input->getInt('sponsorid', 0);
+        
+        $assets = SponsorService::getAssets($sponsorid);
+        
+        $options = "<option value=\"\">-- Select Asset --</option>";
+        
+        foreach ($assets as $asset) {
+            $id     = htmlspecialchars((string) ($asset->id ?? '')     ,ENT_QUOTES, 'UTF-8');
+            $title  = htmlspecialchars((string) ($asset->title ?? '')  ,ENT_QUOTES, 'UTF-8');
+            
+            $options .= "<option value=\"{$id}\">{$title}</option>";
+        }
+        
+        $this->sendHtml($options);
+    }
+}   

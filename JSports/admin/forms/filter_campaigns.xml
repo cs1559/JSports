@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+
+	<fields name="filter">
+
+		<field
+			name="search"
+			type="text"
+			label="COM_JSPORTS_SEARCH_CAMPAIGNS"
+			description="COM_JSPORTS_SEARCH_CAMPAIGNS"
+			hint="JSEARCH_FILTER"
+		/>
+
+		<field name="sponsorid" type="sql" 
+			label="Sponsor"
+			default="0"
+			query="SELECT id, name FROM #__jsports_sponsors order by name "
+			key_field="id"
+			value_field="name" 
+			onchange="this.form.submit();"
+			header="- Select Sponsor -"
+		/>
+
+		<field name="position" type="sql" 
+			label="Position"
+			default="0"
+			query="SELECT position as id, title as name FROM #__jsports_campaign_positions order by title "
+			key_field="id"
+			value_field="name" 
+			onchange="this.form.submit();"
+			header="- Select Position -"
+		/>		
+	
+		<field
+			name="campaigntype"
+			type="list"
+			label="Campaign Type"
+			onchange="this.form.submit();"
+			>
+			<option selected="selected" value="">- Select Type -</option>
+			<option value="U">Link to a URL</option>
+			<option value="I">Image</option>
+		</field>
+		
+		<field
+			name="published"
+			type="status"
+			label="JOPTION_SELECT_PUBLISHED"
+			onchange="this.form.submit();"
+			>
+			<option value="*">- Select State -</option>
+		</field>
+
+		
+	</fields>
+
+	<fields name="list">
+
+		<field
+			name="fullordering"
+			type="list"
+			label="JGLOBAL_SORT_BY"
+			default="a.name ASC"
+			onchange="this.form.submit();"
+			>
+			<option value="">JGLOBAL_SORT_BY</option>
+			<option value="a.teamname ASC">COM_JSPORTS_TEAMNAME_ASC</option>
+			<option value="a.teamname DESC">COM_JSPORTS_TEAMNAME_DESC</option>
+ 			<option value="a.name ASC">COM_JSPORTS_NAME_ASC</option>  
+	  		<option value="a.name DESC">COM_JSPORTS_NAME_DESC</option> 
+		</field>
+
+		<field
+			name="limit"
+			type="limitbox"
+			label="JGLOBAL_LIST_LIMIT"
+			default="25"
+			onchange="this.form.submit();"
+		/>
+	</fields>
+</form>

@@ -110,6 +110,14 @@ final class SponsorHelper
     public static function getAssetURL($sponsorid, $filename) {
         
         $imageFolder = "/media/com_jsports/images/sponsors/assets/";
+        $pdfimage = "/media/com_jsports/images/pdf-icon.png";
+        
+        $fullfilename = JPATH_ROOT . 'sponsor-' . $sponsorid .'/' . $filename;
+        $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+        
+        if ($ext === 'pdf') {
+            return Uri::root() . '/' . $pdfimage;
+        }
         
         return Uri::root() . $imageFolder . 'sponsor-' . $sponsorid .'/' . $filename;
         
