@@ -11,24 +11,7 @@
 			hint="JSEARCH_FILTER"
 		/>
 		
-		<field name="planlevel" type="sql" 
-			label="COM_JSPORTS_BULLETIN_TYPE"
-			query="SELECT category, catdesc FROM #__jsports_bulletin_categories order by catdesc"
-			key_field="category"
-			value_field="catdesc" 
-			header="-Select Cateogry-"
-			onchange="this.form.submit();"
-		/>
-
-		<field name="plantype" type="sql" 
-			label="COM_JSPORTS_BULLETIN_TYPE"
-			query="SELECT category, catdesc FROM #__jsports_bulletin_categories order by catdesc"
-			key_field="category"
-			value_field="catdesc" 
-			header="-Select Cateogry-"
-			onchange="this.form.submit();"
-		/>
-				
+			
 		<field
 			name="published"
 			type="status"
