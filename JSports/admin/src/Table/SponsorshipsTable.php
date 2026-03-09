@@ -18,8 +18,19 @@ use Joomla\Database\DatabaseDriver;
 
 class SponsorshipsTable extends Table
 {
-    function __construct(DatabaseDriver $db)
-    {
-        parent::__construct('#__jsports_sponsorships', 'id', $db);
-    }
+
+        public $id = 0;
+        public $sponsorid = 0;
+        public $programid = 0;
+        public $plancode = '';
+        public $plantype = '';
+        public $published = 1;
+        
+        public $startdate = null;  // <-- add
+        public $enddate   = null;  // <-- add
+        
+        public function __construct(DatabaseDriver $db)
+        {
+            parent::__construct('#__jsports_sponsorships', 'id', $db);
+        }
 }
