@@ -294,6 +294,17 @@
 							
 	</fieldset>
 
+	<fieldset name="sponsorships" description="COM_JSPORTS_SPONSORSHIPS" label="COM_JSPORTS_SPONSORSHIPS">
+
+		<field name="sponsorshipsenabled" type="radio" default="0"
+			label="COM_JSPORTS_SPONSORSHIPS_ENABLED"
+			description="COM_JSPORTS_SPONSORSHIPS_ENABLED_DESC"
+			layout="joomla.form.field.radio.switcher">
+			<option value="0">No</option>
+			<option value="1">Yes</option>
+		</field>
+		
+	</fieldset>
 		
 	<fieldset name="permissions" description="JCONFIG_PERMISSIONS_DESC" label="JCONFIG_PERMISSIONS_LABEL">
 			<field name="rules" type="rules" component="com_jsports" class="inputbox" filter="rules" validate="rules" label="JCONFIG_PERMISSIONS_LABEL" section="component"/>
