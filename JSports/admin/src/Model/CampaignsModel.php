@@ -2,18 +2,12 @@
 /**
  * JSports - Joomla Sports Management Component
  *
- * @version     0.0.1
+ * @version     1.0.0
  * @package     JSports.Administrator
  * @subpackage  com_jsports
- * @copyright   Copyright (C) 2023-2024 Chris Strieter
+ * @copyright   Copyright (C) 2023-2026 Chris Strieter
  * @license     GNU/GPLv2, see http://www.gnu.org/licenses/gpl-2.0.html
  *
- */
-
-/**
- * CHANGE HISTORY
- * 7/10/2024 - Changed AGE GROUP to GROUPING; commented out Delete function.
- * 
  */
 
 namespace FP4P\Component\JSports\Administrator\Model;
@@ -51,6 +45,7 @@ class CampaignsModel extends ListModel
 				'sponsorid', 'a.sponsorid',
 				'position', 'a.positionid',
 			    'campaigntype', 'a.campaigntype',
+			    'published', 'a.published',
 			);
 		}
 
@@ -85,8 +80,8 @@ class CampaignsModel extends ListModel
 		$search = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
 		$this->setState('filter.search', $search);
 
-// 		$published = $this->getUserStateFromRequest($this->context . '.filter.published', 'filter_published', '');
-// 		$this->setState('filter.published', $published);
+		$published = $this->getUserStateFromRequest($this->context . '.filter.published', 'filter_published', '');
+		$this->setState('filter.published', $published);
 
 // 		$grouping = $this->getUserStateFromRequest($this->context . '.filter.grouping', 'filter_grouping', '');
 // 		$this->setState('filter.grouping', $grouping);
@@ -118,6 +113,7 @@ class CampaignsModel extends ListModel
 // 		$id .= ':' . $this->getState('filter.programid');
 		$id .= ':' . $this->getState('filter.sponsorid');
 		$id .= ':' . $this->getState('filter.positionid');
+		$id .= ':' . $this->getState('filter.published');
 
 		return parent::getStoreId($id);
 	}
@@ -140,12 +136,13 @@ class CampaignsModel extends ListModel
 	    $query->select(
 	        $this->getState(
 	            'list.select',
-	            'a.*, s.name as sponsorname, sp.planlevel'
+	            'a.*, s.name as sponsorname, sp.plancode, p.name as planname'
 	            )
 	        );
 	    $query
 	    ->from($db->quoteName('#__jsports_campaigns', 'a') . ', ' .
 	           $db->quoteName('#__jsports_sponsors', 's') . ', ' .
+	           $db->quoteName('#__jsports_sponsorship_plans', 'p') . ', ' .
 	           $db->quoteName('#__jsports_sponsorships', 'sp') 
 	        )->where(
 	            $db->quoteName('a.sponsorid')
@@ -153,19 +150,20 @@ class CampaignsModel extends ListModel
 	            $db->quoteName('s.id')
 	            );
 	    $query->where($db->quoteName('a.sponsorshipid') . ' = ' . $db->quoteName('sp.id'));
+	    $query->where($db->quoteName('sp.plancode') . ' = ' . $db->quoteName('p.plancode'));
 	        
 	    // Filter by published state
-// 	    $published = (string) $this->getState('filter.published');
+	    $published = (string) $this->getState('filter.published');
 	    
-// 	    if (is_numeric($published))
-// 	    {
-// 	        $query->where($db->quoteName('a.published') . ' = :published');
-// 	        $query->bind(':published', $published, ParameterType::INTEGER);
-// 	    }
-// 	    elseif ($published === '')
-// 	    {
-// 	        $query->whereIn($db->quoteName('a.published'), array(0, 1));
-// 	    }
+	    if (is_numeric($published))
+	    {
+	        $query->where($db->quoteName('a.published') . ' = :published');
+	        $query->bind(':published', $published, ParameterType::INTEGER);
+	    }
+	    elseif ($published === '')
+	    {
+	        $query->whereIn($db->quoteName('a.published'), array(0, 1));
+	    }
 	    
 	    // Filter by Sponsor.
 	    $sponsorid = $this->getState('filter.sponsorid');
@@ -203,7 +201,7 @@ class CampaignsModel extends ListModel
 	    $ordering = [$db->quoteName('sponsorname') . ' ' . $db->escape($orderDirn), ];
 	    	    
 	    $query->order($ordering);
-	    
+
 	    return $query;
 	}
 	
@@ -222,38 +220,5 @@ class CampaignsModel extends ListModel
 
 		return $items;
 	}
-	
-	
-	
-
-// 	    /**
-// 	     * Method to DELETE one or more records from the database
-// 	     *
-// 	     * @param   array    &$pks   A list of the primary keys to change.
-// 	     * @param   integer  $value  The value of the published state.
-// 	     *
-// 	     * @return  boolean  True on success.
-// 	     *
-// 	     * @since   4.0.0
-// 	     */
-// 	    public function delete(&$pks, $value = 1) {
-	        
-	        
-	        
-// 	        /* this is a very simple method to change the state of each item selected */
-// 	        $db = $this->getDatabase();
-	        
-// 	        $query = $db->getQuery(true);
-	        
-// 	        $query->delete($db->quoteName('#__jsports_registrations'))
-// 	        ->whereIn($db->quoteName('id'), $pks);
-	        
-// 	        $db->setQuery($query);
-	        
-// 	        $db->execute();
-	        
-	        
-	        
-// 	    }
-	    
+		
 }
