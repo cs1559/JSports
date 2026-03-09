@@ -9,6 +9,7 @@ class CampaignFactory
             'T' => new Textcampaign($data),
             'I' => new Imagecampaign($data),
             'D' => new TextWithAssetCampaign($data),
+            'P' => new PromoBarCampaign($data),
         };
 
         return $campaign;
