@@ -64,9 +64,11 @@
 }
 
 .sponsor-logo-wrapper {
-	text-align: center;
+    max-width: 100%;
+    text-align: center;
 }
+
 .sponsor-logo {
-	height: 250px;
-	width: 250px;
+    max-width: 100%;
+    height: auto;
 }
