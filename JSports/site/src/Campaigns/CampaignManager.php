@@ -28,6 +28,13 @@ class CampaignManager
      */
     public static function renderCampaigns($position = '') 
     {
+        $params = ComponentHelper::getParams('com_jsports');
+        $enabled = (int) $params->get('sponsorshipsenabled', false);
+        
+        if (!$enabled) {
+            return false;
+        }
+        
         // Get Campaigns from Database
         $campaigns = CampaignService::getEligibleCampaigns($position);
         
