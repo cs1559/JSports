@@ -100,7 +100,6 @@ class CampaignModel extends AdminModel
         {
             $data = $this->getItem();
             
-            // Pre-select some filters (Status, Category, Language, Access) in edit form if those have been selected in Article Manager: Articles
         }
         
         // Convert CSV string to array
@@ -127,12 +126,14 @@ class CampaignModel extends AdminModel
         }
         $data['positions'] = implode(',', $requestData['positions']);
         $data['assetid'] = $requestData['assetid'];
+        $data['sponsorshipid'] = $requestData['sponsorshipid'];
         
-        if ($data['campaigntype']) {
+        if ($data['assetid'] > 0) {
             $asset = CampaignService::getAsset($data['sponsorid'], $data['assetid']);
             $data['url'] = CampaignService::getAssetURL($data['sponsorid'], $asset->filename);
         }
 
+        
         return parent::save($data);
 
     }
