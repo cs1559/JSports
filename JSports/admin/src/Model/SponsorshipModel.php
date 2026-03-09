@@ -61,9 +61,15 @@ class SponsorshipModel extends AdminModel
             // $data might be an object or array depending on your code path
             if (is_array($data)) {
                 $data['sponsorid'] = $data['sponsorid'] ?? $sponsorId;
+                // Have to treat this as a timestamp even thought we just need the date.
+                $data['startdate'] = Factory::getDate(date('Y-01-01 12:00:00'))->format('Y-m-d H:i:s');
+                $data['enddate'] = Factory::getDate(date('Y-12-31 12:00:00'))->format('Y-m-d H:i:s');
             } else {
                 $data->sponsorid = $data->sponsorid ?? $sponsorId;
+                $data->startdate = Factory::getDate(date('Y-01-01 12:00:00'))->format('Y-m-d H:i:s');
+                $data->enddate = Factory::getDate(date('Y-12-31 12:00:00'))->format('Y-m-d H:i:s');
             }
+            
         }
 
         $this->preprocessData('com_jsports.sponsorship', $data);
@@ -72,4 +78,31 @@ class SponsorshipModel extends AdminModel
     }
 
 
+    public function save($data)
+    {
+
+        $id       = (int) ($data['id'] ?? 0);
+        $sponsorid = (int) ($data['sponsorid'] ?? 0);
+        $plancode = (string) ($data['plancode'] ?? 0);
+
+        
+        echo '<pre>'; print_r($data); echo '</pre>'; exit;
+        
+        
+        // Replace with your actual "season" key: seasonid, programid, year, etc.
+        $programid = (int) ($data['programid'] ?? 0);
+  
+        if (!$id) {
+            if (!SponsorService::canAddSponsorship($sponsorid, $programid, $plancode)) {
+                $this->setError('This sponsor already has a primary sponsorship for the season. Add a bolt-on instead.');
+                return false;
+            }
+        }
+        
+        // ADD ANY ADDITIONAL RULES TO DETERMINE IF THE SPONSORSHIP CAN BE ADDED.
+        
+        return parent::save($data);
+    }
+    
+    
 }
