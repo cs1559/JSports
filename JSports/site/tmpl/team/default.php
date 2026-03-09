@@ -158,7 +158,7 @@ $document->setTitle(Text::_('COM_JSPORTS_TEAMPROFILE_PAGE_TITLE'));
                             ?>
                             	<tr>
                             		<td><?php echo $staffitem->firstname . " " . $staffitem->lastname; ?> </td>
-                            		<td><?php echo $staffitem->role; ?>
+                            		<td><?php echo $staffitem->role; ?></td>
                             	</tr>
                             <?php } ?>
                             
@@ -201,12 +201,12 @@ $document->setTitle(Text::_('COM_JSPORTS_TEAMPROFILE_PAGE_TITLE'));
                             			<?php echo $standingsitem['teamname']; ?>
                             			</a> 
                         			</td>
-                            		<td><?php echo $standingsitem['wins']; ?>
-                            		<td><?php echo $standingsitem['losses']; ?>
-                            		<td><?php echo $standingsitem['ties']; ?>
-                            		<td><?php echo $standingsitem['runsallowed']; ?>
-                            		<td><?php echo $standingsitem['runsscored']; ?>
-                        			<td><?php echo $standingsitem['points']; ?>
+                            		<td><?php echo $standingsitem['wins']; ?></td>
+                            		<td><?php echo $standingsitem['losses']; ?></td>
+                            		<td><?php echo $standingsitem['ties']; ?></td>
+                            		<td><?php echo $standingsitem['runsallowed']; ?></td>
+                            		<td><?php echo $standingsitem['runsscored']; ?></td>
+                        			<td><?php echo $standingsitem['points']; ?></td>
                             	</tr>
                             <?php } ?>
                             
