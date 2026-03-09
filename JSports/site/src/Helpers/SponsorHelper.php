@@ -26,14 +26,16 @@ final class SponsorHelper
      * @param string $code
      * @return string
      */
-    public static function translatePlanLevel($code = '') : string
+    public static function translatePlancode($code = '') : string
     {
         
         static $map = [
-            'D' => 'Default',
+            'C' => 'Comp',
             'G' => 'Gold',
             'S' => 'Silver',
             'B' => 'Bronze',
+            'P' => 'Platinum',
+            'X' => 'Bolt-on',
         ];
         
         return $map[$code] ?? '*error*';
