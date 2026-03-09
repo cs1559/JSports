@@ -33,8 +33,17 @@ class SponsorshipController extends FormController
     protected $default_view = 'sponsor';
            
     public function save($key=null, $urlVar = null) {
+        
+        $app    = \Joomla\CMS\Factory::getApplication();
+        $sponsorid = $app->input->getInt('sponsorid', 0);
+        $return = $app->input->getBase64('return');
+                
         parent::save($key, $urlVar);
-        $this->setRedirect('index.php?option=com_jsports&view=sponsor&layout=edit&id=' . $sponsorid);
+        if (!empty($return)) {
+            $this->setRedirect(\Joomla\CMS\Router\Route::_(base64_decode($return), false));
+        }
+        
+        return true;
     }
     
     public function add() {
@@ -48,9 +57,10 @@ class SponsorshipController extends FormController
         $app->setUserState('com_jsports.edit.sponsorship.sponsorid', $sponsorid);
         
         // Always use Joomla input filters
-
+        
         $this->setRedirect('index.php?option=com_jsports&view=sponsorship&layout=edit&sponsorid=' . $sponsorid . '&return=' . $return);
     }
+    
     
     public function cancel($key = null) {
         $app    = \Joomla\CMS\Factory::getApplication();
