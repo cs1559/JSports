@@ -74,8 +74,9 @@ class HtmlView extends BaseHtmlView
         $this->filterForm    = $this->get('FilterForm');
         $this->activeFilters = $this->get('ActiveFilters');
         
-        // Check for errors.
-        if (count($errors = $this->get('Errors')))
+        $errors = (array) $this->get('Errors');
+        
+        if ($errors)
         {
             throw new GenericDataException(implode("\n", $errors), 500);
         }
@@ -118,10 +119,10 @@ class HtmlView extends BaseHtmlView
             
             $childBar->archive('campaigns.archive')->listCheck(true);
             
-            if ($this->state->get('filter.published') != -2)
-            {
-                $childBar->trash('campaigns.trash')->listCheck(true);
-            }
+//             if ($this->state->get('filter.published') != -2)
+//             {
+//                 $childBar->trash('campaigns.trash')->listCheck(true);
+//             }
         }
         
         if ($this->state->get('filter.published') == -2 && $canDo->get('core.delete'))

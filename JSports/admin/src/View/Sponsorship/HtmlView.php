@@ -79,10 +79,6 @@ class HtmlView extends BaseHtmlView
         $this->item = $this->get('Item');
         $this->state = $this->get('State');
 
-//         $this->sponsorships = $model->getSponsorships();
-        
-        // $this->hasAttachment = $this->item->hasAttachment;
-
         if (count($errors = $this->get('Errors'))) {
             throw new GenericDataException(implode("\n", $errors), 500);
         }

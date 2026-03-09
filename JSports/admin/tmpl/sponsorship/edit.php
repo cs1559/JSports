@@ -26,7 +26,7 @@ $app = \Joomla\CMS\Factory::getApplication();
 
 ?>
 
-<form enctype="multipart/form-data" action="<?php echo Route::_('index.php?option=com_jsports&view=sponsor&layout=edit&id=' . (int) $this->item->sponsorid); ?>"
+<form enctype="multipart/form-data" action="<?php echo Route::_('index.php?option=com_jsports&view=sponsorship&layout=edit&id=' . (int) $this->item->id); ?>"
 	method="post" name="adminForm" id="sponsorship-form" class="form-validate form-horizontal">
 
 	<div hidden id="spinner"></div>
@@ -49,7 +49,7 @@ $app = \Joomla\CMS\Factory::getApplication();
 					<div class="">
 						<?php echo $this->form->renderField('sponsorid'); ?>
 						<?php echo $this->form->renderField('programid'); ?>
-						<?php echo $this->form->renderField('planlevel'); ?>
+						<?php echo $this->form->renderField('plancode'); ?>
 						<?php echo $this->form->renderField('plantype'); ?>
 						<?php echo $this->form->renderField('startdate'); ?>
 						<?php echo $this->form->renderField('enddate'); ?>

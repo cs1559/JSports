@@ -19,6 +19,7 @@ use Joomla\CMS\Router\Route;
 use FP4P\Component\JSports\Site\Helpers\SponsorHelper;
 use FP4P\Component\JSports\Site\Helpers\JSHelper;
 use FP4P\Component\JSports\Site\Helpers\FileHelper;
+use FP4P\Component\JSports\Site\Services\SponsorService;
 
 HTMLHelper::_('behavior.formvalidator');
 HTMLHelper::_('behavior.keepalive');
@@ -57,30 +58,41 @@ $return = base64_encode('index.php?option=com_jsports&view=sponsor&layout=edit&i
 			<?php if (!empty($this->item->logo)) {?>
 				<div class="sponsor-logo-wrapper">  <!-- GOOD -->
 					<img class="sponsor-logo img-responsive"
-						src="<?php echo SponsorHelper::getLogoURL($this->item->id, $this->item->logo);?>?t=<?php echo time(); ?>" />
+						src="<?php echo SponsorHelper::getLogoURL($this->item->id, $this->item->logo);?>?t=<?php echo time(); ?>" /></br>
 					<a class="btn btn-danger btn-sm"
 						onClick="return confirm('Are you sure?');"
 						href="<?php echo Route::_('index.php?option=com_jsports&task=sponsor.deletelogo&id=' . $this->item->id
                         	      . '&return=' . $return); ?>"> Delete Logo
 					</a>
 				</div>  <!-- GOOD -->
+				
+				<hr/>
 			<?php } ?>
 			
 			
 			<?php 
-// ===============================================================================
-//                          SPONSORSHIP TAB
-// ===============================================================================
-?>
+
+			$entitlements = SponsorService::getEntitlements((int) $this->item->id);
+			?>
 				<div class="card card-light">  <!-- GOOD -->
 					<div class="card-body">  <!-- GOOD -->
+					<strong>Current Entitlements</strong></br>
+					<table style="width: 100%;">
+						<tr><td>Allowed Campaigns:</td><td><?php echo $entitlements->totalcampaigns;?></td></tr>
+						<tr><td>Post Bulletins:</td><td><?php echo JSHelper::translateYesNo($entitlements->allowbulletins); ?></td></tr>
+						<tr><td>Allowed Positions:</td><td><?php echo implode(',', $entitlements->positions);?></td></tr>
+					</table>
 					</div>   <!-- GOOD -->
 				</div> <!--  end of card-light  -->
 			</div>  <!--  end of right side  -- GOOD -->
 		</div>  <!--  end of row -->
 		<?php echo HTMLHelper::_('uitab.endTab'); ?>
 
-
+<?php 
+// ===============================================================================
+//                          SPONSORSHIP TAB
+// ===============================================================================
+?>
 		<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'details', Text::_('COM_JSPORTS_SPONSORSHIPS')); ?>
 		<div class="row">   <!-- GOOD -->
 			<div class="col-md-8"> 
@@ -109,7 +121,7 @@ $return = base64_encode('index.php?option=com_jsports&view=sponsor&layout=edit&i
 				<?php foreach ($sponsorships as $i => $row) : ?>
 					<tr>
 										<td><?php echo htmlspecialchars($row->programname ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
-										<td><?php echo htmlspecialchars(SponsorHelper::translatePlanLevel($row->planlevel) ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
+										<td><?php echo htmlspecialchars(SponsorHelper::translatePlancode($row->plancode) ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
 										<td><?php echo htmlspecialchars(SponsorHelper::translatePlanType($row->plantype) ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
 										<td><?php echo htmlspecialchars($row->startdate ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
 										<td><?php echo htmlspecialchars($row->enddate ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
