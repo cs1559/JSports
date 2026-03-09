@@ -149,11 +149,11 @@ class AjaxController extends BaseController
         
         foreach ($sponsorships as $sponsorship) {
             $id = htmlspecialchars((string) ($sponsorship->id ?? ''), ENT_QUOTES, 'UTF-8');
-            //$planlevel = SponsorHelper::translatePlanLevel()
-            $planlevel = htmlspecialchars((string) (SponsorHelper::translatePlanLevel($sponsorship->planlevel) ?? ''), 
+            //$plancode = SponsorHelper::translatePlancode()
+            $plancode = htmlspecialchars((string) (SponsorHelper::translatePlancode($sponsorship->plancode) ?? ''), 
                 ENT_QUOTES, 'UTF-8');
             
-            $options .= "<option value=\"{$id}\">{$planlevel}</option>";
+            $options .= "<option value=\"{$id}\">{$plancode}</option>";
         }
         
         $this->sendHtml($options);
