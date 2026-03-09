@@ -47,21 +47,23 @@ class CampaignDecorator
         
         // Get the WebAssetManager instance
         $wa = Factory::getApplication()->getDocument()->getWebAssetManager();
-        
-//         $wa = $this->document->getWebAssetManager();
         $wa->getRegistry()->addExtensionRegistryFile('com_jsports');
         $wa->useStyle('com_jsports.campaigns.style');
-        
-        
-//         $output = "<div class='jsports-campaign-" . htmlspecialchars($this->position, ENT_QUOTES, 'UTF-8') . "-container'>";
-        
-        $output = "<div class='jsports-campaign-container jsports-pos-" 
-                . htmlspecialchars($this->position, ENT_QUOTES, 'UTF-8') ."'>";
-        $campaign = CampaignFactory::createCampaign($this->campaign);
-        
-        $output .= $campaign->toHtml($this->position);
 
-        $output .= "</div>";
+        $campaign = CampaignFactory::createCampaign($this->campaign);
+
+        $output = "";
+        
+        if (!$campaign instanceOf PromoBarCampaign) {
+            $output .= "<div class='jsports-campaign-container jsports-pos-" 
+                . htmlspecialchars($this->position, ENT_QUOTES, 'UTF-8') ."'>";
+        }
+        
+            $output .= $campaign->toHtml($this->position);
+    
+        if (!$campaign instanceOf PromoBarCampaign) {
+            $output .= "</div>";
+        }
         return $output;
 	}
 
