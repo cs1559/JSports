@@ -20,12 +20,17 @@
 			class=""
 		/>
 
-		<field name="sponsorshipid" type="list"
-			label="COM_JSPORTS_SPONSORSHIP_LEVEL" class="" default=""
-			header="-Select Sponsorship-">
-			validate="options">
-
-		</field>		
+<field
+    name="sponsorshipid"
+    type="sql"
+    label="COM_JSPORTS_SPONSORSHIP_LEVEL"
+    query="SELECT s.id, p.name as planname FROM #__jsports_sponsorships s, #__jsports_sponsorship_plans p where s.plancode = p.plancode ORDER BY ordering desc, p.name"
+    key_field="id"
+    value_field="planname"
+	sql_filter="sponsorid"
+    header="-Select Sponsorship-"
+    validate="options"
+/>
 		
 		<field name="assetid" type="sql" 
 			label="Asset"
@@ -48,10 +53,11 @@
 				<option value="T">Text (Display Only)</option>
 				<option value="D">Text with LOCAL Document Link</option>
 				<option value="I">Display Asset/Graphic</option>
+				<option value="P">Promo Banner</option>
 			</field>
 		
 		<field name="content" type="editor"
-			label="COM_JSPORTS_CAMPAIGN_CONTENT" filter="raw" height="250" required="false"  showon="campaigntype:T,D"/>
+			label="COM_JSPORTS_CAMPAIGN_CONTENT" filter="raw" height="250" required="false"  showon="campaigntype:T,D,P"/>
 		
 		<field name="startdate" type="calendar" label="COM_JSPORTS_STARTDATE"
 			default="0" class=""  require="true"/>
@@ -109,7 +115,7 @@
 			default="0" class="readonly" readonly="true" />
 
 		<field name="classname" type="text" label="COM_JSPORTS_CAMPAIGN_CLASSNAME"
-			size="100" required="true" />
+			size="100" required="false" />
 
 					
 	</fieldset>
