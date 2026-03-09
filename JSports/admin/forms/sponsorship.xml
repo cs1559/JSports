@@ -10,10 +10,16 @@
 		<field name="sponsorid" type="hidden" label="COM_JSPORTS_SPONSORID" required="true" />
 			
 		<field name="startdate" type="calendar"
-			label="COM_JSPORTS_STARTDATE"  default="0000-00-00"/>
+			label="COM_JSPORTS_STARTDATE"  
+			format="%Y-%m-%d"    
+			showtime="false"
+    		filter="none"/>
 
 		<field name="enddate" type="calendar"
-			label="COM_JSPORTS_ENDDATE"  default="0000-00-00"/>
+			label="COM_JSPORTS_ENDDATE"
+			format="%Y-%m-%d"  
+		    showtime="false"
+  			filter="none"/>
 			
 			<field name="programid" type="sql" 
 			label="COM_JSPORTS_PROGRAM"
@@ -23,13 +29,12 @@
 			header="-Select Program-"
 		/>		
 			
-		<field name="planlevel" type="list"
-			label="COM_JSPORTS_SPONSORSHIP_LEVEL" class="" default="D"
-			validate="options">
-			<option value="G">Gold</option>
-			<option value="S">Silver</option>
-			<option value="B">Bronze</option>
-			<option value="D">Default</option>
+		<field name="plancode" type="sql"
+			label="COM_JSPORTS_SPONSORSHIP_LEVEL" class="" default="B"
+			query="SELECT plancode, name FROM #__jsports_sponsorship_plans order by ordering desc, name"
+			key_field="plancode"
+			value_field="name" 
+			header="-Select Plan">
 		</field>
 	
 		<field name="plantype" type="list"
