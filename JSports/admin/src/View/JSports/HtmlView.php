@@ -36,5 +36,6 @@ class HtmlView extends BaseHtmlView
         ToolbarHelper::title(Text::_('JSports'));
         ToolbarHelper::title(Text::_('Add'));
         
-//        ToolbarHelper::apply('planet.apply');}
+//        ToolbarHelper::apply('planet.apply');
+    }
 }
