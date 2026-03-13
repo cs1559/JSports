@@ -2,7 +2,7 @@
 <extension type="component" version="4.4" method="upgrade">
 	<name>JSports</name>
 	<!-- The following elements are optional and free of formatting constraints -->
-	<creationDate>2026-03-12</creationDate>
+	<creationDate>2026-03-13</creationDate>
 	<author>Chris Strieter</author>
 	<authorEmail>chris@swibl.org</authorEmail>
 	<authorUrl>http://www.swibl.org</authorUrl>
