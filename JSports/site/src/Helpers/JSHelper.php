@@ -186,5 +186,29 @@ final class JSHelper
         return Uri::root() . $attachmentdir . '/Bulletin-' . $key .'/' . $filename;
 
     }
+    
+    
+    /**
+     * A helper function to deterine if the user agent may be a BOT.
+     * @return bool
+     */
+    public static function isBot(): bool
+    {
+        $ua = strtolower($_SERVER['HTTP_USER_AGENT'] ?? '');
+        
+        if (!$ua) {
+            return true;
+        }
+        
+        $bots = ['bot','crawl','spider','slurp','mediapartners'];
+        
+        foreach ($bots as $bot) {
+            if (strpos($ua, $bot) !== false) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
 }
 
