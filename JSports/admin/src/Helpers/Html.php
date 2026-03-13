@@ -101,9 +101,9 @@ class Html
         $menuOptions["Upload Logo"] = Route::_('index.php?option=com_jsports&view=logoupload&teamid=' . $id);
         
         $enablebulletins = $params->get('enablebulletins');
-        if ($enablebulletins) {
-            $menuOptions["Manage Bulletins"] = Route::_('index.php?option=com_jsports&view=bulletins&teamid=' . $id);
-        }
+//         if ($enablebulletins) {
+//             $menuOptions["Manage Bulletins"] = Route::_('index.php?option=com_jsports&view=bulletins&teamid=' . $id);
+//         }
         
         
         $options = "<option value=\"\">" . "-- Select Action--" . "</option>";
