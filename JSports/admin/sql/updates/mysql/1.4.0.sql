@@ -65,7 +65,7 @@ CONSTRAINT UC_filename UNIQUE (sponsorid,filename)
 --
 --  CAMPAIGN TYPE - could be a banner, ad, link to asset, external link, etc.
 --
-CREATE TABLE `#__jsports_campaigns` (
+CREATE TABLE IF NOT EXISTS `#__jsports_campaigns` (
 	 `id` 		tinyint 		NOT NULL AUTO_INCREMENT,
  	 `campaigntype` 	VARCHAR(1),
  	 `name`				VARCHAR(30),	
@@ -80,13 +80,13 @@ CREATE TABLE `#__jsports_campaigns` (
 	 `startdate` 		DATE 			NOT NULL,
  	 `enddate`   		date 			NOT NULL,
  	 `classname`		varchar(100)  default null,
- 	 `customcss`		varchar(500)  default '';
+ 	 `customcss`		varchar(500)  default '',
  	 `published`		tinyint default 0,
-PRIMARY KEY (`campaignid`)
+PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
-CREATE TABLE `xkrji_jsports_sponsorship_plans` (
+CREATE TABLE IF NOT EXISTS `#__jsports_sponsorship_plans` (
  `id` 		tinyint 		NOT NULL AUTO_INCREMENT,	
 	`plancode` 		VARCHAR(1) 		NOT NULL,
 	`name` 			VARCHAR(20),
@@ -96,37 +96,37 @@ CREATE TABLE `xkrji_jsports_sponsorship_plans` (
 PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO xkrji_jsports_sponsorship_plans (plancode, name, bolton, ordering, entitlements)
+INSERT INTO `#__jsports_sponsorship_plans` (plancode, name, bolton, ordering, entitlements)
 VALUES (
     'P',
     'Platinum',0,5,
     '{"max_campaigns":5,"positions":["standings-top","standings-bottom","venues-top"],"bulletins":true}'
 );
-INSERT INTO xkrji_jsports_sponsorship_plans (plancode, name, bolton, ordering, entitlements)
+INSERT INTO `#__jsports_sponsorship_plans` (plancode, name, bolton, ordering, entitlements)
 VALUES (
     'G',
     'Gold',0,4,
     '{"max_campaigns":5,"positions":["standings-top","standings-bottom","venues-top"],"bulletins":true}'
 );
-INSERT INTO xkrji_jsports_sponsorship_plans (plancode, name, bolton, ordering, entitlements)
+INSERT INTO `#__jsports_sponsorship_plans` (plancode, name, bolton, ordering, entitlements)
 VALUES (
     'S',
     'Silver',0,3,
     '{"max_campaigns":5,"positions":["standings-top","standings-bottom","venues-top"],"bulletins":true}'
 );
-INSERT INTO xkrji_jsports_sponsorship_plans (plancode, name, bolton, ordering, entitlements)
+INSERT INTO `#__jsports_sponsorship_plans` (plancode, name, bolton, ordering, entitlements)
 VALUES (
     'B',
     'Bronze',0,2,
     '{"max_campaigns":5,"positions":["standings-top","standings-bottom","venues-top"],"bulletins":true}'
 );
-INSERT INTO xkrji_jsports_sponsorship_plans (plancode, name, bolton, ordering, entitlements)
+INSERT INTO `#__jsports_sponsorship_plans` (plancode, name, bolton, ordering, entitlements)
 VALUES (
     'C',
     'Compliment',0,1,
     '{"max_campaigns":5,"positions":["standings-top","standings-bottom","venues-top"],"bulletins":true}'
 );
-INSERT INTO xkrji_jsports_sponsorship_plans (plancode, name, bolton, ordering, entitlements)
+INSERT INTO `#__jsports_sponsorship_plans` (plancode, name, bolton, ordering, entitlements)
 VALUES (
     'X',
     'Bold-on 5',1,0,
