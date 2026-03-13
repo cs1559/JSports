@@ -294,7 +294,7 @@ class SponsorService
      * @param string $plancode
      * @return bool
      */
-    public static function canAddSponsorship(int $sponsorid, int $programid, string $plancode) : bool
+    public static function canAddSponsorship(int $sponsorid, string $plancode, int $programid = null) : bool
     {
         $db = Factory::getContainer()->get(DatabaseInterface::class);
         $table = new SponsorshipPlanTable($db);
@@ -302,7 +302,7 @@ class SponsorService
         if ($table->bolton) {
             return true;
         }
-        if (self::hasPrimarySponsorship($sponsorid, $programid)) {
+        if (self::hasPrimarySponsorship($sponsorid)) {
             return false;
         }
         return true;
@@ -319,7 +319,7 @@ class SponsorService
      * @param int $excludedid
      * @return bool
      */
-    public static function hasPrimarySponsorship(int $sponsorid, int $programid, int $excludedid = 0): bool
+    public static function hasPrimarySponsorship(int $sponsorid,  int $programid = 0): bool
     {
         $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
@@ -337,7 +337,9 @@ class SponsorService
         where($db->quoteName('bolton') . ' = 0');
 
         $query->bind(':sponsorid', $sponsorid, ParameterType::INTEGER);
-        $query->bind(':seasonid', $programid, ParameterType::INTEGER);
+        
+
+//         $query->bind(':seasonid', $programid, ParameterType::INTEGER);
 
         $db->setQuery($query);
 
