@@ -81,7 +81,27 @@ class SponsorService
         return $db->loadObject();
     }
     
-    
+    /**
+     * This function will randomly return an active sponsor.
+     * @return object
+     */    
+    public static function getRandomSponsor() : object 
+    {
+        
+        $sponsors = SponsorService::getActiveSponsors();
+        
+        if (empty($sponsors)) {
+            return [];
+        }
+        if (count($sponsors) > 1) {
+            $sponsor = $sponsors[array_rand($sponsors,1)];
+        } else {
+            $sponsor = $sponsor[0];
+        }
+        
+        return sponsor;
+        
+    }
     
     /**
      * This function will return a list of sponsor records that are currently active based on the start/end date of their
