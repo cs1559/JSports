@@ -55,28 +55,49 @@ class SponsorshipModel extends AdminModel
 
         $isNew = empty($id);
 
+
+
         if ($isNew) {
             $sponsorId = (int) $app->input->getInt('sponsorid', (int) $app->getUserState('com_jsports.edit.sponsorship.sponsorid', 0));
 
             // $data might be an object or array depending on your code path
             if (is_array($data)) {
-                $data['sponsorid'] = $data['sponsorid'] ?? $sponsorId;
+//                 $data['sponsorid'] = $data['sponsorid'] ?? $sponsorId;
+                $data['sponsorid'] = $sponsorId;
                 // Have to treat this as a timestamp even thought we just need the date.
                 $data['startdate'] = Factory::getDate(date('Y-01-01 12:00:00'))->format('Y-m-d H:i:s');
-                $data['enddate'] = Factory::getDate(date('Y-12-31 12:00:00'))->format('Y-m-d H:i:s');
+                $data[  'enddate'] = Factory::getDate(date('Y-12-31 12:00:00'))->format('Y-m-d H:i:s');
             } else {
-                $data->sponsorid = $data->sponsorid ?? $sponsorId;
+//                 $data->sponsorid = $data->sponsorid ?? $sponsorId;
+                $data->sponsorid = $sponsorId;
                 $data->startdate = Factory::getDate(date('Y-01-01 12:00:00'))->format('Y-m-d H:i:s');
                 $data->enddate = Factory::getDate(date('Y-12-31 12:00:00'))->format('Y-m-d H:i:s');
             }
             
         }
 
+//         echo $data->sponsorid;
+//         exit;
+        
         $this->preprocessData('com_jsports.sponsorship', $data);
 
         return $data;
     }
 
+    public function populateState() {
+        $app = Factory::getApplication();
+        
+        $sponsorid = $app->input->get('sponsorid', 0, 'int');
+//         if (empty($id)) {
+//             $programid = $app->getUserState('com_jsports.divisionid');
+//         }
+//         $programid = $app->input->get('programid', 0, 'int');
+//         $this->setState('programid', $programid);
+
+    	$id = $app->input->getInt('id');
+    	$this->setState($this->getName() . '.id', $id);
+        $app->setUserState('com_jsports.edit.sponsorship.sponsorid', $sponsorid);
+    }
 
     public function save($data)
     {
@@ -86,14 +107,14 @@ class SponsorshipModel extends AdminModel
         $plancode = (string) ($data['plancode'] ?? 0);
 
         
-        echo '<pre>'; print_r($data); echo '</pre>'; exit;
+//         echo '<pre>'; print_r($data); echo '</pre>'; exit;
         
         
         // Replace with your actual "season" key: seasonid, programid, year, etc.
         $programid = (int) ($data['programid'] ?? 0);
   
         if (!$id) {
-            if (!SponsorService::canAddSponsorship($sponsorid, $programid, $plancode)) {
+            if (!SponsorService::canAddSponsorship($sponsorid,  $plancode)) {
                 $this->setError('This sponsor already has a primary sponsorship for the season. Add a bolt-on instead.');
                 return false;
             }
