@@ -29,7 +29,8 @@ CREATE TABLE IF NOT EXISTS `#__jsports_sponsorships` (
   	 `programid` 		int(11) 		NOT NULL DEFAULT 0,
 	 `startdate` 		DATE 			DEFAULT NULL,
  	 `enddate`   		date 			DEFAULT NULL,
- 	 `campaign_limit`	int				DEFAULT 0,
+	 `impressions` 		int default 0,
+   	 `clicks`	 		int default 0,
 	 `published` 		tinyint 		default 0,
 PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
