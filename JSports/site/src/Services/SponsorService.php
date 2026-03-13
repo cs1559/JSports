@@ -51,6 +51,39 @@ class SponsorService
 
     
     /**
+     * This function is intended to return the active sponsorship for a sponsor.
+     */
+    public static function getActiveSponsorship($id) {
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $query = $db->getQuery(true);
+        
+        $query->select('a.*, s.id as sponsorshipid, s.plancode, s.plantype, s.startdate, s.enddate');
+        $query->from($db->quoteName('#__jsports_sponsors') . ' AS a, ' 
+               . $db->quoteName('#__jsports_sponsorships') . ' AS s, ' 
+                . $db->quoteName('#__jsports_sponsorship_plans') . ' AS p');
+        
+        $conditions = [
+            $db->quoteName('a.id') . ' = :sponsorid',
+            $db->quoteName('s.published') . ' = 1',
+            $db->quoteName('p.bolton') . ' = 0',
+            $db->quoteName('s.plancode') . ' = ' . $db->quoteName('p.plancode'),
+            $db->quoteName('a.id') . ' = ' . $db->quoteName('s.sponsorid'),
+            'CURDATE() BETWEEN ' . $db->quoteName('s.startdate') . ' AND ' . $db->quoteName('s.enddate')
+        ];
+        
+        $query->where($conditions);
+        $query->bind(':sponsorid', $id, ParameterType::INTEGER);
+        $query->order($db->quoteName('a.name'));
+        
+        
+        $db->setQuery($query);
+        
+        return $db->loadObject();
+    }
+    
+    
+    
+    /**
      * This function will return a list of sponsor records that are currently active based on the start/end date of their
      * sponsorships.
      * 
@@ -61,7 +94,7 @@ class SponsorService
         $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
         
-        $query->select('a.*');
+        $query->select('a.*, s.id as sponsorshipid');
         $query->from($db->quoteName('#__jsports_sponsors') . ' AS a, ' . $db->quoteName('#__jsports_sponsorships') . ' AS s');
         
         $conditions = [
