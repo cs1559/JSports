@@ -10,21 +10,6 @@
  * @license     GNU/GPLv2, see http://www.gnu.org/licenses/gpl-2.0.html
  *
  */
-
- CONFIGURATION OPTIONS
- 1.  logodir - this is the folder where team logos are uploaded too.  JPATH_SITE is prepended to this value to define
- 	the actual folder the file is stored in.  The format of the actual folder would be:
- 	
- 	Pattern:  JPATH_SITE{logodir}{logodir_prefix}-{teamid}/{logo filename}
- 	Ex:  JPATH_SITE/media/com_jsports/images/logos/Team-232/teamlogo.png
- 	
- 2.  logodir_prefix - This value is prepended to the team id to create the last node of the logo path.  See above.
- 
- 3.  frontend_admin - The setting will enable / disable all JSPorts front-end administration - including any administrator/super users.  When
- 	turne off, administrators can use the backend adminstration functionality to update the data. 
- 	
-
- 
  
  -->
 <config>
@@ -303,8 +288,22 @@
 			<option value="0">No</option>
 			<option value="1">Yes</option>
 		</field>
-		
+
+		<field name="balancedrandomization" type="radio" default="0"
+			label="COM_JSPORTS_BALANCED_RANDOMIZATION_ENABLED"
+			description="COM_JSPORTS_BALANCED_RANDOMIZATION_ENABLED_DESC"
+			layout="joomla.form.field.radio.switcher">
+			<option value="0">No</option>
+			<option value="1">Yes</option>
+		</field>
+
+		<field name="leastusedfactor" type="text" default="3"
+			label="COM_JSPORTS_BALANCED_RANDOMIZATION_FACTOR"
+			description="COM_JSPORTS_BALANCED_RANDOMIZATION_FACTOR_DESC">
+		</field>
+				
 	</fieldset>
+
 		
 	<fieldset name="permissions" description="JCONFIG_PERMISSIONS_DESC" label="JCONFIG_PERMISSIONS_LABEL">
 			<field name="rules" type="rules" component="com_jsports" class="inputbox" filter="rules" validate="rules" label="JCONFIG_PERMISSIONS_LABEL" section="component"/>

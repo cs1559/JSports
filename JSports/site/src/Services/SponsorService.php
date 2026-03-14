@@ -18,6 +18,7 @@ use Joomla\Database\DatabaseInterface;
 use Joomla\Database\ParameterType;
 use Joomla\Filesystem\Folder;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Component\ComponentHelper;
 use FP4P\Component\JSports\Site\Objects\Application;
 use FP4P\Component\JSports\Site\Services\SecurityService;
 use FP4P\Component\JSports\Administrator\Table\SponsorshipsTable;
@@ -88,7 +89,15 @@ class SponsorService
     public static function getRandomSponsor() : object 
     {
         
-        $sponsors = SponsorService::getActiveSponsors();
+        $params = ComponentHelper::getParams('com_jsports');
+        $balancedenabled = $params->get('balancedrandomization', false);
+        $leastusedfactor = $params->get('leastusedfactor',3);
+        
+        if ($balancedenabled) {
+            $sponsors = self::getRandomActiveSponsors($leastusedfactor);
+        } else {
+            $sponsors = SponsorService::getActiveSponsors();
+        }
         
         if (empty($sponsors)) {
             return [];
@@ -102,6 +111,46 @@ class SponsorService
         return $sponsor;
         
     }
+
+    /**
+     * This function will return a list of sponsor records that are currently active based on the start/end date of their
+     * sponsorships.
+     *
+     * @return array<int, \stdClass>
+     */
+    private static function getRandomActiveSponsors($limit): ?array
+    {
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $query = $db->getQuery(true);
+        
+        $inner = $db->getQuery(true);
+        $inner->select([
+            'a.*',
+            $db->quoteName('s.id', 'sponsorshipid'),
+            $db->quoteName('s.impressions')
+        ])
+        ->from($db->quoteName('#__jsports_sponsors', 'a'))
+        ->join(
+            'INNER',
+            $db->quoteName('#__jsports_sponsorships', 's') .
+            ' ON ' . $db->quoteName('a.id') . ' = ' . $db->quoteName('s.sponsorid')
+            )
+            ->where($db->quoteName('s.published') . ' = 1')
+            ->where('CURDATE() BETWEEN ' . $db->quoteName('s.startdate') . ' AND ' . $db->quoteName('s.enddate'))
+            ->order($db->quoteName('s.impressions') . ' ASC')
+            ->setLimit((int) $limit);
+        
+        $query = $db->getQuery(true);
+            
+        $query->select('*')
+            ->from('(' . $inner . ') AS t')
+            ->order('RAND()');
+        
+        $db->setQuery($query);
+        
+        return $db->loadObjectList();
+    }
+    
     
     /**
      * This function will return a list of sponsor records that are currently active based on the start/end date of their
