@@ -99,7 +99,7 @@ class SponsorService
             $sponsor = $sponsor[0];
         }
         
-        return sponsor;
+        return $sponsor;
         
     }
     
