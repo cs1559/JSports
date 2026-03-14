@@ -9,7 +9,7 @@
  * @license     GNU/GPLv2, see http://www.gnu.org/licenses/gpl-2.0.html
  *
  */
-namespace FP4P\Component\JSports\Site\Objects\Reports;
+namespace FP4P\Component\JSports\Site\Reports;
 
 use Joomla\CMS\Factory;
 use Joomla\Database\DatabaseInterface;

@@ -10,7 +10,7 @@
  *
  */
 
-namespace FP4P\Component\JSports\Site\Objects\Reports;
+namespace FP4P\Component\JSports\Site\Reports;
 
 use FP4P\Component\JSports\Site\Helpers\DateHelper;
 use Joomla\CMS\Factory;
@@ -54,7 +54,7 @@ abstract class AbstractReport implements Report {
      * required for the SQL query.
      * 
      * {@inheritDoc}
-     * @see \FP4P\Component\JSports\Site\Objects\Reports\Report::setContext()
+     * @see \FP4P\Component\JSports\Site\Reports\Report::setContext()
      */
     abstract public function setContext(array $context) : void;
     
@@ -63,7 +63,7 @@ abstract class AbstractReport implements Report {
      * the necessary SQL to retrieve the data.
      * 
      * {@inheritDoc}
-     * @see \FP4P\Component\JSports\Site\Objects\Reports\Report::getData()
+     * @see \FP4P\Component\JSports\Site\Reports\Report::getData()
      */
     abstract public function getData() : array;
     
@@ -139,7 +139,7 @@ abstract class AbstractReport implements Report {
      * This is the driver function that will render the output into a specific format.  Initially only HTML
      * but the code is setup for future formats.
      * {@inheritDoc}
-     * @see \FP4P\Component\JSports\Site\Objects\Reports\Report::render()
+     * @see \FP4P\Component\JSports\Site\Reports\Report::render()
      */
     public function render() : string
     {

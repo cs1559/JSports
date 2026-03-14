@@ -10,7 +10,7 @@
  *
  */
 
-namespace FP4P\Component\JSports\Site\Objects\Reports;
+namespace FP4P\Component\JSports\Site\Reports;
 
 use InvalidArgumentException;
 

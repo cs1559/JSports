@@ -3,7 +3,7 @@
  * JSports - Joomla Sports Management Component
  *
  * @version     1.0.0
- * @package     JSports.Administrator
+ * @package     JSports.Administrator 
  * @subpackage  com_jsports
  * @copyright   Copyright (C) 2023-2026 Chris Strieter
  * @license     GNU/GPLv2, see http://www.gnu.org/licenses/gpl-2.0.html
@@ -16,8 +16,8 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Factory;
-use FP4P\Component\JSports\Site\Objects\Reports\NoRosterReport;
-use FP4P\Component\JSports\Site\Objects\Reports\ReportFactory;
+use FP4P\Component\JSports\Site\Reports\NoRosterReport;
+use FP4P\Component\JSports\Site\Reports\ReportFactory;
 
 class ReportsController extends BaseController
 {
