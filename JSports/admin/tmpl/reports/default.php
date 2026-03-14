@@ -47,6 +47,7 @@ $token = $app->getFormToken();
                 <option value="noroster">Roster - Teams with NO Roster</option>
                 <option value="duplicateplayers">Roster - Possible Duplicate Players</option>
                 <option value="rundifferential">Run Differential By Division</option>
+                <option value="sponsorshipclick">Sponsorship Click Report</option>
             </select>
         </div>
 
