@@ -12,6 +12,7 @@
 
 namespace FP4P\Component\JSports\Site\Objects\Reports;
 
+use FP4P\Component\JSports\Site\Helpers\DateHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Layout\LayoutHelper;
 use InvalidArgumentException;
@@ -116,12 +117,14 @@ abstract class AbstractReport implements Report {
         
         $displayData = array();
         $displayData['totalrows'] = $this->totalrows;
-//         $displayData['generated'] = (new \DateTime('now'))->format('Y-m-d g:i A');
+// //         $displayData['generated'] = (new \DateTime('now'))->format('Y-m-d g:i A');
         
-        $tz = new \DateTimeZone(Factory::getApplication()->get('offset', 'UTC'));
-        $displayData['generated'] =
-            (new \DateTimeImmutable('now', $tz))->format('Y-m-d g:i A');
-        
+//         $tz = new \DateTimeZone(Factory::getApplication()->get('offset', 'UTC'));
+
+//         $displayData['generated'] =
+//             (new \DateTimeImmutable('now', $tz))->format('Y-m-d g:i A');
+
+        $displayData['generated'] = DateHelper::nowFormatted();
         $displayData['layout'] = $this->getLayout();
         
         // Render from administrator component layouts folder
