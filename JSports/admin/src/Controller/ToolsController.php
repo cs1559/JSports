@@ -18,7 +18,7 @@ use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Services\LogService;
-use FP4P\Component\JSports\Site\Objects\Adapters\NSProAdapter;
+use FP4P\Component\JSports\Site\Adapters\NSProAdapter;
 use FP4P\Component\JSports\Site\Objects\Standings\StandingsEngine;
 use FP4P\Component\JSports\Site\Services\ProgramsService;
 // /use FP4P\Component\JSports\Site\Services\LogService;
