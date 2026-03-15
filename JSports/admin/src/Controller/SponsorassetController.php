@@ -14,16 +14,8 @@ namespace FP4P\Component\JSports\Administrator\Controller;
 
 defined('_JEXEC') or die;
 
-use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\MVC\Controller\FormController;
-use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
-use Joomla\Database\DatabaseInterface;
-use Joomla\Database\ParameterType;
-use FP4P\Component\JSports\Site\Services\LogService;
-use FP4P\Component\JSports\Site\Objects\Adapters\NSProAdapter;
-use FP4P\Component\JSports\Site\Objects\Standings\StandingsEngine;
-use FP4P\Component\JSports\Site\Services\ProgramsService;
 use FP4P\Component\JSports\Site\Services\SponsorService;
 // /use FP4P\Component\JSports\Site\Services\LogService;
 
