@@ -23,6 +23,19 @@ $token = $app->getFormToken();
 
     <div class="row g-3 align-items-end mb-3">
 
+        <!-- Report -->
+        <div class="col-auto">
+            <label class="form-label">Select Report</label>
+            <select id="viewmode" class="form-select">
+                <option value="gamescores">Games - List of Game Scores</option>
+                <option value="registrationlist">Registration - List Registrations</option>
+                <option value="noroster">Roster - Teams with NO Roster</option>
+                <option value="duplicateplayers">Roster - Possible Duplicate Players</option>
+                <option value="rundifferential">Run Differential By Division</option>
+                <option value="sponsorshipclick">Sponsorship Click Report</option>
+            </select>
+        </div>
+        
         <!-- Program -->
         <div class="col-auto">
             <label class="form-label">Program</label>
@@ -35,19 +48,6 @@ $token = $app->getFormToken();
                         <?php echo htmlspecialchars($program->name, ENT_QUOTES, 'UTF-8'); ?>
                     </option>
                 <?php endforeach; ?>
-            </select>
-        </div>
-
-        <!-- Report -->
-        <div class="col-auto">
-            <label class="form-label">Select Report</label>
-            <select id="viewmode" class="form-select">
-                <option value="gamescores">Games - List of Game Scores</option>
-                <option value="registrationlist">Registration - List Registrations</option>
-                <option value="noroster">Roster - Teams with NO Roster</option>
-                <option value="duplicateplayers">Roster - Possible Duplicate Players</option>
-                <option value="rundifferential">Run Differential By Division</option>
-                <option value="sponsorshipclick">Sponsorship Click Report</option>
             </select>
         </div>
 
