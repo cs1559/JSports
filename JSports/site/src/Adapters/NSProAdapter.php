@@ -9,7 +9,7 @@
  * @license     GNU/GPLv2, see http://www.gnu.org/licenses/gpl-2.0.html
  *
  */
-namespace FP4P\Component\JSports\Site\Objects\Adapters;
+namespace FP4P\Component\JSports\Site\Adapters;
 
 require_once(JPATH_ADMINISTRATOR.'/components/com_nspro/lib.php');
 
