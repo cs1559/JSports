@@ -26,7 +26,8 @@ final class CampaignHelper
         static $map = [
             'T' => 'Text',
             'I' => 'Image',
-            'D' => 'Document',
+            'D' => 'Text With Link',
+            'P' => 'Promo Banner',
         ];
         
         return $map[$code] ?? '*error*';
