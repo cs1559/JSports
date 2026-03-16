@@ -58,7 +58,9 @@ $return = base64_encode('index.php?option=com_jsports&view=sponsor&layout=edit&i
 			<?php if (!empty($this->item->logo)) {?>
 				<div class="sponsor-logo-wrapper">  <!-- GOOD -->
 					<img class="sponsor-logo img-responsive"
-						src="<?php echo SponsorHelper::getLogoURL($this->item->id, $this->item->logo);?>?t=<?php echo time(); ?>" /></br>
+						src="<?php echo SponsorHelper::getLogoURL($this->item->id, $this->item->logo);?>?t=<?php echo time(); ?>" 
+						alt="<?php echo $this->item->logo; ?>"/>
+					</br>
 					<a class="btn btn-danger btn-sm"
 						onClick="return confirm('Are you sure?');"
 						href="<?php echo Route::_('index.php?option=com_jsports&task=sponsor.deletelogo&id=' . $this->item->id
@@ -95,7 +97,7 @@ $return = base64_encode('index.php?option=com_jsports&view=sponsor&layout=edit&i
 ?>
 		<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'details', Text::_('COM_JSPORTS_SPONSORSHIPS')); ?>
 		<div class="row">   <!-- GOOD -->
-			<div class="col-md-8"> 
+			<div class="col-md-12"> 
 				<div class="row">  <!-- GOOD -->
 				
 						<?php //echo LayoutHelper::render('joomla.edit.global', $this); ?>
@@ -111,9 +113,11 @@ $return = base64_encode('index.php?option=com_jsports&view=sponsor&layout=edit&i
 									<tr>
 										<th><?php echo Text::_('COM_JSPORTS_PROGRAM'); ?></th>
 										<th><?php echo Text::_('COM_JSPORTS_SPONSORSHIP_LEVEL'); ?></th>
-										<th><?php echo Text::_('COM_JSPORTS_SPONSORSHIP_TYPE'); ?></th>
 										<th><?php echo Text::_('COM_JSPORTS_STARTDATE'); ?></th>
 										<th><?php echo Text::_('COM_JSPORTS_ENDDATE'); ?></th>
+										<th><?php echo Text::_('COM_JSPORTS_IMPRESSIONS'); ?></th>
+										<th><?php echo Text::_('COM_JSPORTS_CLICKS'); ?></th>
+										<th><?php echo Text::_('COM_JSPORTS_PUBLISHED'); ?></th>
 										<th><?php echo Text::_('COM_JSPORTS_ACTIONS'); ?></th>
 									</tr>
 								</thead>
@@ -122,10 +126,12 @@ $return = base64_encode('index.php?option=com_jsports&view=sponsor&layout=edit&i
 					<tr>
 										<td><?php echo htmlspecialchars($row->programname ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
 										<td><?php echo htmlspecialchars(SponsorHelper::translatePlancode($row->plancode) ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
-										<td><?php echo htmlspecialchars(SponsorHelper::translatePlanType($row->plantype) ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
 										<td><?php echo htmlspecialchars($row->startdate ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
 										<td><?php echo htmlspecialchars($row->enddate ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
-										<td><?php //echo htmlspecialchars(JSHelper::translateYesNo($row->published) ?? '', ENT_QUOTES, 'UTF-8'); ?>
+										<td><?php echo htmlspecialchars($row->impressions ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
+										<td><?php echo htmlspecialchars($row->clicks ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
+										<td><?php echo htmlspecialchars(JSHelper::translateYesNo($row->published) ?? '', ENT_QUOTES, 'UTF-8'); ?></td>
+										<td>
 
 	                      	<a class="btn btn-primary btn-sm"
 											href="<?php echo Route::_('index.php?option=com_jsports&view=sponsorship&layout=edit&id=' . $row->id
@@ -139,29 +145,17 @@ $return = base64_encode('index.php?option=com_jsports&view=sponsor&layout=edit&i
 	                       		Delete 
 	                       	</a>
 
-						</td>
+										</td>
 									</tr>
 				<?php endforeach; ?>
 			</tbody>
-							</table>
-						</div>
+			</table>
+			</div>
 <?php endif; ?>
-				
-				
-				
+			
 				</div>
 			</div>  <!-- GOOD -->
-			<div class="col-md-3">
-<?php 
-// ===============================================================================
-//                          SPONSORSHIP TAB
-// ===============================================================================
-?>
-				<div class="card card-light">  <!-- GOOD -->
-					<div class="card-body">  <!-- GOOD -->
-					</div>   <!-- GOOD -->
-				</div> <!--  end of card-light  -->
-			</div>  <!--  end of right side  -- GOOD -->
+
 		</div>  <!--  end of row -->
 		<?php echo HTMLHelper::_('uitab.endTab'); ?>
 
@@ -193,6 +187,7 @@ $return = base64_encode('index.php?option=com_jsports&view=sponsor&layout=edit&i
 
               <img class="card-img-top img-fluid w-100"
                    src="<?php echo SponsorHelper::getAssetURL($this->item->id, $asset->filename); ?>?t=<?php echo time(); ?>"
+                   alt="<?php echo $asset->filename; ?>"
                    style="height:180px; object-fit:cover;" />
 
               <div class="card-body">
