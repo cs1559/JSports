@@ -52,7 +52,7 @@ class CampaignService
     
     /**
      * This function will return an array of objects that represent all campaigns for a given
-     * position.
+     * position.  The campaign MUST be a published campaign.
      *
      * @return array<int, stdClass>
      */
