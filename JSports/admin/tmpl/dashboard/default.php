@@ -95,18 +95,6 @@ $wa->useStyle('com_jsports.admin.style');
 						<i class="fas fa-handshake"></i>
 						<h2>Sponsors</h2>
 					</div>
-				</a> <a href="index.php?option=com_jsports&view=dashboard"
-					class="card-link"> <!-- adjust view if needed -->
-					<div class="dashboard-card">
-						<i class="fas fa-file-lines"></i>
-						<h2>Reference Tables (Future)</h2>
-					</div>
-				</a> <a href="index.php?option=com_jsports&view=reports"
-					class="card-link"> <!-- adjust view if needed -->
-					<div class="dashboard-card">
-						<i class="fas fa-chart-line"></i>
-						<h2>Reports</h2>
-					</div>
 				</a>
 				<a href="index.php?option=com_jsports&view=campaigns"
 					class="card-link"> <!-- adjust view if needed -->
@@ -115,6 +103,21 @@ $wa->useStyle('com_jsports.admin.style');
 						<h2>Campaigns</h2>
 					</div>
 				</a>
+				<a href="index.php?option=com_jsports&view=reports"
+					class="card-link"> <!-- adjust view if needed -->
+					<div class="dashboard-card">
+						<i class="fas fa-chart-line"></i>
+						<h2>Reports</h2>
+					</div>
+				</a>
+				 
+				<a href="index.php?option=com_jsports&view=dashboard"
+					class="card-link"> <!-- adjust view if needed -->
+					<div class="dashboard-card">
+						<i class="fas fa-file-lines"></i>
+						<h2>Reference Tables (Future)</h2>
+					</div>
+				</a> 
 			</div>
 		</div>
 		<div class="col-12 col-lg-4" style="padding: 1rem;">
