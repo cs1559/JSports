@@ -44,7 +44,14 @@
 			<option value="D">Division</option>
 			<option value="T">Team</option>
 		</field>		
-					
+
+		<field name="published" type="list" label="JSTATUS"
+			class="form-select-color-state" default="1" validate="options">
+			<option value="1">JPUBLISHED</option>
+			<option value="0">JUNPUBLISHED</option>
+			<option value="2">JARCHIVED</option>
+			<option value="-2">JTRASHED</option>
+		</field>					
 	</fieldset>
 
 
