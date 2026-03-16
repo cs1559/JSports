@@ -33,6 +33,7 @@ $token = $app->getFormToken();
                 <option value="duplicateplayers">Roster - Possible Duplicate Players</option>
                 <option value="rundifferential">Run Differential By Division</option>
                 <option value="sponsorshipclick">Sponsorship Click Report</option>
+                <option value="campaignsclick">Campaigns Click Report</option>
             </select>
         </div>
         
