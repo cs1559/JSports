@@ -50,8 +50,8 @@
 			
 		<field name="campaigntype" type="list" label="COM_JSPORTS_CAMPAIGN_TYPE"
 			class="form-select-color-state" default="T" validate="options">
-				<option value="T">Text (Display Only)</option>
-				<option value="D">Text with LOCAL Document Link</option>
+				<option value="T">Text (Display Only - NO LINK)</option>
+				<option value="D">Text with LINK</option>
 				<option value="I">Display Asset/Graphic</option>
 				<option value="P">Promo Banner</option>
 			</field>
