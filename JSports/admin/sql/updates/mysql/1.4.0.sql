@@ -74,7 +74,7 @@ CREATE TABLE IF NOT EXISTS `#__jsports_campaigns` (
  	 `sponsorshipid`	tinyint default 0,
  	 `assetid` 			tinyint default 0,
   	 `positions` 		VARCHAR(150),
-   	 `url` 				VARCHAR(150),		
+   	 `url` 				VARCHAR(200),		
  	 `content` 			text,		
   	 `impressions` 		int default 0,
    	 `clicks`	 		int default 0,
