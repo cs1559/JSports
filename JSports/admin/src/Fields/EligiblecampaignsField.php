@@ -27,13 +27,22 @@ class EligiblecampaignsField extends ListField
         
         $options = array();
         
-        $position = (string) $this->element['positioins'];
+        $position = (string) $this->element['positions'];
+        
+        $filterField = (string) $this->element['filter_field'];
+        $filterValue = null;
+        
+        if ($this->form && $filterField)
+        {
+            $filterValue = $this->form->getValue($filterField);
+        }
+        
                      
-        $items = CampaignService::getEligibleCampaigns($position);
+        $items = CampaignService::getEligibleCampaigns($position, $filterValue);
                 
         $options[] = HtmlHelper::_('select.option',"","-- Select Campaign --");
         foreach ($items as $item) {
-            $options[] = HtmlHelper::_('select.option',$item->id,$item->title);
+            $options[] = HtmlHelper::_('select.option',$item->id,$item->title . ' (' . $item->sponsorname .')');
         }
            
         $options = array_merge(parent::getOptions(), $options);
