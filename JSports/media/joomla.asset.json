@@ -8,6 +8,10 @@
 			"type" : "style",
 			"uri" : "com_jsports/jsports.css"
 		}, {
+			"name" : "com_jsports.sponsors.style",
+			"type" : "style",
+			"uri" : "com_jsports/teamprofile.css"
+		}, {
 			"name" : "com_jsports.teamprofile.style",
 			"type" : "style",
 			"uri" : "com_jsports/teamprofile.css"
