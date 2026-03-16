@@ -21,15 +21,23 @@
 			header="- Select Sponsor -"
 		/>
 
-		<field name="position" type="sql" 
-			label="Position"
-			default="0"
-			query="SELECT position as id, title as name FROM #__jsports_campaign_positions order by title "
-			key_field="id"
-			value_field="name" 
-			onchange="this.form.submit();"
-			header="- Select Position -"
-		/>		
+<field
+    name="position"
+    type="list"
+    label="COM_JSPORTS_POSITIONS"
+    multiple="false"
+    required="true"
+>
+    <option value="module">Joomla Module</option>
+    <option value="standings-top">Standings - Top </option>
+    <option value="standings-bottom">Standings - Bottom</option>
+    <option value="teamprofile-top">Team Profiles - Top</option>
+    <option value="teamprofile-bottom">Team Profiles - Bottom</option>
+    <option value="games-top">Upcoming/Completed Games - Top</option>
+    <option value="venues-top">Venues - Top</option>
+    <option value="teams-top">Teams - Top</option>        
+    <option value="bulletins-top">Bulletins - Top</option>          
+</field>
 	
 		<field
 			name="campaigntype"
