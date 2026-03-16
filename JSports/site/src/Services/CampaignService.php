@@ -56,17 +56,28 @@ class CampaignService
      *
      * @return array<int, stdClass>
      */
-    public static function getEligibleCampaigns($position) {
+    public static function getEligibleCampaigns($position, $filter = null) {
 
         $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
-        
-        $query->select('c.*');
-        $query->from($db->quoteName('#__jsports_campaigns') . ' AS c ');
+
+        /*
+         *         $query->from($db->quoteName('#__jsports_sponsors') . ' AS a,' .
+            $db->quoteName('#__jsports_sponsor_assets') . ' AS sa '
+            );
+         */
+        $query->select('c.*,s.name as sponsorname');
+        $query->from($db->quoteName('#__jsports_campaigns') . ' AS c, ' .
+            $db->quoteName('#__jsports_sponsors') . 'AS s');
         $conditions = array(
+            $db->quoteName('c.sponsorid') . ' = ' . $db->quoteName('s.id'),
             $db->quoteName('c.positions') . ' like \'%' . $position . '%\'',
             $db->quoteName('c.published') . ' in (1) '
         );
+        
+        if (!is_null($filter)) {
+            $conditions[] = $db->quoteName('c.sponsorid') . ' = ' . $filter;
+        }
 //         if ($activeonly) {
 //             $conditions[] = $db->quoteName('p.status') . ' = "A"';
 //         }
