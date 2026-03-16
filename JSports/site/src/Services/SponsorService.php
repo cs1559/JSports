@@ -19,9 +19,6 @@ use Joomla\Database\ParameterType;
 use Joomla\Filesystem\Folder;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Component\ComponentHelper;
-use FP4P\Component\JSports\Site\Objects\Application;
-use FP4P\Component\JSports\Site\Services\SecurityService;
-use FP4P\Component\JSports\Administrator\Table\SponsorshipsTable;
 use FP4P\Component\JSports\Site\Helpers\SponsorHelper;
 use Joomla\Filesystem\File;
 
@@ -29,10 +26,10 @@ class SponsorService
 {
 
     /**
-     * This function will return an individual row based on the PROGRAM ID.
+     * This function will return an individual row based on the SPONSOR ID.
      *
      * @param number $id
-     * @return \FP4P\Component\JSports\Administrator\Table\ProgramsTable|NULL
+     * @return \FP4P\Component\JSports\Administrator\Table\SponsorsTable|NULL
      */
     public static function getItem(int $id = 0): ?SponsorsTable
     {
@@ -52,7 +49,11 @@ class SponsorService
 
     
     /**
-     * This function is intended to return the active sponsorship for a sponsor.
+     * This function is intended to return the active sponsorship for a sponsor.  This function intentionally excludes 
+     * bolt-on plans.
+     * 
+     * @param number $id
+     * @return object
      */
     public static function getActiveSponsorship($id) {
         $db = Factory::getContainer()->get(DatabaseInterface::class);
@@ -76,16 +77,17 @@ class SponsorService
         $query->bind(':sponsorid', $id, ParameterType::INTEGER);
         $query->order($db->quoteName('a.name'));
         
-        
         $db->setQuery($query);
         
         return $db->loadObject();
     }
     
     /**
-     * This function will randomly return an active sponsor.
+     * This function will randomly return an active sponsor.  This does support balanced randomization to ensure
+     * sponsor logos are presented as equally as possible on the site.
+     * 
      * @return object
-     */    
+     */
     public static function getRandomSponsor() : object 
     {
         
