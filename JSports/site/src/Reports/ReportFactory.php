@@ -23,6 +23,7 @@ class ReportFactory {
             'duplicateplayers' => new Duplicateplayers(),
             'rundifferential' => new RunDifferential(),
             'sponsorshipclick' => new SponsorshipclickReport(),
+            'campaignsclick' => new CampaignsclickReport(),
             'gamescores' => new Gamescores(),
             default => throw new InvalidArgumentException("Unknown type."),
         };
