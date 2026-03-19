@@ -62,8 +62,7 @@ class PromoBarCampaign extends Campaign
         $output .= '';
 
         // if ($redirect) {
-        $urlstring = "index.php?option=com_jsports&task=campaign.click&id={$this->id}";
-        $clickurl = Route::_($urlstring);
+        $clickurl = $this->getClickUrl();
         // $output .= "<a class='jsports-img-link' target='_blank' href='{$clickurl}' rel='noopener noreferrer'>";
         // }
 

@@ -27,22 +27,24 @@ class Imagecampaign extends Campaign
     public $url = "";
     public $assetid = 0;
     
+    const TYPE = "I1";
+    
     public function __construct($data) {
         $this->loadObject($data);
     }
     
 
-    /**
-     * @return string
-     */
-    private function getAssetUrl()
-    {
+//     /**
+//      * @return string
+//      */
+//     private function getAssetUrl()
+//     {
         
-        $asset = CampaignService::getAsset($this->sponsorid, $this->assetid);
+//         $asset = CampaignService::getAsset($this->sponsorid, $this->assetid);
         
-        $url = SponsorHelper::getAssetURL($this->sponsorid, $asset->filename);
-        return $url;
-    }
+//         $url = SponsorHelper::getAssetURL($this->sponsorid, $asset->filename);
+//         return $url;
+//     }
     
     public function toHtml($position) {
         
@@ -59,8 +61,7 @@ class Imagecampaign extends Campaign
         $output .= "<div id='jsports-campaign-{$position}' class='jsports-campaign-slot jsports-campaign-img-content {$this->classname}'>";
         
         if ($redirect) {
-            $urlstring = "index.php?option=com_jsports&task=campaign.click&id={$this->id}";
-            $clickurl = Route::_($urlstring);
+            $clickurl = $this->getClickUrl();
             $output .= "<a class='jsports-img-link' target='_blank' href='{$clickurl}' rel='noopener noreferrer'>";
         }
         

@@ -21,20 +21,13 @@ use FP4P\Component\JSports\Site\Services\CampaignService;
 
 class Textcampaign extends Campaign
 {
+    
+    const TYPE = "T1";
  
     public function __construct($data) {
         $this->loadObject($data);    
     }
     
-    public $content = "";
-    /**
-     * @return string
-     */
-    public function getContent()
-    {
-        return $this->content;
-    }
-
     public function toHtml($position) {
         
         $output = '';
