@@ -15,8 +15,10 @@ namespace FP4P\Component\JSports\Site\Helpers;
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\Router\Router;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Filesystem\Folder;
+use Joomla\CMS\Router\Route;
 
 final class SponsorHelper
 {
@@ -125,6 +127,19 @@ final class SponsorHelper
         
     }
     
+    public static function getClickUrl($sponsorid) {
+        
+        $params = ComponentHelper::getParams('com_jsports');
+        $secret = $params->get('secretkey', "jsports");
+        
+        $id = $sponsorid;
+        $ts = time();
+        
+        $token = hash_hmac('sha256', $id . '|' . $ts, $secret);
+        $urlstring = "index.php?option=com_jsports&task=sponsor.click&id={$id}&ts={$ts}&sig={$token}";
+        $clickurl = Route::_($urlstring);
+        return $clickurl;
+    }
     
 }
 
