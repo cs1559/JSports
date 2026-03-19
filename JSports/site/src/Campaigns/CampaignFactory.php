@@ -6,9 +6,10 @@ class CampaignFactory
     public static function createCampaign(object $data) {
         
         $campaign = match ($data->campaigntype) {
-            'T' => new Textcampaign($data),
-            'I' => new Imagecampaign($data),
-            'D' => new TextWithAssetCampaign($data),
+            Textcampaign::TYPE => new Textcampaign($data),
+            TextWithLinkCampaign::TYPE => new TextWithLinkCampaign($data),
+            Imagecampaign::TYPE => new Imagecampaign($data),
+            ImageWithTextCampaign::TYPE => new ImageWithTextCampaign($data),
             'P' => new PromoBarCampaign($data),
         };
 
