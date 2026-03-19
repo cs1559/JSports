@@ -7,6 +7,7 @@ use Joomla\CMS\Installer\InstallerAdapter;
 use Joomla\CMS\Installer\InstallerScriptInterface;
 use Joomla\CMS\Language\Text;
 use Joomla\Filesystem\Folder;
+use Joomla\CMS\Filesystem\File;
 
 return new class () implements InstallerScriptInterface
 {
@@ -69,7 +70,7 @@ return new class () implements InstallerScriptInterface
         // - backfill new columns
         // - cleanup old records
         
-        $this->installMessages[] = "*** Update successfully completed **";
+
         return true;
     }
     
@@ -91,6 +92,11 @@ return new class () implements InstallerScriptInterface
 //             'com_jsports postflight complete for action: ' . $type,
 //             'message'
 //             );
+        if (in_array($type, ['install', 'update'], true)) {
+            $this->removeObsoleteFiles();
+        }
+
+        $this->installMessages[] = "*** Update successfully completed **";
   
         echo "<h1>JSports Installation Messages</h1>";
         echo "<ul>";
@@ -99,5 +105,34 @@ return new class () implements InstallerScriptInterface
         }
         echo "</ul>";
         return true;
+    }
+    
+    
+    private function removeObsoleteFiles(): void
+    {
+        $files = [
+//             JPATH_ADMINISTRATOR . '/components/com_jsports/helpers/oldhelper.php',
+            JPATH_SITE . '/components/com_jsports/src/Campaigns/TextWithAssetCampaign.php',
+        ];
+        
+        $folders = [
+//             JPATH_ADMINISTRATOR . '/components/com_jsports/legacy',
+        ];
+        
+        foreach ($files as $file) {
+            if (is_file($file)) {
+                if (file_exists($file)) {
+                    File::delete($file);
+                    $this->installMessages[] = "File: " . $file . " removed.";
+                }
+            }
+        }
+        
+        foreach ($folders as $folder) {
+            if (is_dir($folder)) {
+                Folder::delete($folder);
+                $this->installMessages[] = "Folder: " . $file . " removed.";
+            }
+        }
     }
 };
