@@ -20,6 +20,7 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Factory;
 use Joomla\Database\DatabaseInterface;
+use FP4P\Component\JSports\Site\Helpers\JSHelper;
 use FP4P\Component\JSports\Site\Objects\Standings\StandingsEngine;
 use FP4P\Component\JSports\Site\Services\ProgramsService;
 use FP4P\Component\JSports\Site\Services\MailService;
@@ -49,11 +50,24 @@ class SponsorController extends BaseController
             throw new \RuntimeException('Invalid Sponsor id', 400);
         }
         
+        $params = ComponentHelper::getParams('com_jsports');
+        $secret = $params->get('secretkey', "jsports");
+        
+        $ts = $input->getInt('ts');
+        $sig = $input->getString('sig', '');
+        
+        $expected = hash_hmac('sha256', $id . '|' . $ts, $secret);
+        
+        $isValid = hash_equals($expected, $sig);
+        $isFresh = $ts > 0 && abs(time() - $ts) <= 3600;
+        $isBot = JSHelper::isBot();
+        $shouldCount = $isValid && $isFresh && !$isBot;
+        
         $sponsorship = SponsorService::getActiveSponsorship($id);
 
-        // update click count
-        SponsorshipService::click($sponsorship->sponsorshipid);
-                
+        if ($shouldCount) {
+            SponsorshipService::click($sponsorship->sponsorshipid);
+        }
         $url = trim((string) $sponsorship->website);
         
         // Allow only absolute http(s) URLs (recommended)
