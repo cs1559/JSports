@@ -9,7 +9,22 @@
 
 		<field name="name" type="text" label="COM_JSPORTS_NAME"
 			size="40" required="true" />
+
+		<field name="address1" type="text" label="COM_JSPORTS_ADDRESS1"
+			size="40" required="false" />
 			
+		<field name="address2" type="text" label="COM_JSPORTS_ADDRESS2"
+			size="40" required="false" />
+			
+		<field name="city" type="text" label="COM_JSPORTS_CITY"
+			size="30" required="false" />
+					
+		<field name="state" type="text" label="COM_JSPORTS_STATE"
+			size="2" required="false" />
+			
+		<field name="zipcode" type="text" label="COM_JSPORTS_ZIPCODE"
+			size="10" required="false" />			
+															
 		<field name="alias" type="text"
 			label="COM_JSPORTS_ALIAS" size="80" 
 			hint="Will be used in the URL"
@@ -27,7 +42,10 @@
 		<field name="contactphone" type="tel"
 			label="COM_JSPORTS_CONTACTphone" size="40" />	
 			
-			
+	
+		<field name="notes" type="textarea"
+			label="COM_JSPORTS_NOTES" rows="10" cols="100" />	
+					
 		<field name="website" type="URL"
 			size="100"
 			label="COM_JSPORTS_URL" class="" default=""
@@ -37,6 +55,9 @@
 		<field name="logo" type="text" label="COM_JSPORTS_LOGOFILENAME" 
 			description=""  readonly="true"></field>
 					
+		<field name="slogan" type="text" label="COM_JSPORTS_SLOGAN"
+			size="40" required="false" />
+								
 		<field name="afile" 
 				type="file" label="COM_JSPORTS_FILEUPLOAD"
 				description="Choose an file from your computer with maximum 100KB" 
