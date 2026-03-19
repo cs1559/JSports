@@ -24,7 +24,10 @@ final class CampaignHelper
     static function translateCampaignType($code)
     {
         static $map = [
-            'T' => 'Text',
+            Textcampaign::TYPE => 'Text',
+            TextWithLinkCampaign::TYPE => 'Text with Link',
+            Imagecampaign::TYPE => 'Image',
+            ImageWithTextCampaign::TYPE => 'Image with Text',
             'I' => 'Image',
             'D' => 'Text With Link',
             'P' => 'Promo Banner',
