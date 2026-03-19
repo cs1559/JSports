@@ -59,7 +59,7 @@ class CampaignDecorator
                 . htmlspecialchars($this->position, ENT_QUOTES, 'UTF-8') ."'>";
         }
         
-            $output .= $campaign->toHtml($this->position);
+        $output .= $campaign->toHtml($this->position);
     
         if (!$campaign instanceOf PromoBarCampaign) {
             $output .= "</div>";
