@@ -46,18 +46,19 @@
 		/>
 
 		<field name="url" type="url"
-			label="Link to Redirect To" required="false"  showon="campaigntype:I,D"/>
+			label="Link to Redirect To" required="false"  showon="campaigntype:T2,I1,I2"/>
 			
 		<field name="campaigntype" type="list" label="COM_JSPORTS_CAMPAIGN_TYPE"
-			class="form-select-color-state" default="T" validate="options">
-				<option value="T">Text (Display Only - NO LINK)</option>
-				<option value="D">Text with LINK</option>
-				<option value="I">Display Asset/Graphic</option>
+			class="form-select-color-state" default="T1" validate="options">
+				<option value="T1">Text (Display Only - NO LINK)</option>
+				<option value="T2">Text with LINK</option>
+				<option value="I1">Image Only</option>
+				<option value="I2">Image with Text</option>
 				<option value="P">Promo Banner</option>
 			</field>
 		
 		<field name="content" type="editor"
-			label="COM_JSPORTS_CAMPAIGN_CONTENT" filter="raw" height="250" required="false"  showon="campaigntype:T,D,P"/>
+			label="COM_JSPORTS_CAMPAIGN_CONTENT" filter="raw" height="250" required="false"  showon="campaigntype:T1,T2,I2,P"/>
 		
 		<field name="startdate" type="calendar" label="COM_JSPORTS_STARTDATE"
 			default="0" class=""  require="true"/>
