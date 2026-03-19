@@ -45,11 +45,17 @@ $return = base64_encode('index.php?option=com_jsports&view=sponsor&layout=edit&i
 				<div class="row">  <!-- GOOD -->
 					<div class="col-md-10">
 						<?php echo $this->form->renderField('id'); ?>
+						<?php echo $this->form->renderField('address1'); ?>
+						<?php echo $this->form->renderField('address2'); ?>
+						<?php echo $this->form->renderField('city'); ?>
+						<?php echo $this->form->renderField('state'); ?>
+						<?php echo $this->form->renderField('zipcode'); ?>
 						<?php echo $this->form->renderField('contactname'); ?>
 						<?php echo $this->form->renderField('contactphone'); ?>
 						<?php echo $this->form->renderField('contactemail'); ?>
 						<?php echo $this->form->renderField('website'); ?>
 						<?php echo $this->form->renderField('logo'); ?>
+						<?php echo $this->form->renderField('slogan'); ?>
 						<?php echo $this->form->renderField('afile'); ?>
 					</div>
 				</div>
@@ -220,6 +226,20 @@ $return = base64_encode('index.php?option=com_jsports&view=sponsor&layout=edit&i
 </div><!-- /.row -->
 
 <?php echo HTMLHelper::_('uitab.endTab'); ?>
+		
+		<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'details', Text::_('COM_JSPORTS_NOTES')); ?>
+		
+		<div class="row">   <!-- GOOD -->
+			<div class="col-md-12"> 
+				<div class="row">  <!-- GOOD -->
+					<div class="col-md-10">
+						<?php echo $this->form->renderField('notes'); ?>
+
+					</div>
+				</div>
+			</div>  <!-- GOOD -->
+		</div>		
+		<?php echo HTMLHelper::_('uitab.endTab'); ?>
 		
 		<?php echo HTMLHelper::_('uitab.endTabSet'); ?>
 	</div>
