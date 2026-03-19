@@ -16,6 +16,7 @@ use FP4P\Component\JSports\Site\Helpers\JSHelper;
   <th>End Date</th>
   <th>Impressions</th>
   <th>Clicks</th>
+  <th>CTR%</th>
 </tr>
 </thead>
 
@@ -30,12 +31,19 @@ foreach ($displayData as $row) {
 				<td><?php echo $row->enddate; ?> </td>
 				<td><?php echo $row->impressions; ?> </td>
 				<td><?php echo $row->clicks; ?> </td>
-				
+				<td><?php 
+			        $ctr = ($row->clicks / $row->impressions)*100;
+			        echo number_format($ctr, 1);
+			    ?>
+				</td>
 			</tr>
 			<?php
 }
 ?>
 </tbody>
 </table>
+<p>
+<strong>CTR% = Click Through Rate (clicks/impressions)</strong>
+</p>
 </div>
 
