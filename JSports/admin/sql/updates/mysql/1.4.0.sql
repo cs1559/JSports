@@ -68,7 +68,7 @@ CONSTRAINT UC_filename UNIQUE (sponsorid,filename)
 --
 CREATE TABLE IF NOT EXISTS `#__jsports_campaigns` (
 	 `id` 		tinyint 		NOT NULL AUTO_INCREMENT,
- 	 `campaigntype` 	VARCHAR(1),
+ 	 `campaigntype` 	VARCHAR(2),
  	 `title`			VARCHAR(50),	
  	 `sponsorid` 		tinyint default 0,
  	 `sponsorshipid`	tinyint default 0,
