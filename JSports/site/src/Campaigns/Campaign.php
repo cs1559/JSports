@@ -17,9 +17,12 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Filesystem\Folder;
+use FP4P\Component\JSports\Site\Helpers\SponsorHelper;
 use FP4P\Component\JSports\Site\Services\CampaignService;
+use Joomla\CMS\Router\Route;
 
-class Campaign
+
+abstract class Campaign
 {
     /** var int $id */
     public $id = 0;
@@ -36,8 +39,37 @@ class Campaign
     public $published = 0;
     public $customcss;
     public $classname;
-    
     public $data;
+    public $content;
+    
+    
+    public abstract function toHtml($position);
+
+    public function getClickUrl() {
+        
+        $params = ComponentHelper::getParams('com_jsports');
+        $secret = $params->get('secretkey', "jsports");
+               
+        $id = $this->id;
+        $ts = time();
+        
+        $token = hash_hmac('sha256', $id . '|' . $ts, $secret);
+        $urlstring = "index.php?option=com_jsports&task=campaign.click&id={$this->id}&ts={$ts}&sig={$token}";
+        $clickurl = Route::_($urlstring);   
+        return $clickurl;
+    }
+    
+    /**
+     * @return string
+     */
+    public function getAssetUrl()
+    {
+        
+        $asset = CampaignService::getAsset($this->sponsorid, $this->assetid);
+        
+        $url = SponsorHelper::getAssetURL($this->sponsorid, $asset->filename);
+        return $url;
+    }
     
     /**
      * @return mixed
