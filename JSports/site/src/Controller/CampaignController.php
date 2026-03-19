@@ -24,6 +24,9 @@ use FP4P\Component\JSports\Site\Objects\Standings\StandingsEngine;
 use FP4P\Component\JSports\Site\Services\ProgramsService;
 use FP4P\Component\JSports\Site\Services\MailService;
 use FP4P\Component\JSports\Site\Services\CampaignService;
+use FP4P\Component\JSports\Site\Campaigns\CampaignHelper;
+use FP4P\Component\JSports\Site\Helpers\SponsorHelper;
+use FP4P\Component\JSports\Site\Helpers\JSHelper;
 
 
 /**
@@ -47,10 +50,26 @@ class CampaignController extends BaseController
             throw new \RuntimeException('Invalid campaign id', 400);
         }
         
+        $params = ComponentHelper::getParams('com_jsports');
+        $secret = $params->get('secretkey', "jsports");
+        
+        $ts = $input->getInt('ts');
+        $sig = $input->getString('sig', '');
+        
+        $expected = hash_hmac('sha256', $id . '|' . $ts, $secret);
+        
+        $isValid = hash_equals($expected, $sig);
+        $isFresh = $ts > 0 && abs(time() - $ts) <= 3600;
+        $isBot = JSHelper::isBot();
+        
+        $shouldCount = $isValid && $isFresh && !$isBot;
+               
         $campaign = CampaignService::getItem($id);
+        
         // update click count
-        CampaignService::click($id);
-                
+        if ($shouldCount) {
+            CampaignService::click($id);
+        }
         $url = trim((string) $campaign->url);
         
         // Allow only absolute http(s) URLs (recommended)
