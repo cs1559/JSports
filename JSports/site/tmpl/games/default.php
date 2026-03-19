@@ -37,7 +37,7 @@ $wa->useStyle('com_jsports.teamlist.style');
 ?>
 <?php echo CampaignManager::renderCampaigns('games-top'); ?>
 
-<form action="#<?php //echo Route::_('index.php?option=com_jsports&view=teams'); ?>" method="post" name="adminForm" id="adminForm">
+<form action="#<?php //echo Route::_('index.php?option=com_jsports&view=games'); ?>" method="post" name="adminForm" id="adminForm">
 	
 	<div class="row">
 		<div class="col-sm-3">
