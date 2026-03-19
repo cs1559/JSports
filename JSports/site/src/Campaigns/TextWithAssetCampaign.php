@@ -21,6 +21,11 @@ use Joomla\CMS\Router\Route;
 use FP4P\Component\JSports\Site\Services\CampaignService;
 use FP4P\Component\JSports\Site\Helpers\SponsorHelper;
 
+/**
+ * @deprecated
+ * @author Chris Strieter
+ *
+ */
 class TextWithAssetCampaign extends Campaign
 {
 
@@ -68,7 +73,7 @@ class TextWithAssetCampaign extends Campaign
         $output .= $this->content;
         
 //         if ($redirect) {
-//             $output .= "</a>";
+            $output .= "</a>";
 //         }
         $output .= "</div>";
 //         $output .= "</div>";
