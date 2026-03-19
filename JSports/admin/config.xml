@@ -289,6 +289,11 @@
 			<option value="1">Yes</option>
 		</field>
 
+		<field name="secretkey" type="text" default=""
+			label="COM_JSPORTS_SECRETKEY"
+			description="COM_JSPORTS_SECRETKEY_DESC">
+		</field>
+		
 		<field name="balancedrandomization" type="radio" default="0"
 			label="COM_JSPORTS_BALANCED_RANDOMIZATION_ENABLED"
 			description="COM_JSPORTS_BALANCED_RANDOMIZATION_ENABLED_DESC"
