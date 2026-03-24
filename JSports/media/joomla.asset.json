@@ -24,6 +24,10 @@
 			"type" : "style",
 			"uri" : "com_jsports/myteams.css"
 		}, {
+			"name" : "com_jsports.ads.style",
+			"type" : "style",
+			"uri" : "com_jsports/ads.css"
+		}, {
 			"name" : "com_jsports.campaigns.style",
 			"type" : "style",
 			"uri" : "com_jsports/campaigns.css"
