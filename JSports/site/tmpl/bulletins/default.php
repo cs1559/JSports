@@ -23,6 +23,8 @@ use FP4P\Component\JSports\Site\Services\UserService;
 use FP4P\Component\JSports\Site\Services\GameService;
 use FP4P\Component\JSports\Site\Helpers\JSHelper;
 use Joomla\CMS\Session\Session;
+use FP4P\Component\JSports\Site\Campaigns\CampaignManager;
+use FP4P\Component\JSports\Site\Ads\AdsManager;
 
 $clientId  = (int) $this->state->get('client_id', 0);
 // $user      = Factory::getUser();
@@ -47,8 +49,9 @@ $token = Session::getFormToken();
 ?>
 
 <?php 
-    use FP4P\Component\JSports\Site\Campaigns\CampaignManager;
-    echo CampaignManager::renderCampaigns('bulletins-top'); 
+    
+    //echo CampaignManager::renderCampaigns('bulletins-top'); 
+    echo AdsManager::renderCampaigns('bulletins-top');
 ?>
 
 <form action="<?php echo Route::_('index.php?option=com_jsports&view=bulletins'); ?>" method="post" name="adminForm" id="adminForm">
