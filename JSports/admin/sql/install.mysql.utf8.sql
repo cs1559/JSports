@@ -461,7 +461,7 @@ CREATE TABLE IF NOT EXISTS `#__jsports_campaigns` (
 	 `startdate` 		DATE 			NOT NULL,
  	 `enddate`   		date 			NOT NULL,
  	 `classname`		varchar(100)  default null,
- 	 `customcss`		varchar(500)  default '',
+ 	 `customcss`		varchar(700)  default '',
  	 `published`		tinyint default 0,
 PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
