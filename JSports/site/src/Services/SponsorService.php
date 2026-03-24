@@ -116,7 +116,7 @@ class SponsorService
 
     /**
      * This function will return a list of sponsor records that are currently active based on the start/end date of their
-     * sponsorships.
+     * sponsorships.  In addition, this will return the sponsors current sponsorship information.
      *
      * @return array<int, \stdClass>
      */
@@ -129,7 +129,12 @@ class SponsorService
         $inner->select([
             'a.*',
             $db->quoteName('s.id', 'sponsorshipid'),
-            $db->quoteName('s.impressions')
+            $db->quoteName('s.impressions'),
+            $db->quoteName('s.plancode'),
+            $db->quoteName('s.plantype'),
+            $db->quoteName('s.programid'),
+            $db->quoteName('s.startdate'),
+            $db->quoteName('s.enddate')
         ])
         ->from($db->quoteName('#__jsports_sponsors', 'a'))
         ->join(
