@@ -13,6 +13,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use FP4P\Component\JSports\Administrator\Helpers\Html;
 use FP4P\Component\JSports\Site\Campaigns\CampaignManager;
+use FP4P\Component\JSports\Site\Ads\AdsManager;
 
 
 // Load Web Asset Manager
@@ -27,7 +28,8 @@ $wa->useStyle('com_jsports.campaigns.style');
 
 <?php
     // Display any content for standings-top position
-    echo CampaignManager::renderCampaigns('standings-top');
+//     echo CampaignManager::renderCampaigns('standings-top');
+    echo AdsManager::renderCampaign('standings-top');
 ?>
     
 <div id="top" class="page-header">
@@ -51,5 +53,5 @@ $wa->useStyle('com_jsports.campaigns.style');
 
 <?php
     // Display any content for standings-top position
-    echo CampaignManager::renderCampaigns('standings-bottom');
+    echo AdsManager::renderCampaign('standings-bottom');
 ?>
