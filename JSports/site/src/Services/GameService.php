@@ -362,7 +362,7 @@ class GameService
         }
         $query->where($conditions);
         $query->setLimit($limit);
-        $query->order('g.gamedate asc');
+        $query->order('g.gamedate desc');
         $query->bind(':programid', $programid, ParameterType::INTEGER);
         if ($divisionid > 0) {
             $query->bind(':divisionid', $divisionid, ParameterType::INTEGER);
