@@ -10,13 +10,6 @@
  *
  */
 
-/**
- * ================================================================================
- * LEAGUES MAY NOT BE REQUIRED AND MAYBE REMOVED IN A LATER RELASE.  MANY OF THE
- * OPTIONS ASSOCIATED WITH A LEAGUE ARE SUPPORTED AT THE PROGRAM LEVEL OR AT THE
- * COMPONENT LEVEL.
- * ================================================================================
- */
 
 namespace FP4P\Component\JSports\Administrator\Controller;
 
@@ -26,12 +19,12 @@ use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\MVC\Controller\FormController;
 
 /**
- * Controller for a single League
+ * Campaigns Controller
  *
  */
 class CampaignsController extends AdminController
 {
-    protected $default_view = 'bulletins';
+    protected $default_view = 'campaigns';
     
     public function getModel(
         $name = 'Campaign',
