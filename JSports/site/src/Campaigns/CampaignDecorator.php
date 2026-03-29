@@ -54,6 +54,8 @@ class CampaignDecorator
 
         $output = "";
         
+        $output = "<div class=\"jsports-ad\" data-adid=\"{$this->campaign->id}\" 
+                data-position=\"{$this->position}\" data-type=\"campaign\">";
         if (!$campaign instanceOf PromoBarCampaign) {
             $output .= "<div class='jsports-campaign-container jsports-pos-" 
                 . htmlspecialchars($this->position, ENT_QUOTES, 'UTF-8') ."'>";
@@ -64,6 +66,8 @@ class CampaignDecorator
         if (!$campaign instanceOf PromoBarCampaign) {
             $output .= "</div>";
         }
+        
+        $output .= "</div>";
         return $output;
 	}
 
