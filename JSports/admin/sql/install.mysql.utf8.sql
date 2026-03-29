@@ -379,7 +379,9 @@ insert into #__jsports_bulletin_categories values('S','Sponsors',0);
 ALTER TABLE `#__jsports_teams` 
     ADD COLUMN IF NOT EXISTS `archived` TINYINT(1) NOT NULL DEFAULT 0 AFTER `properties`;
     
-    
+ -- =================================================================================
+ --  Release 1.4.0
+ -- =================================================================================
     -- Sponsors Table -- THE WHO
 CREATE TABLE IF NOT EXISTS `#__jsports_sponsors` (
 	 `id` 			int(11) NOT NULL AUTO_INCREMENT,
@@ -513,3 +515,25 @@ VALUES (
     'Bold-on 5',1,0,
     '{"max_campaigns":5,"positions":["standings-top","standings-bottom","venues-top"],"bulletins":true}'
 );
+
+
+-- ========================================================================================
+--  Release 1.4.4
+-- ========================================================================================
+-- Add address fields for the sponsor
+ALTER TABLE `#__jsports_sponsors` ADD `address1` 	VARCHAR(35) DEFAULT NULL AFTER `name`;
+ALTER TABLE `#__jsports_sponsors` ADD `address2` 	VARCHAR(35) DEFAULT NULL AFTER `address1`;
+ALTER TABLE `#__jsports_sponsors` ADD `city` 		VARCHAR(25) DEFAULT NULL AFTER `address2`;
+ALTER TABLE `#__jsports_sponsors` ADD `state` 		VARCHAR(2) 	DEFAULT NULL AFTER `city`;
+ALTER TABLE `#__jsports_sponsors` ADD `zipcode` 	VARCHAR(10) DEFAULT NULL AFTER `state`;
+ALTER TABLE `#__jsports_sponsors` ADD `slogan` 		VARCHAR(50) DEFAULT NULL AFTER `logo`;
+
+-- ========================================================================================
+--  Release 1.4.5
+-- ========================================================================================
+-- Add a LAYOUTS column in favor of campaign type
+ALTER TABLE `#__jsports_campaigns` ADD `layout` 	VARCHAR(25) DEFAULT NULL AFTER `sponsorid`;
+ALTER TABLE `#__jsports_campaigns` ADD `link` 		VARCHAR(1) 	DEFAULT 'S' AFTER `layout`;
+ALTER TABLE `#__jsports_campaigns` ADD `imageid` 	TINYINT 	DEFAULT 0 AFTER `link`;
+
+
