@@ -119,9 +119,9 @@ final class SponsorHelper
         $fullfilename = JPATH_ROOT . 'sponsor-' . $sponsorid .'/' . $filename;
         $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
         
-        if ($ext === 'pdf') {
-            return Uri::root() . '/' . $pdfimage;
-        }
+//         if ($ext === 'pdf') {
+//             return Uri::root() . '/' . $pdfimage;
+//         }
         
         return Uri::root() . $imageFolder . 'sponsor-' . $sponsorid .'/' . $filename;
         
