@@ -24,6 +24,7 @@ use FP4P\Component\JSports\Site\Objects\Standings\StandingsEngine;
 use FP4P\Component\JSports\Site\Services\ProgramsService;
 use FP4P\Component\JSports\Site\Services\MailService;
 use FP4P\Component\JSports\Site\Services\CampaignService;
+use FP4P\Component\JSports\Site\Ads\Campaign;
 use FP4P\Component\JSports\Site\Campaigns\CampaignHelper;
 use FP4P\Component\JSports\Site\Helpers\SponsorHelper;
 use FP4P\Component\JSports\Site\Helpers\JSHelper;
@@ -64,13 +65,18 @@ class CampaignController extends BaseController
         
         $shouldCount = $isValid && $isFresh && !$isBot;
                
-        $campaign = CampaignService::getItem($id);
+        $row = CampaignService::getCampaign($id);
+        
+        // Load a campaign object.
+        $campaign = new Campaign();
+        $campaign->loadObject($row);
+        
         
         // update click count
         if ($shouldCount) {
             CampaignService::click($id);
         }
-        $url = trim((string) $campaign->url);
+        $url = trim((string) $campaign->getRedirectUrl());
         
         // Allow only absolute http(s) URLs (recommended)
         $parts = Uri::getInstance($url)->toString() ? parse_url($url) : null;
