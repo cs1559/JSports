@@ -25,6 +25,7 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Form\Form;
+use FP4P\Component\JSports\Site\Services\CampaignService;
 
 /**
  * View to edit a bulletin.
@@ -61,6 +62,12 @@ class HtmlView extends BaseHtmlView
      */
     protected $canDo;
     
+    /**
+     * 
+     * @var string
+     */
+    protected $imageurl;
+    
     
     /**
      * Execute and display a template script.
@@ -87,6 +94,11 @@ class HtmlView extends BaseHtmlView
          
        $this->addToolbar();
     
+       if ($this->item->imageid) {
+            $imageasset = CampaignService::getAsset($this->item->sponsorid, $this->item->imageid);
+            $this->imageurl = CampaignService::getAssetURL($this->item->sponsorid, $imageasset->filename);
+       }
+       
        $wa = $this->getDocument()->getWebAssetManager();
        $wa->getRegistry()->addExtensionRegistryFile('com_jsports');
        $wa->useStyle('com_jsports.campaigns.style');
