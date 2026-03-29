@@ -113,6 +113,7 @@ return new class () implements InstallerScriptInterface
         $files = [
 //             JPATH_ADMINISTRATOR . '/components/com_jsports/helpers/oldhelper.php',
             JPATH_SITE . '/components/com_jsports/src/Campaigns/TextWithAssetCampaign.php',
+            JPATH_SITE . '/components/com_jsports/src/Helpers/SponsorsHelper.php',
         ];
         
         $folders = [
