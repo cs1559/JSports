@@ -69,7 +69,7 @@ $canChange = true;
 						<?php echo Text::_('COM_JSPORTS_SPONSORNAME'); ?>
 					</th>
 					<th scope="col" class="w-5">
-						<?php echo Text::_('COM_JSPORTS_SPONSORSHIP_TYPE'); ?>
+						<?php echo Text::_('COM_JSPORTS_CAMPAIGN_LAYOUT'); ?>
 					</th>
 					<th scope="col" class="w-10">
 						<?php echo HTMLHelper::_('searchtools.sort', 'COM_JSPORTS_STARTDATE', 'c.startdate', $listDirn, $listOrder); ?>
@@ -109,7 +109,7 @@ $canChange = true;
 						<?php echo $item->sponsorname; ?>
 					</td>
 					<td class="text-center">
-						<?php echo CampaignHelper::translateCampaignType($item->campaigntype); ?>
+						<?php echo $item->layout; ?>
 					</td>
 					<td class="">
 						<?php echo $item->startdate; ?>

@@ -44,13 +44,11 @@ window.JSportsDefaults = {
 					<div>
 						<?php echo $this->form->renderField('sponsorid'); ?>
 						<?php echo $this->form->renderField('sponsorshipid'); ?>
-						<?php echo $this->form->renderField('campaigntype'); ?>
-						<?php echo $this->form->renderField('positions'); ?>
+						<?php echo $this->form->renderField('layout'); ?>
+						<?php //echo $this->form->renderField('campaigntype'); ?>
 						<?php echo $this->form->renderField('startdate'); ?>
 						<?php echo $this->form->renderField('enddate'); ?>
-						<?php echo $this->form->renderField('assetid'); ?>
-						<?php echo $this->form->renderField('url'); ?>
-						<?php echo $this->form->renderField('content'); ?>
+						<?php echo $this->form->renderField('positions'); ?>
 					</div>
 				</div>
 			</div>
@@ -66,7 +64,71 @@ window.JSportsDefaults = {
 		</div>
 		<?php echo HTMLHelper::_('uitab.endTab'); ?>
 
-		<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'schedule', Text::_('COM_JSPORTS_CUSTOMCSS')); ?>
+		<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'contents', Text::_('COM_JSPORTS_CAMPAIGN_CONTENT')); ?>
+		<div class="row">
+			<div class="col-md-9">
+				<div class="row">
+						<?php echo $this->form->renderField('content'); ?>
+				</div>  
+			</div>
+			<div class="col-md-3">
+				<div class="card card-light">
+					<div class="card-body">
+					</div>
+				</div>
+			</div>
+		</div>
+		<?php echo HTMLHelper::_('uitab.endTab'); ?>
+
+		<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'image', Text::_('COM_JSPORTS_CAMPAIGN_IMAGE')); ?>
+		<div class="row">
+			<div class="col-md-6">
+				<div class="row">
+						<?php echo $this->form->renderField('imageid'); ?>
+				</div>  
+			</div>
+			<div class="col-md-6">
+			<h2>Current Image</h2>
+			<?php // if (!empty($this->imageurl)) {?>
+				<div class="campaign-image-wrapper">  <!-- GOOD -->
+					<img class="campaign-image img-responsive"
+						src="<?php echo $this->imageurl; ?>"/>
+				</div>  <!-- GOOD -->
+				
+				<hr/>
+			<?php //} ?>
+			</div>
+		</div>
+		<?php echo HTMLHelper::_('uitab.endTab'); ?>
+		
+		<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'links', Text::_('COM_JSPORTS_CAMPAIGN_LINKS')); ?>
+		<div class="row">
+			<div class="col-md-6">
+				<div class="row">
+						<?php echo $this->form->renderField('link'); ?>
+						<?php echo $this->form->renderField('assetid'); ?>
+						<?php echo $this->form->renderField('url'); ?>
+				</div>  
+			</div>
+			<div class="col-md-6">
+				<div class="card card-light">
+					<div class="card-body">
+					<strong>REDIRECT LINKS INFORMATION:</strong>
+					<hr/>
+					<ul>
+						<li><strong>Sponsor Website</strong> - This option will use the sponsors website property in the link used when rendering the campaign.</li>
+						<li><strong>Sponsor Asset/Document</strong> - This option will link to an uploaded asset/document from the Sponsors section.</li>
+						<li><strong>External URL</strong> - this option will allow you to include an external URL in the link when someone clicks on the campaign.</li>
+					</ul>
+					<strong>NOTE:  Only ONE link will be used when the campaign renders. </strong>
+					</div>
+				</div>
+			</div>
+		</div>
+		<?php echo HTMLHelper::_('uitab.endTab'); ?>
+
+
+		<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'customcss', Text::_('COM_JSPORTS_CUSTOMCSS')); ?>
 		<div class="row">
 			<div class="col-md-9">
 				<div class="row">
