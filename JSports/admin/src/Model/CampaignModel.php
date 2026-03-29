@@ -120,18 +120,20 @@ class CampaignModel extends AdminModel
         // Posted form data
         $requestData = $input->post->get('jform', [], 'array');
         // $bulletinTitle = $requestData['title'] ?? '';
-        $type = $data['campaigntype'];
-        if (!empty($data['campaigntype']) && $data['campaigntype'] === 'T') {
-            $data['assetid'] = null;
-        }
+//         $type = $data['campaigntype'];
+//         if (!empty($data['campaigntype']) && $data['campaigntype'] === 'T') {
+//             $data['assetid'] = null;
+//         }
         $data['positions'] = implode(',', $requestData['positions']);
         $data['assetid'] = $requestData['assetid'];
         $data['sponsorshipid'] = $requestData['sponsorshipid'];
+        $data['imageid'] = (int) ($requestData['imageid'] ?? 0);
+        $data['assetid'] = (int) ($requestData['assetid'] ?? 0);
         
-        if ($data['assetid'] > 0) {
-            $asset = CampaignService::getAsset($data['sponsorid'], $data['assetid']);
-            $data['url'] = CampaignService::getAssetURL($data['sponsorid'], $asset->filename);
-        }
+//         if ($data['assetid'] > 0) {
+//             $asset = CampaignService::getAsset($data['sponsorid'], $data['assetid']);
+//             $data['url'] = CampaignService::getAssetURL($data['sponsorid'], $asset->filename);
+//         }
 
         
         return parent::save($data);
