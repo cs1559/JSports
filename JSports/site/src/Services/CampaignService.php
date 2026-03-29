@@ -49,6 +49,32 @@ class CampaignService
                
         return null;
     }
+
+    public static function getCampaign($pk) {
+        
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $query = $db->getQuery(true);
+        
+        /*
+         *         $query->from($db->quoteName('#__jsports_sponsors') . ' AS a,' .
+         $db->quoteName('#__jsports_sponsor_assets') . ' AS sa '
+         );
+         */
+        $query->select('c.*,s.name as sponsorname, s.logo as sponsorlogo, s.website as sponsorurl');
+        $query->from($db->quoteName('#__jsports_campaigns') . ' AS c, ' .
+            $db->quoteName('#__jsports_sponsors') . 'AS s');
+        $conditions = array(
+            $db->quoteName('c.sponsorid') . ' = ' . $db->quoteName('s.id'),
+            $db->quoteName('c.published') . ' in (1) ',
+            $db->quoteName('c.id') . ' = ' . $pk
+        );
+        
+        $query->where($conditions);
+        //         $query->order('id desc');
+        $db->setQuery($query);
+        return $db->loadObject();
+        
+    }
     
     /**
      * This function will return an array of objects that represent all campaigns for a given
@@ -66,7 +92,7 @@ class CampaignService
             $db->quoteName('#__jsports_sponsor_assets') . ' AS sa '
             );
          */
-        $query->select('c.*,s.name as sponsorname');
+        $query->select('c.*,s.name as sponsorname, s.logo as sponsorlogo, s.website as sponsorurl');
         $query->from($db->quoteName('#__jsports_campaigns') . ' AS c, ' .
             $db->quoteName('#__jsports_sponsors') . 'AS s');
         $conditions = array(
