@@ -11,9 +11,7 @@ This tab covers data attributes related to the actual organization operating the
 	<li><b>Organization Name</b> - Name of the organization</li>
 	<li><b>Address 1</b> - Mailing address (line 1)</li>
 	<li><b>Address 2</b> - Mailing address (line 2 if applicable)</li>
-	<li><b>City</b></li>
-	<li><b>State</b></li>
-	<li><b>Zipcode</b></li>
+	<li><b>City/State/Zipcode</b>- City/State and Zipcode of the organization.</li>
 	<li><b>Contact Name</b> = Primary contact name in the organization]</li>
 	<li><b>Email</b> - Organizations primary email address</li>
 	<li><b>Phone</b> - Organizations phone number</li>
@@ -58,7 +56,7 @@ This tab covers data attributes related to the actual organization operating the
 <h2>League Administration</h2>
 <p>
 The LEAGUE is the highest level of the object hierarchy.  The program can support multiple
-leagues.  Currently, there are very view attributes related to the LEAGUE.
+leagues.  Currently, there are very few attributes related to the LEAGUE.
 </p>
 
 <hr/>
@@ -134,26 +132,138 @@ division the team is participating in.   Each entry MUST be published for the te
 
 <h2>Division Management</h2>
 <hr/>
-<br/>
+<p>
+This section allows you to define divisions within a given program.  League standings are all calculated within the DIVISION level.  All teams must be assigned to
+a specific division.
+</p>
+<h3>Details</h3>
+<ul>
+<li><b>Program</b>- Defines what program the division is associated with.</li>
+<li><b>Age Group</b>- Defines the specific age group for the teams assigned to the division.  There are no rules to prevent any team from being placed
+in the wrong age/division.</li>
+<li><b>Notes</b>- Any additional notes/informaiton about the division.  Information is currently NOT displayed on the front end.  The intent
+is to add some additional notes such as cross-divisional play, number of games, etc. that COULD be presented on the frontend if needed.</li>
+<li><b>Cross-Divisional Play</b>- This flag indicates that this division, as part of the league play and setup, will be required to play 
+teams from other divisions (within the same age group), and have those games count as part of the overall league standings.</li>
+<li><b>Order</b>- This is a numeric value that helps define a specific sequence when sorting the divisions.</li>
+<li><b>Status</b>- Published/Unpublished status.  This value should not be unpublished if teams have been assigned and also if the program has already started.</li>
+</ul>
+<h3>Schedule</h3>
+<ul>
+<li><b>League Managed Schedule</b>- This indicates it the league manages the schedule.  When this indicator is set to YES, then the owner of the team profiles will
+NOT be able to see the 'Manage Schedule' menu option on the profile.</li>
+</ul>
 
 <h2>Teams</h2>
 <hr/>
-<br/>
+<p>
+The Teams section contains the detailed record about the team.  This is primarily data that is collected from the registration form and can 
+be updated by team coaches/managers, who have permissions, via the team profile page.
+</p>
+<h3>Details</h3>
+<ul>
+<li><b>Contact Name</b>- Name of the primary contact for the team.  Typically, this should be the name of the head coach.</li>
+<li><b>Contact Email</b>- Email address of the primary contact.  This attribute is HIDDEN from public display unless the profile owner
+explicity changes the indicator to make this public (not recommended).</li>
+<li><b>Contact Phone</b>- Phone number of primary contact.  This attribute is HIDDEN from public display unless the profile owner
+explicity changes the indicator to make this public (not recommended).</li>
+<li><b>City/State</b>- Should represent the city of the primary contact.  Could also be used to represent the City/State where the team 
+is based out of.  </li>
+<li><b>ID</b>- This is the team id.  This is system assigned and is NOT editable.</li>
+</ul>
+<h3>Options</h3>
+<ul>
+<li><b>Profile Owner</b>- Represents which user actually OWNS the profile.  The profile owner can grant/revoke privileges who have access
+rights to the profile via the team roster.</li>
+<li><b>Hits</b>- Represents the number of times a team's profile has been viewed.</li>
+</ul>
 
 <h2>Venues</h2>
 <hr/>
-<br/>
-
+<p>
+Defines all of the Venues that teams within the league play at.  The venues are available for selection by users when they enter their
+game schedule via the team profile.
+<p/>
+<h3>Details</h3>
+<ul>
+<li><b>Address</b>- Street address of the venue.</li>
+<li><b>City/State</b>- City/State where the venue is located</li>
+<li><b>ID</b>- Unique venue id.</li>
+</ul>
+<h3>Location</h3>
+<ul>
+<li><b>Notes</b>- General notes that may apply to the venue.  The intent is to use this to 
+specify things like number of fields or any specific instructions/notes on how to find the venue.</li>
+<li><b>Latitute</b>- Latitude of the venue location (for Google Maps support)</li>
+<li><b>Longitude</b>- Longitude of the venue location (for Google Maps support)</li>
+</ul>
 <h2>Registrations</h2>
 <hr/>
-<br/>
+<p>This section contains the registration information from individuals who have registered a team in the league.
+This data is used to create teams during the league/program setup process.
+</p>
+<h3>Details</h3>
+<ul>
+<li><b>Program</b>- Program the registration is associated with</li>
+<li><b>Name</b>- Head coach name</li>
+<li><b>Address</b>- Address of the head coach/primary contact</li>
+<li><b>City/State</b>- City/State of the head coach/primary contact</li>
+<li><b>Email</b>- Email address of the head coach/primary contact</li>
+<li><b>Phone</b>- Phone number of the head coach/primary contact</li>
+<li><b>Mobile</b>- Mobile phone of the head coach/primary contact</li>
+<li><b>Returning Team</b>- Indicator if the team is a returning team</li>
+<li><b>Team Id</b>- Unique ID of the team (if returning - otherwise it should be ZERO)</li>
+<li><b>Age Group</b>- Age group the team is registering for.</li>
+<li><b>Skill Level</b>- Skill level the team is registering for.</li>
+<li><b>Playoffs</b>- Indicator on whether or not the team is planning on playing in the year end playoffs.</li>
+<li><b>Status</b>- Published/Unpublished indicicator.</li>
+</ul>
+<h3>Options</h3>
+<ul>
+<li><b>Registered By</b>- Name of the person who entered the registration information</li>
+<li><b>IP Address</b>- IP Address of the device used when registering the team</li>
+<li><b>Acknowledged TOS</b>- Terms of Service acknowledgement that it has been viewed and agreed to.</li>
+</ul>
 
 <h2>Games</h2>
 <hr/>
-<br/>
+<p>Detailed game information.
+<h3>Match</h3>
+<ul>
+<li><b>Program</b>- Progrma that the game is part of.</li>
+<li><b>Division</b>- Division the game is associated with.  In case of cross-divisional play,
+this division should be the division of the HOME TEAM.</li>
+<li><b>Home Team</b>- Home team ID.</li>
+<li><b>Opponent</b>- Away team ID.</li>
+<li><b>Location</b>- Venue location where the game is scheduled.</li>
+<li><b>Game Date</b>- Date of the game.</li>
+<li><b>Game Time</b>- Time of the game.</li>
+<li><b>League Game</b>- Indicator if this game is a league game and should count toward standings</li>
+<li><b>Status</b>- Published/Unpublished indicator.</li>
+</ul>
+<h3>Result</h3>
+<ul>
+<li><b>Home Team Score</b>- Final score of the Home Team</li>
+<li><b>Away Team Score</b>- Final score of the Away Team</li>
+</ul>
 
 <h2>Rosters</h2>
 <hr/>
+<p>
+Rosters contains all of the player and staff names associated with teams within the league.
+</p>
+<h3>Details</h3>
+<ul>
+<li><b>Classification</b>- Indicates if the roster entry is a Player of Staff Member</li>
+<li><b>First Name</b>- First name of the player/staff member.</li>
+<li><b>Last Name</b>- Last name of the player/staff member.</li>
+<li><b>Uniform Number</b>- Uniform number of the player.  DOES NOT APPLY TO STAFF MEMBERS.</li>
+<li><b>Role</b>- Applies to staff member.  Defines what their role is.</li>
+<li><b>User</b>- A user account associated with this staff member.  This can be used to grant
+admin permissions to a user who can log into the site.</li>
+<li><b>Admin Privileges</b>- Indicates if the user associated with the roster entry can edit the team profile.</li>
+<li><b>Email</b>- Staff members email address (OPTIONAL).</li>
+</ul>
 <br/>
 
 <h2>View Logs</h2>
@@ -183,4 +293,71 @@ This option provides a few tools that help manage the JSports installation.
 	adjusted; however, most implementations have the standings systematially refreshed based on a time schedule (e.g. every 30 minutes).
 	</li>
 </ul>
+<h2>Bulletins</h2>
+<hr/>
+
+<h2>Sponsors</h2
+<p>
+This option provides the capability to manage your organizational sponsors.  This includes the abilityt to add new sponsors, update existing
+sponsor information, add sponsorship plans to each sponsor and upload assets that campaigns can linked too in presenting sponsor information 
+to users.
+</p>
+<h3>Details</h3>
+<ul>
+	<li><b>ID</b>- Unique Sponsor ID</li>
+	<li><b>Address Line 1</b>- 1st line of the Sponsors address</li>
+	<li><b>Address Line 2</b>- 2nd line of the Sponsors address (if applicable)</li>
+	<li><b>City/State/Zipcode</b> - City/State/Zipcode of Sponsors address</li>
+	<li><b>Contact Name</b> - Primary contact name.</li>
+	<li><b>Contact Phone</b> - Primary contacts phone number.</li>
+	<li><b>Contact Email</b> - Primary contacts email address.</li>
+	<li><b>Website URL</b> - Company email.</li>
+	<li><b>Logo Filename</b> - Name of the logo file that has been uploaded (if uploaded).</li>
+	<li><b>Slogan</b> - One line company slogan (if applicable).  NOTE: This is different than campaign text.</li>
+	<li><b>File (Logo) attachment to Upload</b> - This is the input that enables the ability to upload a logo file.  Size restrictions
+	apply.</li>
+</ul>
+
+<h3>Sponsorships</h3>
+This tab shows the existing plans that is attached to the sponsors account.  Sponsorship plans can be added by clicking on the 
+'Add Sponsorship' button from the Sponsors EDIT screen.  The following attributes are required to attacha a sponsorship plan to 
+a sponsor:
+
+<ul>
+<li><b>Sponsorship Level</b> - A sponsorship level is required and will define what entitlements (e.g. number of campaigns, number of 
+bulletins, etc.) a sponsor can do on the website.</li>
+<li><b>Type</b> - FUTURE USE</li>
+<li><b>Start Date</b> - The start of the sponsorship plan.</li>
+<li><b>End Date</b> - The ending date of the sponsorship.  This date should always be December 31 of the current year.</li>
+<li><b>ID</b> - The sponsorship identifier</li>
+<li><b>Status</b> - Publish/Unpublished status of the sponsorship.</li>
+</ul>
+<p>
+NOTE:  Program is an attribute on the sponsorship screen; however, it isn't used as the sponsorship plans are tied to a date range versus 
+any given program.
+</p>
+
+<h3>Assets</h3>
+A Sponsor may provide the organization several assets that can be used on the website as part of a given campaign.  An asset can be an
+image or it can be a document that can be used in a campaign link.  These assets are stored locally on the website.  Assets can be linked
+to a sponsor by using the 'Add Asset' button on the Sponsor EDIT screen.  The following data attributes are required when adding an 
+asset:
+<ul>
+	<li><b>Title</b> - User-defined name of the asset.  </li>
+	<li><b>Description</b> - </li>
+	<li><b>Type</b> - </li>
+	<li><b>File to Upload</b> - </li>
+	<li><b>Mime Type</b> - </li>
+	<li><b>Height</b> - </li>
+	<li><b>Width</b> - </li>
+	
+	
+	
+	
+	
+	
+</ul>
+
+<h3>Notes</h3>
+
 <h1>Frequently Asked Questions</h1>
