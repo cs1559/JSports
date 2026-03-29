@@ -19,6 +19,11 @@ use Joomla\CMS\Uri\Uri;
 use Joomla\CMS\Filesystem\Folder;
 use FP4P\Component\JSports\Site\Services\CampaignService;
 
+/**
+ * @deprecated
+ * @author Chris Strieter
+ *
+ */
 class CampaignManager
 {
     /**
@@ -54,9 +59,6 @@ class CampaignManager
         CampaignService::incrementImpressions($campaign->id);
         
         return $output;
-        
-        // Build each campaign using a factory
-        // return value
         
     }
 
