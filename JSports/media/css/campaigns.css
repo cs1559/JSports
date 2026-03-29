@@ -1,5 +1,18 @@
 @import url("promobar.css");
 
+.campaign-image-wrapper {
+    width: 250px;
+    height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.campaign-image-wrapper img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
 /* DEFAULT: applies everywhere */
 .jsports-campaign-container {
   width: 100%;
@@ -36,4 +49,15 @@
   height: auto;
   object-fit: contain;       /* no crop */
   display: block;            /* avoids inline spacing quirks */
+}
+
+
+.jsports-text-campaign-container {
+	/* background: #575EC7 !important; */
+    display: flex;
+    justify-content: center;   /* horizontal */
+    align-items: center;       /* vertical */
+	font-size: clamp(14px, 2vw, 20px); 
+	/*font-size: clamp(12px, 1.5vw, 18px);  */
+	color: #fff;
 }
