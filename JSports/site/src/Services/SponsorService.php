@@ -216,7 +216,7 @@ class SponsorService
      *
      * @return array<int, \stdClass>
      */
-    public static function getAssets(int $sponsorid): ?array
+    public static function getAssets(int $sponsorid, $imagesonly = false): ?array
     {
         $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
@@ -228,6 +228,9 @@ class SponsorService
             $db->quoteName('a.id') . ' = ' . $db->quote($sponsorid),
             $db->quoteName('a.id') . ' = ' . $db->quoteName('sa.sponsorid')
         );
+        if ($imagesonly) {
+            $conditions[] = $db->quoteName('sa.mimetype') . ' like \'image%\'';
+        }
         $query->where($conditions);
         $query->order("sa.title asc");
 
