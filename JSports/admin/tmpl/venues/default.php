@@ -17,7 +17,7 @@ use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Services\UserService;
-use FP4P\Component\JSports\Site\Campaigns\CampaignManager;
+// use FP4P\Component\JSports\Site\Campaigns\CampaignManager;
 
 $listOrder = $this->escape($this->state->get('list.ordering'));
 $listDirn  = $this->escape($this->state->get('list.direction'));
@@ -38,7 +38,7 @@ $user = UserService::getUser();
 
 ?>
 
-<?php echo CampaignManager::renderCampaigns('venues-top'); ?>
+<?php //echo CampaignManager::renderCampaigns('venues-top'); ?>
 
 <form action="<?php echo Route::_('index.php?option=com_jsports&view=venues'); ?>" method="post" name="adminForm" id="adminForm">
 	<?php echo LayoutHelper::render('joomla.searchtools.default', array('view' => $this)); ?>
