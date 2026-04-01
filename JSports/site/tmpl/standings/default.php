@@ -12,7 +12,6 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 use FP4P\Component\JSports\Administrator\Helpers\Html;
-use FP4P\Component\JSports\Site\Campaigns\CampaignManager;
 use FP4P\Component\JSports\Site\Ads\AdsManager;
 
 
@@ -28,7 +27,6 @@ $wa->useStyle('com_jsports.campaigns.style');
 
 <?php
     // Display any content for standings-top position
-//     echo CampaignManager::renderCampaigns('standings-top');
     echo AdsManager::renderCampaign('standings-top');
 ?>
     

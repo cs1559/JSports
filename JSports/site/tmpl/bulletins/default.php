@@ -23,7 +23,6 @@ use FP4P\Component\JSports\Site\Services\UserService;
 use FP4P\Component\JSports\Site\Services\GameService;
 use FP4P\Component\JSports\Site\Helpers\JSHelper;
 use Joomla\CMS\Session\Session;
-use FP4P\Component\JSports\Site\Campaigns\CampaignManager;
 use FP4P\Component\JSports\Site\Ads\AdsManager;
 
 $clientId  = (int) $this->state->get('client_id', 0);
@@ -49,8 +48,6 @@ $token = Session::getFormToken();
 ?>
 
 <?php 
-    
-    //echo CampaignManager::renderCampaigns('bulletins-top'); 
     echo AdsManager::renderCampaigns('bulletins-top');
 ?>
 

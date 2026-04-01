@@ -35,8 +35,8 @@ $wa->useStyle('com_jsports.teamlist.style');
 
 ?>
 <?php 
-    use FP4P\Component\JSports\Site\Campaigns\CampaignManager;
-    echo CampaignManager::renderCampaigns('teams-top'); 
+    use FP4P\Component\JSports\Site\Ads\AdsManager;
+    echo AdsManager::renderCampaign('teams-top');
 ?>
 
 

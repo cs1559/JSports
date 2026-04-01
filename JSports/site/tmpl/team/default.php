@@ -20,7 +20,7 @@ use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Services\GameService;
 use FP4P\Component\JSports\Site\Helpers\JSHelper;
 use Joomla\CMS\Component\ComponentHelper;
-use FP4P\Component\JSports\Site\Campaigns\CampaignManager;
+use FP4P\Component\JSports\Site\Ads\AdsManager;
 
 HTMLHelper::_('behavior.formvalidator');
 HTMLHelper::_('behavior.keepalive');
@@ -47,7 +47,7 @@ $document->setTitle(Text::_('COM_JSPORTS_TEAMPROFILE_PAGE_TITLE'));
 ?>
 
 <?php
-    echo CampaignManager::renderCampaigns('teamprofile-top');
+   echo AdsManager::renderCampaign('teamprofile-top');
 ?>
 
 <div class="container">
@@ -372,5 +372,5 @@ $document->setTitle(Text::_('COM_JSPORTS_TEAMPROFILE_PAGE_TITLE'));
 </div>  <!--  end of container -->
 
 <?php
-    echo CampaignManager::renderCampaigns('teamprofile-bottom');
+    echo AdsManager::renderCampaign('teamprofile-bottom');
 ?>

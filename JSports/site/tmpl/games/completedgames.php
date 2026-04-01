@@ -20,7 +20,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Factory;
-use FP4P\Component\JSports\Site\Campaigns\CampaignManager;
+use FP4P\Component\JSports\Site\Ads\AdsManager;
 
 $listOrder = $this->escape($this->state->get('list.ordering'));
 $listDirn  = $this->escape($this->state->get('list.direction'));
@@ -36,7 +36,9 @@ $wa->useStyle('com_jsports.teamlist.style');
 
 ?>
 
-<?php echo CampaignManager::renderCampaigns('games-top'); ?>
+<?php 
+    echo AdsManager::renderCampaign('games-top');
+?>
 
 <form action="#<?php //echo Route::_('index.php?option=com_jsports&view=teams'); ?>" method="post" name="adminForm" id="adminForm">
 	
