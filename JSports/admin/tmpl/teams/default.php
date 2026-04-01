@@ -37,8 +37,8 @@ $user = UserService::getUser();
 ?>
 
 <?php 
-    use FP4P\Component\JSports\Site\Campaigns\CampaignManager;
-    echo CampaignManager::renderCampaigns('teams-top'); 
+//     use FP4P\Component\JSports\Site\Campaigns\CampaignManager;
+//     echo CampaignManager::renderCampaigns('teams-top'); 
 ?>
 
 <form action="<?php echo Route::_('index.php?option=com_jsports&view=teams'); ?>" method="post" name="adminForm" id="adminForm">
