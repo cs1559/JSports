@@ -9,7 +9,7 @@
  * @license     GNU/GPLv2, see http://www.gnu.org/licenses/gpl-2.0.html
  *
  */
-namespace FP4P\Component\JSports\Site\Objects\Events;
+namespace FP4P\Component\JSports\Site\Events;
 
 use FP4P\Component\JSports\Site\Objects\BaseObserver;
 use FP4P\Component\JSports\Site\Services\TeamService;

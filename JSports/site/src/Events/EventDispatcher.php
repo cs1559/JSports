@@ -10,12 +10,12 @@
  *
  */
 
-namespace FP4P\Component\JSports\Site\Objects\Events;
+namespace FP4P\Component\JSports\Site\Events;
 
 use FP4P\Component\JSports\Site\Objects\Observable;
-use FP4P\Component\JSports\Site\Objects\Events\GameObserver;
-use FP4P\Component\JSports\Site\Objects\Events\TeamObserver;
-use FP4P\Component\JSports\Site\Objects\Events\RegistrationObserver;
+use FP4P\Component\JSports\Site\Events\GameObserver;
+use FP4P\Component\JSports\Site\Events\TeamObserver;
+use FP4P\Component\JSports\Site\Events\RegistrationObserver;
 
 class EventDispatcher extends Observable
 {
