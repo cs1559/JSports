@@ -98,7 +98,8 @@ class CampaignService
         $conditions = array(
             $db->quoteName('c.sponsorid') . ' = ' . $db->quoteName('s.id'),
             $db->quoteName('c.positions') . ' like \'%' . $position . '%\'',
-            $db->quoteName('c.published') . ' in (1) '
+            $db->quoteName('c.published') . ' in (1) ',
+            $db->quoteName('c.enddate') . ' >= CURDATE()'
         );
         
         if (!is_null($filter)) {
