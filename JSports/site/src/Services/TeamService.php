@@ -388,7 +388,7 @@ a.contactemail, a.city, a.state, m.divisionid, d.name as divisionname, d.agegrou
      * @param int $teamid
      * @return array
      */
-    public static function getTeamEmailAddresses(int $teamid) : array
+    public static function getTeamEmailAddresses(int $teamid, int $programid) : array
     {
         $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
@@ -401,12 +401,14 @@ select distinct email from (
     select email from #__users as u
     where id in (select userid from #__jsports_rosters where teamid = :teamid2
              and classification = 'S'
+             and programid = :programid
              and userid > 0)
 ) as temp";
         
         $query->setQuery($sql);
         $query->bind(':teamid1', $teamid, ParameterType::INTEGER);
         $query->bind(':teamid2', $teamid, ParameterType::INTEGER);
+        $query->bind(':programid', $programid, ParameterType::INTEGER);
         $db->setQuery($query);
         $rows = $db->loadObjectList();
         
