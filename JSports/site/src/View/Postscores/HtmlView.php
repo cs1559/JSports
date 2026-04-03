@@ -65,7 +65,15 @@ class HtmlView extends BaseHtmlView
         $this->items        = $model->getItems();
         $this->team         = $model->getTeam();
         $this->program      = $model->getProgram();
-        $this->canEdit      = SecurityService::canEditTeamSchedule($this->team->id,$this->program->id);
+        
+        $context = array('teamid' => $this->team->id,
+            'ownerid' => $this->team->ownerid,
+            'programid' => $this->program->id
+        );
+        /** Check to see if the current user can EDIT the team profile */
+//         $this->canEdit = SecurityService::canEditTeam($context);
+            $this->canEdit = SecurityService::canPostGameScore($this->team->id, $this->program->id);
+//         $this->canEdit      = SecurityService::canEditTeamSchedule($this->team->id,$this->program->id);
         //$this->canEdit = SecurityService::canEditTeamSchedule($context);
 
         if ($this->program->registrationonly) {
