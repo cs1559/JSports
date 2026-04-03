@@ -71,8 +71,8 @@ Email: " . $orgemail . "<br/>
         
         $subject = "SWIBL - Game Score Posted";
         
-        $homeemails = TeamService::getTeamEmailAddresses($data->hometeamid);
-        $awayemails = TeamService::getTeamEmailAddresses($data->awayteamid);
+        $homeemails = TeamService::getTeamEmailAddresses($data->hometeamid, $data->programid);
+        $awayemails = TeamService::getTeamEmailAddresses($data->awayteamid, $data->programid);
         $recipients = array_merge($homeemails, $awayemails);
         
         $adminrecipients = array();
@@ -136,8 +136,8 @@ Email: " . $orgemail . "<br/>
         
         $subject = "SWIBL - Game Score Posted";
         
-        $homeemails = TeamService::getTeamEmailAddresses($data->hometeamid);
-        $awayemails = TeamService::getTeamEmailAddresses($data->awayteamid);
+        $homeemails = TeamService::getTeamEmailAddresses($data->hometeamid, $data->programid);
+        $awayemails = TeamService::getTeamEmailAddresses($data->awayteamid, $data->programid);
         $recipients = array_merge($homeemails, $awayemails);
         
         $adminrecipients = array();
@@ -201,8 +201,8 @@ Email: " . $orgemail . "<br/>
         
         $subject = "SWIBL - Possible Forfiet Game Score Posted";
         
-        $homeemails = TeamService::getTeamEmailAddresses($data->hometeamid);
-        $awayemails = TeamService::getTeamEmailAddresses($data->awayteamid);
+        $homeemails = TeamService::getTeamEmailAddresses($data->hometeamid, $data->programid);
+        $awayemails = TeamService::getTeamEmailAddresses($data->awayteamid, $data->programid);
         $recipients = array_merge($homeemails, $awayemails);
         
         $adminrecipients = array();
