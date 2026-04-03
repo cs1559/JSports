@@ -431,6 +431,42 @@ class SecurityService
         
         return false;
     }
+
+
+    
+    public static function canPostGameScore(int $teamid, int $programid, ?int $ownerid = null) : bool {
+        
+        // If the user is a "super user" or "administrator" immediately grant them access
+        if (SecurityService::isAdmin()) {
+            return true;
+        }
+        
+        if (is_null($ownerid)) {
+            $user = SecurityService::getUser();
+            $ownerid = $user->id;
+        }
+        
+        $context = array(
+            'teamid' => $teamid,
+            'ownerid' => $ownerid
+        );
+        
+        if (UserService::isTeamAdmin($teamid, $programid, $user->id)){
+            return true;
+        }
+        
+        $canEdit = SecurityService::canEditTeam($context);
+        
+        // If program/season is closed, no game scores can be posted.
+        $pgm = ProgramsService::getItem($programid);
+        if ($pgm->status == 'C') {
+            return false;
+        }
+        
+        return $canEdit;
+    }
+    
+    
     
 }
 
