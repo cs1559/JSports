@@ -24,27 +24,6 @@ final class UserServiceTest extends TestCase
         $this->db = Factory::getContainer()->get(DatabaseInterface::class);
     }
     
-//     /**
-//      * This test ensures that the ProgramService is still able to retrieve a program record.
-//      */
-//     public function testGetUserTeams(): void
-//     {
-
-//         $item = ProgramsService::getItem(35);
-//         if ($this->debug) {
-//             fwrite(STDERR, "Name = " . $item->name . PHP_EOL);
-//         }
-// //         // If your table can be empty, assert it's an array; otherwise assertNotEmpty
-// //         $this->assertIsArray($rows);
-        
-// //         // Optional: if you expect at least 1 row in your dev DB
-//         $this->assertNotEmpty($item);
-        
-// //         if (!empty($rows)) {
-// //             $this->assertArrayHasKey('id', $rows[0]);
-// //             $this->assertArrayHasKey('name', $rows[0]);
-// //         }
-//     }
 
 //     /**
 //      * this test should ensure that only PUBLISHED (1) and ACTIVE (status = A) programs are returned.
