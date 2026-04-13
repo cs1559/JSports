@@ -25,6 +25,7 @@ use FP4P\Component\JSports\Site\Objects\Application as Myapp;
 use FP4P\Component\JSports\Site\Helpers\JSHelper;
 use Joomla\CMS\Form\Form; 
 use FP4P\Component\JSports\Site\Services\UserService;
+use FP4P\Component\JSports\Administrator\Services\SecurityService;
 
 /**
  * GameModel - Methods/functions to manage games within the component.
@@ -85,13 +86,15 @@ class GameModel extends FormModel
             }
         }
         
-        $date = $data['gamedate'] ?? null;
-        if ($date) {
-            $today = Factory::getDate('now')->format('Y-m-d');
-            
-            if ($date < $today) {
-                $this->setError(Text::_('COM_JSPORTS_ERR_GAME_HAS_PREVIOUS_DATE'));
-                return false;
+        if (!SecurityService::isAdmin()) {
+            $date = $data['gamedate'] ?? null;
+            if ($date) {
+                $today = Factory::getDate('now')->format('Y-m-d');
+                
+                if ($date < $today) {
+                    $this->setError(Text::_('COM_JSPORTS_ERR_GAME_HAS_PREVIOUS_DATE'));
+                    return false;
+                }
             }
         }
         
