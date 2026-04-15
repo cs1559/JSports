@@ -286,6 +286,7 @@ class GameController extends FormController
 
         $gameid = $requestData['id'];
         $teamid = $requestData['teamid'];
+        $programid = $requestData['programid'];
         $contextid = $requestData['contextid'];
         
         /* Code to prevent further action if user is NOT logged in */
@@ -328,7 +329,7 @@ class GameController extends FormController
 
             // Redirect back to the edit screen.
             // @TODO  Need to look at how the context id is set
-            $this->setRedirect(Route::_('index.php?option=com_jsports&view=game&layout=edit&id=' .$gameid . '&teamid=' . $teamid, false));
+            $this->setRedirect(Route::_('index.php?option=com_jsports&view=game&layout=edit&id=' .$gameid . '&teamid=' . $teamid . '&programid=' . $programid, false));
             //$this->setRedirect(Route::_('index.php?option=com_jsports&view=game&layout=edit&id=' .$gameid . '&teamid=' . $contextid, false));
             
             return false;
