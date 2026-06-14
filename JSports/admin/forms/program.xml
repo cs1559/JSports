@@ -43,7 +43,7 @@
 			label="COM_JSPORTS_SPORT" class="" default="B"
 			validate="options">
 			<option value="B">Baseball</option>
-			<option value="G">Golf</option>
+			<option value="S">Softball</option>
 		</field>
 
 
