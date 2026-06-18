@@ -37,6 +37,9 @@ $wa->useStyle('com_jsports.postings.style');
 ?>
 
 	<h2>Postings <?php //echo $this->program->name; ?></h2>
+	
+	<p><strong>NOTE:</strong>Use the CATEGORY/SEARCH field to limit the postings listed.  Select 'TRYOUT' if you are looking
+	for only current tryout information.</p>
 
 <form action="#<?php //echo Route::_('index.php?option=com_jsports&view=teams'); ?>" method="post" name="adminForm" id="adminForm">
 	
