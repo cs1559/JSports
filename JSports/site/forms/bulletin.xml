@@ -17,6 +17,7 @@
 			key_field="category"
 			value_field="catdesc" 
 			header="-Select Category-"
+			required="true"
 		/>
 		
 		<field name="content" type="editor"
