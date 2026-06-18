@@ -1,13 +1,13 @@
 <?php
 /**
- * @package     Games.Administrator
- * @subpackage  com_jsports
- * 
- * This template provides a user the ability to EDIT a team record from the website's FRONT END (site).  Most changes to a 
- * team should be done on the administrator site.
+ * @version     0.0.1
+ * @package     JSports
+ * @subpackage  Bulletin.Site
+ * @category    Template
+ * @desc        Template to create/edit a bulletin
+ * @copyright   Copyright (C) 2023-2026 Chris Strieter
+ * @license     GNU/GPLv2, see http://www.gnu.org/licenses/gpl-2.0.html
  *
- * @copyright   Copyright (C) 2005 - 2019 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 defined('_JEXEC') or die;
@@ -33,6 +33,9 @@ $token = Session::getFormToken();
 ?>
 
 <h1>Add/Edit Bulletin </h1>
+<?php //if ($this->item->id > 0) {?>
+<p><strong>NOTE:</strong>  You need to create the bulletin FIRST before you can add an attachment.</p>
+<?php //} ?>
 <form action="<?php echo Route::_('index.php?option=com_jsports&view=bulletin&layout=edit&id=' . (int) $this->item->id); ?>"
 	method="post" enctype="multipart/form-data" name="bulletinForm" id="bulletin-form" class="form-validate">
 
