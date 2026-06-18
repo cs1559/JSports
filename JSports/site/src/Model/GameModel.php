@@ -86,17 +86,21 @@ class GameModel extends FormModel
             }
         }
         
-        if (!SecurityService::isAdmin()) {
+// //         if (!SecurityService::isAdmin()) {
             $date = $data['gamedate'] ?? null;
             if ($date) {
-                $today = Factory::getDate('now')->format('Y-m-d');
+                $today = Factory::getDate('now');
+                $today->setTime(0, 0, 0);
                 
-                if ($date < $today) {
+                $threshold = clone $today;
+                $threshold->modify('-3 days');
+                
+                if ($date < $threshold) {
                     $this->setError(Text::_('COM_JSPORTS_ERR_GAME_HAS_PREVIOUS_DATE'));
                     return false;
                 }
             }
-        }
+// //         }
         
         
         return parent::validate($form, $data, $group);
