@@ -66,8 +66,7 @@ class ProgramController extends FormController
         $programid = (int) ($this->input->getInt('id') ?: ($data['id'] ?? 0));
         
         $this->setRedirect(
-            Route::_('index.php?option=com_jsports&view=programsetup&programid=' . $programid . 
-                '&' . Session::getFormToken() . '=1', false)
+            Route::_('index.php?option=com_jsports&view=programsetup&programid=' . $programid, false)
             );
         
         return true;
