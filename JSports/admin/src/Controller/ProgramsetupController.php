@@ -65,11 +65,13 @@ class ProgramsetupController extends AdminController
             $input = $app->input;
             
             // Always use Joomla input filters
-            $programid   = $input->getInt('programid', 0);
+            $data = $this->input->post->get('filter', array(), 'array');
+
+            $programid   = $data['programid'];
             $assignments = $input->post->get('div-assignment', [], 'array'); // name must match your form field
             
             if ($programid <= 0) {
-                $app->enqueueMessage(Text::_(), 'warning');
+                $app->enqueueMessage(Text::_('COM_JSPORTS_ERR_MISSINGPROGRAMID'), 'warning');
                 $this->setRedirect(Route::_('index.php?option=com_jsports&view=programs', false));
                 return false;
             }
