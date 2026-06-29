@@ -144,8 +144,8 @@
 		<field name="registrationend" type="calendar"
 			label="COM_JSPORTS_ENDDATE"  default="0000-00-00"/>
 
-		<field name="registrationnotes" type="textarea"
-			label="COM_JSPORTS_REGISTRATIONNOTES" rows="5" cols="75" required="false" />
+		<field name="registrationnotes" type="editor"
+			label="COM_JSPORTS_REGISTRATIONNOTES" rows="5" cols="75" filter="raw" required="false" />
 
 		<field name="cost" type="number" label="COM_JSPORTS_COST"
 			default="0" />
