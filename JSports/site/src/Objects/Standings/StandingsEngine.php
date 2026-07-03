@@ -13,6 +13,9 @@ namespace FP4P\Component\JSports\Site\Objects\Standings;
 
 use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Administrator\Table\StandingsTable;
+use FP4P\Component\JSports\Site\Services\DivisionService;
+use FP4P\Component\JSports\Site\Services\ProgramsService;
+use CBOR\OtherObject\TrueObject;
 
 class StandingsEngine
 {
@@ -25,13 +28,42 @@ class StandingsEngine
             echo "ERROR:  Isseus flushing the standings database\n";
         }
         
-        $result = $this->getData();
-        echo "StandingsEngine:  # of records = " . count($result) ."<br/>\n";
+//         $result = $this->getData();
+//         echo "StandingsEngine:  # of records = " . count($result) ."<br/>\n";
         
-        echo "StandingsEngine:  Loading Records  .... <br/>\n";
-        foreach ($result as $item) {
-            $this->loadRecord($item);
-        }
+//         echo "StandingsEngine:  Loading Records  .... <br/>\n";
+//         foreach ($result as $item) {
+//             $this->loadRecord($item);
+//         }
+
+//         return true;
+        
+//         $programs = ProgramsService::getNonCompletedPrograms(true);
+        
+//         foreach ($programs as $program) {
+            $program = ProgramsService::getItem($programid);
+            $divisions = DivisionService::getDivisionList($programid);
+            // echo "StandingsEngine:  Processing Program -" . $programid . "\n";
+           
+            foreach ($divisions as $division) {
+                $div = (object) $division;
+                $builder = new StandingsBuilder();
+                $standings = $builder->loadStandings($div->id, $programid);
+              //  echo "StandingsEngine: Processing Division -" . $div->name . "</h1>";
+//                 foreach ($standings as $team) {
+//                     echo "Pos:  " . $team->position . " Team: " . $team->name . "<br/>";
+//                 }
+                
+                
+//                 $builder   = new StandingsBuilder();
+//                 $standings = $builder->loadStandings($divisionId, $programId);
+                
+                $writer = new TempStandingsWriter();
+                $writer->save($programid, $div->id, $standings);
+                
+            }
+            
+//         }
         
         return true;
         
