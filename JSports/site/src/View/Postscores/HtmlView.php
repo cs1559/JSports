@@ -65,7 +65,7 @@ class HtmlView extends BaseHtmlView
         $this->items        = $model->getItems();
         $this->team         = $model->getTeam();
         $this->program      = $model->getProgram();
-        $this->state                = $model->getState();
+        $this->state        = $model->getState();
         
         $context = array('teamid' => $this->team->id,
             'ownerid' => $this->team->ownerid,
