@@ -53,7 +53,7 @@ class RegistrationObserver extends BaseObserver
                 $skill = "Elite";
                 break;
             default:
-                $skill = "ERROR";
+                $skill = "";
                 break;
         }
         
@@ -78,7 +78,7 @@ State: " . $data->state . "<br/>
 </br>
 Returning Team: " . $returningteam . "<br/>
 </br>
-Registration Group: " . $data->grouping . " - " . $skill ."<br/>
+Registration Group: " . $data->grouping . " - Skill Level:" . $skill ."<br/>
 </br>
 Registered By: " . $data->registeredby . "<br/>
 
