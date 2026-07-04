@@ -118,7 +118,7 @@ class ToolsController extends BaseController
         
         //print $content;
         //$app->close();
-        
+               
         $msg = 'Standings were manually refreshed';
         Factory::getApplication()->enqueueMessage($msg, 'message');
         LogService::info("MANUAL REFRESH STANDINGS: <br/>\n" . $content);
