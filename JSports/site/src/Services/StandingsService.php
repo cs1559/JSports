@@ -66,6 +66,10 @@ class StandingsService
                 $query->order('d.ordering, d.name, winpct desc, runsallowed asc, 
                         runsscored desc, gamesplayed desc, teamid');
                 break;
+            case 'PTSH2H':
+                $query->order('d.ordering, d.name, position, points desc, runsallowed asc,
+                        runsscored desc, gamesplayed desc, teamid');
+                break;
             default:
                 $query->order('d.ordering, d.name, points desc, runsallowed asc, 
                         runsscored desc, gamesplayed desc, teamid');
@@ -129,5 +133,10 @@ class StandingsService
 
         return $db->loadAssocList();
     }
+    
+    public static function insertTempRecord() {
+        
+    }
+    
 }
     
