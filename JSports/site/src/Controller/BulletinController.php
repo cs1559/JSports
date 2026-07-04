@@ -242,4 +242,51 @@ class BulletinController extends BaseController
         $this->setRedirect(Route::_(self::REDIRECTBULLETINS_URL . $teamid, false));
     }
 
+    
+    public function bump() {
+        
+        $this->checkToken($this->input->getMethod() == 'GET' ? 'get' : 'post');
+        
+        $app   = $this->app;
+        $input = $app->input;
+        
+        $id    = $input->getInt('id');
+        $teamId = $input->getInt('teamid');
+        
+        //         $user = $app->getIdentity();
+        $user = UserService::getUser();
+        if ($user->guest) {
+            $app->enqueueMessage(Text::_('COM_JSPORTS_INVALID_USERSESSION'), 'error');
+            $this->setRedirect(Route::_(self::REDIRECTBULLETINS_URL . $teamId, false));
+            return false;
+        }
+        
+        if ($id <= 0) {
+            $app->enqueueMessage('Invalid ID value provided - Bulletin DELETE failed', 'error');
+            $this->setRedirect(Route::_(self::REDIRECTBULLETINS_URL . $teamId, false));
+            return false;
+        }
+        
+        try {
+            $item = (new BulletinService())->getItem($id);
+            
+            if (BulletinService::bump($id)) {
+                $app->enqueueMessage("Bulletin '{$item->title}' was successfully bumped/updated", 'message');
+                $this->setRedirect(Route::_(self::REDIRECTBULLETINS_URL. (int) $item->teamid, false));
+            return true;
+            } else {
+                $app->enqueueMessage("Bump of  '{$item->title}' was NOT successful", 'message');
+                $this->setRedirect(Route::_(self::REDIRECTBULLETINS_URL. (int) $item->teamid, false));
+            }
+            
+        } catch (\Exception $e) {
+            LogService::error('Bulletin delete failed: ' . $e->getMessage());
+            $app->enqueueMessage('Delete failed: ' . $e->getMessage(), 'error');
+            $this->setRedirect(Route::_('index.php?option=com_jsports&view=bulletins&teamid=' . $teamId, false));
+            return false;
+        }
+    }
+    
+    
+    
 }

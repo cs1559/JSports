@@ -48,7 +48,7 @@ $token = Session::getFormToken();
 ?>
 
 <?php 
-    echo AdsManager::renderCampaigns('bulletins-top');
+    echo AdsManager::renderCampaign('bulletins-top');
 ?>
 
 <form action="<?php echo Route::_('index.php?option=com_jsports&view=bulletins'); ?>" method="post" name="adminForm" id="adminForm">
@@ -117,7 +117,9 @@ $token = Session::getFormToken();
 						<th scope="row" class="has-context">
 
 					<?php 
-				       echo $item->createdate;
+// 				       echo $item->updatedate;
+				       $bdate = (new DateTime($item->updatedate))->format('Y-m-d');
+				       echo $bdate;
 					?>
 					</td>
 
@@ -149,6 +151,9 @@ $token = Session::getFormToken();
     					 ?>
         							<a class="btn btn-primary btn-sm" href="<?php echo Route::_('index.php?option=com_jsports&view=bulletin&layout=edit&id=' . $item->id); ?>">Edit</a>
         							<a class="btn btn-danger btn-sm" onClick="return confirm('Are you sure?');" href="<?php echo Route::_('index.php?option=com_jsports&task=bulletin.delete&id=' . $item->id . '&' . $token . '=1'); ?>">Delete</a>
+        							<?php if ($item->approved) { ?>
+       								<a class="btn btn-success btn-sm" onClick="return confirm('Are you sure?');" href="<?php echo Route::_('index.php?option=com_jsports&task=bulletin.bump&id=' . $item->id . '&' . $token . '=1'); ?>">Bump</a>
+       							<?php } ?>
 						  <?php 
     					 } 
     						?>

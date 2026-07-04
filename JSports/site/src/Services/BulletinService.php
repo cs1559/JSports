@@ -31,6 +31,7 @@ use Joomla\Filesystem\Folder;
 use FP4P\Component\JSports\Site\Services\LogService;
 use FP4P\Component\JSports\Site\Objects\Application as Myapp;
 
+
 class BulletinService
 {
    
@@ -59,6 +60,42 @@ class BulletinService
         return null;
     }
 
+    
+    /**
+     * The bump function updates the UPDATEDATE column in the bulletins table to enable the user
+     * to easily bump their post to the top of the list.
+     * 
+     * @param int $id
+     * @return bool
+     */
+    public static function bump(int $id = 0) : bool {
+        
+        $logger = Myapp::getLogger();
+        if ($id === 0) {
+            $logger->error('Bulletin Record ID ' . $id . ' is required ');
+            return false;
+        }
+        
+        $db    = Factory::getContainer()->get(DatabaseInterface::class);
+        $query = $db->getQuery(true)
+        ->update($db->quoteName('#__jsports_bulletins'))
+        ->set($db->quoteName('updatedate') . ' = CURRENT_TIMESTAMP')
+        ->where($db->quoteName('id') . ' = :id')
+        ->bind(':id', $id, ParameterType::INTEGER);
+        
+        $result = $db->setQuery($query)->execute();
+    
+        if ($result) {
+            $logger->error('Bulletin Record ID ' . $id . ' has been bumped ');
+        } else {
+            $logger->error('Bulletin Record ID ' . $id . ' bump failed ');
+        }
+        
+        return $result;
+    }
+    
+        
+    
     /**
      * This function will delete an individual bulletin record in the database.
      * NOTE:  deleting any underlying attachment is handled elsewhere.
