@@ -83,7 +83,8 @@ $wa->useStyle('com_jsports.postings.style');
 	<?php foreach ($this->items as $item) {	?>
 		<tr>
 			<?php 
-			 $bdate = (new DateTime($item->createdate))->format('Y-m-d');
+			 //$bdate = (new DateTime($item->createdate))->format('Y-m-d');
+			$bdate = (new DateTime($item->updatedate))->format('Y-m-d');
 			?>
 			<th scope="row"><?php echo $bdate; ?></th>
 			<td><?php echo strtoupper($item->title); ?>
