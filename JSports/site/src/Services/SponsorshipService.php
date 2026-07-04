@@ -67,6 +67,27 @@ class SponsorshipService
         $db->setQuery($query)->execute();
     }
     
-     
+    
+    public static function getPlanDetails($code) {
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        $query = $db->getQuery(true);
+        
+        $query->select('a.*');
+        $query->from($db->quoteName('#__jsports_sponsorship_plans') . ' AS a ');
+        
+        $conditions = [
+            $db->quoteName('a.plancode') . ' = ' . $db->quote($code),
+        ];
+        
+        $query->where($conditions);
+        $db->setQuery($query);
+        
+        return $db->loadObject();
+        
+    }
+    
+    
+    
+    
 }
 
