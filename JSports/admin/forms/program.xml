@@ -136,6 +136,7 @@
 			class="form-select-color-state" default="POINTS" validate="options">
 			<option value="POINTS">Points (Points, RA, RS)</option>
 			<option value="WINPCT">Winning Percentage</option>
+			<option value="PTSH2H">Points Plus Head to Head</option>
 		</field>
 
 		<field name="registrationstart" type="calendar"
