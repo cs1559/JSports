@@ -143,8 +143,9 @@ class PostingsModel extends ListModel
 // 	    $orderCol  = $this->state->get('list.ordering', 'a.name');
 // 	    $orderDirn = $this->state->get('list.direction', 'asc');
 	    
-	    $query->order('a.createdate desc');
-	    
+// 	    $query->order('a.createdate desc');
+	    $query->order('a.updatedate desc');
+
 	    return $query;
 	    
 	}	    
