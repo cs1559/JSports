@@ -1,3 +1,16 @@
+#Query to identify team rosters with players greater than 'n'
+select d.name, d.agegroup, t.name, count(*) as playercnt
+from jos2823_jsports_rosters r, jos2823_jsports_teams t, jos2823_jsports_map m, jos2823_jsports_divisions d
+where m.programid = 37
+and r.programid = m.programid
+and r.teamid = t.id
+and t.id = m.teamid
+and m.divisionid = d.id
+and r.classification = 'P'
+group by d.name, d.agegroup, t.name
+having playercnt > 18;
+
+
 #Query to identify top 3 teams in a division
 WITH standings_data AS (
   SELECT 
