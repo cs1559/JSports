@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="component" version="4.4" method="upgrade">
-	<name>JSports</name>
+<extension type="component" version="5.0" method="upgrade">
+	<name>COM_JSPORTS</name>
 	<!-- The following elements are optional and free of formatting constraints -->
-	<creationDate>2026-03-19</creationDate>
+	<creationDate>2026-06-17</creationDate>
 	<author>Chris Strieter</author>
 	<authorEmail>chris@swibl.org</authorEmail>
 	<authorUrl>http://www.swibl.org</authorUrl>
@@ -16,7 +16,7 @@
 	and more.
 	</description>
 
-	<namespace path="src/">FP4P\Component\JSports</namespace>
+	<namespace path="src">FP4P\Component\JSports</namespace>
 
 	<scriptfile>script.php</scriptfile>
 
