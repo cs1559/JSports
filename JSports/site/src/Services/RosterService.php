@@ -40,7 +40,6 @@ class RosterService
      */
     public function getItem(int $id = 0) : ?RostersTable {
         
-//         $db = Factory::getDbo();
         $db = Factory::getContainer()->get(DatabaseInterface::class);
         $table = new RostersTable($db);
         
@@ -138,7 +137,7 @@ class RosterService
      * @return array<object>
      */
     private static function getRosterDataByType($teamid, $programid, $classification, $includesubs = true) : array {
-//         $db = Factory::getDbo();
+
         $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
               

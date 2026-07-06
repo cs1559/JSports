@@ -54,7 +54,7 @@ class GameObserver extends BaseObserver
         $body = "
 <p>A league game score has been posted for a team you are associated with. The game score is listed below:</p>
 <p>
-<strong>ID: " . $data->id . " - " . $data->awayteamname . " @ " . $data->hometeamname . "</strong>
+<strong>Date: " . $data->gamedate . " - " . $data->awayteamname . " @ " . $data->hometeamname . "</strong>
 </p>
 <table style=\"width: 40%\">
 <tbody>
@@ -67,6 +67,9 @@ class GameObserver extends BaseObserver
 <p>
 SWIBL<br/>
 Email: " . $orgemail . "<br/>
+</p>
+<p>
+Game ID:  " . $data->id . "
 </p> ";
         
         $subject = "SWIBL - Game Score Posted";

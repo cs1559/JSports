@@ -51,7 +51,8 @@ class RostersModel extends ListModel
 	    parent::populateState($ordering, $direction);
 	    
 	    $app = Factory::getApplication();
-	    $input = $app->input;
+// 	    $input = $app->input;
+	    $input = $app->getInput();
 	    
 // 	    $this->setState('rosters.id', $input->getInt('id'));
 	    $this->setState('rosters.teamid', $input->getInt('teamid'));

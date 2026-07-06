@@ -29,7 +29,6 @@ class ProgramsService
      */
     public static function getItem(int $id = 0) : ?ProgramsTable {
         
-//         $db = Factory::getDbo();
         $db = Factory::getContainer()->get(DatabaseInterface::class);
         $programs = new ProgramsTable($db);
                 
@@ -50,7 +49,6 @@ class ProgramsService
      */
     public static function getPrograms($inclregistrations = false) {
         $db = Factory::getContainer()->get(DatabaseInterface::class);
-        //$db = Factory::getDbo();
         $query = $db->getQuery(true);
         
         $query->select('p.*');
@@ -77,7 +75,6 @@ class ProgramsService
      */
     public static function getNonCompletedPrograms(bool $activeonly = false) {
         $db = Factory::getContainer()->get(DatabaseInterface::class);
-        //$db = Factory::getDbo();
         $query = $db->getQuery(true);
         
         $query->select('p.*');
@@ -115,7 +112,6 @@ class ProgramsService
      */
     public static function getProgramList() : array {
         
-//         $db = Factory::getDbo();
         $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
         
@@ -137,7 +133,6 @@ class ProgramsService
      * @return array 
      */
     public static function getMostRecentProgram() : array {
-//         $db = Factory::getDbo();
         $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
         
@@ -166,7 +161,6 @@ class ProgramsService
         
         $pgm = ProgramsService::getItem($programid);
         
-//         $db = Factory::getDbo();
         $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
         
@@ -186,7 +180,6 @@ class ProgramsService
     
     public static function closeProgram($programid) {
 
-//         $db = Factory::getDbo();
         $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
         
@@ -308,8 +301,6 @@ class ProgramsService
         //         }
         
         echo "DELETING STANDINGS FROM PAST STANDINGS TABLE<br/>";
-        
-//         $db = Factory::getDbo();
         $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
         

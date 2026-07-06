@@ -34,7 +34,6 @@ class SponsorService
     public static function getItem(int $id = 0): ?SponsorsTable
     {
 
-        // $db = Factory::getDbo();
         $db = Factory::getContainer()->get(DatabaseInterface::class);
         $table = new SponsorsTable($db);
 

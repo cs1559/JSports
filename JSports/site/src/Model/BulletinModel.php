@@ -50,7 +50,8 @@ class BulletinModel extends FormModel
         $bulletin = $bsvc->getBulletinsTable();
         
         $app   = Factory::getApplication();
-        $input = $app->input;
+//         $input = $app->input;
+        $input = $app->getInput();
 //         $user   = $app->getIdentity();
         $user = UserService::getUser();
         

@@ -79,7 +79,6 @@ class LogService
      */
     public static function purge(int $logdays = 200) : int {
         
-        //$db    = Factory::getDbo();
         $db = Factory::getContainer()->get(DatabaseInterface::class);
         
         $query = $db->getQuery(true);

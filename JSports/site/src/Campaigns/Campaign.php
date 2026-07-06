@@ -16,7 +16,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Uri\Uri;
-use Joomla\CMS\Filesystem\Folder;
+use Joomla\Filesystem\Folder;
 use FP4P\Component\JSports\Site\Helpers\SponsorHelper;
 use FP4P\Component\JSports\Site\Services\CampaignService;
 use Joomla\CMS\Router\Route;

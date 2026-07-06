@@ -16,7 +16,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Uri\Uri;
-use Joomla\CMS\Filesystem\Folder;
+use Joomla\Filesystem\Folder;
 
 final class JSHelper
 {
@@ -110,7 +110,7 @@ final class JSHelper
      * This function will return the version number of the component.
      * @return string
      */
-    public static function getVersion() {
+    public static function getVersion() : string {
         $xml_path = JPATH_ADMINISTRATOR . '/components/com_jsports/jsports.xml';
         $xml_obj = new \SimpleXMLElement(file_get_contents($xml_path));
         return strval($xml_obj->version);
@@ -120,7 +120,7 @@ final class JSHelper
      * This function will return the version number of the component.
      * @return string
      */
-    public static function getReleasedate() {
+    public static function getReleasedate() : string {
         $xml_path = JPATH_ADMINISTRATOR . '/components/com_jsports/jsports.xml';
         $xml_obj = new \SimpleXMLElement(file_get_contents($xml_path));
         return strval($xml_obj->creationDate);
@@ -132,7 +132,7 @@ final class JSHelper
      * @param string $code
      * @return string
      */
-    public static function translateBulletinCategory($code = "")
+    public static function translateBulletinCategory($code = "") : string
     {
         static $map = [
             'G' => 'General',
@@ -154,7 +154,7 @@ final class JSHelper
      * @param number $key
      * @return string
      */
-    public static function getBulletinFilePath($key) {
+    public static function getBulletinFilePath($key) : string {
         $params = ComponentHelper::getParams('com_jsports');
         $attachmentdir = rtrim($params->get('attachmentdir'));
         
@@ -179,7 +179,7 @@ final class JSHelper
      * @param string $filename
      * @return string
      */
-    public static function getBulletinAttachmentURL($key, $filename) {
+    public static function getBulletinAttachmentURL($key, $filename) : string {
         $params = ComponentHelper::getParams('com_jsports');
         $attachmentdir = $params->get('attachmentdir');
         

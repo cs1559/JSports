@@ -39,7 +39,8 @@ class RosterModel extends FormModel
         parent::populateState();
         
         $app = Factory::getApplication();
-        $input = $app->input;
+//         $input = $app->input;
+        $input = $app->getInput();
         
         $this->setState('roster.id', $input->getInt('id'));
         $this->setState('roster.teamid', $input->getInt('teamid'));

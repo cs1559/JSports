@@ -11,7 +11,7 @@
  */
 namespace FP4P\Component\JSports\Administrator\Fields;
 
-defined('JPATH_PLATFORM') or die;
+defined('_JEXEC') or die;
     
 
 use Joomla\CMS\Factory;

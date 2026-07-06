@@ -131,7 +131,6 @@ class TeamService
     {
         $programid = 0;
         
-        //         $db = Factory::getDbo();
         $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
                 
@@ -269,7 +268,6 @@ class TeamService
     public static function getTeamList2($programid, $divisionid)
     {
         return self::getTeamsByDivision($programid, $divisionid);
-//         $db = Factory::getDbo();
 //         $db = Factory::getContainer()->get(DatabaseInterface::class);
 //         $query = $db->getQuery(true);
 
@@ -299,7 +297,6 @@ class TeamService
      */
     public static function getTeamsByDivision(int $programid, int $divisionid) : array
     {
-        //         $db = Factory::getDbo();
         $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
            
@@ -466,7 +463,6 @@ select distinct email from (
             
             return (bool) $db->loadResult();
             
-    //         $db = Factory::getDbo();
     //         $db = Factory::getContainer()->get(DatabaseInterface::class);
     //         $query = $db->getQuery(true);
             

@@ -37,7 +37,6 @@ class CampaignService
      */
     public static function getItem(int $id = 0) : ?CampaignsTable {
         
-//         $db = Factory::getDbo(); 
         $db = Factory::getContainer()->get(DatabaseInterface::class);
         $table = new CampaignsTable($db);
                 

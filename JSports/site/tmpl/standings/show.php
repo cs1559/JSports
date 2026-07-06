@@ -123,12 +123,8 @@ if (!$this->program->setupfinal) {
 					<?php  } ?>									
 					<td>
 						<?php 
-//							//$link		= JRoute::_( 'index.php?option=com_jleague&controller=teams&task=viewTeamProfile&teamid=' .$obj->getTeamId() );						
-							//$link		= JRoute::_( 'index.php?option=com_jleague&controller=teams&task=viewTeamProfile&teamid=' .$obj->getSlug() . "&Itemid=9999999" );
-							//echo JHTML::_('link', $link , $obj->getTeamName(), array('id' => "team".$obj->getTeamId() ));
 							$link		= Route::_( 'index.php?option=com_jsports&view=team&id=' .$item['teamid'] );
-							echo "<a href=\"" . $link . "\">" . $item['teamname'] . "</a>"; 
-						
+							echo "<a href=\"" . $link . "\">" . $item['teamname'] . "</a>"; 						
 						?>
 					</td>
 			

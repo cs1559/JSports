@@ -18,7 +18,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\Uri\Uri;
-use Joomla\CMS\Filesystem\Folder;
+use Joomla\Filesystem\Folder;
 
 final class DateHelper
 {

@@ -17,7 +17,7 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Router\Router;
 use Joomla\CMS\Uri\Uri;
-use Joomla\CMS\Filesystem\Folder;
+use Joomla\Filesystem\Folder;
 use Joomla\CMS\Router\Route;
 
 final class SponsorHelper

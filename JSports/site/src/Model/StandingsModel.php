@@ -37,7 +37,8 @@ class StandingsModel extends BaseModel
         parent::populateState($ordering, $direction);
         
         $app = Factory::getApplication();
-        $input = $app->input;
+//         $input = $app->input;
+        $input = $app->getInput();
         
         $this->setState('standings.programid', $input->getInt('programid'));
     }

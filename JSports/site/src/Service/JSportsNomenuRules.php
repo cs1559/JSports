@@ -11,7 +11,7 @@
  */
 namespace FP4P\Component\JSports\Site\Service;
 
-defined('JPATH_PLATFORM') or die;
+defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\Router\RouterView;
 use Joomla\CMS\Component\Router\Rules\RulesInterface;

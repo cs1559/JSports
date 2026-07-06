@@ -12,6 +12,7 @@
 namespace FP4P\Component\JSports\Site\Objects\stats;
 
 use Joomla\CMS\Factory;
+use Joomla\Database\DatabaseInterface;
 
 class RosterStatistics
 {
@@ -32,7 +33,7 @@ class RosterStatistics
             return 0;
         }
 
-        $db    = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
              
         $query->select('count(case when classification = "P" then 1 end) totalplayers,

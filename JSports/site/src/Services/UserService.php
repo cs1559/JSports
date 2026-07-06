@@ -167,7 +167,6 @@ order by lastprogramid desc";
             return (bool) 0;
         }
         
-//         $db    = Factory::getDbo();
         $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
         $query2 = $db->getQuery(true);

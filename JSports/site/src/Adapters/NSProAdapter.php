@@ -14,6 +14,8 @@ namespace FP4P\Component\JSports\Site\Adapters;
 require_once(JPATH_ADMINISTRATOR.'/components/com_nspro/lib.php');
 
 use Joomla\CMS\Factory;
+use Joomla\Database\DatabaseInterface;
+use Joomla\Database\ParameterType;
 
 class NSProAdapter
 {
@@ -44,7 +46,7 @@ $source and $source_id are only required if you want to send a confirmation mess
      */
     public function getContactsFromSource()
     {
-        $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
         
         /*
@@ -82,13 +84,24 @@ and length(email)>0;
         
         //select * from jos2823_nspro_subs where id in (select subscriber_id from jos2823_nspro_sub_lists where list_id = 1); 
         
-        $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
+        
         $query = $db->getQuery(true);
         
-        $sql = "select * from #__nspro_subs where lower(email) = lower('" . $email . "') and id in (select subscriber_id from #__nspro_sub_lists where list_id = " . $listid . ")";
+//         $sql = "select * from #__nspro_subs where lower(email) = lower('" . $email . "') and id in (select subscriber_id from #__nspro_sub_lists where list_id = " . $listid . ")";
+//         $query->setQuery($sql);
+//         $db->setQuery($query);
         
-        $query->setQuery($sql);
+        $query = $db->getQuery(true)
+        ->select('*')
+        ->from($db->quoteName('#__nspro_subs'))
+        ->where('LOWER(email) = LOWER(:email)')
+        ->where($db->quoteName('id') . ' IN (SELECT subscriber_id FROM ' . $db->quoteName('#__nspro_sub_lists') . ' WHERE list_id = :listid)')
+        ->bind(':email', $email)
+        ->bind(':listid', $listid, ParameterType::INTEGER);
         $db->setQuery($query);
+        
+
         
         // Load the results as a list of stdClass objects (see later for more options on retrieving data).
         return count($db->loadAssocList());

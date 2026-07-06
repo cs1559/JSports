@@ -9,8 +9,8 @@ defined('_JEXEC') or die();
 use FP4P\Component\JSports\Site\Helpers\SponsorHelper;
 use FP4P\Component\JSports\Site\Services\UserService;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Filesystem\File;
-use Joomla\CMS\Filesystem\Folder;
+use Joomla\Filesystem\File;
+use Joomla\Filesystem\Folder;
 use Joomla\CMS\MVC\Model\AdminModel;
 use finfo;
 
@@ -68,7 +68,8 @@ class SponsorassetModel extends AdminModel
     public function save($data)
     {
         $app = Factory::getApplication();
-        $input = $app->input;
+//         $input = $app->input;
+        $input = $app->getInput();
         $user = UserService::getUser();
 
         // Posted form data

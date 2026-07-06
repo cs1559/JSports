@@ -68,7 +68,8 @@ class SchedulesModel extends ListModel
         parent::populateState($ordering, $direction);
         
         $app = Factory::getApplication();
-        $input = $app->input;
+//         $input = $app->input;
+        $input = $app->getInput();
 
         $this->setState('schedules.teamid', $input->getInt('teamid'));
         $this->setState('schedules.programid', $input->getInt('programid'));

@@ -14,11 +14,12 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Uri\Uri;
 
 // $document = Factory::getDocument();
 $document = Factory::getApplication()->getDocument();
 
-$document->addStyleSheet(JUri::base() . 'components\com_jsports\assets\css\registration.css');
+$document->addStyleSheet(Uri::base() . 'components\com_jsports\assets\css\registration.css');
 HTMLHelper::_('bootstrap.tooltip', '.hasTooltip');
 HTMLHelper::_('behavior.formvalidator');
 HTMLHelper::_('behavior.keepalive');

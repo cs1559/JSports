@@ -115,7 +115,8 @@ class CampaignModel extends AdminModel
     public function save($data)
     {
         $app = Factory::getApplication();
-        $input = $app->input;
+//         $input = $app->input;
+        $input = $app->getInput();
         
         // Posted form data
         $requestData = $input->post->get('jform', [], 'array');

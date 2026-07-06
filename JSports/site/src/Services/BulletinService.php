@@ -27,7 +27,6 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Filesystem\Folder;
-// use Joomla\CMS\Filesystem\Path;
 use FP4P\Component\JSports\Site\Services\LogService;
 use FP4P\Component\JSports\Site\Objects\Application as Myapp;
 

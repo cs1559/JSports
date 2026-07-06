@@ -14,7 +14,7 @@ namespace FP4P\Component\JSports\Administrator\Helpers;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Uri\Uri;
-use Joomla\CMS\Filesystem\Folder;
+use Joomla\Filesystem\Folder;
 
 class JSHelper
 {

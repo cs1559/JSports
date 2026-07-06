@@ -12,6 +12,7 @@
 namespace FP4P\Component\JSports\Site\Objects\Standings;
 
 use Joomla\CMS\Factory;
+use Joomla\Database\DatabaseInterface;
 use FP4P\Component\JSports\Administrator\Table\StandingsTable;
 use FP4P\Component\JSports\Site\Services\DivisionService;
 use FP4P\Component\JSports\Site\Services\ProgramsService;
@@ -71,7 +72,7 @@ class StandingsEngine
     
     private function getData() {
         
-        $db    = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
         
         $sql = "
@@ -131,7 +132,7 @@ on tempa.teamid = tempb.teamid and tempa.programid = tempb.programid
     
     private function loadRecord($item) {
         
-        $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $table = new StandingsTable($db);
         $table->bind($item);
         $table->store();
@@ -144,7 +145,7 @@ on tempa.teamid = tempb.teamid and tempa.programid = tempb.programid
     private function flushDatabase() {
         
         echo "StandingsEngine:  Flushing Standings Table - START". "<br/>\n";;
-        $db = Factory::getDbo();
+        $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
         
         // delete all custom keys for user 1001.

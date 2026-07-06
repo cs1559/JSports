@@ -15,8 +15,8 @@ use Joomla\CMS\Table\Table;
 use FP4P\Component\JSports\Site\Helpers\JSHelper;
 use FP4P\Component\JSports\Site\Services\BulletinService;
 use FP4P\Component\JSports\Site\Services\LogService;
-use Joomla\CMS\Filesystem\Folder;
-use Joomla\CMS\Filesystem\File;
+use Joomla\Filesystem\File;
+use Joomla\Filesystem\Folder;
 use Joomla\Database\ParameterType;
 use FP4P\Component\JSports\Site\Services\UserService;
 use FP4P\Component\JSports\Site\Services\SponsorService;
@@ -95,7 +95,8 @@ class SponsorModel extends AdminModel
     public function save($data) {
         
         $app   = Factory::getApplication();
-        $input = $app->input;
+//         $input = $app->input;
+        $input = $app->getInput();
         $user = UserService::getUser();
         
         // Posted form data
