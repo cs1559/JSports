@@ -17,7 +17,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
-use Joomla\CMS\Input\Input;
+use Joomla\Input\Input;
 use FP4P\Component\JSports\Site\Objects\Application;
 use FP4P\Component\JSports\Site\Objects\Application as Myapp;
 use FP4P\Component\JSports\Site\Services\UserService;
@@ -39,8 +39,18 @@ class RegistrationController extends BaseController
     
     
     /**
-     * Edit the Registration Data.  NOTE:  Currently, registration only supports NEW registrations on the frontend.
+     * Prepares the session state for a new registration and redirects to the
+     * program's registration form.
      *
+     * NOTE: registration currently only supports NEW registrations on the
+     * frontend, despite the "edit" name.
+     *
+     * @param   mixed   $key     Unused; present only for signature compatibility.
+     * @param   string  $urlVar  Unused; present only for signature compatibility.
+     *
+     * @return  boolean  Always true.
+     *
+     * @since   1.6
      */
     public function edit($key = null, $urlVar = 'id')
     {
@@ -91,12 +101,16 @@ class RegistrationController extends BaseController
     }
     
     /**
-     * Method to save a registration data.
+     * Validates and saves a new team registration from posted 'jform' data,
+     * logs the registration, fires the onAfterRegistration event, and
+     * redirects to a completion page.
      *
-     * @return  void|boolean
+     * @return  boolean|void  False if the form fails validation or the save
+     *                        fails. No explicit return value on the success
+     *                        path (redirects and clears session state instead).
      *
+     * @throws  \Exception  If the model's form cannot be loaded.
      * @since   1.6
-     * @throws  \Exception
      */
     public function save()
     {
@@ -201,9 +215,12 @@ class RegistrationController extends BaseController
     }
     
     /**
-     * Method to cancel an registration.  This will redirect user to 1st registration page..
+     * Cancels a registration in progress, clearing all related session state
+     * and redirecting back to the first registration page.
      *
      * @return  void
+     *
+     * @since   1.6
      */
     public function cancel()
     {

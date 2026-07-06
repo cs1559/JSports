@@ -16,7 +16,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
-use Joomla\CMS\Input\Input;
+use Joomla\Input\Input;
 use Joomla\CMS\Factory;
 
 use FP4P\Component\JSports\Site\Services\ProgramsService;
@@ -36,7 +36,24 @@ use FP4P\Component\JSports\Site\Services\UserService;
  */
 class RosterController extends FormController
 {
-    
+  
+    /**
+     * Displays the requested view; delegates to the parent FormController.
+     *
+     * NOTE: like other controllers in this component, the parameters
+     * received here are ignored — the call below always passes
+     * ($cachable = false, $urlparams = []) rather than forwarding the
+     * caller's actual arguments.
+     *
+     * @param   boolean  $cachable   If true, the view output will be cached
+     *                               (currently not actually honored — see NOTE).
+     * @param   array    $urlparams  Safe URL parameters (currently not
+     *                               actually honored — see NOTE).
+     *
+     * @return  static  This object to support chaining.
+     *
+     * @since   1.0
+     */
     public function display($cachable = false, $urlparams = [])
     {
         
@@ -50,6 +67,19 @@ class RosterController extends FormController
         parent::display($cachable = false, $urlparams = []);
     }
     
+    /**
+     * Deletes a roster entry after verifying the user session and id.
+     *
+     * NOTE: on the guest-check failure path this references $teamid when
+     * building the redirect route, but that variable is never assigned in
+     * this method — it will trigger an "undefined variable" warning and
+     * produce a redirect URL with a blank teamid. Consider setting
+     * `$teamid = $input->getInt('teamid');` alongside $id, above.
+     *
+     * @return  void
+     *
+     * @since   1.0
+     */
     public function delete() {
         
         $this->checkToken($this->input->getMethod() == 'GET' ? 'get' : 'post');
@@ -99,12 +129,19 @@ class RosterController extends FormController
     }
     
     /**
-     * Method to save a ROSTER item.
+     * Validates and saves a roster entry (create or update) from posted
+     * 'jform' data.
      *
-     * @return  void|boolean
+     * @param   mixed  $key     Unused; present only for signature compatibility.
+     * @param   mixed  $urlVar  Unused; present only for signature compatibility.
      *
+     * @return  boolean|void  False if the user session is invalid, validation
+     *                        fails, or the save fails. No explicit return
+     *                        value on the success path (redirects and clears
+     *                        session state instead).
+     *
+     * @throws  \Exception  If the model's form cannot be loaded.
      * @since   1.6
-     * @throws  \Exception
      */
     public function save($key = null, $urlVar = null)
     {
@@ -231,9 +268,12 @@ class RosterController extends FormController
         $app->setUserState('com_jsports.edit.team.data', null);
     }
     
-    
+
     /**
-     * Method to cancel an edit.
+     * Cancels a roster entry edit, clearing the session edit state and
+     * redirecting back to the team's roster list.
+     *
+     * @param   mixed  $key  Unused; present only for signature compatibility.
      *
      * @return  void
      *

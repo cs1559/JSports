@@ -38,12 +38,22 @@ class BatchController extends BaseController
 
     /**
      * This function will perform the batch operation to update the league standings.  It is expected
-     * that this function is performed via a CRON JOB.  
-     * 
-     * @param boolean $cachable
-     * @param array $urlparams
-     */   
-    public function updatestandings($cachable = false, $urlparams = array()) {
+     * that this function is performed via a CRON JOB.
+     *
+     * Authenticates the request against a CRON key (derived from the component's
+     * configured secret) before regenerating standings for every non-completed,
+     * active program. Output is buffered and flushed as plain text, ending the
+     * request via $app->close() either way.
+     *
+     * @param   boolean  $cachable   Unused; present only to satisfy the base
+     *                               controller's display() signature convention.
+     * @param   array    $urlparams  Unused; see above.
+     *
+     * @return  void  Never returns normally — always terminates via $app->close().
+     *
+     * @since   1.5
+     */
+    public function updatestandings($cachable = false, $urlparams = array()) : void {
 
         $params = ComponentHelper::getParams('com_jsports');
         $salt = $params->get('cronkey');
@@ -95,10 +105,18 @@ class BatchController extends BaseController
     
     
     /**
-     * This function is a helper function to test email functionality.
-     * 
+     * Debug helper that sends a hardcoded test email to a fixed recipient list
+     * and echoes whether it succeeded.
+     *
+     * NOTE: recipients and content are hardcoded — this is intended for manual
+     * developer testing only and should not be exposed on a production route
+     * without further access control.
+     *
+     * @return  void
+     *
+     * @since   1.5
      */
-    public function testEmail(){
+    public function testEmail() : void {
         $recipients = array();
         $recipients[]='cs1559@sbcglobal.net';
         $recipients[]='cjstrieter@gmail.com';

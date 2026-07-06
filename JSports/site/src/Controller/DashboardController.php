@@ -19,11 +19,19 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Uri\Uri;
 
 /**
- * JSports SITE Component Controller
+ * JSports SITE Component Controller for the member Dashboard view.
+ *
+ * NOTE: this class was previously (incorrectly) named `DisplayController`,
+ * identical to the class in DisplayController.php in this same namespace.
+ * Two classes with the same fully-qualified name is a fatal PHP error if
+ * both files are ever loaded in the same request, and it also meant Joomla's
+ * MVC factory could never resolve a controller actually named
+ * `DashboardController`. Renamed to match the file name and its apparent
+ * intent (@see $default_view below).
  *
  * @since  1.5
  */
-class DisplayController extends BaseController
+class DashboardController extends BaseController
 {
     
     protected $default_view = 'dashboard';

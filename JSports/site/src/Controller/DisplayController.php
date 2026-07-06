@@ -22,7 +22,9 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 
 /**
- * JSports SITE Component Controller
+ * Default JSports SITE Component Controller. Resolves the requested view and,
+ * for the 'bulletins' view specifically, gates access behind a permission
+ * check before delegating to the base controller's display logic.
  *
  * @since  1.5
  */
@@ -34,13 +36,15 @@ class DisplayController extends BaseController
     /**
      * Method to display a view.
      *
-     * @param boolean $cachable
-     *            If true, the view output will be cached
-     * @param array $urlparams
-     *            An array of safe URL parameters and their variable types, for valid
-     *            values see {@link \JFilterInput::clean()}.
+     * @param   boolean  $cachable   If true, the view output will be cached.
+     * @param   array    $urlparams  An array of safe URL parameters and their variable
+     *                               types, for valid values see {@link \JFilterInput::clean()}.
      *
-     * @return static This object to support chaining.
+     * @return  static|$this  This object to support chaining. Returns early
+     *                        (without calling the parent) if the requested
+     *                        view is 'bulletins' and the user lacks permission.
+     *
+     * @since   1.5
      */
     public function display($cachable = false, $urlparams = array())
     {

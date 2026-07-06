@@ -62,7 +62,8 @@ class ProgramsetupController extends AdminController
             //Text::_('JINVALID_TOKEN')
             
             $app   = Factory::getApplication();
-            $input = $app->input;
+//             $input = $app->input;
+            $input = $app->getInput();
             
             // Always use Joomla input filters
             $data = $this->input->post->get('filter', array(), 'array');

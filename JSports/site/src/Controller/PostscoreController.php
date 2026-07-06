@@ -15,7 +15,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
-use Joomla\CMS\Input\Input;
+use Joomla\Input\Input;
 use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Objects\Application;
 
@@ -35,24 +35,45 @@ use FP4P\Component\JSports\Site\Services\UserService;
  */
 class PostscoreController extends FormController
 {
-    
+    /**
+     * Displays the requested view; delegates to the parent FormController.
+     *
+     * NOTE: the parameters received here are currently ignored — the call
+     * below always passes ($cachable = false, $urlparams = []) regardless of
+     * what the caller passed in. If a caller ever needs caching enabled or
+     * custom URL params honored, this will silently drop them. Consider
+     * changing the call to `parent::display($cachable, $urlparams);`.
+     *
+     * @param   boolean  $cachable   If true, the view output will be cached
+     *                               (currently not actually honored — see NOTE).
+     * @param   array    $urlparams  Safe URL parameters (currently not
+     *                               actually honored — see NOTE).
+     *
+     * @return  static  This object to support chaining.
+     *
+     * @since   1.6
+     */
     public function display($cachable = false, $urlparams = [])
     {
         
-        $app            = $this->app;
-//         $user           = $this->app->getIdentity();
-        
+        $app            = $this->app;        
         parent::display($cachable = false, $urlparams = []);
     }
     
     
     /**
-     * This function will SAVE the game item.
+     * Validates and saves a posted game score from 'jform' data, then
+     * redirects back to the team's postscores list either way.
      *
-     * @return  void|boolean
+     * @param   mixed  $key     Unused; present only for signature compatibility.
+     * @param   mixed  $urlVar  Unused; present only for signature compatibility.
      *
+     * @return  boolean|void  False if the user session is invalid, validation
+     *                        fails, or the save fails. No explicit return
+     *                        value on the success path.
+     *
+     * @throws  \Exception  If the model's form cannot be loaded.
      * @since   1.6
-     * @throws  \Exception
      */
     
     /* 12/21/2024 - renamed this function to 'save' .. formerly save2 */
@@ -147,11 +168,14 @@ class PostscoreController extends FormController
       
     
     /**
-     * Function to support a CANCEL operation from the Game data entry screen.  The redirect goes back to the team schedules page.
+     * Cancels a Postscore data-entry edit, clearing the session edit state
+     * and redirecting back to the team's postscores list.
+     *
+     * @param   mixed  $key  Unused; present only for signature compatibility.
      *
      * @return  void
      *
-     * @since   4.0.0
+     * @since   1.0.0
      */
     public function cancel($key = null)
     {

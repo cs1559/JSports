@@ -30,18 +30,38 @@ use FP4P\Component\JSports\Site\Services\SponsorService;
 
 
 /**
+ * Site controller for sponsor link click tracking and redirection.
+ *
+ * @since  1.0.0
  */
 class SponsorController extends BaseController
 {
 
     /**
-     * @param boolean $cachable
-     * @param array $urlparams
-     */   
+     * Handles a sponsor click: validates the HMAC signature, records the
+     * click against the active sponsorship if it looks legitimate, and
+     * redirects the browser to the sponsor's website.
+     *
+     * Expects the following request parameters:
+     *  - id  (int)     Sponsor ID.
+     *  - ts  (int)     Unix timestamp the link was generated at.
+     *  - sig (string)  HMAC-SHA256 signature of "{id}|{ts}" using the component's secret key.
+     *
+     * A click is only counted when the signature is valid, the link is no more
+     * than an hour old, and the request doesn't look like a bot/crawler.
+     *
+     * @return  void
+     *
+     * @throws  \RuntimeException  If the sponsor id is missing/invalid, or the
+     *                             sponsor's website is not a valid absolute
+     *                             http(s) URL.
+     * @since   1.4.6
+     */
     public function click() {
 
         $app   = Factory::getApplication();
-        $input = $app->input;
+//         $input = $app->input;
+        $input = $app->getInput();
         $db    = Factory::getContainer()->get(DatabaseInterface::class);
         
         // 1) Campaign id only

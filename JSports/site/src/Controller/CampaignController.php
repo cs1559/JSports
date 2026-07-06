@@ -36,13 +36,30 @@ class CampaignController extends BaseController
 {
 
     /**
-     * @param boolean $cachable
-     * @param array $urlparams
-     */   
+     * Handles a campaign click: validates the HMAC signature, records the
+     * click if it looks legitimate, and redirects the browser to the
+     * campaign's target URL.
+     *
+     * Expects the following request parameters:
+     *  - id  (int)     Campaign ID.
+     *  - ts  (int)     Unix timestamp the link was generated at.
+     *  - sig (string)  HMAC-SHA256 signature of "{id}|{ts}" using the component's secret key.
+     *
+     * A click is only counted when the signature is valid, the link is no more
+     * than an hour old, and the request doesn't look like a bot/crawler.
+     *
+     * @return  void
+     *
+     * @throws  \RuntimeException  If the campaign id is missing/invalid, or the
+     *                             resolved redirect URL is not a valid absolute
+     *                             http(s) URL.
+     * @since   1.4.6
+     */
     public function click() {
 
         $app   = Factory::getApplication();
-        $input = $app->input;
+//         $input = $app->input;
+        $input = $app->getInput();
         $db    = Factory::getContainer()->get(DatabaseInterface::class);
         
         // 1) Campaign id only

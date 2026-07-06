@@ -37,7 +37,8 @@ class BulletinController extends FormController
     public function save($key = null, $urlVar = null)
     {
             $app   = Factory::getApplication();
-            $input = $app->input;
+//             $input = $app->input;
+            $input = $app->getInput();
             
             // Posted form data
             $requestData   = $input->post->get('jform', [], 'array');

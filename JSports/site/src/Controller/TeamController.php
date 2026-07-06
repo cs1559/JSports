@@ -13,10 +13,9 @@ namespace FP4P\Component\JSports\Site\Controller;
 
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
-use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
-use Joomla\CMS\Input\Input;
+use Joomla\Input\Input;
 use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Objects\Application as Myapp;
 use FP4P\Component\JSports\Site\Services\ProgramsService;
@@ -32,12 +31,30 @@ use FP4P\Component\JSports\Site\Services\UserService;
 // phpcs:enable PSR1.Files.SideEffects
 
 /**
- * Controller object for an individiaul TEAM PROFILE
+ * Controller for an individual team's profile page: display, save,
+ * cancel-edit, and CSV schedule export.
  *
+ * @since  1.0.0
  */
 class TeamController extends BaseController
 {
-    
+    /**
+     * Displays the requested view; delegates to the parent BaseController.
+     *
+     * NOTE: like other controllers in this component, the parameters
+     * received here are ignored — the call below always passes
+     * ($cachable = false, $urlparams = []) rather than forwarding the
+     * caller's actual arguments.
+     *
+     * @param   boolean  $cachable   If true, the view output will be cached
+     *                               (currently not actually honored — see NOTE).
+     * @param   array    $urlparams  Safe URL parameters (currently not
+     *                               actually honored — see NOTE).
+     *
+     * @return  static  This object to support chaining.
+     *
+     * @since   1.0.0
+     */
     public function display($cachable = false, $urlparams = [])
     {
         
@@ -53,12 +70,16 @@ class TeamController extends BaseController
     }
     
     /**
-     * Method to save a TEAM object.
+     * Validates and saves a team profile update from posted 'jform' data.
+     * Fires the onAfterProfileOwnerUpdate event if the team's owner changed.
      *
-     * @return  void|boolean
+     * @return  boolean|void  False if the user session is invalid, validation
+     *                        fails, or the save fails. No explicit return
+     *                        value on the success path (redirects and clears
+     *                        session state instead).
      *
-     * @since   1.6
-     * @throws  \Exception
+     * @throws  \Exception  If the model's form cannot be loaded.
+     * @since   1.0
      */
     public function save()
     {
@@ -203,11 +224,12 @@ class TeamController extends BaseController
     }
     
     /**
-     * Method to cancel an edit.
+     * Cancels a team profile edit, clearing the session edit state and
+     * redirecting back to the team's profile page.
      *
      * @return  void
      *
-     * @since   4.0.0
+     * @since   1.0.0
      */
     public function cancel()
     {
@@ -228,13 +250,17 @@ class TeamController extends BaseController
     }
     
     /**
-     * this function supports downloading a team's program schedule.  The client must provide a TEAMID and
-     * PROGRAMID value in the URL string.
+     * Streams a team's program schedule as a downloadable CSV file.
+     * Expects 'teamid' and 'programid' request parameters.
      *
+     * @return  void  Never returns normally — always terminates via $app->close().
+     *
+     * @since   1.0.0
      */
     public function downloadSchedule() {
         $app = Factory::getApplication();
-        $input = $app->input;
+//         $input = $app->input;
+        $input = $app->getInput();
         
         $teamid     = $input->getInt("teamid");
         $programid     = $input->getInt("programid");

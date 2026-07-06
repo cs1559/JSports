@@ -15,8 +15,7 @@ namespace FP4P\Component\JSports\Site\Controller;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Router\Route;
-use Joomla\CMS\Uri\Uri;
-use Joomla\CMS\Input\Input;
+use Joomla\Input\Input;
 use FP4P\Component\JSports\Site\Objects\Application;
 use FP4P\Component\JSports\Site\Objects\Application as Myapp;
 use Joomla\CMS\Factory;
@@ -45,14 +44,23 @@ class BulletinController extends BaseController
     const REDIRECTBULLETINS_URL = "index.php?option=com_jsports&view=bulletins&teamid=";
     
     /**
-     * Method to save a registration data.
+     * Saves a bulletin post (create or update) from posted 'jform' data,
+     * including any attached file, and fires the onAfterBulletinSave event
+     * on success.
      *
-     * @return  void|boolean
+     * NOTE: on the failure path this method references $bulletinid when
+     * building the redirect route, but that variable is never assigned
+     * in this method — it will trigger an "undefined variable" warning.
+     * Consider deriving it from $requestData['id'] the same way $teamid
+     * is derived, above.
+     *
+     * @return  boolean  True if the bulletin (and any attachment) saved
+     *                   successfully, false otherwise.
      *
      * @since   1.6
      * @throws  \Exception
      */
-    public function save()
+    public function save() : bool 
     {
         // Check for request forgeries.
         $this->checkToken($this->input->getMethod() == 'GET' ? 'get' : 'post');
@@ -60,7 +68,7 @@ class BulletinController extends BaseController
         $jsapp = Myapp::getInstance();
         
         $app    = $this->app;
-        $input = $app->input;
+        $input = $app->getInput();
 //         $user   = $this->app->getIdentity();
         $user = UserService::getUser();
 
@@ -129,17 +137,25 @@ class BulletinController extends BaseController
         
     }
     
-    public function delete() {
+    /**
+     * Deletes a bulletin post: verifies the user session, removes the
+     * attachment folder if one exists, then deletes the bulletin record.
+     *
+     * @return  boolean  True on success, false if validation failed or the
+     *                   delete operation raised an exception.
+     *
+     * @since   1.6
+     */
+    public function delete() : bool {
         
         $this->checkToken($this->input->getMethod() == 'GET' ? 'get' : 'post');
         
         $app   = $this->app;
-        $input = $app->input;
+        $input = $app->getInput();
         
         $id    = $input->getInt('id');
         $teamId = $input->getInt('teamid');
         
-//         $user = $app->getIdentity();
         $user = UserService::getUser();
         if ($user->guest) {
             $app->enqueueMessage(Text::_('COM_JSPORTS_INVALID_USERSESSION'), 'error');
@@ -188,7 +204,20 @@ class BulletinController extends BaseController
             return false;
         }
     }
-    
+
+    /**
+     * Deletes the attachment folder for a bulletin (identified by the 'id'
+     * request parameter) without deleting the bulletin record itself.
+     *
+     * @param   mixed  $key     Unused.
+     * @param   mixed  $urlVar  Unused.
+     *
+     * @return  boolean|void  False if the user session is invalid; otherwise
+     *                        no explicit return value (redirects and enqueues
+     *                        a status message either way).
+     *
+     * @since   1.6
+     */
     public function deleteAttachment($key = null, $urlVar = null) {
 
         // Check for request forgeries.
@@ -226,7 +255,7 @@ class BulletinController extends BaseController
      * @return  void
      *
      */
-    public function cancel()
+    public function cancel() : void 
     {
         // Check for request forgeries.
         $this->checkToken($this->input->getMethod() == 'GET' ? 'get' : 'post');
@@ -243,17 +272,31 @@ class BulletinController extends BaseController
     }
 
     
+    /**
+     * "Bumps" a bulletin post (e.g. refreshes its sort/date so it resurfaces
+     * near the top of the list) after verifying the user session and id.
+     *
+     * @return  boolean|void  False if validation failed or the bump raised an
+     *                        exception; otherwise no explicit return value on
+     *                        the "bump did not succeed" path (see NOTE below).
+     *
+     * NOTE: when BulletinService::bump() returns false, this method enqueues
+     * a message and redirects but does not return a value — only the true
+     * and exception paths return explicitly. Consider adding `return false;`
+     * there for consistency.
+     *
+     * @since   1.6
+     */
     public function bump() {
         
         $this->checkToken($this->input->getMethod() == 'GET' ? 'get' : 'post');
         
         $app   = $this->app;
-        $input = $app->input;
+        $input = $app->getInput();
         
         $id    = $input->getInt('id');
         $teamId = $input->getInt('teamid');
         
-        //         $user = $app->getIdentity();
         $user = UserService::getUser();
         if ($user->guest) {
             $app->enqueueMessage(Text::_('COM_JSPORTS_INVALID_USERSESSION'), 'error');

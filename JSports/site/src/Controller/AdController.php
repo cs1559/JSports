@@ -32,19 +32,39 @@ use FP4P\Component\JSports\Site\Ads\Campaign;
 
 
 /**
+ * Site controller for ad campaign interactions (click tracking and redirect).
+ *
+ * @since  1.0.0
  */
 class AdController extends BaseController
 {
 
     /**
-     * @param boolean $cachable
-     * @param array $urlparams
-     */   
-    public function click() {
+     * Handles an ad click: validates the HMAC signature, records the click if
+     * it looks legitimate, and redirects the browser to the campaign's target URL.
+     *
+     * Expects the following request parameters:
+     *  - id  (int)     Campaign ID.
+     *  - ts  (int)     Timestamp the link was generated at.
+     *  - sig (string)  HMAC-SHA256 signature of "{id}|{ts}" using the component's secret key.
+     *
+     * A click is only counted when the signature is valid, the link is no more
+     * than an hour old, and the request doesn't look like a bot/crawler.
+     *
+     * @return  void
+     *
+     * @throws  \RuntimeException  If the campaign id is missing/invalid, or the
+     *                             resolved redirect URL is not a valid absolute
+     *                             http(s) URL.
+     * @since   1.4.6
+     */
+    
+    public function click() : void {
 
         $app   = Factory::getApplication();
-        $input = $app->input;
-        $db    = Factory::getContainer()->get(DatabaseInterface::class);
+//         $input = $app->input;
+        $input = $app->getInput();
+//         $db    = Factory::getContainer()->get(DatabaseInterface::class);
         
         // 1) Campaign id only
         $id = $input->getInt('id', 0);
@@ -90,11 +110,16 @@ class AdController extends BaseController
         $app->redirect($url);
         
         
-        //$this->setRedirect(Route::_('index.php?option=com_jsports&view=postscores&teamid=' . $redirectteamid, false));
-        
     }
 
-    public function test() {
+    /**
+     * Debug/preview helper that renders a single ad slot directly to output.
+     *
+     * @return  void
+     *
+     * @since   1.4.6
+     */
+    public function test() : void {
                 
         echo AdsManager::renderCampaign('standings-top');
         

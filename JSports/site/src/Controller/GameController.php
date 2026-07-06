@@ -15,7 +15,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
-use Joomla\CMS\Input\Input;
+use Joomla\Input\Input;
 use Joomla\CMS\Factory;
 
 use FP4P\Component\JSports\Site\Services\ProgramsService;
@@ -38,14 +38,34 @@ use FP4P\Component\JSports\Site\Services\UserService;
 class GameController extends FormController
 {
     
+    /**
+     * Displays the requested view; delegates entirely to the parent
+     * FormController implementation.
+     *
+     * @param   boolean  $cachable   If true, the view output will be cached.
+     * @param   array    $urlparams  Safe URL parameters and their variable types.
+     *
+     * @return  static  This object to support chaining.
+     *
+     * @since   1.0.0
+     */
     public function display($cachable = false, $urlparams = [])
     {
         return parent::display($cachable, $urlparams);
     }
     
     /**
-     * Function to support the DELETION of a game from the team schedule
-     * @return boolean
+     * Deletes a game from a team's schedule, provided the user has a valid
+     * session and the game is not already marked complete.
+     *
+     * Expects 'id' (game id) and 'teamid' (or legacy 'contextid') request
+     * parameters.
+     *
+     * @return  boolean  True if the game was deleted successfully, false if
+     *                   validation failed, the game couldn't be deleted, or
+     *                   an exception occurred.
+     *
+     * @since   1.0.0
      */
     public function delete() {
 
@@ -138,9 +158,15 @@ class GameController extends FormController
     
     
     /**
-     * Function to support the RESET of a game from the team schedule.
-     * This function resets the status to 'S'
-     * @return boolean
+     * Resets a game's status back to 'Scheduled' ('S'), e.g. to undo an
+     * accidental completion or cancellation.
+     *
+     * Expects 'id' (game id) and 'teamid' request parameters.
+     *
+     * @return  boolean  True if the reset succeeded, false if validation
+     *                   failed or the reset was unsuccessful.
+     *
+     * @since   1.0.0
      */
     public function reset() {
         
@@ -149,7 +175,7 @@ class GameController extends FormController
         $logger = Myapp::getLogger();
         $app = Factory::getApplication();
         
-        $input = $app->input;
+        $input = $app->getInput();
         $id     = $input->getInt("id");
         $teamid = $input->getInt("teamid");
         
@@ -264,12 +290,20 @@ class GameController extends FormController
     
     
     
-    
     /**
-     * This function will SAVE the game item.
+     * Validates and saves a game item (create or update) from posted
+     * 'jform' data, then redirects based on the outcome and the current task.
      *
-     * @return  void|boolean
+     * @param   mixed  $key     Unused; present only for signature compatibility.
+     * @param   mixed  $urlVar  Unused; present only for signature compatibility.
      *
+     * @return  boolean|void  False if the user session is invalid, the form
+     *                        fails validation, or the save fails. No explicit
+     *                        return value on the success path (redirects and
+     *                        clears session state instead).
+     *
+     * @throws  \Exception  If the model's form cannot be loaded.
+     * @since   1.0.0
      */
     public function save($key = null, $urlVar = null)
     {
@@ -387,12 +421,16 @@ class GameController extends FormController
         
     
     /**
-     * Function to support a CANCEL operation from the Game data entry screen.  The redirect
-     * goes back to the team schedules page.
+     * Cancels a Game data-entry edit, clearing the session edit state and
+     * redirecting back to the team's schedule page.
+     *
+     * @param   mixed  $key  Unused; present only for signature compatibility.
      *
      * @return  void
+     *
+     * @since   1.0.0
      */
-    public function cancel($key = null)
+    public function cancel($key = null) : void 
     {
         
         $this->checkToken($this->input->getMethod() == 'GET' ? 'get' : 'post');

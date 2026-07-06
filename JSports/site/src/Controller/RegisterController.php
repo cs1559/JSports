@@ -16,7 +16,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Uri\Uri;
-use Joomla\CMS\Input\Input;
+use Joomla\Input\Input;
 use FP4P\Component\JSports\Site\Objects\Application;
 use FP4P\Component\JSports\Site\Objects\Application as Myapp;
 
@@ -38,11 +38,12 @@ class RegisterController extends BaseController
     
     
     /**
-     * Method to cancel an edit.
+     * Cancels an in-progress registration, clearing the session edit state
+     * and redirecting to the site root.
      *
      * @return  void
      *
-     * @since   4.0.0
+     * @since   1.0.0
      */
     public function cancel()
     {
@@ -58,6 +59,14 @@ class RegisterController extends BaseController
         $this->setRedirect('index.php');
     }
     
+    /**
+     * Terminal step of the registration flow: prints a confirmation message
+     * and ends the request.
+     *
+     * @return  void  Never returns — always terminates via exit.
+     *
+     * @since   1.6
+     */
     public function complete() {
         echo "Registration complete";
         exit;
