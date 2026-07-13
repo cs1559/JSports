@@ -14,6 +14,7 @@ namespace FP4P\Component\JSports\Site\Model;
 
 defined('_JEXEC') or die;
 
+use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Model\FormModel;
 
 use Joomla\Database\ParameterType;
@@ -62,6 +63,49 @@ class RegisterModel extends FormModel
             array($this->data)	// prefill data if no data found in session
             );
         
+    }
+    
+    
+    
+    
+    public function validate($form, $data, $group = null)
+    {
+        $valid = parent::validate($form, $data, $group);
+        
+        if ($valid === false) {
+            return false;
+        }
+
+        $errors = $this->getErrors();
+        throw new \Exception(implode("\n", $errors), 500);
+        
+        exit;
+        
+        // Conditional requirement: only enforce these when returningteam is YES
+        if (isset($data['returningteam']) && (int) $data['returningteam'] === 1) {
+            $errors = [];
+            
+            if (empty($data['username'])) {
+                $errors[] = Text::_('Username is required for returning teams.');
+            }
+            
+            if (empty($data['password'])) {
+                $errors[] = Text::_('Password is required for returning teams.');
+            }
+            
+            if (empty($data['teamid'])) {
+                $errors[] = Text::_('Team is required for returning teams.');
+            }
+            
+            if (!empty($errors)) {
+                foreach ($errors as $error) {
+                    $this->setError($error);
+                }
+                return false;
+            }
+        }
+        
+        return $valid;
     }
     
 }

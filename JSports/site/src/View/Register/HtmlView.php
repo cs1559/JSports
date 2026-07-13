@@ -44,24 +44,22 @@ class HtmlView extends BaseHtmlView
         
         $this->data       = $model->getItem();
         $this->form       = $model->getForm($this->data,true);
-        
-        // Check authorizations
-        //        $this->canDo = ContentHelper::getActions('com_content', 'article', $this->item->id);
-        $this->canDo = ContentHelper::getActions('com_jsports','core.register');
-        
-        if (!$user->authorise('core.register', 'com_jsports')) {
-            Factory::getApplication()->enqueueMessage("You must be logged in to register", 'error');
-            return false;
-        }
-               
+                       
         // Check to see if the user can even register.
         $svc = new RegistrationService();
         $bool = $svc->isRegistrationAvailable();
         
+        // If registration is unavailable, then stop processing and display any error messages.
+        // NOTE:  Messages are set in the registrationservice.  It may be best to have them set someplace else.
         if (!$bool){
             return false;
         }
-               
+        
+        $document = Factory::getApplication()->getDocument();
+        $wa = $this->getDocument()->getWebAssetManager();
+        $wa->getRegistry()->addExtensionRegistryFile('com_jsports');
+        $wa->useScript('com_jsports.registration.script');
+        
         return parent::display($tpl);
     }
 }

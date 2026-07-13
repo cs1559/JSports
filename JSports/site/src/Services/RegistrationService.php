@@ -18,6 +18,8 @@ use Joomla\Database\ParameterType;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Component\ComponentHelper;
 
+
+
 class RegistrationService
 {
    
@@ -140,6 +142,30 @@ class RegistrationService
         return $db->loadAssocList();
     }
     
+    public static function canRegisterTeam(int $userid, int $teamid, int $programid) {
+        
+        // If the user is logged in
+        if (SecurityService::isAdmin()) {
+            return true;
+        }
+        
+        // Check if admin and not logged in.
+        $user = Factory::getUser($userid);
+        if ($user->authorise('core.admin')) {
+            return true;
+        }
+        
+        if (UserService::isTeamAdmin($teamid, $programid, $userid)) {
+            return true;
+        }
+        return false;        
+    }
+    
+//     public static function canRegisterTeam($username, $password, $teamid) {
+        
+//         return true;
+        
+//     }
     
     
 }

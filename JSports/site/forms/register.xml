@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <form>
 
-	<fieldset name="details" label="COM_JSPORTS_DETAILS">
+	<fieldset name="details" label="COM_JSPORTS_DETAILS" addfieldprefix="FP4P\Component\JSports\Administrator\Fields">
 			
 		<field name="programid" type="sql" 
 			label="COM_JSPORTS_PROGRAMS"
@@ -12,7 +12,38 @@
 			header="-Select Program-"
 		/>
 		
+		<field name="returningteam" type="radio"
+			label="COM_JSPORTS_RETURNINGTEAM" class="btn-group btn-group-yesno" default="0"
+			validate="options" required="true">
+			<option value="1">Yes</option>
+			<option value="0">No</option>
+		</field>
+		
+		<field name="lastprogramplayed" type="sql" 
+			label="COM_JSPORTS_LASTPROGRAMPLAYED"
+			query="SELECT id, name FROM #__jsports_programs where published in (0,1) and status in ('A','C') order by name desc limit 5"
+			key_field="id"
+			value_field="name" 
+			required="false"
+			class="form-select-color-state" 
+			showon="returningteam:1"
+			registrationonly="false"
+			onchange="refreshTeamlist();" 
+			header="-Select Program-"
+			/>
+			
+		<field name="teamid" type="list"
+			label="COM_JSPORTS_TEAM" class="form-select-color-state"
+			required="false"
+			default="0" header="- Select Team -"
+			showon="returningteam:1">
+		</field>
 
+		<field name="username" type="text" class="input-medium"
+			label="User Name" required="false" size="40" showon="returningteam:1" />
+			
+		<field name="password" type="password" class="input-medium"
+			label="Password" required="false" size="40" showon="returningteam:1"/>
 	</fieldset>
 
 

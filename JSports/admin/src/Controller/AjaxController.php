@@ -185,4 +185,36 @@ class AjaxController extends BaseController
         
         $this->sendHtml($options);
     }
+
+
+    public function getRegistrationTeamList() : void {
+         
+        $app = Factory::getApplication();
+        
+        // CSRF check (use 'get' if you call via GET token)
+        //         if (!Session::checkToken('get')) {
+        //             echo new JsonResponse(null, 'Invalid token', true);
+        //             return;+
+        //         }
+        
+        echo "hello world";
+        exit;
+        
+        $programid = $app->input->getInt('programid', 0);
+        
+        $teams = TeamService::getTeamsByProgram($programid);
+        
+        $options = "<option value=\"\">-- Select Teamt --</option>";
+        
+        foreach ($teams as $team) {
+            $id     = htmlspecialchars((string) ($team->id ?? '')     ,ENT_QUOTES, 'UTF-8');
+            $title  = htmlspecialchars((string) ($team->name ?? '')  ,ENT_QUOTES, 'UTF-8');
+            
+            $options .= "<option value=\"{$id}\">{$title}</option>";
+        }
+        
+        $this->sendHtml($options);
+    }
+
+
 }   

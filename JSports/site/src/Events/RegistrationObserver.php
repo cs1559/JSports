@@ -76,8 +76,8 @@ Phone: " . $data->phone . "<br/>
 Address: " . $data->address . "<br/>
 City: " . $data->city . "<br/>
 State: " . $data->state . "<br/>
-</br>
-Returning Team: " . $returningteam . "<br/>
+Returning Team: " . $returningteam . " - " . "Id: " . $data->teamid . "<br/>
+Playoffs: " . JSHelper::translateYesNo($data->playoffs) . "<br/>
 </br>
 Registration Group: " . $data->grouping . " - Skill Level:" . $skill ."<br/>
 </br>

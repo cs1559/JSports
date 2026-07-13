@@ -109,7 +109,7 @@
 		<field name="tosack" type="checkbox"
 			label="COM_JSPORTS_TOS" size="40" require="true"/>
 
-		<field name="existingteam" type="radio"
+		<field name="existingteam" type="hidden"
 			label="COM_JSPORTS_RETURNINGTEAM" class="btn-group btn-group-yesno" default="0"
 			validate="options">
 			<option value="1">Yes</option>
@@ -118,6 +118,8 @@
 		
 		<field name="captcha" type="captcha" label="COM_JSPORTS_CAPTCHA_LABEL" validate="captcha" namespace="contact"/>
 
+		<field name="teamid" type="hidden"
+			label="COM_JSPORTS_TEAMID" size="40" required="false" default="0"/>
 		
 	</fieldset>
 

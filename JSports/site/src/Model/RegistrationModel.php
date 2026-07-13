@@ -21,6 +21,7 @@ use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Services\RegistrationService;
 use FP4P\Component\JSports\Administrator\Table\RegistrationsTable;
 use Joomla\CMS\Form\Form;
+use FP4P\Component\JSports\Site\Services\TeamService;
 
 /**
  * This model supports methods required to enable users to register for a program from the front-end side of the JSports component.
@@ -38,14 +39,35 @@ class RegistrationModel extends FormModel
      * @var string
      */
     protected $agreementurl = null;
+    protected $registrationtemplate = 'default';
  
     
     protected function populateState()
     {
-        parent::populateState();
+        $app   = Factory::getApplication();
+        $input = $app->getInput();
         
-        $app = Factory::getApplication();
-        $this->setState('registration.id', $app->input->getInt('id'));
+        $context = 'com_jsports.registration.data';
+        
+        
+//         $programId = $input->getInt('programid', $app->getUserState($context . '.programid', 0));
+//         $app->setUserState($context . '.programid', $programId);
+        
+//         $lastProgramId = $input->getInt('lastprogramid', $app->getUserState($context . '.lastprogramid', 0));
+//         $app->setUserState($context . '.lastprogramid', $lastProgramId);
+        
+//         $returningTeam = $input->getInt('returningteam', $app->getUserState($context . '.returningteam', 0));
+//         $app->setUserState($context . '.returningteam', $returningTeam);
+        
+//         $teamId = $input->getInt('teamid', $app->getUserState($context . '.teamid', 0));
+//         $app->setUserState($context . '.teamid', $teamId);
+        
+//         $this->setState('program.id', $programId);
+//         $this->setState('program.lastid', $lastProgramId);
+//         $this->setState('team.returning', $returningTeam);
+//         $this->setState('team.id', $teamId);
+        
+        parent::populateState();
     }
     
     
@@ -122,17 +144,38 @@ class RegistrationModel extends FormModel
     protected function loadFormData()
     {
         
-        // Check the session for previously entered form data.
-        $data = Factory::getApplication()->getUserState(
-            'com_jsports_form.registration.data',	// a unique name to identify the data in the session
-                array($this->data)	// prefill data if no data found in session
-            );
+        
+        $app  = Factory::getApplication();
+        $data = $app->getUserState('com_jsports.registration.data', []);
+        
+        $team = TeamService::getItem($data['teamid']);
+        $data['teamname'] = $team->name;
+        $data['name'] = $team->contactname;
+        $data['email'] = $team->contactemail;
+        $data['phone'] = $team->contactphone;
+        $data['city'] = $team->city;
+        $data['state'] = $team->state;
+        $data['teamid'] = $team->id;
+        $data['existingteam'] = $data['returningteam'];
+        
         
         if (empty($data)) {
             $data = $this->getItem();
         }
         
-        $this->preprocessData('jsports.registration', $data);
+        return $data;
+        
+//         // Check the session for previously entered form data.
+//         $data = Factory::getApplication()->getUserState(
+//             'com_jsports_form.registration.data',	// a unique name to identify the data in the session
+//                 array($this->data)	// prefill data if no data found in session
+//             );
+        
+//         if (empty($data)) {
+//             $data = $this->getItem();
+//         }
+        
+//         $this->preprocessData('jsports.registration', $data);
         
         return $data;
     }

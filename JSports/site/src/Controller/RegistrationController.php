@@ -23,6 +23,10 @@ use FP4P\Component\JSports\Site\Objects\Application as Myapp;
 use FP4P\Component\JSports\Site\Services\UserService;
 use FP4P\Component\JSports\Site\Services\ProgramsService;
 use Joomla\CMS\Component\ComponentHelper;
+use FP4P\Component\JSports\Site\Services\SecurityService;
+use FP4P\Component\JSports\Site\Services\RegistrationService;
+use Joomla\CMS\Session\Session;
+use Joomla\CMS\Authentication\Authentication;
 
 // phpcs:disable PSR1.Files.SideEffects
 \defined('_JEXEC') or die;
@@ -157,7 +161,7 @@ class RegistrationController extends BaseController
             }
             
             // Save the data in the session.
-            $app->setUserState('com_jsports.edit.registration.data', $requestData);
+            $app->setUserState('com_jsports.registration.data', $requestData);
             
             // Redirect back to the edit screen.
             $this->setRedirect(Route::_('index.php?option=com_jsports&view=register', false));
@@ -172,9 +176,8 @@ class RegistrationController extends BaseController
         // Check for errors.
         if ($return === false) {
             // Save the data in the session.
-            $app->setUserState('com_jsports.edit.registration.data', $data);
+            $app->setUserState('com_jsports.registration.data', $data);
             
-            // Redirect back to the edit screen.
             $this->setMessage(Text::sprintf('COM_JSPORTS_REGISTRATION_FAILED', $model->getError()), 'warning');
             $this->setRedirect(Route::_('index.php?option=com_jsports&view=dashboard', false));
             
@@ -186,31 +189,27 @@ class RegistrationController extends BaseController
 
         $japp->triggerEvent('onAfterRegistration', ['data' => $data, 'regid' => $lastid]);
         
-        // Redirect the user and adjust session state based on the chosen task.
-        switch ($this->getTask()) {
-            default:
-                // Clear the profile id from the session.
-                $app->setUserState('com_jsports.edit.registration.data', null);
-                
-                $redirect = $app->getUserState('com_jsports.edit.registration.redirect', '');
-                
-                // Don't redirect to an external URL.
-                if (!Uri::isInternal($redirect)) {
-                    $redirect = null;
-                }
-                
-                if (!$redirect) {
-                    //$redirect = 'index.php?option=com_jsports&view=dashboard';
-                    $redirect = 'index.php?option=com_jsports&view=registration&layout=complete' . '&id=' . $lastid;
-                }
-                
-                // Redirect to the list screen.
-                $this->setMessage(Text::_('COM_JSPORTS_REGISTRATION_SAVE_SUCCESS'));
-                $this->setRedirect(Route::_($redirect, false));
-                break;
+        // Clear the profile id from the session.
+        $app->setUserState('com_jsports.edit.registration.data', null);
+        
+        $redirect = $app->getUserState('com_jsports.edit.registration.redirect', '');
+        
+        // Don't redirect to an external URL.
+        if (!Uri::isInternal($redirect)) {
+            $redirect = null;
         }
         
+        if (!$redirect) {
+            //$redirect = 'index.php?option=com_jsports&view=dashboard';
+            $redirect = 'index.php?option=com_jsports&view=registrationcomplete' . '&id=' . $lastid;
+        }
+                
+        // Redirect to the list screen.
+        $this->setMessage(Text::_('COM_JSPORTS_REGISTRATION_SAVE_SUCCESS'));
+        $this->setRedirect(Route::_($redirect, false));
+        
         // Flush the data from the session.
+        $app->setUserState('com_jsports.registration.data', null);
         $app->setUserState('com_jsports.edit.registration.data', null);
     }
     
@@ -239,5 +238,79 @@ class RegistrationController extends BaseController
         $this->setRedirect('index.php?option=com_jsports&view=register');
         return;
     }    
+    
+    
+    
+    /**
+     * AJAX endpoint: verify credentials AND that this user is allowed
+     * to register the given team.
+     */
+    public function checkteamauth()
+    {
+        $app   = Factory::getApplication();
+        $input = $app->input;
+        
+        // CSRF check - required for any state-changing/ajax POST
+        if (!Session::checkToken('post')) {
+            $this->sendJson(false, Text::_('JINVALID_TOKEN'));
+        }
+        
+        // Fields are nested under jform[] because they're rendered via JForm
+        $jform = $input->post->get('jform', [], 'array');
+        
+        $returningTeam = isset($jform['returningteam']) ? (int) $jform['returningteam'] : 0;
+        $username = isset($jform['username']) ? trim((string) $jform['username']) : '';
+        $password = isset($jform['password']) ? (string) $jform['password'] : ''; // raw, don't filter
+        $teamId   = isset($jform['teamid']) ? (int) $jform['teamid'] : 0;
+        $lastprogramid   = isset($jform['lastprogramplayed']) ? (int) $jform['lastprogramplayed'] : 0;
+
+        if ($returningTeam == 0) {
+            $this->sendJson(true, 'Ok');
+        }
+        
+        if ($returningTeam == 1 && ($username === '' || $password === '' || $teamId <= 0)) {
+            $this->sendJson(false, 'Missing required fields.');
+        }
+        
+        // Step 1: authenticate credentials
+        $authenticate = Authentication::getInstance();
+        $credentials  = ['username' => $username, 'password' => $password];
+        $options      = ['action' => 'core.login.site'];
+        $response     = $authenticate->authenticate($credentials, $options);
+        
+        if ($response->status !== Authentication::STATUS_SUCCESS) {
+            $this->sendJson(false, 'Invalid username or password.');
+        }
+        
+        // Step 2: resolve the user id
+        $userId = \Joomla\CMS\User\UserHelper::getUserId($username);
+        
+        if (!$userId) {
+            $this->sendJson(false, 'User not found.');
+        }
+        
+//         // Step 3: check this user is allowed to register this team
+//         /** @var JsportsModelRegistration $model */
+//         $model = $this->getModel('Registration');
+        
+//         if (!$model->userCanRegisterTeam($userId, $teamId)) {
+        if (!RegistrationService::canRegisterTeam($userId, $teamId, $lastprogramid)) {
+            $this->sendJson(false, 'You are not authorized to register this team.');
+        }
+        
+        $this->sendJson(true, 'OK');
+    }
+    
+    /**
+     * Helper: send JSON and terminate.
+     */
+    private function sendJson(bool $success, string $message): void
+    {
+        $app = Factory::getApplication();
+        $app->setHeader('Content-Type', 'application/json');
+        $app->sendHeaders();
+        echo json_encode(['success' => $success, 'message' => $message]);
+        $app->close();
+    }
     
 }
