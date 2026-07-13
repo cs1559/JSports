@@ -63,6 +63,7 @@ HTMLHelper::_('behavior.keepalive');
 						<?php echo $this->form->renderField('status'); ?>
 						<?php echo $this->form->renderField('publishstandings'); ?>
 						<?php echo $this->form->renderField('setupfinal'); ?>
+						<?php echo $this->form->renderField('postscores'); ?>
 						<?php echo $this->form->renderField('standingspolicy'); ?>
 					</div>
 				</div>
