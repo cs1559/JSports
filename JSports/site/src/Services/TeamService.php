@@ -325,7 +325,7 @@ class TeamService
      * @param number $programid
      * @return array<int, array<string, mixed>>
      */
-    public static function getTeamsByProgram(int $programid) : array
+    public static function getTeamsByProgram(int $programid, $orderby = null) : array
     {
         $db = Factory::getContainer()->get(DatabaseInterface::class);     
         $query = $db->getQuery(true);
@@ -338,6 +338,9 @@ a.contactemail, a.city, a.state, m.divisionid, d.name as divisionname, d.agegrou
                 and m.programid = :programid
                 and m.published = 1 
                 ";
+        if (!is_null($orderby)) {
+            $sql .= " order by d.agegroup, d.ordering, d.name";
+        }
         
         $query->setQuery($sql);
         $query->bind(':programid', $programid, ParameterType::INTEGER);
