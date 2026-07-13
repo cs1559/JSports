@@ -1,9 +1,9 @@
 <?php
 /**
- * @package     Registration.Administrator
+ * @package     Registration.Template
  * @subpackage  com_jsports
  *
- * @copyright   Copyright (C) 2005 - 2019 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2005 - 2026 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -42,6 +42,7 @@ HTMLHelper::_('behavior.keepalive');
 <?php echo $this->form->renderField('state');?>
 <?php echo $this->form->renderField('agegroup');?>
 <?php echo $this->form->renderField('skilllevel');?>
+<?php echo $this->form->renderField('teamid');?>
 <div class="row agreement-container">
 <h3>COACHES AGREEMENT</h3>
 All coaches are required to review the Coaches Agreement/Code of Conduct before submitting their registration.  
