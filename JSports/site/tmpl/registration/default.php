@@ -51,6 +51,8 @@ HTMLHelper::_('behavior.keepalive');
 <?php echo $this->form->renderField('city');?>
 <?php echo $this->form->renderField('state');?>
 <?php echo $this->form->renderField('existingteam');?>
+<?php echo $this->form->renderField('teamid');?>
+
 <?php 
 if (!is_null($this->options)) {
 if ($this->options->includegroups) {
@@ -114,6 +116,10 @@ if (!is_null($this->options)) {
 </div>
 
 <?php echo HTMLHelper::_('form.token'); ?>
+
+<p>
+Template:  default
+</p>
 </form>
 
 

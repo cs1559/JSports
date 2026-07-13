@@ -85,5 +85,7 @@ your registration.
 <?php echo HTMLHelper::_('form.token'); ?>
 </form>
 
-Template:  swiblspring.php <br/>
+<p>
+Template:  swiblspring
+</p>
 

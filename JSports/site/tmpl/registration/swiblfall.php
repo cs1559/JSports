@@ -73,5 +73,6 @@ your registration.
 <?php echo HTMLHelper::_('form.token'); ?>
 </form>
 
-Template:  edit1 <br/>
-
+<p>
+Template:  swiblfall
+</p>
