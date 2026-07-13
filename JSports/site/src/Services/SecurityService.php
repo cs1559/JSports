@@ -21,6 +21,8 @@ use FP4P\Component\JSports\Site\Services\ProgramsService;
 use FP4P\Component\JSports\Site\Services\DivisionService;
 use Joomla\CMS\User\User;
 use FP4P\Component\JSports\Administrator\Table\GamesTable;
+use Joomla\CMS\Authentication\Authentication;
+use Joomla\CMS\Language\Text;
 
 class SecurityService
 {
@@ -466,6 +468,36 @@ class SecurityService
         return $canEdit;
     }
     
+    
+    public static function authenticate(string $username, string $password): array
+    {
+        $app = Factory::getApplication();
+        $authenticate = Authentication::getInstance();
+        
+        $credentials = [
+            'username' => $username,
+            'password' => $password,
+        ];
+        
+        $options = [
+            'action' => 'core.login.site',
+        ];
+        
+        $response = $authenticate->authenticate($credentials, $options);
+        
+        if ($response->status === Authentication::STATUS_SUCCESS) {
+            return [
+                'success' => true,
+                'message' => Text::_('JLIB_LOGIN_AUTHENTICATE'),
+                'user_id' => (int) $response->username, // note: see caveat below
+            ];
+        }
+        
+        return [
+            'success' => false,
+            'message' => $response->error_message ?: Text::_('JGLOBAL_AUTH_FAIL'),
+        ];
+    }
     
     
 }
