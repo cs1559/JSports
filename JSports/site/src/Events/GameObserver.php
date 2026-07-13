@@ -11,10 +11,12 @@
  */
 namespace FP4P\Component\JSports\Site\Events;
 
+use FP4P\Component\JSports\Site\Helpers\JSHelper;
 use FP4P\Component\JSports\Site\Objects\BaseObserver;
 use FP4P\Component\JSports\Site\Services\TeamService;
 use FP4P\Component\JSports\Site\Services\MailService;
 use Joomla\CMS\Component\ComponentHelper;
+
 
 class GameObserver extends BaseObserver
 {
@@ -93,6 +95,12 @@ Game ID:  " . $data->id . "
         
         $svc = new MailService();
         // to, subject, body, html mode, cc
+        
+        // Code to override email address for testing purposes.
+        if (JSHelper::isTestServer()) {
+            $recipients = ['cs1559@sbcglobal.net'];
+            $body = "<h1>THIS IS ONLY A TEST</h1><br/>" . $body;
+        }
         $rc = $svc->sendMail($recipients, $subject, $body, true,$adminrecipients );
         if ($rc) {
             return true;
@@ -122,7 +130,7 @@ Game ID:  " . $data->id . "
         $body = "
 <p>A league game score has been posted for a team you are associated with. The game score is listed below:</p>
 <p>
-<strong>ID: " . $data->id . " - " . $data->awayteamname . " @ " . $data->hometeamname . "</strong>
+<strong>Date: " . $data->gamedate . " - " . $data->awayteamname . " @ " . $data->hometeamname . "</strong>
 </p>
 <table style=\"width: 40%\">
 <tbody>
@@ -135,6 +143,9 @@ Game ID:  " . $data->id . "
 <p>
 SWIBL<br/>
 Email: " . $orgemail . "<br/>
+</p>
+<p>
+Game ID:  " . $data->id . "
 </p> ";
         
         $subject = "SWIBL - Game Score Posted";
@@ -155,7 +166,12 @@ Email: " . $orgemail . "<br/>
                 $adminrecipients = $adminemails;
             }
         }
-        
+
+        // Code to override email address for testing purposes.
+        if (JSHelper::isTestServer()) {
+            $recipients = ['cs1559@sbcglobal.net'];
+            $body = "<h1>THIS IS ONLY A TEST</h1><br/>" . $body;
+        }
         $svc = new MailService();
         // to, subject, body, html mode, cc
         $rc = $svc->sendMail($recipients, $subject, $body, true,$adminrecipients );
@@ -220,7 +236,12 @@ Email: " . $orgemail . "<br/>
                 $adminrecipients = $adminemails;
 //             }
 //         }
-        
+
+        // Code to override email address for testing purposes.
+        if (JSHelper::isTestServer()) {
+            $adminrecipients = ['cs1559@sbcglobal.net'];
+            $body = "<h1>THIS IS ONLY A TEST</h1><br/>" . $body;
+        }
         $svc = new MailService();
         // Recipients should be an array
         $rc = $svc->sendMail($adminrecipients, $subject, $body, true );
@@ -233,4 +254,3 @@ Email: " . $orgemail . "<br/>
     }
     
 }
-

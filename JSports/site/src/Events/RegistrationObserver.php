@@ -11,6 +11,7 @@
  */
 namespace FP4P\Component\JSports\Site\Events;
 
+use FP4P\Component\JSports\Site\Helpers\JSHelper;
 use FP4P\Component\JSports\Site\Objects\BaseObserver;
 use FP4P\Component\JSports\Site\Services\TeamService;
 use FP4P\Component\JSports\Site\Services\ProgramsService;
@@ -99,6 +100,12 @@ Email: info@swibl.org<br/>
             } else {
                 $adminrecipients = $adminemails;
             }
+        }
+
+        // Code to override email address for testing purposes.
+        if (JSHelper::isTestServer()) {
+            $recipients = ['cs1559@sbcglobal.net'];
+            $body = "<h1>THIS IS ONLY A TEST</h1><br/>" . $body;
         }
         
         $svc = new MailService();
