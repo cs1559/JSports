@@ -92,6 +92,14 @@
 			<option value="1">Yes</option>
 			<option value="0">No</option>
 		</field>
+
+		<field name="postscores" type="radio"
+			label="COM_JSPORTS_POSTSCORESENABLED" class="btn-group btn-group-yesno" default="0"
+			validate="options">
+			<option value="1">Yes</option>
+			<option value="0">No</option>
+		</field>
+
 		
 		<field name="rostersenabled" type="radio"
 			label="COM_JSPORTS_ROSTERSENABLED" class="btn-group btn-group-yesno" default="0"
