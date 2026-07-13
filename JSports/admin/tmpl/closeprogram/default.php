@@ -36,7 +36,6 @@ HTMLHelper::_('behavior.keepalive');
     <button type="submit" class="btn btn-danger">
         <?php echo Text::_('COM_JSPORTS_CLOSE_PROGRAM'); ?>
     </button>
-    	<input type="hidden" name="task" value="">
     	<input type="hidden" name="boxchecked" value="0">
 	<?php echo HTMLHelper::_('form.token'); ?>
 	
