@@ -210,5 +210,24 @@ final class JSHelper
         
         return false;
     }
+    
+    /**
+     * This function will evaluate the HOST server name and return true/false if the code is running on a test server.
+     * NOTE:  This is primarily for testing purposes.  However, another option may be to use a component level paramter that sets
+     * the component in "test mode".
+     * 
+     * @return bool
+     */
+    public static function isTestServer() : bool
+    {
+        $host = parse_url('http://' . ($_SERVER['HTTP_HOST'] ?? ''), PHP_URL_HOST);
+        
+        if (in_array($host, ['localhost', 'test.swibl.org'], true)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
 }
 
