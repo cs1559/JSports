@@ -171,6 +171,7 @@ CREATE TABLE IF NOT EXISTS `#__jsports_programs` (
  `registrationnotes` mediumtext DEFAULT NULL,
  `publishstandings` tinyint(4) NOT NULL,
  `setupfinal` tinyint(4) NOT NULL,
+ `postscores` tinyint(4) NOT NULL DEFAULT 0,
  `published` tinyint(4) NOT NULL,
  `properties` mediumtext DEFAULT NULL,
  `rostersenabled` tinyint(4) DEFAULT NULL,
