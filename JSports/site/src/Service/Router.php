@@ -124,9 +124,9 @@ class Router extends RouterView
         //         $openings->setKey('id');
         $this->registerView($postings);
         
-//         $bulletins = new RouterViewConfiguration('bulletins');
+        $bulletins = new RouterViewConfiguration('bulletins');
 //         $bulletins->setKey('id');
-//         $this->registerView($bulletins);
+        $this->registerView($bulletins);
 
 //         $bulletin = new RouterViewConfiguration('bulletin');
 //         $bulletin->setKey('id');
