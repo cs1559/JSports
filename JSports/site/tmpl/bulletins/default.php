@@ -49,15 +49,16 @@ $token = Session::getFormToken();
 <form action="<?php echo Route::_('index.php?option=com_jsports&view=bulletins'); ?>" method="post" name="adminForm" id="adminForm">
 	
 	<div class="" >
-	<div class="teamprofile-header-name">
+	<div class="mybulletins-header-name">
 		<h1>
-			<?php echo Text::_('COM_JSPORTS_BULLETINS_HEADING'); ?>
+			<?php echo Text::_('COM_JSPORTS_MYBULLETINS_HEADING'); ?>
 		</h1>
 	</div>
 </div>
 		<?php 
 		   if ($this->canEdit) {
 		?>
+			<strong><?php echo Text::_('COM_JSPORTS_MYBULLETINS_BUMP_NOTE');?></strong><br/><br/>
 			<a class="btn btn-primary btn-sm"
 				href="<?php echo Route::_('index.php?option=com_jsports&view=bulletin&layout=edit&id=0' ); ?>">Add Bulletin 
 			</a>
@@ -81,7 +82,7 @@ $token = Session::getFormToken();
 			<thead>
 				<tr>
 					<th scope="col" class="w-15">
-						<?php echo Text::_('COM_JSPORTS_CREATEDATE'); ?>
+						<?php echo Text::_('COM_JSPORTS_UPDATEDATE'); ?>
 					</th>
 					<th scope="col" class="w-10">
 						<?php echo Text::_('COM_JSPORTS_TITLE'); ?>

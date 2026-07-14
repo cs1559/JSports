@@ -99,12 +99,12 @@ class BulletinsModel extends ListModel
             $query->select("a.*");
     	    $query->from($db->quoteName('#__jsports_bulletins') . ' AS a')
      	       ->where($db->quoteName('a.teamid') . ' = ' . $db->quote($teamid))
-               ->order("createdate desc");
+               ->order("updatedate desc");
 	    } else {
 	        $query->select("a.*");
 	        $query->from($db->quoteName('#__jsports_bulletins') . ' AS a')
 	        ->where($db->quoteName('a.ownerid') . ' = ' . $db->quote($user->id))
-	        ->order("createdate desc");
+	        ->order("updatedate desc");
 	    }
 	    
 	    return $query;
