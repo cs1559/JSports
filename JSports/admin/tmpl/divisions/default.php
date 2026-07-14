@@ -1,14 +1,9 @@
 <?php
 /**
- * JSports Component for Joomla! 4.x
- *
- * @version     0.0.1
- * @package     JSports
- * @subpackage  Divisions.Admin
- * @category    Template
- * @copyright   Copyright (C) 2023-2024 Chris Strieter
- * @license     GNU/GPLv2, see http://www.gnu.org/licenses/gpl-2.0.html
- *
+ * @package     JSports.Administrator
+ * @subpackage  com_jsports
+ * @copyright   Copyright (C) 2023-2026 Chris Strieter
+ * @license     GNU/GPLv2 or later, see http://www.gnu.org/licenses/gpl-2.0.html
  */
 
 defined('_JEXEC') or die;

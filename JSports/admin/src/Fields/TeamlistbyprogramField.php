@@ -1,31 +1,23 @@
 <?php
 /**
- * JSports - Joomla Sports Management Component
- *
- * @version     1.0.0
  * @package     JSports.Administrator
  * @subpackage  com_jsports
- * @copyright   Copyright (C) 2023-2024 Chris Strieter
- * @license     GNU/GPLv2, see http://www.gnu.org/licenses/gpl-2.0.html
- *
+ * @copyright   Copyright (C) 2023-2026 Chris Strieter
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 namespace FP4P\Component\JSports\Administrator\Fields;
 
 defined('_JEXEC') or die;
     
-use Joomla\CMS\Factory;
-use Joomla\CMS\Form\FormField;
-use Joomla\CMS\Form\Formhelper;
 use Joomla\CMS\Form\Field\ListField;
 use Joomla\CMS\HTML\HTMLHelper;
-use FP4P\Component\JSports\Administrator\Helpers\Html;
 use FP4P\Component\JSports\Site\Services\TeamService;
 use FP4P\Component\JSports\Site\Services\DivisionService;
 
 
-class TeamlistField extends ListField
+class TeamlistbyprogramField extends ListField
 {
-    protected $type = 'Teamlist';
+    protected $type = 'Teamlistbyprogram';
     protected $teamid = 0;
     protected $programid = 0;
     

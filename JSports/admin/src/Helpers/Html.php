@@ -1,19 +1,15 @@
 <?php
 /**
- * JSports - Joomla Sports Management Component
- *
- * @version     1.0.0
  * @package     JSports.Administrator
  * @subpackage  com_jsports
- * @copyright   Copyright (C) 2023-2024 Chris Strieter
- * @license     GNU/GPLv2, see http://www.gnu.org/licenses/gpl-2.0.html
+ * @copyright   Copyright (C) 2023-2026 Chris Strieter
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
  * @deprecated
  */
 
 namespace FP4P\Component\JSports\Administrator\Helpers;
 
 use Joomla\CMS\Router\Route;
-use Joomla\Database\ParameterType;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\Database\DatabaseInterface;
@@ -27,7 +23,7 @@ class Html
 {
 
     /**
-     *
+     * @deprecated
      */
     public static function getProgramDivisions($programid, $itemkey=0, $defaultvalue=0) {
         $db = Factory::getContainer()->get(DatabaseInterface::class);
@@ -82,6 +78,7 @@ class Html
      *
      * @param number $id
      * @return string
+     * @deprecated
      */
     public static function getTeamProfileMenu($id = 0, $label="Actions", $class="form-select") {
         
@@ -128,7 +125,12 @@ class Html
         throw new \Exception('Undefine function');
     }
     
-    
+    /**
+     * @deprecated
+     * @param number $teamid
+     * @param number $programid
+     * @return string
+     */
     public static function getHomeTeamlist($teamid, $programid) {
         $id="hometeam-list";
         $class="form-select";
@@ -137,6 +139,12 @@ class Html
         return self::getTeamOpponents($teamid, $programid, $id, $label, $class);
     }
 
+    /**
+     * @deprecated
+     * @param number $teamid
+     * @param number $programid
+     * @return string
+     */
     public static function getAwatTeamlist($teamid, $programid) {
         $id="awayteam-list";
         $class="form-select";
@@ -145,6 +153,15 @@ class Html
         return self::getTeamOpponents($teamid, $programid, $id, $label, $class);
     }
     
+    /**
+     * @deprecated
+     * @param number $teamid
+     * @param number $programid
+     * @param string $id
+     * @param string $label
+     * @param string $class
+     * @return string
+     */
     public static function getTeamOpponents($teamid, $programid, $id="teamlist", $label="Team", $class="form-select") {
 
         
@@ -174,6 +191,12 @@ class Html
         
     }
     
+    /**
+     * @deprecated
+     * @param number $teamid
+     * @param number $programid
+     * @return array
+     */
     protected static function getOpponentData($teamid, $programid) {
 
         $db = Factory::getContainer()->get(DatabaseInterface::class);
@@ -203,7 +226,7 @@ class Html
     /**
      * getProgramsList - this function will return an HTML select list for all of the programs
      * in the database.
-     *
+     * @deprecated
      * @param number $defaultvalue
      * @return string
      */

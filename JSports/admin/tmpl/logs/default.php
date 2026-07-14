@@ -1,16 +1,10 @@
 <?php
 /**
- * @package     Logs.Administrator
+ * @package     JSports.Administrator
  * @subpackage  com_jsports
- *
- * @copyright   Copyright (C) 2005 - 2019 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
- * 
- * CHANGE HISTORY:
- * 2024-02-29  Changed the action value to '#' and commented out the Route statement
+ * @copyright   Copyright (C) 2023-2026 Chris Strieter
+ * @license     GNU/GPLv2 or later, see http://www.gnu.org/licenses/gpl-2.0.html
  */
-
-
 
 defined('_JEXEC') or die;
 

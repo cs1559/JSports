@@ -6,7 +6,7 @@
  * @category    Template
  * @desc        Template for uploading a team logo.
  * @copyright   Copyright (C) 2023-2024 Chris Strieter
- * @license     GNU/GPLv2, see http://www.gnu.org/licenses/gpl-2.0.html
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
  *
  */
 

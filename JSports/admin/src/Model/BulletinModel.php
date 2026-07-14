@@ -1,6 +1,9 @@
 <?php
 /**
- * JSports - Joomla Sports Management Component
+ * @package     JSports.Administrator
+ * @subpackage  com_jsports
+ * @copyright   Copyright (C) 2023-2026 Chris Strieter
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 namespace FP4P\Component\JSports\Administrator\Model;
