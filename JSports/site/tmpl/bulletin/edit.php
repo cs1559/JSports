@@ -1,13 +1,9 @@
 <?php
 /**
- * @version     0.0.1
- * @package     JSports
- * @subpackage  Bulletin.Site
- * @category    Template
- * @desc        Template to create/edit a bulletin
+ * @package     JSports.Site
+ * @subpackage  com_jsports
  * @copyright   Copyright (C) 2023-2026 Chris Strieter
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
- *
+ * @license     GNU/GPLv2 or later, see http://www.gnu.org/licenses/gpl-2.0.html
  */
 
 defined('_JEXEC') or die;

@@ -1,22 +1,19 @@
 <?php
 /**
- * JSports - Joomla Sports Management Component
- *
- * @version     1.0.0
- * @package     JSports.Administrator
+ * @package     JSports.Site
  * @subpackage  com_jsports
  * @copyright   Copyright (C) 2023-2026 Chris Strieter
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
- *
+ * @license     GNU/GPLv2 or later, see http://www.gnu.org/licenses/gpl-2.0.html
+ * @todo        check to see if this is used
  */
-
-namespace FP4P\Component\JSports\Site\Ads;
+namespace FP4P\Component\JSports\Site\Sponsors;
 
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Filesystem\Folder;
+use FP4P\Component\JSports\Site\Ads\Ad;
 use FP4P\Component\JSports\Site\Helpers\SponsorHelper;
 use FP4P\Component\JSports\Site\Services\CampaignService;
 use Joomla\CMS\Router\Route;

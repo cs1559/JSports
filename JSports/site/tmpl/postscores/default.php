@@ -1,14 +1,9 @@
 <?php
 /**
- * JSports Component for Joomla! 4.x
- *
- * @version     0.0.1
- * @package     JSports
- * @subpackage  PostScores.Site
- * @category    Templates
- * @copyright   Copyright (C) 2023-2024 Chris Strieter
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
- *
+ * @package     JSports.Site
+ * @subpackage  com_jsports
+ * @copyright   Copyright (C) 2023-2026 Chris Strieter
+ * @license     GNU/GPLv2 or later, see http://www.gnu.org/licenses/gpl-2.0.html
  */
 
 defined('_JEXEC') or die;

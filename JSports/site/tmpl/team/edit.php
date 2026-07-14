@@ -1,13 +1,9 @@
 <?php
 /**
- * @package     Team.Administrator
+ * @package     JSports.Site
  * @subpackage  com_jsports
- * 
- * This template provides a user the ability to EDIT a team record from the website's FRONT END (site).  Most changes to a 
- * team should be done on the administrator site.
- *
- * @copyright   Copyright (C) 2005 - 2019 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright   Copyright (C) 2023-2026 Chris Strieter
+ * @license     GNU/GPLv2 or later, see http://www.gnu.org/licenses/gpl-2.0.html
  */
 
 defined('_JEXEC') or die;

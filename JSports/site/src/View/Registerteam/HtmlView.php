@@ -1,16 +1,11 @@
 <?php
 /**
- * JSports - Joomla Sports Management Component
- *
- * @version     1.0.0
  * @package     JSports.Site
  * @subpackage  com_jsports
  * @copyright   Copyright (C) 2023-2026 Chris Strieter
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
- *
- * This
+ * @license     GNU/GPLv2 or later, see http://www.gnu.org/licenses/gpl-2.0.html
+ * @deprecated
  */
-
 namespace FP4P\Component\JSports\Site\View\Registerteam;
 
 defined('_JEXEC') or die;

@@ -1,15 +1,10 @@
 <?php
 /**
- * JSports - Joomla Sports Management Component
- *
- * @version     1.0.0
  * @package     JSports.Site
  * @subpackage  com_jsports
  * @copyright   Copyright (C) 2023-2026 Chris Strieter
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
- *
+ * @license     GNU/GPLv2 or later, see http://www.gnu.org/licenses/gpl-2.0.html
  */
-
 namespace FP4P\Component\JSports\Site\View\Rosters;
 
 defined('_JEXEC') or die;
