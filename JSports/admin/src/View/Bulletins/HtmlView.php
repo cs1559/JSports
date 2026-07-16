@@ -61,15 +61,21 @@ class HtmlView extends BaseHtmlView
     
     public function display($tpl = null)
     {
+
+        $model = $this->getModel();
+        $this->items         = $model->getItems();
+        $this->pagination    = $model->getPagination();
+        $this->state         = $model->getState();
+        $this->filterForm    = $model->getFilterForm();
+        $this->activeFilters = $model->getActiveFilters();
+//         $this->items         = $this->get('Items');
+//         $this->pagination    = $this->get('Pagination');
+//         $this->state         = $this->get('State');
+//         $this->filterForm    = $this->get('FilterForm');
+//         $this->activeFilters = $this->get('ActiveFilters');
         
-        $this->items         = $this->get('Items');
-        $this->pagination    = $this->get('Pagination');
-        $this->state         = $this->get('State');
-        $this->filterForm    = $this->get('FilterForm');
-        $this->activeFilters = $this->get('ActiveFilters');
-        
-        // Check for errors.
-        if (count($errors = $this->get('Errors')))
+//         Check for errors.
+        if (count($errors = $model->getErrors()))
         {
             throw new GenericDataException(implode("\n", $errors), 500);
         }
@@ -83,8 +89,8 @@ class HtmlView extends BaseHtmlView
     protected function addToolbar()
     {
         
-        // Get the toolbar object instance
-        $toolbar = Toolbar::getInstance('toolbar');
+        //         $toolbar = Toolbar::getInstance();
+        $toolbar = $this->getDocument()->getToolbar();
 
         ToolbarHelper::title(Text::_('Sports Managment - Bulletins'));
                

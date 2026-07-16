@@ -19,6 +19,7 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Form\Form;
+use FP4P\Component\JSports\Administrator\Model\BulletinModel;
 
 /**
  * View to edit a bulletin.
@@ -68,13 +69,15 @@ class HtmlView extends BaseHtmlView
      */
     public function display($tpl = null)
     {
-        $this->form  = $this->get('Form');
-        $this->item  = $this->get('Item');
-        $this->state = $this->get('State');
+        $model = $this->getModel();
+        /* change this from $this->get('Item') to $model->getItem() for J7 */
+        $this->form  = $model->getForm();
+        $this->item  = $model->getItem();
+        $this->state = $model->getState();
         
         //$this->hasAttachment = $this->item->hasAttachment;
         
-        if (count($errors = $this->get('Errors')))
+        if (count($errors = $model->getError()))
         {
             throw new GenericDataException(implode("\n", $errors), 500);
         }
@@ -97,7 +100,8 @@ class HtmlView extends BaseHtmlView
         Factory::getApplication()->input->set('hidemainmenu', true);
         $isNew      = ($this->item->id == 0);
         
-        $toolbar = Toolbar::getInstance();
+        //         $toolbar = Toolbar::getInstance();
+        $toolbar = $this->getDocument()->getToolbar();
         
         ToolbarHelper::title(
             Text::_('COM_JSPORTS_BULLETIN_PAGE_TITLE_' . ($isNew ? 'ADD' : 'EDIT'))

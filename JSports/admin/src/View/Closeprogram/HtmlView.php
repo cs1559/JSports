@@ -66,15 +66,10 @@ class HtmlView extends BaseHtmlView
      */
     public function display($tpl = null)
     {
-//         $this->form  = $this->get('Form');
-        $this->item  = $this->get('Item');
-//         $this->state = $this->get('State');
-        
-//         if (count($errors = $this->get('Errors')))
-//         {
-//             throw new GenericDataException(implode("\n", $errors), 500);
-//         }
-        
+
+        $model = $this->getModel();
+        $this->item  = $model->getItem();
+
         $this->addToolbar();
         
         return parent::display($tpl);
@@ -90,8 +85,8 @@ class HtmlView extends BaseHtmlView
      */
     protected function addToolbar()
     {
-        // Get the toolbar object instance
-        $toolbar = Toolbar::getInstance('toolbar');
+        //         $toolbar = Toolbar::getInstance();
+        $toolbar = $this->getDocument()->getToolbar();
         
         $canDo = ContentHelper::getActions('com_jsports');       
         

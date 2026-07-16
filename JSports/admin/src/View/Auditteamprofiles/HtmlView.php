@@ -84,7 +84,8 @@ class HtmlView extends BaseHtmlView
     {
         Factory::getApplication()->input->set('hidemainmenu', true);
         
-        $toolbar = Toolbar::getInstance();
+        //         $toolbar = Toolbar::getInstance();
+        $toolbar = $this->getDocument()->getToolbar();
         
         ToolbarHelper::title(
             Text::_('COM_JSPORTS_AUDITPROFILES_PAGE_TITLE')

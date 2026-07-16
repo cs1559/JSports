@@ -99,7 +99,8 @@ class HtmlView extends BaseHtmlView
         
         $pgmstat = $this->program->status;
         
-        $toolbar = Toolbar::getInstance();
+        //         $toolbar = Toolbar::getInstance();
+        $toolbar = $this->getDocument()->getToolbar();
         
         ToolbarHelper::title(
             Text::_('COM_JSPORTS_GAME_PAGE_TITLE_' . ($isNew ? 'ADD' : 'EDIT'))

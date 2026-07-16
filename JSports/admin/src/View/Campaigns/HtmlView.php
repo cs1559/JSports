@@ -64,13 +64,14 @@ class HtmlView extends BaseHtmlView
     public function display($tpl = null)
     {
         
-        $this->items         = $this->get('Items');
-        $this->pagination    = $this->get('Pagination');
-        $this->state         = $this->get('State');
-        $this->filterForm    = $this->get('FilterForm');
-        $this->activeFilters = $this->get('ActiveFilters');
+        $model = $this->getModel();
+        $this->items         = $model->getItems();
+        $this->pagination    = $model->getPagination();
+        $this->state         = $model->getState();
+        $this->filterForm    = $model->getFilterForm();
+        $this->activeFilters = $model->getActiveFilters();
         
-        $errors = (array) $this->get('Errors');
+        $errors = (array) $model->getErrors();
         
         if ($errors)
         {
@@ -86,8 +87,8 @@ class HtmlView extends BaseHtmlView
     protected function addToolBar()
     {
         
-        // Get the toolbar object instance
-        $toolbar = Toolbar::getInstance('toolbar');
+        //         $toolbar = Toolbar::getInstance();
+        $toolbar = $this->getDocument()->getToolbar();
 
         ToolbarHelper::title(Text::_('COM_JSPORTS_VIEW_CAMPAIGNS_TITLE'));
                

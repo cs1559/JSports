@@ -22,9 +22,11 @@ class HtmlView extends BaseHtmlView
     
     public function display($tpl = null)
     {
-        $this->title = $this->get('Title');
-        $this->version = $this->get('Version');
-        $this->releasedate = $this->get('Releasedate');
+        $model = $this->getModel();
+        
+        $this->title = $model->getTitle();
+        $this->version = $model->getVersion();
+        $this->releasedate = $model->getReleasedate();
         
          $this->addToolBar();
         
@@ -34,7 +36,8 @@ class HtmlView extends BaseHtmlView
     protected function addToolBar() {
         
     
-        $toolbar = Toolbar::getInstance();
+//         $toolbar = Toolbar::getInstance();
+        $toolbar = $this->getDocument()->getToolbar();
         $toolbar->preferences('com_jsports');
         
         ToolbarHelper::help('help.html', true);

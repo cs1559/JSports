@@ -83,8 +83,8 @@ class HtmlView extends BaseHtmlView
     protected function addToolbar()
     {
         
-        // Get the toolbar object instance
-        $toolbar = Toolbar::getInstance('toolbar');
+        //         $toolbar = Toolbar::getInstance();
+        $toolbar = $this->getDocument()->getToolbar();
 
         ToolbarHelper::title(Text::_('COM_JSPORTS_SPONSORS_PAGE_TITLE'));
                
