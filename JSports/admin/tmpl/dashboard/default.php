@@ -116,7 +116,15 @@ $wa->useStyle('com_jsports.admin.style');
 						<h2>Reports</h2>
 					</div>
 				</a>
-				 
+
+				<a href="index.php?option=com_jsports&view=badges"
+					class="card-link"> <!-- adjust view if needed -->
+					<div class="dashboard-card">
+						<i class="fas fa-award"></i>
+						<h2>Badges</h2>
+					</div>
+				</a> 
+								 
 				<a href="index.php?option=com_jsports&view=dashboard"
 					class="card-link"> <!-- adjust view if needed -->
 					<div class="dashboard-card">

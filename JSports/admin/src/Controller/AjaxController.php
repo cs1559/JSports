@@ -213,4 +213,49 @@ class AjaxController extends BaseController
     }
 
 
+    public function getProgramTeamList() : void {
+        
+        $app = Factory::getApplication();
+        
+        // CSRF check (use 'get' if you call via GET token)
+        //         if (!Session::checkToken('get')) {
+        //             echo new JsonResponse(null, 'Invalid token', true);
+        //             return;+
+        //         }
+        
+        $programid = $app->input->getInt('programid', 0);
+        
+        $teams = TeamService::getTeamsByProgram($programid, true);
+        
+        $options = "<option value=\"\">-- Select Team --</option>";
+        
+        $currentDivision = null;
+        
+        foreach ($teams as $teamArray) {
+            $team = (Object) $teamArray;
+            $id            = htmlspecialchars((string) ($team->teamid ?? '')        , ENT_QUOTES, 'UTF-8');
+            $title         = htmlspecialchars((string) ($team->teamname ?? '')      , ENT_QUOTES, 'UTF-8');
+            $agegroup      = htmlspecialchars((string) ($team->agegroup ?? '')      , ENT_QUOTES, 'UTF-8');
+            $divisionname  = htmlspecialchars((string) ($team->divisionname ?? '')  , ENT_QUOTES, 'UTF-8');
+            
+            // If the division changed, close the previous optgroup (if any) and open a new one
+            if ($divisionname !== $currentDivision) {
+                if ($currentDivision !== null) {
+                    $options .= "</optgroup>";
+                }
+                $options .= "<optgroup label=\"{$divisionname}\">";
+                $currentDivision = $divisionname;
+            }
+            
+            $options .= "<option value=\"{$id}\">{$title} {$agegroup}</option>";
+        }
+        
+        // Close the last optgroup, if we opened one
+        if ($currentDivision !== null) {
+            $options .= "</optgroup>";
+        }
+        
+        $this->sendHtml($options);
+    }
+    
 }   

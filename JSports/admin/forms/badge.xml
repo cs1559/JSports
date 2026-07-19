@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+
+	<fieldset  addfieldprefix="FP4P\Component\JSports\Administrator\Fields" name="details" label="COM_JSPORTS_DETAILS">
+
+		<field name="id" type="number" label="JGLOBAL_FIELD_ID_LABEL"
+			default="0" class="readonly" readonly="true" />
+
+		<field name="name" type="text"
+			label="COM_JSPORTS_NAME" size="40" required="true" 
+			description="Enter name of award.  eg. 2027 SWIBL 7U Tournament Champion" 
+			/>
+
+		<field name="badgetypeid" type="sql" 
+			label="COM_JSPORTS_BADGETYPE"
+			query="SELECT id, name FROM #__jsports_badge_types where published = '1' order by name"
+			key_field="id"
+			value_field="name" 
+			header="-Select Badge Type-"
+		/>
+		
+		<field name="programid" type="programslist" label="COM_JSPORTS_PROGRAMID"
+			default="0" 
+			class="form-select-color-state" 
+			onchange="refreshTeamlist();"
+			registrationonly="false"/>
+		
+		<field name="teamid" type="list"
+			label="COM_JSPORTS_TEAM" class="form-select-color-state"
+			required="false"
+			default="0" header="- Select Team -">
+		</field>
+		
+		<field name="alias" type="text"
+			label="COM_JSPORTS_ALIAS" 
+			required="false" />
+								
+		<field name="awarded_date" type="calendar" label="COM_JSPORTS_AWARDDATE"
+			default="0" class=""  require="true"/>
+			
+		<field name="published" type="list" label="JSTATUS"
+			class="form-select-color-state" default="1" validate="options">
+			<option value="1">JPUBLISHED</option>
+			<option value="0">JUNPUBLISHED</option>
+			<option value="2">JARCHIVED</option>
+			<option value="-2">JTRASHED</option>
+		</field>
+
+		
+	</fieldset>
+
+
+</form>

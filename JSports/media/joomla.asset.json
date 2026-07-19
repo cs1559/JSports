@@ -73,6 +73,16 @@
 				"jquery"
 			],
 			"attributes" : {
+				"defer" : true  
+			}
+		}, {
+			"name" : "com_jsports.badges.script",
+			"type" : "script",
+			"uri" : "com_jsports/badges.js",
+			"dependencies" : [
+				"jquery"
+			],
+			"attributes" : {
 				"defer" : true
 			}
 		}, {
