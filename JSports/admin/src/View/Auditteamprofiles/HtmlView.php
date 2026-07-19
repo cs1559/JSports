@@ -65,8 +65,8 @@ class HtmlView extends BaseHtmlView
      */
     public function display($tpl = null)
     {
-
-        $this->item  = $this->get('Item');
+        $model = $this->getModel();
+        $this->item = $model->getItem();
         $this->addToolbar();
         
         return parent::display($tpl);

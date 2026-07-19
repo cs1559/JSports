@@ -76,7 +76,6 @@ class HtmlView extends BaseHtmlView
     public function display($tpl = null)
     {
         $model = $this->getModel();
-        /* change this from $this->get('Item') to $model->getItem() for J7 */
         $this->form  = $model->getForm();
         $this->item  = $model->getItem();
         $this->state = $model->getState();

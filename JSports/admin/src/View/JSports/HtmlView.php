@@ -13,6 +13,7 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Toolbar\ToolbarHelper;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\MVC\View\GenericDataException;
 
 class HtmlView extends BaseHtmlView
 {
@@ -20,7 +21,15 @@ class HtmlView extends BaseHtmlView
     
     public function display($tpl = null)
     {
-        $this->form = $this->get('Form');
+        $model = $this->getModel();
+        $this->form  = $model->getForm();
+        $this->item  = $model->getItem();
+        $this->state = $model->getState();
+        
+        if (count($errors = $model->getErrors()))
+        {
+            throw new GenericDataException(implode("\n", $errors), 500);
+        }
         
         $this->addToolBar();
         

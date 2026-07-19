@@ -65,13 +65,13 @@ class HtmlView extends BaseHtmlView
     public function display($tpl = null)
     {
         
-        $this->items         = $this->get('Items');
-        $this->pagination    = $this->get('Pagination');
-        $this->state         = $this->get('State');
-        $this->filterForm    = $this->get('FilterForm');
-        $this->form    =       $this->get('Form');
-        $this->activeFilters = $this->get('ActiveFilters');
-        
+        $model = $this->getModel();
+        $this->items         = $model->getItems();
+        $this->pagination    = $model->getPagination();
+        $this->state         = $model->getState();
+        $this->filterForm    = $model->getFilterForm();
+        $this->activeFilters = $model->getActiveFilters();
+       
         $input = Factory::getApplication()->input;
         $this->programid = $input->get('programid');
 
@@ -81,8 +81,7 @@ class HtmlView extends BaseHtmlView
         $this->form->bind($defaults);
         $this->filterForm->bind($defaults);
         
-        // Check for errors.
-        if (count($errors = $this->get('Errors')))
+        if (count($errors = $model->getErrors()))
         {
             throw new GenericDataException(implode("\n", $errors), 500);
         }

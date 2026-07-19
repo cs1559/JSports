@@ -64,12 +64,17 @@ class HtmlView extends BaseHtmlView
     public function display($tpl = null)
     {
         
-        $this->items         = $this->get('Items');
-        $this->pagination    = $this->get('Pagination');
-        $this->state         = $this->get('State');
-        $this->filterForm    = $this->get('FilterForm');
-        $this->form          = $this->get('Form');
-        $this->activeFilters = $this->get('ActiveFilters');
+        $model = $this->getModel();
+        $this->items         = $model->getItems();
+        $this->pagination    = $model->getPagination();
+        $this->state         = $model->getState();
+        $this->filterForm    = $model->getFilterForm();
+        $this->activeFilters = $model->getActiveFilters();
+        
+        if (count($errors = $model->getErrors()))
+        {
+            throw new GenericDataException(implode("\n", $errors), 500);
+        }
         
         // Obtain the state variables and bind them to the search form
         $_programid = $this->state->get('admin.rosters.programid');
@@ -80,13 +85,7 @@ class HtmlView extends BaseHtmlView
             'teamid' => $_teamid,
         );
         $this->form->bind($defaults);
-        
-        // Check for errors.
-        if (count($errors = $this->get('Errors')))
-        {
-            throw new GenericDataException(implode("\n", $errors), 500);
-        }
-        
+               
         $this->addToolbar();
         
         return parent::display($tpl);

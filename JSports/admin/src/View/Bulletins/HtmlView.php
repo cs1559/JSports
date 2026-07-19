@@ -68,13 +68,7 @@ class HtmlView extends BaseHtmlView
         $this->state         = $model->getState();
         $this->filterForm    = $model->getFilterForm();
         $this->activeFilters = $model->getActiveFilters();
-//         $this->items         = $this->get('Items');
-//         $this->pagination    = $this->get('Pagination');
-//         $this->state         = $this->get('State');
-//         $this->filterForm    = $this->get('FilterForm');
-//         $this->activeFilters = $this->get('ActiveFilters');
-        
-//         Check for errors.
+
         if (count($errors = $model->getErrors()))
         {
             throw new GenericDataException(implode("\n", $errors), 500);

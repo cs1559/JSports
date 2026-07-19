@@ -76,17 +76,14 @@ class HtmlView extends BaseHtmlView
         
         /** @var \FP4P\Component\JSports\Administrator\Model\SponsorModel $model */
         $model = $this->getModel();
-        
-        $this->form = $this->get('Form');
-        $this->item = $this->get('Item');
-        $this->state = $this->get('State');
-
+        $this->form  = $model->getForm();
+        $this->item  = $model->getItem();
+        $this->state = $model->getState();
         $this->sponsorships = $model->getSponsorships();
         $this->assets = $model->getAssets();
         
-        // $this->hasAttachment = $this->item->hasAttachment;
-
-        if (count($errors = $this->get('Errors'))) {
+        if (count($errors = $model->getErrors()))
+        {
             throw new GenericDataException(implode("\n", $errors), 500);
         }
 
