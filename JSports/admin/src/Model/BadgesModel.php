@@ -150,7 +150,7 @@ class BadgesModel extends ListModel
 	    
 	    
 	    // Filter by search in date.
-	    $city = $this->getState('filter.programid');
+	    $programid = $this->getState('filter.programid');
 	    if (!empty($programid)) {
 	        $query->where($db->quoteName('a.programid') . ' like :programid');
 	        $query->bind(':programid', $programid, ParameterType::INTEGER);
@@ -162,7 +162,7 @@ class BadgesModel extends ListModel
 	    if (!empty($search))
 	    {
 	        $search = '%' . trim($search) . '%';
-	        $query->where($db->quoteName('a.notes') . ' LIKE :search')
+	        $query->where($db->quoteName('a.name') . ' LIKE :search')
 	        ->bind(':search', $search, ParameterType::STRING);
 	    }
 	    	    
