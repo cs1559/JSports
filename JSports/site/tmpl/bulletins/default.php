@@ -42,10 +42,6 @@ $token = Session::getFormToken();
 
 ?>
 
-<?php 
-    echo AdsManager::renderCampaign('bulletins-top');
-?>
-
 <form action="<?php echo Route::_('index.php?option=com_jsports&view=bulletins'); ?>" method="post" name="adminForm" id="adminForm">
 	
 	<div class="" >

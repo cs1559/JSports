@@ -20,6 +20,7 @@ use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Factory;
 use FP4P\Component\JSports\Site\Helpers\JSHelper;
+use FP4P\Component\JSports\Site\Ads\AdsManager;
 
 $listOrder = $this->escape($this->state->get('list.ordering'));
 $listDirn  = $this->escape($this->state->get('list.direction'));
@@ -33,6 +34,10 @@ $wa->getRegistry()->addExtensionRegistryFile('com_jsports');
 $wa->useScript('com_jsports.jsports.script');
 $wa->useStyle('com_jsports.postings.style');
 
+?>
+
+<?php 
+    echo AdsManager::renderCampaign('bulletins-top');
 ?>
 
 	<h2>Postings <?php //echo $this->program->name; ?></h2>
@@ -127,3 +132,7 @@ $wa->useStyle('com_jsports.postings.style');
 	<input type="hidden" name="boxchecked" value="0">
 	<?php echo HTMLHelper::_('form.token'); ?>
 </form>
+
+<?php 
+    echo AdsManager::renderCampaign('bulletins-bottom');
+?>
