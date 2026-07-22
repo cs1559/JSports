@@ -8,6 +8,7 @@
 
 namespace FP4P\Component\JSports\Site\Ads;
 
+use FP4P\Component\JSports\Site\Services\CampaignService;
 use Joomla\CMS\Layout\LayoutHelper;
 
 class CampaignRenderer implements RendererInterface
@@ -36,6 +37,7 @@ class CampaignRenderer implements RendererInterface
         echo LayoutHelper::render($fqn, $data, $basePath);
         echo '</div>';
         
+        CampaignService::incrementImpressions($campaign->id);
         
     }
 }
