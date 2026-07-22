@@ -28,6 +28,7 @@
 			<option value="default">Sponsor Logo</option>
 			<option value="textonly">Text ONLY - no links</option>
 			<option value="textwithlink">Text with LINK</option>
+			<option value="imagewithtext">Sponsor Image with Text</option>
 			<option value="sponsorwithlink">Sponsor Logo with Link</option>
 			<option value="stickytexttop">Sticky Ad - top</option>
 		</field>
@@ -59,8 +60,9 @@
 
 		<field name="link" type="list"
 			label="COM_JSPORTS_CAMPAIGN_REDIRECTLINK"
-			class="form-select-color-state" default="T1" validate="options"
+			class="form-select-color-state" default="" validate="options"
 			description="COM_JSPORTS_CAMPAIGN_REDIRECTLINK_DESC">
+			<option value="">None</option>
 			<option value="S">Sponsor Website</option>
 			<option value="A">Sponsor Asset/Document (local)</option>
 			<option value="X">External URL</option>
