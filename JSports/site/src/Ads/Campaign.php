@@ -95,7 +95,7 @@ class Campaign extends Ad
     /**
      * @return string
      */
-    public function getTitle()
+    public function getTitle() : string
     {
         return $this->title;
     }
@@ -176,14 +176,18 @@ class Campaign extends Ad
         return $this->sponsorurl;    
     }
     
+    /**
+     * {@inheritDoc}
+     * @see \FP4P\Component\JSports\Site\Ads\Ad::getLayout()
+     */
     public function getLayout() {
-        static $map = [
-            'T1' => 'textonly',
-            'T2' => 'textwithlink',
-            'I1' => 'imageonly',
-            'I2' => 'imagewithtext',
-            'P' => 'promobanner',
-        ];
+//         static $map = [
+//             'T1' => 'textonly',
+//             'T2' => 'textwithlink',
+//             'I1' => 'imageonly',
+//             'I2' => 'imagewithtext',
+//             'P' => 'promobanner',
+//         ];
         
         return $this->layout;
         
