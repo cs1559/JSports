@@ -24,6 +24,7 @@ $itemid = $params->get('itemid');
 
 ?>
 
+
 <?php
 $ajaxUrl = Route::_('index.php?option=com_jsports&task=registration.checkteamauth', false);
 ?>
@@ -83,6 +84,10 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 </script>
+
+<?php
+   echo AdsManager::renderCampaign('register-top');
+?>
 
 <form action="<?php echo Route::_('index.php?option=com_jsports&task=register.save&Itemid=' . $itemid); ?>"
 	method="post" name="registerform" id="register-form" class="form-validate">

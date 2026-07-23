@@ -102,6 +102,7 @@
 			<option value="venues-top">Venues - Top</option>
 			<option value="teams-top">Teams - Top</option>
 			<option value="bulletins-top">Bulletins - Top</option>
+			<option value="register-top">Register - Top</option>
 		</field>
 
 		<field name="impressions" type="number"
