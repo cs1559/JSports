@@ -29,11 +29,12 @@ class SponsorAssetsField extends ListField
 
         $filterValue = null;
         
+        $filterValue = 0;
         if ($this->form && $filterField)
         {
-            $filterValue = $this->form->getValue($filterField);
+            $filterValue = $this->form->getValue($filterField) ?? 0;
         }
-
+        
         if ($this->form && $filterImages)
         {
 		    $imagesonly = filter_var($filterImages, FILTER_VALIDATE_BOOLEAN);
