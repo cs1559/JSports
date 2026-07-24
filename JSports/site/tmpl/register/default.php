@@ -13,6 +13,8 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Component\ComponentHelper;
+use FP4P\Component\JSports\Site\Ads\AdsManager;
+
 
 HTMLHelper::_('behavior.formvalidator');
 HTMLHelper::_('behavior.keepalive');
