@@ -57,7 +57,6 @@ class UserService
      * @return User
      */
     public static function getUser() {
-//         return Factory::getUser();
         return Factory::getApplication()->getIdentity();
         
     }
@@ -232,7 +231,6 @@ order by lastprogramid desc";
     public static function getAssignedAgeGroups($uid = null) : array {
         
         if (is_null($uid)) {
-//             $user = Factory::getUser();
             $user = self::getUser();
             $uid = $user->id;
             if ($user->guest) {

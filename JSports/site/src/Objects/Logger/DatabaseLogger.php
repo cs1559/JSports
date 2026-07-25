@@ -44,7 +44,6 @@ class DatabaseLogger extends Logger
     {
         
         $db = Factory::getContainer()->get(DatabaseInterface::class);
-//         $user = Factory::getUser();
         $user = UserService::getUser();
         
         $query = $db->getQuery(true);

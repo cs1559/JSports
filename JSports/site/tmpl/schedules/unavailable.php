@@ -29,7 +29,6 @@ use FP4P\Component\JSports\Site\Helpers\JSHelper;
 use FP4P\Component\JSports\Site\Services\UserService;
 
 $clientId  = (int) $this->state->get('client_id', 0);
-// $user      = Factory::getUser();
 $user = UserService::getUser();
 
 // Set Page Title and load specific stylesheet

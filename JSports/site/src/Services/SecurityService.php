@@ -71,7 +71,6 @@ class SecurityService
         }
         
         // Get current user
-        //$user = Factory::getUser();
         $user = SecurityService::getUser();
         
         // If the user is a GUEST, return FALSE
@@ -136,7 +135,6 @@ class SecurityService
         }
 
         if (is_null($ownerid)) {
-            //$user = Factory::getUser();
             $user = SecurityService::getUser();
             $ownerid = $user->id;
         }
@@ -192,7 +190,6 @@ class SecurityService
         }
         
         if (is_null($ownerid)) {
-            //$user = Factory::getUser();
             $user = SecurityService::getUser();
             $ownerid = $user->id;
         }
@@ -219,7 +216,6 @@ class SecurityService
       //  $editawaygame = $params->get('editawaygame');
         
         // Get current user
-        //$user = Factory::getUser();
         $user = SecurityService::getUser();
         
         // If the user is a GUEST, return FALSE
@@ -276,7 +272,6 @@ class SecurityService
      */
     public static function isAdmin() : bool {
         // Get current user
-        //$user = Factory::getUser();
         $user = SecurityService::getUser();
         
         // Chekcs to  see if the user is in an ADMINISTRATOR ROLE.
@@ -304,7 +299,6 @@ class SecurityService
      */
     public static function isCoach() : bool {
         
-        //$user = Factory::getUser();
         $user = SecurityService::getUser();
         
         // If the current user a guest, return false
@@ -338,7 +332,6 @@ class SecurityService
         
         $retval= false;
         
-        //$user = Factory::getUser();
         $user = SecurityService::getUser();
         
         if ($user->guest) {
@@ -374,7 +367,6 @@ class SecurityService
      */
     public static function canEditTeamBulletins(int $teamid) : bool {
         $retval = false;
-        //$user = Factory::getUser();
         $user = SecurityService::getUser();
         
         // If the current user a guest, return false

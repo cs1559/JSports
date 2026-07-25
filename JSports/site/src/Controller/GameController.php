@@ -238,7 +238,6 @@ class GameController extends FormController
 //         $teamid     = $input->getInt("teamid");
         
 //         /* Code to prevent further action if user is NOT logged in */
-// //         $user = Factory::getUser();
 //         $user = UserService::getUser();
 //         // Check if the user is logged in
 //         if ($user->guest) {
@@ -320,7 +319,6 @@ class GameController extends FormController
         $contextid = $requestData['contextid'];
         
         /* Code to prevent further action if user is NOT logged in */
-//         $user = Factory::getUser();
         $user = UserService::getUser();
         // Check if the user is logged in
         if ($user->guest) {

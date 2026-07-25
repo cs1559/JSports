@@ -169,7 +169,6 @@ class PostscoreModel extends FormModel
         
         $logger = Myapp::getLogger();
         
-//         $user = Factory::getUser();
         $user = UserService::getUser();
 
         $id = $data['id'];

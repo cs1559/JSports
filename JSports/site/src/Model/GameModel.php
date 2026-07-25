@@ -187,7 +187,6 @@ class GameModel extends FormModel
         $logger = Myapp::getLogger();
         $isNew = false;
         
-//         $user = Factory::getUser();
         $user = UserService::getUser();
         
         $table = GameService::getGamesTable();

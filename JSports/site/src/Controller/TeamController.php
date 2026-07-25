@@ -101,7 +101,6 @@ class TeamController extends BaseController
         $teamid = (int) ($requestData['teamid'] ?? $requestData['id'] ?? 0);
         
         /* Code to prevent further action if user is NOT logged in */
-//         $user = Factory::getUser();
         $user = UserService::getUser();
         // Check if the user is logged in
         if ($user->guest) {

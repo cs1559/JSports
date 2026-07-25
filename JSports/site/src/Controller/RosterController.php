@@ -87,7 +87,6 @@ class RosterController extends FormController
         $id     = $input->getInt("id");
         
         /* Code to prevent further action if user is NOT logged in */
-//         $user = Factory::getUser();
         $user = UserService::getUser();
         // Check if the user is logged in
         if ($user->guest) {
@@ -159,7 +158,6 @@ class RosterController extends FormController
         $teamid = $requestData['teamid'];
 
         /* Code to prevent further action if user is NOT logged in */
-//         $user = Factory::getUser();
         $user = UserService::getUser();
         // Check if the user is logged in
         if ($user->guest) {

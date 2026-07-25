@@ -145,8 +145,7 @@ class GameModel extends AdminModel
     
     public function save($data) {
      
-        // Moved to the UserService due to Factory::getUser being deprecated
-//         $user = Factory::getUser();
+
         $user = UserService::getUser();
 
         /*

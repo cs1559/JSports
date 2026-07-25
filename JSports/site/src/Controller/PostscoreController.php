@@ -92,7 +92,6 @@ class PostscoreController extends FormController
         $redirectteamid = $requestData['redirectteamid'];
         
         /* Code to prevent further action if user is NOT logged in */
-//         $user = Factory::getUser();
         $user = UserService::getUser();
         // Check if the user is logged in
         if ($user->guest) {

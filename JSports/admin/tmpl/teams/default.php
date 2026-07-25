@@ -28,7 +28,6 @@ $states = array (
 $editIcon = '<span class="fa fa-pen-square me-2" aria-hidden="true"></span>';
 
 $clientId  = (int) $this->state->get('client_id', 0);
-// $user      = Factory::getUser();
 $user = UserService::getUser();
 
 ?>

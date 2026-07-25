@@ -28,7 +28,6 @@ use FP4P\Component\JSports\Site\Services\GameService;
 use FP4P\Component\JSports\Site\Helpers\JSHelper;
 
 $clientId  = (int) $this->state->get('client_id', 0);
-// $user      = Factory::getUser();
 
 // Set Page Title and load specific stylesheet
 // $document = Factory::getDocument();
