@@ -196,7 +196,42 @@ final class JSHelper
             return true;
         }
         
-        $bots = ['bot','crawl','spider','slurp','mediapartners'];
+//         $bots = ['bot','crawl','spider','slurp','mediapartners'];
+        $bots = [
+            // Generic patterns (catch most well-behaved crawlers)
+            'bot', 'crawl', 'spider', 'slurp', 'mediapartners',
+            
+            // Search engines not caught by generic patterns above
+            'yandex', 'baidu', 'duckduckbot', 'ia_archiver',
+            
+            // Social / link-preview bots (often lack "bot" in the string)
+            'facebookexternalhit', 'whatsapp', 'telegram',
+            'linkedinbot', 'discordbot', 'slack',
+            
+            // SEO / marketing crawlers
+            'ahrefs', 'semrush', 'mj12', 'dotbot', 'majestic',
+            
+            // AI / LLM crawlers
+            'gptbot', 'anthropic', 'claudebot', 'ccbot',
+            'perplexitybot', 'google-extended',
+            
+            // Uptime / monitoring services
+            'pingdom', 'uptimerobot', 'statuscake', 'newrelic',
+            'datadog', 'site24x7', 'monitor',
+            
+            // Feed fetchers
+            'feedfetcher', 'feedburner',
+            
+            // Headless browsers / automation frameworks
+            'headlesschrome', 'phantomjs', 'selenium', 'puppeteer',
+            'playwright',
+            
+            // Generic scripted HTTP clients (no real browser sends these)
+            'curl', 'wget', 'python-requests', 'python-urllib',
+            'go-http-client', 'java/', 'libwww-perl', 'scrapy',
+            'node-fetch', 'axios', 'okhttp', 'postmanruntime',
+            'httpclient',
+        ];
         
         foreach ($bots as $bot) {
             if (strpos($ua, $bot) !== false) {
