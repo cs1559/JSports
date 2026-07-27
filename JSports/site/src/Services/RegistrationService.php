@@ -146,7 +146,8 @@ class RegistrationService
         }
         
         // Check if admin and not logged in.
-        $user = Factory::getUser($userid);
+//         $user = Factory::getUser($userid);
+        $user = UserService::getUserById($userid);
         if ($user->authorise('core.admin')) {
             return true;
         }
