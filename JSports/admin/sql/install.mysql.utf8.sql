@@ -449,25 +449,28 @@ CONSTRAINT UC_filename UNIQUE (sponsorid,filename)
 --
 --  CAMPAIGN TYPE - could be a banner, ad, link to asset, external link, etc.
 --
-CREATE TABLE IF NOT EXISTS `#__jsports_campaigns` (
-	 `id` 		tinyint 		NOT NULL AUTO_INCREMENT,
- 	 `campaigntype` 	VARCHAR(2),
- 	 `title`			VARCHAR(50),	
- 	 `sponsorid` 		tinyint default 0,
- 	 `sponsorshipid`	tinyint default 0,
- 	 `assetid` 			tinyint default 0,
-  	 `positions` 		VARCHAR(150),
-   	 `url` 				VARCHAR(200),		
- 	 `content` 			text,		
-  	 `impressions` 		int default 0,
-   	 `clicks`	 		int default 0,
-	 `startdate` 		DATE 			NOT NULL,
- 	 `enddate`   		date 			NOT NULL,
- 	 `classname`		varchar(100)  default null,
- 	 `customcss`		varchar(700)  default '',
- 	 `published`		tinyint default 0,
-PRIMARY KEY (`id`)
+CREATE TABLE `jos2823_jsports_campaigns` (
+  `id` tinyint(4) NOT NULL,
+  `campaigntype` varchar(2) DEFAULT NULL,
+  `title` varchar(70) DEFAULT NULL,
+  `sponsorid` tinyint(4) DEFAULT 0,
+  `layout` varchar(25) DEFAULT NULL,
+  `link` varchar(1) DEFAULT 'S',
+  `imageid` tinyint(4) DEFAULT 0,
+  `sponsorshipid` tinyint(4) DEFAULT 0,
+  `assetid` tinyint(4) DEFAULT 0,
+  `positions` varchar(150) DEFAULT NULL,
+  `url` varchar(200) DEFAULT NULL,
+  `content` text DEFAULT NULL,
+  `impressions` int(11) DEFAULT 0,
+  `clicks` int(11) DEFAULT 0,
+  `startdate` date NOT NULL,
+  `enddate` date NOT NULL,
+  `classname` varchar(100) DEFAULT NULL,
+  `customcss` varchar(500) DEFAULT '',
+  `published` tinyint(4) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 
 
 CREATE TABLE IF NOT EXISTS `#__jsports_sponsorship_plans` (
