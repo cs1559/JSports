@@ -12,6 +12,7 @@ use Joomla\Database\DatabaseInterface;
 use Joomla\Database\ParameterType;
 use Joomla\CMS\Factory;
 use Joomla\CMS\User\User;
+use Joomla\CMS\User\UserFactoryInterface;
 
 class UserService
 {
@@ -61,6 +62,18 @@ class UserService
         
     }
 
+    /**
+     * A helper function to retrieve the Joomla user object based on an ID.
+     * NOTE:  This also is migrating away from the legacy Factory::getUser method.
+     * 
+     * @param int $userid
+     * @return User
+     */
+    public static function getUserById($userid) {
+        $user = Factory::getContainer()->get(UserFactoryInterface::class)->loadUserById($userid);
+        return $user;
+    }
+    
     /**
      * This function will return a list of teams a user is associated with - either as the owner or as a staff
      * roster entry where their user id was set.
