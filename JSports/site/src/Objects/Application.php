@@ -9,7 +9,7 @@ namespace FP4P\Component\JSports\Site\Objects;
 
 use FP4P\Component\JSports\Site\Events\EventDispatcher;
 use FP4P\Component\JSports\Site\Services\MailService;
-use FP4P\Component\JSports\Site\Objects\Logger\DatabaseLogger;
+use FP4P\Component\JSports\Site\Logger\DatabaseLogger;
 
 class Application
 {
