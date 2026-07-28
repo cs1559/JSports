@@ -53,7 +53,7 @@
 	
 	
 	<fieldset name="component">
-
+		
 		<field name="frontend_admin" type="radio" default="0"
 			label="COM_JSPORTS_FRONTEND_ADMIN_ENABLED"
 			description="COM_JSPORTS_FRONTEND_ADMIN_ENABLED_DESC"
@@ -305,6 +305,45 @@
 				
 	</fieldset>
 
+	<fieldset name="testing" label="Testing">
+			<field name="testmode" type="radio" default="0"
+				label="COM_JSPORTS_TESTMODE_ENABLED"
+				description="COM_JSPORTS_TESTMODE_ENABLED_DESC"
+				layout="joomla.form.field.radio.switcher">
+				<option value="0">No</option>
+				<option value="1">Yes</option>
+			</field>
+			<field
+			    name="impersonatefrom"
+			    type="sql"
+			    label="COM_JSPORTS_TESTMODE_USER_IMPERSONATE_FROM"
+			    description="COM_JSPORTS_TESTMODE_USER_IMPERSONATE_FROM_DESC"
+			    key_field="value"
+			    value_field="text"
+			    translate="false"
+			    header="- Select User -"
+			    query="SELECT u.id AS value, concat(u.name,' ','(',u.username,')') AS text
+			            FROM #__users AS u
+			            INNER JOIN #__user_usergroup_map AS m ON m.user_id = u.id
+			            INNER JOIN #__usergroups AS g ON g.id = m.group_id
+			            WHERE g.title like '%Super User%'
+			            ORDER BY u.name ASC
+			        ">
+			</field>
+			<field name="impersonateto" type="sql" 
+				label="COM_JSPORTS_TESTMODE_USER_IMPERSONATE_TO"
+				query="SELECT id, concat(name,' ','(',email,')') as name FROM #__users where block &lt;&gt; 1 order by SUBSTRING_INDEX(name, ' ', -1) "
+				key_field="id"
+				value_field="name" 
+				header="- Select User -"
+				/>				
+
+			<field name="testemail" type="email" default=""
+				label="COM_JSPORTS_TESTMODE_EMAIL"
+				description="COM_JSPORTS_TESTMODE_EMAIL_DESC">
+			</field>
+		
+	</fieldset>
 		
 	<fieldset name="permissions" description="JCONFIG_PERMISSIONS_DESC" label="JCONFIG_PERMISSIONS_LABEL">
 			<field name="rules" type="rules" component="com_jsports" class="inputbox" filter="rules" validate="rules" label="JCONFIG_PERMISSIONS_LABEL" section="component"/>

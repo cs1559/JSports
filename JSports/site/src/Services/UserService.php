@@ -11,8 +11,10 @@ namespace FP4P\Component\JSports\Site\Services;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Database\ParameterType;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\User\User;
 use Joomla\CMS\User\UserFactoryInterface;
+use FP4P\Component\JSports\Site\Objects\Application;
 
 class UserService
 {
@@ -22,7 +24,6 @@ class UserService
     public function __construct(User $user = null) {
         
         if (is_null($user)) {
-            //             $this->mailer = Factory::getMailer();
             $this->user = Factory::getApplication()->getIdentity();
         } else {
             $this->user = $user;
@@ -58,8 +59,21 @@ class UserService
      * @return User
      */
     public static function getUser() {
-        return Factory::getApplication()->getIdentity();
-        
+ 
+        if (Application::inTestMode()) {
+            $current_user = Factory::getApplication()->getIdentity();
+            $params = ComponentHelper::getParams('com_jsports');
+            $impersonatefrom = $params->get('impersonatefrom', "jsports");
+            $impersonateto = $params->get('impersonateto', "jsports");
+            $uid = $current_user->id;
+            
+            // if the current user is the same as the FROM id in the configuration then return the TO user object
+            if ($uid == $impersonatefrom) {
+                return UserService::getUserById($impersonateto);
+            }
+        } else {
+            return Factory::getApplication()->getIdentity();
+        }
     }
 
     /**
@@ -94,8 +108,11 @@ class UserService
         $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
 
-        if ($uid == 956) {
-            $uid = 1176;
+        // If the application component is in TEST mode and the userid is the ADMIN user,then hardcode the UID in the query
+        if (Application::inTestMode()) {
+            if ($uid == 956) {
+                $uid = 1176;
+            }
         }
         $sql = "
 select * from (
@@ -195,8 +212,6 @@ order by lastprogramid desc";
             $db->quoteName('staffadmin') . ' = 1' ,     
         );
         $query2->where($conditions2);
-
-        //$query2->bind(':staffadmin', 1, ParameterType::INTEGER);
         
         $query->union($query2);
 
@@ -296,7 +311,7 @@ order by lastprogramid desc";
      * 
      * @param int|User|null $user
      * @return array
-     */
+     */ 
     public static function getUserActiveTeams(int|User|null $user  = null) : array {
         
         
@@ -311,8 +326,11 @@ order by lastprogramid desc";
         $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
         
-        if ($uid == 956) {
-            $uid = 1176;
+        // If the application component is in TEST mode and the userid is the ADMIN user,then hardcode the UID in the query
+        if (Application::inTestMode()) {
+            if ($uid == 956) {
+                $uid = 1176;
+            }
         }
         $sql = "
 select * from (
@@ -357,35 +375,5 @@ and r.staffadmin = 1
         
     }
     
-    
-    /**
-     * 
-     * 
-     * select * from (
-select t.*
-from 
-	(select teamid
-	from jos2823_jsports_map
-     WHERE programid = 37
-	group by teamid 
-	) temp1, jos2823_jsports_teams t
-where 
-temp1.teamid = t.id
-and t.ownerid = 963
-UNION
-select t.*
-from  
-	(select teamid
-	from jos2823_jsports_map
-     where programid = 37
-	group by teamid 
-	) temp1, jos2823_jsports_teams t, jos2823_jsports_rosters r
-where temp1.teamid = t.id
-    and temp1.teamid = r.teamid
-    and r.programid = 37
-and r.userid = 963
-and r.staffadmin = 1
-) table1;
-     */
 }
 

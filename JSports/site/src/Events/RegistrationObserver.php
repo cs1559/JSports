@@ -8,10 +8,10 @@
 namespace FP4P\Component\JSports\Site\Events;
 
 use FP4P\Component\JSports\Site\Helpers\JSHelper;
+use FP4P\Component\JSports\Site\Objects\Application;
 use FP4P\Component\JSports\Site\Objects\BaseObserver;
-use FP4P\Component\JSports\Site\Services\TeamService;
-use FP4P\Component\JSports\Site\Services\ProgramsService;
 use FP4P\Component\JSports\Site\Services\MailService;
+use FP4P\Component\JSports\Site\Services\ProgramsService;
 use Joomla\CMS\Component\ComponentHelper;
 
 class RegistrationObserver extends BaseObserver
@@ -99,8 +99,10 @@ Email: info@swibl.org<br/>
         }
 
         // Code to override email address for testing purposes.
-        if (JSHelper::isTestServer()) {
-            $recipients = ['cs1559@sbcglobal.net'];
+        if (JSHelper::isTestServer() || Application::inTestMode()) {
+            $params = ComponentHelper::getParams('com_jsports');
+            $testemail = $params->get('testemail', "jsports");
+            $recipients = [$testemail];
             $body = "<h1>THIS IS ONLY A TEST</h1><br/>" . $body;
         }
         

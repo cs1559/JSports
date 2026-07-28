@@ -8,8 +8,8 @@
 namespace FP4P\Component\JSports\Site\Objects;
 
 use FP4P\Component\JSports\Site\Events\EventDispatcher;
-use FP4P\Component\JSports\Site\Services\MailService;
 use FP4P\Component\JSports\Site\Logger\DatabaseLogger;
+use Joomla\CMS\Component\ComponentHelper;
 
 class Application
 {
@@ -37,6 +37,18 @@ class Application
         return self::$instance;
     }
     
+    /**
+     * This is a helper function that can be used to check if the component is in TEST mode.
+     * If it is, certain functionality may be limited.  An example is when sending emails.  Emails
+     * would only be sent to certain email addresses versus the the actual recipients.
+     * @return bool
+     */
+    public static function inTestMode() : bool {
+        $params = ComponentHelper::getParams('com_jsports');
+        $testmode = $params->get('testmode', "jsports");
+        
+        return $testmode;
+    }
     
     /**
      * Ths function will use the dispatcher to trigger the event notifications.
