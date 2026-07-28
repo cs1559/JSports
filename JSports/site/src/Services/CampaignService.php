@@ -12,13 +12,8 @@ use FP4P\Component\JSports\Administrator\Table\SponsorassetsTable;
 use FP4P\Component\JSports\Administrator\Table\SponsorsTable;
 use Joomla\Database\DatabaseInterface;
 use Joomla\Database\ParameterType;
-use Joomla\Filesystem\Folder;
 use Joomla\CMS\Factory;
-use FP4P\Component\JSports\Site\Objects\Application;
-use FP4P\Component\JSports\Site\Services\SecurityService;
 use FP4P\Component\JSports\Administrator\Table\SponsorshipsTable;
-use FP4P\Component\JSports\Site\Helpers\SponsorHelper;
-use Joomla\Filesystem\File;
 use FP4P\Component\JSports\Administrator\Table\CampaignsTable;
 use Joomla\CMS\Uri\Uri;
 
@@ -28,7 +23,7 @@ class CampaignService
     /**
      * This function will return an individual row based on the PROGRAM ID.
      *
-     * @param number $id
+     * @param int $id
      * @return \FP4P\Component\JSports\Administrator\Table\CampaignsTable|NULL
      */
     public static function getItem(int $id = 0) : ?CampaignsTable {
@@ -45,74 +40,117 @@ class CampaignService
         return null;
     }
 
-    public static function getCampaign($pk) {
+    /**
+     * This function will return a single published campaign record, joined with its
+     * sponsor's name, logo, and website, based on the campaign ID.
+     *
+     * @param int $pk Campaign ID
+     * @return \stdClass|null
+     */
+    public static function getCampaign(int $pk) {
         
         $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
         
-        /*
-         *         $query->from($db->quoteName('#__jsports_sponsors') . ' AS a,' .
-         $db->quoteName('#__jsports_sponsor_assets') . ' AS sa '
-         );
-         */
         $query->select('c.*,s.name as sponsorname, s.logo as sponsorlogo, s.website as sponsorurl');
         $query->from($db->quoteName('#__jsports_campaigns') . ' AS c, ' .
-            $db->quoteName('#__jsports_sponsors') . 'AS s');
+            $db->quoteName('#__jsports_sponsors') . ' AS s');
+        
         $conditions = array(
             $db->quoteName('c.sponsorid') . ' = ' . $db->quoteName('s.id'),
             $db->quoteName('c.published') . ' in (1) ',
-            $db->quoteName('c.id') . ' = ' . $pk
+            $db->quoteName('c.id') . ' = :pk'
         );
         
         $query->where($conditions);
-        //         $query->order('id desc');
+        $query->bind(':pk', $pk, ParameterType::INTEGER);
+        
         $db->setQuery($query);
         return $db->loadObject();
-        
-    }
+    }   
     
     /**
      * This function will return an array of objects that represent all campaigns for a given
      * position.  The campaign MUST be a published campaign.
      *
+     * @param string $position The campaign position slot to match against (e.g. 'sidebar', 'header')
+     * @param int|null $filter Optional sponsor ID to restrict results to a single sponsor
      * @return array<int, stdClass>
      */
-    public static function getEligibleCampaigns($position, $filter = null) {
-
+    public static function getEligibleCampaigns(string $position, ?int $filter = null) {
+        
         $db = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true);
-
-        /*
-         *         $query->from($db->quoteName('#__jsports_sponsors') . ' AS a,' .
-            $db->quoteName('#__jsports_sponsor_assets') . ' AS sa '
-            );
-         */
+        
         $query->select('c.*,s.name as sponsorname, s.logo as sponsorlogo, s.website as sponsorurl');
         $query->from($db->quoteName('#__jsports_campaigns') . ' AS c, ' .
-            $db->quoteName('#__jsports_sponsors') . 'AS s');
+            $db->quoteName('#__jsports_sponsors') . ' AS s');
+        
+        $likePosition = '%' . $position . '%';
+        
         $conditions = array(
             $db->quoteName('c.sponsorid') . ' = ' . $db->quoteName('s.id'),
-            $db->quoteName('c.positions') . ' like \'%' . $position . '%\'',
+            $db->quoteName('c.positions') . ' LIKE :position',
             $db->quoteName('c.published') . ' in (1) ',
             $db->quoteName('c.enddate') . ' >= CURDATE()'
         );
         
         if (!is_null($filter)) {
-            $conditions[] = $db->quoteName('c.sponsorid') . ' = ' . $filter;
+            $conditions[] = $db->quoteName('c.sponsorid') . ' = :filter';
         }
-//         if ($activeonly) {
-//             $conditions[] = $db->quoteName('p.status') . ' = "A"';
-//         }
+        
         $query->where($conditions);
-//         $query->order('id desc');
+        $query->bind(':position', $likePosition, ParameterType::STRING);
+        
+        if (!is_null($filter)) {
+            $query->bind(':filter', $filter, ParameterType::INTEGER);
+        }
+        
         $db->setQuery($query);
         return $db->loadObjectList();
-        
     }
+
+//     public static function getEligibleCampaigns($position, $filter = null) {
+
+//         $db = Factory::getContainer()->get(DatabaseInterface::class);
+//         $query = $db->getQuery(true);
+
+//         /*
+//          *         $query->from($db->quoteName('#__jsports_sponsors') . ' AS a,' .
+//             $db->quoteName('#__jsports_sponsor_assets') . ' AS sa '
+//             );
+//          */
+//         $query->select('c.*,s.name as sponsorname, s.logo as sponsorlogo, s.website as sponsorurl');
+//         $query->from($db->quoteName('#__jsports_campaigns') . ' AS c, ' .
+//             $db->quoteName('#__jsports_sponsors') . 'AS s');
+//         $conditions = array(
+//             $db->quoteName('c.sponsorid') . ' = ' . $db->quoteName('s.id'),
+//             $db->quoteName('c.positions') . ' like \'%' . $position . '%\'',
+//             $db->quoteName('c.published') . ' in (1) ',
+//             $db->quoteName('c.enddate') . ' >= CURDATE()'
+//         );
+        
+//         if (!is_null($filter)) {
+//             $conditions[] = $db->quoteName('c.sponsorid') . ' = ' . $filter;
+//         }
+// //         if ($activeonly) {
+// //             $conditions[] = $db->quoteName('p.status') . ' = "A"';
+// //         }
+//         $query->where($conditions);
+// //         $query->order('id desc');
+//         $db->setQuery($query);
+//         return $db->loadObjectList();
+        
+//     }
     
     
     /**
-     * @return array<int, \stdClass>
+     * This function will return a single sponsor asset record, joined with its sponsor's name,
+     * based on the sponsor ID and asset ID.
+     *
+     * @param int $sponsorid
+     * @param int $assetid
+     * @return \stdClass|null
      */
     public static function getAsset(int $sponsorid, int $assetid)
     {
@@ -139,7 +177,15 @@ class CampaignService
         
     }
     
-    public static function getAssetURL($sponsorid, $filename) {
+    /**
+     * This function will return the URL string that can be used to retrieve a sponsor's
+     * asset file (e.g. logo, banner image) via a browser.
+     *
+     * @param int $sponsorid
+     * @param string $filename
+     * @return string
+     */
+    public static function getAssetURL(int $sponsorid, string $filename) {
         
         $imageFolder = "/media/com_jsports/images/sponsors/assets/";
                 
@@ -148,7 +194,13 @@ class CampaignService
     }
     
     
-    public static function incrementImpressions($campaignid) : void {
+    /**
+     * This function will increment the impressions counter for a given campaign by 1.
+     *
+     * @param int $campaignid
+     * @return void
+     */
+    public static function incrementImpressions(int $campaignid) : void {
         
         $db    = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true)
@@ -161,7 +213,13 @@ class CampaignService
     }
     
   
-    public static function click($campaignid) : void {
+    /**
+     * This function will increment the clicks counter for a given campaign by 1.
+     *
+     * @param int $campaignid
+     * @return void
+     */
+    public static function click(int $campaignid) : void {
         
         $db    = Factory::getContainer()->get(DatabaseInterface::class);
         $query = $db->getQuery(true)
@@ -175,4 +233,3 @@ class CampaignService
     
      
 }
-
