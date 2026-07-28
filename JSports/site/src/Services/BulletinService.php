@@ -8,13 +8,6 @@
 
 namespace FP4P\Component\JSports\Site\Services;
 
-/**
- * DivisionService - This is a service class that exposes certain functions that
- * various components within the applicaiton that can call statically.
- * 
- * REVISION HISTORY:
- * 2025-01-16  Cleaned up code and added inline comments.
- */
 
 use FP4P\Component\JSports\Administrator\Table\BulletinsTable;
 use Joomla\Database\DatabaseInterface;
@@ -24,12 +17,22 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Uri\Uri;
 use Joomla\Filesystem\Folder;
 use FP4P\Component\JSports\Site\Services\LogService;
-use FP4P\Component\JSports\Site\Objects\Application as Myapp;
 
-
+/**
+ * The BulletinService class provides a series of functions used within the component to perform functions related to
+ * the management of the Bulletin features.
+ * 
+ * @author Chris Strieter
+ *
+ */
 class BulletinService
 {
-   
+
+    /**
+     * This function returns a BulletinsTable instance bound to the current database connection.
+     *
+     * @return BulletinsTable
+     */
     public static function getBulletinsTable() : BulletinsTable
     {
         $db = Factory::getContainer()->get(DatabaseInterface::class);
@@ -39,7 +42,7 @@ class BulletinService
     /**
      * This function will return an individual row based on the Bulletin ID.
      *
-     * @param number $id
+     * @param int $id
      * @return \FP4P\Component\JSports\Administrator\Table\BulletinsTable|NULL
      */
     public static function getItem(int $id = 0) : ?BulletinsTable {
@@ -65,9 +68,9 @@ class BulletinService
      */
     public static function bump(int $id = 0) : bool {
         
-        $logger = Myapp::getLogger();
+//         $logger = Myapp::getLogger();
         if ($id === 0) {
-            $logger->error('Bulletin Record ID ' . $id . ' is required ');
+            LogService::error('Bulletin Record ID ' . $id . ' is required ');
             return false;
         }
         
@@ -80,10 +83,11 @@ class BulletinService
         
         $result = $db->setQuery($query)->execute();
     
+        //@todo - maybe change this from checking $result to $db->getAffectedRows()
         if ($result) {
-            $logger->error('Bulletin Record ID ' . $id . ' has been bumped ');
+            LogService::info('Bulletin Record ID ' . $id . ' has been bumped ');
         } else {
-            $logger->error('Bulletin Record ID ' . $id . ' bump failed ');
+            LogService::error('Bulletin Record ID ' . $id . ' bump failed ');
         }
         
         return $result;
@@ -100,16 +104,16 @@ class BulletinService
      */
     public static function delete(int $id = 0) : bool {
         
-        $logger = Myapp::getLogger();
+//         $logger = Myapp::getLogger();
         if ($id === 0) {
-            $logger->error('Bulletin Record ID ' . $id . ' is required ');
+            LogService::error('Bulletin Record ID ' . $id . ' is required ');
             return false;
         }
         
-        $svc = new BulletinService();
-        $item = $svc->getItem($id);
+//         $svc = new BulletinService();
+        $item = BulletinService::getItem($id);
         if ($item === null) {
-            $logger->error("Bulletin record not found (id=$id)");
+            LogService::error("Bulletin record not found (id=$id)");
             return false;
         }
         
@@ -126,49 +130,57 @@ class BulletinService
         
         try {
             $db->execute();
-            $logger->info('Deleting bulletin item - ' . $item->title . ' ID: ' . $id);
+            LogService::info('Deleting bulletin item - ' . $item->title . ' ID: ' . $id);
             return true;
         } catch (\Throwable $e) {
-            $logger->error('Bulletin delete failed - Record ID ' . $id . ' - ' . $e->getMessage());
+            LogService::error('Bulletin delete failed - Record ID ' . $id . ' - ' . $e->getMessage());
             return false;
         }
     }
     
     /**
      * This function returns the path (incl. folder) defined at the component level where the bulletin attachments are stored.
-     * The full path is defined as the value from the component options PLUS "Bulletin-" appanded with the bulletin ID.  
-     * However, the arguemnt (key) can be really any value passed by the calling client.
+     * The full path is defined as the value from the component options PLUS "Bulletin-" appended with the bulletin ID.
+     * However, the argument (key) can be really any value passed by the calling client.
      * 
-     * @param string $key
+     * @param int $key
      * @return string
      */
     public static function getBulletinFilePath(int $key) : string {
+        
         $params = ComponentHelper::getParams('com_jsports');
-        $attachmentdir = trim((string) $params->get('attachmentdir',''));
+        $attachmentdir = trim((string) $params->get('attachmentdir', ''));
         
-        $path = JPATH_ROOT . '/' . $attachmentdir;
+        $path = rtrim(JPATH_ROOT . '/' . $attachmentdir, '/\\');
+        
+        return Folder::makeSafe($path . '/Bulletin-' . $key . '/');
+        
+//         $params = ComponentHelper::getParams('com_jsports');
+//         $attachmentdir = trim((string) $params->get('attachmentdir',''));
+        
+//         $path = JPATH_ROOT . '/' . $attachmentdir;
 
-        $value = rtrim($path); // optional: remove trailing whitespace
-        if (str_ends_with($path, '/') || str_ends_with($path, '\\')) {
-            $endswithsep = true;
-        } else {
-            $endswithsep = false;
-        }
-        
-//         if (!$endswithsep) {
-//             $filepath = Folder::makeSafe( $path . '/Bulletin-' . $key .'/');
+//         $value = rtrim($path); // optional: remove trailing whitespace
+//         if (str_ends_with($path, '/') || str_ends_with($path, '\\')) {
+//             $endswithsep = true;
 //         } else {
-// 	       $filepath = Folder::makeSafe( $path . '/Bulletin-' . $key .'/');
+//             $endswithsep = false;
 //         }
-        $filepath = $path . '/Bulletin-' . $key .'/';
-        return $filepath;
+        
+// //         if (!$endswithsep) {
+// //             $filepath = Folder::makeSafe( $path . '/Bulletin-' . $key .'/');
+// //         } else {
+// // 	       $filepath = Folder::makeSafe( $path . '/Bulletin-' . $key .'/');
+// //         }
+//         $filepath = $path . '/Bulletin-' . $key .'/';
+//         return $filepath;
     }
     
     /**
      * This function will return the URL string that can be used to retrieve the bulletins
      * attachment via a browser.
      * 
-     * @param string $key Same as the bulletinid
+     * @param int $key Same as the bulletinid
      * @param string $filename
      * @return string
      */
@@ -183,8 +195,8 @@ class BulletinService
     
     /**
      * This function will remove the attachments underlying folder and all files within it.
-     * @param string $key
-     * @return boolean
+     * @param int $key
+     * @return bool
      */
     public static function deleteAttachmentFolder(int $key) {
         
@@ -209,7 +221,7 @@ class BulletinService
     }
 
     /**
-     * This function will blank out the attachment filenmae for a specific bulletin.
+     * This function will blank out the attachment filename for a specific bulletin.
      * @param int $id
      * @return bool
      */
@@ -225,7 +237,7 @@ class BulletinService
      * 
      * @param int $id
      * @param string $name
-     * @return boolean
+     * @return bool
      */
     public static function updateAttachmentFilename(int $id, string $name) : bool {
 
@@ -253,17 +265,11 @@ class BulletinService
             $db->execute();
             return true;
             
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             LogService::error($e->getMessage());
             return false;
         }
-//         return true;
+
     }
 
-
-
 }
-
-
-
-
