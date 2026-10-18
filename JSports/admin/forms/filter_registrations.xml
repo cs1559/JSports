@@ -37,6 +37,19 @@
 		/>
 		
 		<field
+			name="skilllevel"
+			type="list"
+			label="Skill Level"
+			onchange="this.form.submit();"
+			>
+			<option selected="selected" value="">- Skill? -</option>
+			<option value="R">Red</option>
+			<option value="W">White</option>
+			<option value="B">Blue</option>
+			<option value="E">Elite</option>
+		</field>
+		
+		<field
 			name="existingteam"
 			type="list"
 			label="Existing Team"
