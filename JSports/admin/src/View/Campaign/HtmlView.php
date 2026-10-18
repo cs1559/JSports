@@ -61,7 +61,10 @@ class HtmlView extends BaseHtmlView
      * @var string
      */
     protected $imageurl;
-    
+    /**
+     * @var string
+     */
+    protected $clickurl;
     
     /**
      * Execute and display a template script.
@@ -79,6 +82,7 @@ class HtmlView extends BaseHtmlView
         $this->form  = $model->getForm();
         $this->item  = $model->getItem();
         $this->state = $model->getState();
+        $this->clickurl = $model->getClickUrl($this->item);
         
         //$this->hasAttachment = $this->item->hasAttachment;
         
