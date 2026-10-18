@@ -16,6 +16,12 @@ use Joomla\CMS\User\User;
 use Joomla\CMS\User\UserFactoryInterface;
 use FP4P\Component\JSports\Site\Objects\Application;
 
+/**
+ * This class provides a lilst of functions pertaining to a Joomla USER.
+ * 
+ * @author Chris Strieter
+ *
+ */
 class UserService
 {
     
@@ -55,25 +61,26 @@ class UserService
     
     /**
      * This is a helper function that returns the current user object from Joomla.
-     *
      * @return User
      */
     public static function getUser() {
  
+        $current_user = Factory::getApplication()->getIdentity();
+        
         if (Application::inTestMode()) {
-            $current_user = Factory::getApplication()->getIdentity();
             $params = ComponentHelper::getParams('com_jsports');
-            $impersonatefrom = $params->get('impersonatefrom', "jsports");
-            $impersonateto = $params->get('impersonateto', "jsports");
-            $uid = $current_user->id;
+            $impersonatefrom = $params->get('impersonatefrom', $current_user->id);
+            $impersonateto   = $params->get('impersonateto', $current_user->id);
             
-            // if the current user is the same as the FROM id in the configuration then return the TO user object
-            if ($uid == $impersonatefrom) {
-                return UserService::getUserById($impersonateto);
-            }
-        } else {
-            return Factory::getApplication()->getIdentity();
+            // Only swap if impersonatefrom was actually selected (not left on the
+            // "- Select User -" placeholder) AND it matches the current user.
+            if ($impersonatefrom !== $current_user->id
+                && (int) $current_user->id === (int) $impersonatefrom) {
+                    return UserService::getUserById($impersonateto);
+                }
         }
+        
+        return $current_user;
     }
 
     /**
