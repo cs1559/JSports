@@ -86,7 +86,7 @@ class HtmlView extends BaseHtmlView
         
         // $layout = $program->registrationtemplate;
         $layout = $this->options->registrationtemplate;
-        
+        $this->agreementurl = $this->options->agreementurl;        
         /**
          * If the program does not have a specific regisration template defined, then use the default
          */
