@@ -49,6 +49,7 @@ class RegistrationsModel extends ListModel
 			    'programid', 'a.programid',
 			    'published', 'a.published',
 			    'grouping', 'a.grouping',
+			    'skilllevel', 'a.skilllevel',
 			);
 		}
 
@@ -92,6 +93,9 @@ class RegistrationsModel extends ListModel
 		$existingteam = $this->getUserStateFromRequest($this->context . '.filter.existingteam', 'filter_existingteam', '');
 		$this->setState('filter.existingteam', $existingteam);
 		
+		$skilllevel = $this->getUserStateFromRequest($this->context . '.filter.skilllevel', 'filter_skilllevel', '');
+		$this->setState('filter', $skilllevel);
+		
 		// List state information.
 		parent::populateState($ordering, $direction);
 	}
@@ -118,7 +122,7 @@ class RegistrationsModel extends ListModel
 		$id .= ':' . $this->getState('filter.id');
 		$id .= ':' . $this->getState('filter.grouping');
 		$id .= ':' . $this->getState('filter.existingteam');
-
+		$id .= ':' . $this->getState('filter.skilllevel');
 		return parent::getStoreId($id);
 	}
 
@@ -183,6 +187,14 @@ class RegistrationsModel extends ListModel
 	        $query->bind(':existingteam', $existingteam, ParameterType::INTEGER);
 	    }
 	    
+	    // Filter by SKILL LEVEL
+	    $skilllevel = $this->getState('filter.skilllevel');
+	    
+	    if (!empty($skilllevel)) {
+	        $query->where($db->quoteName('a.skilllevel') . ' = :skilllevel');
+	        $query->bind(':skilllevel', $skilllevel, ParameterType::STRING);
+	    }
+	    
 	    // Filter by search in TEAMNAME.
 	    $search = $this->getState('filter.search');
 	    
@@ -195,7 +207,7 @@ class RegistrationsModel extends ListModel
 	    
 	    	    
 	    // Add the list ordering clause.
-	    $orderCol  = $this->state->get('list.ordering', 'a.id');
+// 	    $orderCol  = $this->state->get('list.ordering', 'a.id');
 	    $orderDirn = $this->state->get('list.direction', 'ASC');
 	    
 	    $ordering = [$db->quoteName('a.teamname') . ' ' . $db->escape($orderDirn), ];
