@@ -48,6 +48,8 @@ window.JSportsDefaults = {
 						<?php echo $this->form->renderField('startdate'); ?>
 						<?php echo $this->form->renderField('enddate'); ?>
 						<?php echo $this->form->renderField('positions'); ?>
+						
+						<?php echo $this->clickurl; ?>
 					</div>
 				</div>
 			</div>
