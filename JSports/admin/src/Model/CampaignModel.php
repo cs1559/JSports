@@ -137,5 +137,10 @@ class CampaignModel extends AdminModel
 
     }
     
+    public function getClickUrl($data) {
+        
+        return "https://swibl.org/baseball?task=campaign.click&id=" . $data->id;
+    }
+    
 }
 
