@@ -53,6 +53,7 @@ order by s.name;
             $db->quoteName('#__jsports_sponsorships', 'p')
             . ' ON ' . $db->quoteName('s.id') . ' = ' . $db->quoteName('p.sponsorid')
             )
+            ->where($db->quoteName('p.programid') . ' = ' . $this->programid)
             ->join(
                 'INNER',
                 $db->quoteName('#__jsports_sponsorship_plans', 'p2')

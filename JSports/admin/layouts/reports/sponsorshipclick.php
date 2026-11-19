@@ -32,7 +32,11 @@ foreach ($displayData as $row) {
 				<td><?php echo $row->impressions; ?> </td>
 				<td><?php echo $row->clicks; ?> </td>
 				<td><?php 
+				if ($row->impressions > 0) {
 			        $ctr = ($row->clicks / $row->impressions)*100;
+				} else {
+				    $ctr = 0;
+				}
 			        echo number_format($ctr, 1);
 			    ?>
 				</td>
