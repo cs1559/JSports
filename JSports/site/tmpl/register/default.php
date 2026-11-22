@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function () {
         var returningTeamRadio = form.querySelector('input[name="jform[returningteam]"]:checked');
         var returningTeamValue = returningTeamRadio ? returningTeamRadio.value : null;
     
-        if (returningTeamValue === 'NO') {
+        if (returningTeamValue === '0') {
             // Clear out fields not needed for a new team registration
             var usernameField = form.querySelector('input[name="jform[username]"]');
             var passwordField = form.querySelector('input[name="jform[password]"]');

@@ -43,7 +43,13 @@ class HtmlView extends BaseHtmlView
         $model = $this->getModel();
         
         $this->data = $app->getUserState('com_jsports.registration.data', null);
-
+        
+        if (($data['returningteam'] ?? '0') === '0') {
+            $data['teamid']   = 0;
+            $data['username'] = '';
+            $data['password'] = '';
+        }
+        
 //         $this->programId     = $model->getState('program.id');
 //         $this->lastProgramId = $model->getState('program.lastid');
 //         $this->returningTeam = $model->getState('team.returning');
@@ -63,7 +69,7 @@ class HtmlView extends BaseHtmlView
 //             $isNew = true;
 //         }
         
-        $this->form        = $model->getForm($this->item,true);
+       // $this->form        = $model->getForm($this->item,true);
         
 //         if ($isNew) {
 //             $this->item->programid = $this->programId;

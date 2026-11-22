@@ -143,16 +143,41 @@ class RegistrationModel extends FormModel
         $app  = Factory::getApplication();
         $data = $app->getUserState('com_jsports.registration.data', []);
         
-        $team = TeamService::getItem($data['teamid']);
-        $data['teamname'] = $team->name;
-        $data['name'] = $team->contactname;
-        $data['email'] = $team->contactemail;
-        $data['phone'] = $team->contactphone;
-        $data['city'] = $team->city;
-        $data['state'] = $team->state;
-        $data['teamid'] = $team->id;
-        $data['existingteam'] = $data['returningteam'];
+        // $team = TeamService::getItem($data['teamid']);
+        // $data['teamname'] = $team->name;
+        // $data['name'] = $team->contactname;
+        // $data['email'] = $team->contactemail;
+        // $data['phone'] = $team->contactphone;
+        // $data['city'] = $team->city;
+        // $data['state'] = $team->state;
+        // $data['teamid'] = $team->id;
+        // $data['existingteam'] = $data['returningteam'];
         
+        $teamid = (int) ($data['teamid'] ?? 0);
+        $team   = ($teamid > 0) ? TeamService::getItem($teamid) : null;
+        
+        if ($team) {
+            // Returning team: prefill from the team record
+            $data['teamid']       = $team->id;
+            $data['teamname']     = $team->name;
+            $data['name']         = $team->contactname;
+            $data['email']        = $team->contactemail;
+            $data['phone']        = $team->contactphone;
+            $data['city']         = $team->city;
+            $data['state']        = $team->state;
+            $data['existingteam'] = $data['returningteam'] ?? '1';
+        } else {
+            // No teamid, or the team wasn't found: new team, blank values
+            $data['teamid']       = 0;
+            $data['teamname']     = '';
+            $data['name']         = '';
+            $data['email']        = '';
+            $data['phone']        = '';
+            $data['city']         = '';
+            $data['state']        = '';
+            $data['existingteam'] = 0;
+        }
+
         
         if (empty($data)) {
             $data = $this->getItem();
