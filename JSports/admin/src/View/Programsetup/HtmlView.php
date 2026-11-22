@@ -78,7 +78,7 @@ class HtmlView extends BaseHtmlView
         $defaults = array(
               'programid' => $this->programid,
         );
-        $this->form->bind($defaults);
+//         $this->form->bind($defaults);
         $this->filterForm->bind($defaults);
         
         if (count($errors = $model->getErrors()))
