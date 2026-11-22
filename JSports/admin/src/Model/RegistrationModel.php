@@ -211,17 +211,25 @@ class RegistrationModel extends AdminModel
             return false;
         }
         try {
-            
+
             if ($item->teamid) {
                 $team = TeamService::getitem($item->teamid);
-                if (is_null($item)) {
-                    $createteam = true;
-                } else {
-                    $createteam = false;
-                }
+                $createteam = is_null($team);
             } else {
                 $createteam = true;
             }
+            
+//             if ($item->teamid) {
+//                 $team = TeamService::getitem($item->teamid);
+// //                 if (is_null($item)) {
+//                 if (is_null($team)) {
+//                     $createteam = true;
+//                 } else {
+//                     $createteam = false;
+//                 }
+//             } else {
+//                 $createteam = true;
+//             }
             
             // begin transactio
             $db->transactionStart();
@@ -271,7 +279,38 @@ class RegistrationModel extends AdminModel
                 $logger->info('Team Profile ' . $item->teamname . ' was published/created - ID: ' . $new_row_id);
                 
             } else {
-                $new_row_id = $item->teamid;
+//                 $new_row_id = $item->teamid;
+                // =========================================================================================
+                // Update existing Team record with data from the registration
+                // =========================================================================================
+                $new_row_id = (int) $item->teamid;
+                $teamalias  = OutputFilter::stringURLUnicodeSlug($item->teamname);
+                
+                $query = $db->getQuery(true);
+                
+                $fields = array(
+                    $db->quoteName('name')         . ' = ' . $db->quote($item->teamname),
+                    $db->quoteName('alias')        . ' = ' . $db->quote($teamalias),
+                    $db->quoteName('city')         . ' = ' . $db->quote($item->city),
+                    $db->quoteName('state')        . ' = ' . $db->quote($item->state),
+                    $db->quoteName('contactname')  . ' = ' . $db->quote($item->name),
+                    $db->quoteName('contactemail') . ' = ' . $db->quote($item->email),
+                    $db->quoteName('contactphone') . ' = ' . $db->quote($item->phone),
+                    $db->quoteName('tournament')   . ' = ' . $db->quote($item->playoffs),
+                );
+                
+                $conditions = array(
+                    $db->quoteName('id') . ' = ' . $new_row_id
+                );
+                
+                $query->update($db->quoteName('#__jsports_teams'))
+                ->set($fields)
+                ->where($conditions);
+                
+                $db->setQuery($query);
+                $db->execute();
+                
+                $logger->info('Team Profile ' . $item->teamname . ' was updated - ID: ' . $new_row_id);
             }
             
             $query = $db->getQuery(true);
