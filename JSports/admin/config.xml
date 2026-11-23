@@ -100,11 +100,6 @@
 			label="COM_JSPORTS_SPORTS_ID"
 			description="COM_JSPORTS_SPORTS_ID">
 		</field>
-
-		<field name="cronkey" type="text" default=""
-			label="COM_JSPORTS_CRONKEY"
-			description="COM_JSPORTS_CRONKEY">
-		</field>
 		
 		<field name="logdays" type="text" default="200"
 			label="COM_JSPORTS_LOGS_DAYS_TO_RETAIN"
@@ -119,6 +114,24 @@
 			<option value="1">Yes</option>
 		</field>
 								
+	</fieldset>
+	
+	<fieldset name="cron" description="COM_JSPORTS_CRON_DESC" label="COM_JSPORTS_CRON_LABEL">
+
+		<field name="cronkey" type="text" default=""
+			label="COM_JSPORTS_CRONKEY"
+			description="COM_JSPORTS_CRONKEY">
+		</field>
+
+		<field name="cronactiveonly" type="radio" default="0"
+			label="COM_JSPORTS_CRONACTIVEONLY_ENABLED"
+			description="COM_JSPORTS_CRONACTIVEONLY_DESC"
+			layout="joomla.form.field.radio.switcher">
+			<option value="0">No</option>
+			<option value="1">Yes</option>
+		</field>
+
+
 	</fieldset>
 	
 	<fieldset name="email" description="COM_JSPORTS_EMAIL_DESC" label="COM_JSPORTS_EMAIL_LABEL">
