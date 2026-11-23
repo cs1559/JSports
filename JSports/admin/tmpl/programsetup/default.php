@@ -87,7 +87,7 @@ $user = UserService::getUser();
 
 ?>
                  <td class="text-center">   
-                        <?php echo HTMLHelper::_('jgrid.published', $item->published, $i,'programsetup.', $canChange);  ?>
+                        <?php echo HTMLHelper::_('jgrid.published', $item->published, $i,'programsetup.', true);  ?>
                 </td>
 
 
