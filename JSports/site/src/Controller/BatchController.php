@@ -53,6 +53,7 @@ class BatchController extends BaseController
 
         $params = ComponentHelper::getParams('com_jsports');
         $salt = $params->get('cronkey');
+        $activeonly = $params->get('cronactiveonly',true);
         
         $app = Factory::getApplication();
         
@@ -76,7 +77,7 @@ class BatchController extends BaseController
             
             // 2024-03-11 Made changes to support issue#8 - remove hardcoded value.
             // Retrieve the non completed programs.  'true' will filter only ACTIVE programs.
-            $programs = ProgramsService::getNonCompletedPrograms(true);
+            $programs = ProgramsService::getNonCompletedPrograms($activeonly);
             foreach ($programs as $program) {
                 print "- Processing Program " . $program->id . "\n";
                 $engine->generateStandings($program->id);
