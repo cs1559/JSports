@@ -76,6 +76,7 @@ class HtmlView extends BaseHtmlView
         $this->activeFilters = $model->getActiveFilters();
         
         $this->isProgramPending = false;
+        $this->showdivision = true;
         
         /* removed 12/6/2024 - this caused pagination issues */
         //$this->pagination->limit = 30;
@@ -86,6 +87,11 @@ class HtmlView extends BaseHtmlView
         $isAdmin = SecurityService::isAdmin();
         $status = $this->program->status ?? '';
         $setupFinal = !empty($this->program->setupfinal);
+        $showdivision = true;
+        
+        if (!$this->program->publishstandings && !$isAdmin) {
+            $this->showdivision = false;
+        }
         
         $this->isProgramPending = ($status === 'P') || (!$setupFinal && (int) ($this->program->id ?? 0) > 0);
         

@@ -120,7 +120,13 @@ $wa->useStyle('com_jsports.teamlist.style');
 						<?php echo $item->contactname; ?>
 					</td>
 					<td class="">
-						<?php echo $item->divisionname; ?>
+					<?php 
+						if ($this->showdivision) {
+							echo $item->divisionname; 
+						} else {
+							echo "Unavailable"; 
+						}
+						?>
 					</td>					
 					<td class="">
 						<?php echo $item->city; ?>
