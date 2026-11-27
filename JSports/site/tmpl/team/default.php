@@ -39,6 +39,11 @@ $showhits = $params->get('showhits');
 $downloadschedule = $params->get('downloadcvsschedule');
 
 $document->setTitle(Text::_('COM_JSPORTS_TEAMPROFILE_PAGE_TITLE'));
+
+// If the standings program the program haven't been published, then suppress display on profile.
+if (!$this->recentprogram->publishstandings) {
+    $showstandings = false;
+}
 ?>
 
 <?php
